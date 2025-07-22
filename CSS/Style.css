@@ -1,0 +1,331 @@
+/* ------------------- */
+/* Reset & Grundstile  */
+/* ------------------- */
+:root {
+    --primary-color: #0A1931; /* Dunkelblau aus Logo */
+    --secondary-color: #185ADB; /* Helles Blau aus Logo */
+    --accent-color: #FFC947; /* Orange/Gelb aus Logo */
+    
+    /* --- ÄNDERUNG HIER: Hintergrund weniger steril --- */
+    --bg-color: #f0f4f8; /* Sehr helles, leicht bläuliches Grau */
+    
+    --text-color: #334155; /* Dunkles Textgrau */
+    --card-bg: #ffffff; /* Weiß */
+    --font-primary: 'Inter', sans-serif;
+    --font-secondary: 'Roboto Mono', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.7;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ------------------- */
+/* Header & Navigation */
+/* ------------------- */
+.main-header {
+    /* --- ÄNDERUNG HIER: Header dunkelblau --- */
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px; /* Höhe anpassen */
+    width: auto;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.main-nav a {
+    text-decoration: none;
+    /* --- ÄNDERUNG HIER: Helle Schrift für dunklen Header --- */
+    color: #e2e8f0; 
+    font-weight: 700;
+    transition: color 0.3s ease;
+    padding: 5px 0;
+}
+
+.main-nav a:hover {
+    /* --- ÄNDERUNG HIER: Akzentfarbe beim Hover --- */
+    color: var(--accent-color);
+}
+
+.nav-highlight {
+    /* --- ÄNDERUNG HIER: Angepasster Look für dunklen Header --- */
+    background-color: var(--accent-color);
+    color: var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-highlight:hover {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+}
+
+/* ------------------- */
+/* Sektionen Allgemein */
+/* ------------------- */
+section {
+    padding: 80px 0;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 3.2rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+/* ------------------- */
+/* Hero-Sektion        */
+/* ------------------- */
+.hero-section {
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero-section .subtitle {
+    font-size: 1.25rem;
+    max-width: 750px;
+    margin: 0 auto 40px;
+    color: var(--text-color);
+}
+
+.cta-button {
+    display: inline-block;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    padding: 15px 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+    border: 2px solid var(--accent-color);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(255, 201, 71, 0.5);
+}
+
+/* ------------------- */
+/* Leistungs-Sektion   */
+/* ------------------- */
+.services-section {
+    background-color: var(--card-bg);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+.service-card {
+    /* --- ÄNDERUNG HIER: Hintergrund passt zum neuen Body-BG --- */
+    background-color: var(--bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(100,100,100,0.1);
+}
+
+.service-card p {
+    margin-top: 15px;
+}
+
+/* ------------------- */
+/* Über-Uns-Sektion    */
+/* ------------------- */
+.about-flex {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.about-image img {
+    max-width: 350px;
+    border-radius: 50%; /* Rundes Bild für persönlichen Touch */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* ------------------- */
+/* Demo-Sektion        */
+/* ------------------- */
+.demo-section {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    text-align: center;
+}
+
+.demo-section h2 {
+    color: var(--card-bg);
+}
+
+.demo-section p {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    font-size: 1.1rem;
+}
+
+.cta-button-secondary {
+    display: inline-block;
+    background: transparent;
+    color: var(--accent-color);
+    font-weight: 700;
+    padding: 15px 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border: 2px solid var(--accent-color);
+}
+
+.cta-button-secondary:hover {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+.domain-info {
+    margin-top: 15px !important;
+    font-size: 0.9rem !important;
+    color: #cbd5e1;
+}
+
+/* ------------------- */
+/* Kontakt-Sektion     */
+/* ------------------- */
+.contact-section {
+    text-align: center;
+}
+
+/* ------------------- */
+/* Footer              */
+/* ------------------- */
+.main-footer {
+    background-color: #071122; /* Etwas dunkler als primär */
+    color: #a0aec0;
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.main-footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-footer ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.main-footer a {
+    color: #a0aec0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.main-footer a:hover {
+    color: var(--accent-color);
+}
+
+/* ------------------- */
+/* Responsive Design   */
+/* ------------------- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+
+    .main-header .container, .main-nav ul {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .logo img { height: 40px; }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-flex {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-text h2 {
+        text-align: center;
+    }
+    
+    .main-footer .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
