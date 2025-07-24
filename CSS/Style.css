@@ -32,15 +32,14 @@ body {
     background-color: rgba(10, 25, 49, 0.85); 
     backdrop-filter: blur(10px);
     border-bottom: 1px solid #1e293b;
-    /* --- ÄNDERUNG HIER: Mehr Abstand für eine bessere Optik --- */
-    padding: 0.75rem 0;
+    padding: 0.5rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 .main-header .container { display: flex; justify-content: space-between; align-items: center; }
 .logo img { 
-    height: 65px; /* Beibehaltung der guten Logo-Größe */
+    height: 65px; 
     width: auto; 
 }
 .main-nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
@@ -129,18 +128,9 @@ h3 { font-size: 1.5rem; color: var(--accent-color); }
 .about-text { flex: 1; }
 .about-text h2 { text-align: left; margin-bottom: 20px; }
 
-.demo-section .container { text-align: center; }
-.demo-section p {
-    /* --- ÄNDERUNG HIER: Mehr Abstand zum Video --- */
-    margin-bottom: 40px;
-}
 .video-placeholder { max-width: 800px; margin: 0 auto; background-color: #000; aspect-ratio: 16 / 9; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-secondary); border: 2px solid var(--accent-color); }
 
 .contact-section .container { text-align: center; }
-.contact-section p {
-    /* --- ÄNDERUNG HIER: Mehr Abstand zum Button --- */
-    margin-bottom: 40px;
-}
 
 /* ------------------- */
 /* Footer              */
