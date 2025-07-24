@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- KORREKTER PFAD ZUR CSS-DATEI -->
     <link rel="stylesheet" href="CSS/Style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
@@ -17,10 +16,9 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <!-- KORREKTER PFAD ZUM LOGO -->
                 <img src="Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
-            <nav class="main-nav">
+            <nav class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="leistungen.html">Leistungen</a></li>
                     <li><a href="#about">Über Neuratex AI</a></li>
@@ -29,6 +27,9 @@
                     <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
             </nav>
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="sr-only">Menü</span>
+            </button>
         </div>
     </header>
 
@@ -138,29 +139,29 @@
 
     <!-- Script für Hero Banner Animation -->
     <script>
-        const canvas = document.getElementById('hero-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = canvas.parentElement.offsetWidth;
-        canvas.height = canvas.parentElement.offsetHeight;
+        const heroCanvas = document.getElementById('hero-canvas');
+        const heroCtx = heroCanvas.getContext('2d');
+        heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+        heroCanvas.height = heroCanvas.parentElement.offsetHeight;
 
-        let nodes = [];
-        const numNodes = 100;
-        const connectionDistance = 220;
+        let heroNodes = [];
+        const heroNumNodes = 100;
+        const heroConnectionDistance = 220;
 
-        const mouse = { x: undefined, y: undefined, radius: 150 };
+        const heroMouse = { x: undefined, y: undefined, radius: 150 };
 
         window.addEventListener('mousemove', (event) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = event.clientX - rect.left;
-            mouse.y = event.clientY - rect.top;
+            const rect = heroCanvas.getBoundingClientRect();
+            heroMouse.x = event.clientX - rect.left;
+            heroMouse.y = event.clientY - rect.top;
         });
         
         window.addEventListener('mouseout', () => {
-            mouse.x = undefined;
-            mouse.y = undefined;
+            heroMouse.x = undefined;
+            heroMouse.y = undefined;
         });
         
-        class Node {
+        class HeroNode {
              constructor(x, y) {
                 this.x = x; this.y = y;
                 this.size = Math.random() * 2.5 + 1.5;
@@ -168,15 +169,15 @@
                 this.density = (Math.random() * 40) + 5;
             }
             draw() {
-                ctx.fillStyle = 'rgba(139, 174, 255, 0.8)';
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath(); ctx.fill();
+                heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)';
+                heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                heroCtx.closePath(); heroCtx.fill();
             }
             update() {
-                let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
                 let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    let force = (mouse.radius - distance) / mouse.radius;
+                if (distance < heroMouse.radius) {
+                    let force = (heroMouse.radius - distance) / heroMouse.radius;
                     this.x -= (dx / distance) * force * this.density;
                     this.y -= (dy / distance) * force * this.density;
                 } else {
@@ -186,48 +187,65 @@
             }
         }
 
-        function init() {
-            nodes = [];
-            for (let i = 0; i < numNodes; i++) {
-                nodes.push(new Node(Math.random() * canvas.width, Math.random() * canvas.height));
+        function heroInit() {
+            heroNodes = [];
+            for (let i = 0; i < heroNumNodes; i++) {
+                heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < nodes.length; i++) {
-                nodes[i].update(); nodes[i].draw();
+        function heroAnimate() {
+            heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+            for (let i = 0; i < heroNodes.length; i++) {
+                heroNodes[i].update(); heroNodes[i].draw();
             }
-            connect();
-            requestAnimationFrame(animate);
+            heroConnect();
+            requestAnimationFrame(heroAnimate);
         }
 
-        function connect() {
-            for (let a = 0; a < nodes.length; a++) {
-                for (let b = a; b < nodes.length; b++) {
-                    let distance = Math.sqrt((nodes[a].x - nodes[b].x) ** 2 + (nodes[a].y - nodes[b].y) ** 2);
-                    if (distance < connectionDistance) {
-                        let opacity = 1 - (distance / connectionDistance);
-                        ctx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
-                        ctx.lineWidth = 1;
-                        ctx.beginPath(); ctx.moveTo(nodes[a].x, nodes[a].y); ctx.lineTo(nodes[b].x, nodes[b].y); ctx.stroke();
+        function heroConnect() {
+            for (let a = 0; a < heroNodes.length; a++) {
+                for (let b = a; b < heroNodes.length; b++) {
+                    let distance = Math.sqrt((heroNodes[a].x - heroNodes[b].x) ** 2 + (heroNodes[a].y - heroNodes[b].y) ** 2);
+                    if (distance < heroConnectionDistance) {
+                        let opacity = 1 - (distance / heroConnectionDistance);
+                        heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
+                        heroCtx.lineWidth = 1;
+                        heroCtx.beginPath(); heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y); heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y); heroCtx.stroke();
                     }
                 }
             }
         }
         
-        let resizeTimer;
+        let heroResizeTimer;
         window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                canvas.width = canvas.parentElement.offsetWidth;
-                canvas.height = canvas.parentElement.offsetHeight;
-                init();
+            clearTimeout(heroResizeTimer);
+            heroResizeTimer = setTimeout(() => {
+                heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+                heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+                heroInit();
             }, 250);
         });
 
-        init();
-        animate();
+        heroInit();
+        heroAnimate();
+    </script>
+    
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
     </script>
 
 </body>
