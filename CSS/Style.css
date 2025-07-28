@@ -45,12 +45,20 @@ body {
 .main-nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
 .main-nav a { text-decoration: none; color: var(--headline-color); font-weight: 700; transition: color 0.3s ease; padding: 5px 0; }
 .main-nav a:hover { color: var(--accent-color); }
-.nav-highlight { background-color: var(--accent-color); color: var(--primary-color); padding: 10px 20px; border-radius: 8px; transition: all 0.3s ease; }
+
+/* --- HIER IST DIE ÄNDERUNG --- */
+.nav-highlight { 
+    background-color: var(--accent-color); 
+    color: var(--primary-color); 
+    padding: 12px 25px; /* Vergrößert für bessere Sichtbarkeit */
+    border-radius: 8px; 
+    transition: all 0.3s ease; 
+}
 .nav-highlight:hover { background-color: var(--headline-color); color: var(--primary-color); }
 
-/* --- Styles für den mobilen Menü-Button --- */
+/* --- HIER IST DIE ÄNDERUNG --- */
 .mobile-nav-toggle {
-    display: none;
+    display: none; /* Standardmäßig auf Desktops unsichtbar */
 }
 
 /* ------------------- */
@@ -180,7 +188,7 @@ h3 { font-size: 1.5rem; color: var(--accent-color); }
     }
 
     .mobile-nav-toggle {
-        display: block;
+        display: block; /* Auf Mobilgeräten sichtbar machen */
         position: absolute;
         z-index: 9999;
         background-color: transparent;
