@@ -23,7 +23,8 @@ body {
     color: var(--text-color);
 }
 
-.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+/* ZENTRALE ÄNDERUNG: Container verbreitert, um mehr Platz zu schaffen */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* ------------------- */
 /* Header & Navigation */
@@ -63,41 +64,6 @@ body {
 }
 
 /* ------------------- */
-/* Typografie (NEU & AUFGERÄUMT) */
-/* ------------------- */
-h1, h2, h3 { 
-    font-family: var(--font-primary); 
-    font-weight: 700; 
-    color: var(--headline-color); 
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-/* Fluid Typography: Schriftgrößen passen sich stufenlos an die Bildschirmbreite an. */
-h1 { font-size: clamp(2.5rem, 5vw, 3.2rem); }
-h2 { font-size: clamp(2.0rem, 4vw, 2.8rem); }
-h3 { font-size: clamp(1.2rem, 2.5vw, 1.5rem); }
-
-/* Spezifische Überschriften-Anpassungen */
-.principles-section h2, 
-.services-section h2, 
-.demo-section h2, 
-.contact-section h2 {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.about-text h2,
-.featured-section .text-container h2,
-.lead-gen-text h2 {
-    text-align: left;
-}
-
-.principle-card h3 {
-    color: var(--headline-color); /* Überschreibt die generelle h3-Farbe */
-}
-
-/* ------------------- */
 /* Sektionen Allgemein */
 /* ------------------- */
 section {
@@ -107,6 +73,12 @@ section {
 section:last-of-type {
     border-bottom: none;
 }
+
+/* Typografie auf Standard zurückgesetzt */
+h1, h2, h3 { font-family: var(--font-primary); font-weight: 700; color: var(--headline-color); margin-bottom: 20px; }
+h1 { font-size: 3.5rem; line-height: 1.2; }
+h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
+h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geändert für Konsistenz */
 
 /* ------------------- */
 /* Hero-Sektion        */
@@ -138,6 +110,7 @@ section:last-of-type {
 .cta-button { display: inline-block; background: var(--accent-color); color: var(--primary-color); font-weight: 700; padding: 15px 35px; border-radius: 8px; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; font-size: 1rem; border: 2px solid var(--accent-color); }
 .cta-button:hover { transform: translateY(-3px); box-shadow: 0 6px 40px rgba(255, 201, 71, 0.7); }
 
+
 /* ------------------- */
 /* Komponenten & Layout-Blöcke */
 /* ------------------- */
@@ -167,15 +140,18 @@ section:last-of-type {
     border-color: var(--secondary-color);
 }
 .service-card p { margin-top: 15px; }
+.service-card h3 { color: var(--accent-color); } /* Farbe hier spezifisch setzen */
 
-/* Korrigiertes Grid, damit die Karten nicht zu schmal werden */
-.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; } 
+
+.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
 .principle-card { text-align: center; }
 .principle-card span { font-family: var(--font-secondary); font-size: 2rem; font-weight: 700; color: var(--accent-color); display: block; margin-bottom: 10px; }
+.principle-card h3 { margin-bottom: 10px; }
 
 .about-flex { display: flex; align-items: center; gap: 60px; }
 .about-image img { max-width: 350px; border-radius: 50%; box-shadow: 0 0 40px rgba(24, 90, 219, 0.5); border: 2px solid var(--secondary-color); }
 .about-text { flex: 1; }
+.about-text h2 { text-align: left; margin-bottom: 20px; }
 
 .demo-section .container { text-align: center; }
 .demo-section p {
@@ -257,12 +233,16 @@ section:last-of-type {
     max-width: 800px;
     margin: 0 auto;
 }
-.featured-section.alt-layout .container {
-    flex-direction: row-reverse;
+.featured-section .text-container h2 {
+    text-align: left;
+    margin-bottom: 10px;
 }
 .featured-section .text-container h3 {
     color: var(--accent-color);
     margin-bottom: 20px;
+}
+.featured-section.alt-layout .container {
+    flex-direction: row-reverse;
 }
 
 /* ------------------- */
@@ -280,10 +260,13 @@ section:last-of-type {
 .lead-gen-text {
     flex-basis: 60%;
 }
+.lead-gen-text h2 {
+    text-align: left;
+    margin-bottom: 30px;
+}
 .lead-gen-text ul {
     list-style: none;
     margin-bottom: 30px;
-    padding-left: 5px; /* Kleine Einrückung für die Liste */
 }
 .lead-gen-text ul li {
     padding-left: 25px;
@@ -307,6 +290,7 @@ section:last-of-type {
 .lead-gen-form-container h3 {
     text-align: center;
     margin-bottom: 30px;
+    font-size: 1.8rem;
 }
 .form-group {
     margin-bottom: 20px;
@@ -349,7 +333,7 @@ section:last-of-type {
 }
 
 /* ------------------- */
-/* Cookie Banner (ERGÄNZT) */
+/* Cookie Banner       */
 /* ------------------- */
 .cookie-banner {
     display: none;
@@ -365,7 +349,6 @@ section:last-of-type {
     border: 1px solid #1e293b;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 2000;
-    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -438,6 +421,9 @@ section:last-of-type {
 }
 
 @media (max-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2.2rem; }
+    
     .main-nav {
         position: fixed;
         inset: 0 0 0 30%;
@@ -495,7 +481,6 @@ section:last-of-type {
     .featured-section .text-container h2 {
         text-align: center;
     }
-
     .cookie-banner {
         flex-direction: column;
         text-align: center;

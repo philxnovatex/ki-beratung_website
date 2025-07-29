@@ -34,14 +34,15 @@
     </header>
 
     <main>
-    <section id="hero" class="hero-section">
-    <canvas id="hero-canvas"></canvas>
-    <div class="container">
-        <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
-        <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
-        <a href="kontakt.html" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
-    </div>
-</section>
+        <section id="hero" class="hero-section">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container">
+                <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
+                <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
+                <a href="kontakt.html" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
+            </div>
+        </section>
+
         <section id="services" class="services-section">
             <div class="container">
                 <h2>Ihre Abkürzung zu funktionierenden KI-Lösungen</h2>
@@ -95,24 +96,21 @@
                     </div>
                 </div>
             </div>
-<section id="about" class="about-section">
-    <div class="container about-flex">
-    
-        <div class="about-image">
-            <img src="Images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
-        </div>
-
-        <div class="about-text">
-            <h2>Die Expertise hinter Neuratex AI</h2>
-            <p><strong>Neuratex AI ist entstanden, weil wir überzeugt sind: Künstliche Intelligenz kann Unternehmen nicht nur effizienter machen, sondern Geschäftsmodelle verändern.</strong></p>
-            <p>Unser Ziel ist es, diese Möglichkeiten greifbar zu machen. Klar, pragmatisch und mit Lösungen, die sich im Alltag wirklich auszahlen. Für unseren Gründer Philipp Koch war schnell klar: Wer heute nicht versteht, wie KI sinnvoll eingesetzt wird, verliert morgen den Anschluss.</p>
-            <p>Philipp kommt aus der Wirtschaft, hat Business Management studiert und war in Unternehmensberatungen tätig. Als die ersten großen Sprachmodelle erschienen, begann er zu experimentieren. Um diese Leidenschaft beruflich einzusetzen, wechselte er ins Business Development eines Versicherungskonzerns und übernahm dort den Bereich KI.</p>
-            <p>Er entwickelte interne Chatbots, setzte RAG-gestützte Assistenten um und hielt Workshops bis in den Vorstand hinein. Dort lernte er, wie man KI-Projekte unter strengsten Vorgaben für Datenschutz und Compliance plant – und auch, wie viele gute Ideen genau daran scheitern.</p>
-            <p>Diese Erfahrung hat ihn geprägt. Deshalb hat er Neuratex AI gegründet: Um kleinen und mittelständischen Dienstleistungsunternehmen zu helfen, aus Ideen funktionierende KI-Lösungen zu machen. Wir glauben nicht an Hype. Wir glauben daran, dass KI sinnvoll eingesetzt werden muss. Damit Ihre Zeit für das bleibt, was Ihr Unternehmen wirklich ausmacht.</p>
-        </div>
-        
-    </div>
-</section>
+        </section> <section id="about" class="about-section">
+            <div class="container about-flex">
+                <div class="about-image">
+                    <img src="Images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
+                </div>
+                <div class="about-text">
+                    <h2>Die Expertise hinter Neuratex AI</h2>
+                    <p><strong>Neuratex AI ist entstanden, weil wir überzeugt sind: Künstliche Intelligenz kann Unternehmen nicht nur effizienter machen, sondern Geschäftsmodelle verändern.</strong></p>
+                    <p>Unser Ziel ist es, diese Möglichkeiten greifbar zu machen. Klar, pragmatisch und mit Lösungen, die sich im Alltag wirklich auszahlen. Für unseren Gründer Philipp Koch war schnell klar: Wer heute nicht versteht, wie KI sinnvoll eingesetzt wird, verliert morgen den Anschluss.</p>
+                    <p>Philipp kommt aus der Wirtschaft, hat Business Management studiert und war in Unternehmensberatungen tätig. Als die ersten großen Sprachmodelle erschienen, begann er zu experimentieren. Um diese Leidenschaft beruflich einzusetzen, wechselte er ins Business Development eines Versicherungskonzerns und übernahm dort den Bereich KI.</p>
+                    <p>Er entwickelte interne Chatbots, setzte RAG-gestützte Assistenten um und hielt Workshops bis in den Vorstand hinein. Dort lernte er, wie man KI-Projekte unter strengsten Vorgaben für Datenschutz und Compliance plant – und auch, wie viele gute Ideen genau daran scheitern.</p>
+                    <p>Diese Erfahrung hat ihn geprägt. Deshalb hat er Neuratex AI gegründet: Um kleinen und mittelständischen Dienstleistungsunternehmen zu helfen, aus Ideen funktionierende KI-Lösungen zu machen. Wir glauben nicht an Hype. Wir glauben daran, dass KI sinnvoll eingesetzt werden muss. Damit Ihre Zeit für das bleibt, was Ihr Unternehmen wirklich ausmacht.</p>
+                </div>
+            </div>
+        </section>
 
         <section id="demo" class="demo-section">
             <div class="container">
@@ -262,35 +260,33 @@
     </script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cookieBanner = document.getElementById('cookie-banner');
-            if (cookieBanner) {
-                const acceptBtn = document.getElementById('cookie-accept-btn');
-                const declineBtn = document.getElementById('cookie-decline-btn');
+      document.addEventListener('DOMContentLoaded', () => {
+        const cookieBanner = document.getElementById('cookie-banner');
+        if (cookieBanner) {
+          const acceptBtn = document.getElementById('cookie-accept-btn');
+          const declineBtn = document.getElementById('cookie-decline-btn');
 
-                const hideBanner = () => {
-                    cookieBanner.style.display = 'none';
-                };
+          const hideBanner = () => {
+            cookieBanner.classList.remove('show');
+          };
 
-                if (!localStorage.getItem('cookie_consent_neuratex')) {
-                    setTimeout(() => {
-                        cookieBanner.style.display = 'flex';
-                    }, 1000);
-                } else {
-                     hideBanner();
-                }
+          if (!localStorage.getItem('cookie_consent_neuratex')) {
+            setTimeout(() => {
+              cookieBanner.classList.add('show');
+            }, 1000);
+          }
 
-                acceptBtn.addEventListener('click', () => {
-                    localStorage.setItem('cookie_consent_neuratex', 'accepted');
-                    hideBanner();
-                });
+          acceptBtn.addEventListener('click', () => {
+            localStorage.setItem('cookie_consent_neuratex', 'accepted');
+            hideBanner();
+          });
 
-                declineBtn.addEventListener('click', () => {
-                    localStorage.setItem('cookie_consent_neuratex', 'declined');
-                    hideBanner();
-                });
-            }
-        });
+          declineBtn.addEventListener('click', () => {
+            localStorage.setItem('cookie_consent_neuratex', 'declined');
+            hideBanner();
+          });
+        }
+      });
     </script>
 
 </body>
