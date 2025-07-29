@@ -9,21 +9,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .content-page h1 { margin-bottom: 30px; }
+        .content-page p { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
 
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <!-- HIER IST DIE KORREKTUR -->
-                <img src="https://www.neuratex.de/Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="leistungen.html">Leistungen</a></li>
                     <li><a href="index.html#about">Über Neuratex AI</a></li>
                     <li><a href="index.html#demo">Demo</a></li>
-                    <!-- HIER IST DIE KORREKTUR -->
                     <li><a href="kontakt.html">Kontakt</a></li>
                     <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
@@ -34,29 +36,28 @@
         </div>
     </header>
 
-
     <main>
         <div class="container">
-            <section class="content-page">
+            <section class="content-page" style="padding: 80px 0;">
                 <h1>Impressum</h1>
                 <p><strong>Angaben gemäß § 5 TMG:</strong></p>
                 <p>
                     Philipp Koch<br>
                     Neuratex AI<br>
-                    Ihre Straße 123<br>
-                    12345 Ihre Stadt
+                    Pionierstraße 43<br>
+                    40215 Düsseldorf
                 </p>
                 <p>
                     <strong>Kontakt:</strong><br>
-                    Telefon: Ihre Telefonnummer<br>
+                    Telefon: +49 176 47338240<br>
                     E-Mail: philipp.koch@neuratex.de
                 </p>
                 <p>
                     <strong>Umsatzsteuer-ID:</strong><br>
-                    Umsatzsteuer-Identifikationsnummer gemäß §27a UStG: DE123456789
+                    Umsatzsteuer-Identifikationsnummer gemäß §27a UStG: [DE123456789]
                 </p>
                 <p>
-                    <strong>Wichtiger Hinweis:</strong> Dies ist ein Platzhalter. Bitte nutzen Sie einen professionellen Impressums-Generator oder lassen Sie die Angaben anwaltlich prüfen, um Rechtssicherheit zu gewährleisten.
+                    <strong>Wichtiger Hinweis:</strong> Melden Sie sich gerne!
                 </p>
             </section>
         </div>
@@ -71,6 +72,21 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
 
 </body>
 </html>

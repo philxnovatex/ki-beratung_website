@@ -3,27 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Datenschutz – Neuratix AI</title>
+    <title>Datenschutz – Neuratex AI</title>
     <link rel="stylesheet" href="CSS/Style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .content-page h1 { margin-bottom: 30px; }
+        .content-page p { margin-bottom: 20px; }
+    </style>
 </head>
 <body>
 
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <!-- HIER IST DIE KORREKTUR -->
-                <img src="https://www.neuratex.de/Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="leistungen.html">Leistungen</a></li>
                     <li><a href="index.html#about">Über Neuratex AI</a></li>
                     <li><a href="index.html#demo">Demo</a></li>
-                    <!-- HIER IST DIE KORREKTUR -->
                     <li><a href="kontakt.html">Kontakt</a></li>
                     <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
@@ -34,10 +36,9 @@
         </div>
     </header>
 
-
     <main>
         <div class="container">
-            <section class="content-page">
+            <section class="content-page" style="padding: 80px 0;">
                 <h1>Datenschutzerklärung</h1>
                 <p>Hier muss Ihre detaillierte Datenschutzerklärung stehen. Dieses Thema ist sehr wichtig und komplex.</p>
                 <p><strong>Wichtiger Hinweis:</strong> Kopieren Sie niemals eine Datenschutzerklärung von einer anderen Seite. Nutzen Sie einen professionellen Datenschutz-Generator (z.B. von e-recht24.de, activemind.de) oder lassen Sie sich von einem Fachanwalt beraten, um eine korrekte und abmahnsichere Erklärung zu erstellen.</p>
@@ -47,13 +48,28 @@
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 Neuratix AI by Philipp Koch</p>
+            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
             <ul>
                 <li><a href="impressum.html">Impressum</a></li>
                 <li><a href="datenschutz.html">Datenschutz</a></li>
             </ul>
         </div>
     </footer>
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
 
 </body>
 </html>

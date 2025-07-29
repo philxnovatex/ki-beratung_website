@@ -75,28 +75,28 @@
             </div>
         </section>
 
-        <section id="principles" class="principles-section">
+<section id="principles" class="principles-section">
             <div class="container">
                 <h2>Das Neuratex-Prinzip: Ihr Fundament für nachhaltigen KI-Erfolg</h2>
                 <div class="principles-grid">
                     <div class="principle-card">
                         <span>01</span>
                         <h3>Strategische Klarheit</h3>
-                        <p>Bevor wir über Tools sprechen, analysieren wir Ihr Geschäftsmodell. Das Ergebnis ist eine klare Roadmap, die sicherstellt, dass jede KI-Initiative auf Ihre wichtigsten Unternehmensziele einzahlt.</p>
+                        <p>Wir beginnen jede KI-Initiative mit einer umfassenden Strategiephase. Gemeinsam analysieren wir Geschäftsmodell, vorhandene IT-Architektur und Datenbasis sowie ethische Vorgaben Ihres Unternehmens. Daraus entsteht eine klare, individuell angepasste KI-Roadmap, die sicherstellt, dass alle folgenden Schritte auf Ihre wichtigsten Geschäftsziele einzahlen – kein Aktionismus mit KI-Tools ohne Plan, sondern zielgerichtete Lösungsentwicklung.</p>
                     </div>
                     <div class="principle-card">
                         <span>02</span>
                         <h3>Technologische Exzellenz</h3>
-                        <p>Sie erhalten State-of-the-Art-Lösungen, die präzise für Ihr Problem ausgewählt werden. Durch schnelles Prototyping validieren wir den Ansatz mit minimalem Risiko und beweisen den Nutzen.</p>
+                        <p>Auf Basis der Strategie wählen wir passgenau die optimalen KI-Technologien und Methoden für Ihre Herausforderungen. Durch schnelles Prototyping und Pilotprojekte im kleinen Rahmen validieren wir frühzeitig Machbarkeit und Nutzen der KI-Lösung – mit minimalem Risiko und messbaren Ergebnissen. Dieser pragmatische Ansatz mit neuesten Technologien stellt sicher, dass nur funktionierende Lösungen in großem Maßstab weiterverfolgt werden.</p>
                     </div>
                     <div class="principle-card">
                         <span>03</span>
                         <h3>Nachhaltige Wertschöpfung</h3>
-                        <p>Eine KI ist nur erfolgreich, wenn sie gelebt wird. Wir sorgen für eine nahtlose Integration und die Akzeptanz im Team, um einen langfristigen, messbaren Mehrwert zu schaffen.</p>
+                        <p>Eine KI-Lösung entfaltet nur dann vollen Nutzen, wenn sie nahtlos in Ihre Prozesse integriert und von den Menschen im Unternehmen akzeptiert wird. Wir begleiten die Einführung mit Change Management, Schulungen und klarer Kommunikation, damit Technologie und Mitarbeiter optimal zusammenspielen. Nach dem Go-Live sorgen wir für kontinuierliche Optimierung durch Monitoring und Feedback, damit aus Projekten dauerhafter Mehrwert wird.</p>
                     </div>
                 </div>
             </div>
-        </section> <section id="about" class="about-section">
+        </section>
             <div class="container about-flex">
                 <div class="about-image">
                     <img src="Images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
@@ -260,34 +260,42 @@
     </script>
     
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const cookieBanner = document.getElementById('cookie-banner');
-        if (cookieBanner) {
-          const acceptBtn = document.getElementById('cookie-accept-btn');
-          const declineBtn = document.getElementById('cookie-decline-btn');
+  // Cookie-Banner Logik
+  document.addEventListener('DOMContentLoaded', () => {
+    const cookieBanner = document.getElementById('cookie-banner');
+    
+    // Prüfen, ob das Banner-Element überhaupt auf der Seite existiert
+    if (cookieBanner) {
+      const acceptBtn = document.getElementById('cookie-accept-btn');
+      const declineBtn = document.getElementById('cookie-decline-btn');
 
-          const hideBanner = () => {
-            cookieBanner.classList.remove('show');
-          };
+      // Funktion, um das Banner auszublenden, indem die .show-Klasse entfernt wird
+      const hideBanner = () => {
+        cookieBanner.classList.remove('show');
+      };
 
-          if (!localStorage.getItem('cookie_consent_neuratex')) {
-            setTimeout(() => {
-              cookieBanner.classList.add('show');
-            }, 1000);
-          }
+      // Prüfen, ob der Nutzer bereits eine Auswahl getroffen hat
+      if (!localStorage.getItem('cookie_consent_neuratex')) {
+        // Wenn keine Auswahl gespeichert ist, zeige das Banner nach 1 Sekunde an
+        setTimeout(() => {
+          cookieBanner.classList.add('show');
+        }, 1500); // Leicht längere Verzögerung
+      }
 
-          acceptBtn.addEventListener('click', () => {
-            localStorage.setItem('cookie_consent_neuratex', 'accepted');
-            hideBanner();
-          });
-
-          declineBtn.addEventListener('click', () => {
-            localStorage.setItem('cookie_consent_neuratex', 'declined');
-            hideBanner();
-          });
-        }
+      // Event-Listener für den "Akzeptieren"-Button
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookie_consent_neuratex', 'accepted');
+        hideBanner();
       });
-    </script>
+
+      // Event-Listener für den "Ablehnen"-Button
+      declineBtn.addEventListener('click', () => {
+        localStorage.setItem('cookie_consent_neuratex', 'declined');
+        hideBanner();
+      });
+    }
+  });
+</script>
 
 </body>
 </html>

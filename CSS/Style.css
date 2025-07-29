@@ -486,3 +486,33 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
         text-align: center;
     }
 }
+/* ------------------- */
+/* Stile für Kontakt-Seite */
+/* ------------------- */
+.contact-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 60px;
+    text-align: left;
+}
+.contact-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+}
+.contact-card h3 {
+    color: var(--accent-color);
+}
+.contact-card p {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+/* Responsive für Kontakt-Seite */
+@media (max-width: 768px) {
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+}

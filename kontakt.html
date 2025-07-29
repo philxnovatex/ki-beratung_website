@@ -32,9 +32,9 @@
 
     <main>
         <div class="container">
-            <section class="content-page text-center">
+            <section class="page-hero">
                 <h1>Nehmen Sie Kontakt auf</h1>
-                <p class="subtitle">Wir freuen uns darauf, von Ihnen zu hören und Ihre Fragen zu beantworten.</p>
+                <p class="subtitle" style="color: var(--text-color);">Wir freuen uns darauf, von Ihnen zu hören und Ihre Fragen zu beantworten.</p>
                 
                 <div class="contact-options">
                     <div class="contact-card">
@@ -45,7 +45,7 @@
                     <div class="contact-card">
                         <h3>Termin buchen</h3>
                         <p>Buchen Sie direkt einen Termin für eine kostenlose und unverbindliche Potenzial-Analyse in unserem Kalender.</p>
-                        <a href="#" target="_blank" class="cta-button">Kalender öffnen</a>
+                        <a href="[HIER_LINK_ZU_CALENDLY_EINFÜGEN]" target="_blank" class="cta-button">Kalender öffnen</a>
                     </div>
                 </div>
             </section>
@@ -61,6 +61,21 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
 
 </body>
 </html>
