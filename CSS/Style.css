@@ -516,3 +516,26 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
         grid-template-columns: 1fr;
     }
 }
+/* ------------------- */
+/* Stile für Kontakt-Seite */
+/* ------------------- */
+.contact-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 60px;
+    text-align: left;
+}
+.contact-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #1e293b; /* KORRIGIERT */
+}
+
+/* Responsive für Kontakt-Seite */
+@media (max-width: 768px) {
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+}

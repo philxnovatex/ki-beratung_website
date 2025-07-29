@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="CSS/Style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
+    <script defer src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
+
 </head>
 <body>
 
@@ -75,7 +79,7 @@
             </div>
         </section>
 
-<section id="principles" class="principles-section">
+        <section id="principles" class="principles-section">
             <div class="container">
                 <h2>Das Neuratex-Prinzip: Ihr Fundament für nachhaltigen KI-Erfolg</h2>
                 <div class="principles-grid">
@@ -97,6 +101,8 @@
                 </div>
             </div>
         </section>
+
+        <section id="about" class="about-section">
             <div class="container about-flex">
                 <div class="about-image">
                     <img src="Images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
@@ -139,50 +145,29 @@
         </div>
     </footer>
 
-    <div id="cookie-banner" class="cookie-banner">
-        <p>Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. <a href="datenschutz.html">Mehr Informationen</a>.</p>
-        <div class="cookie-banner-actions">
-            <button id="cookie-decline-btn" class="cta-button-secondary">Ablehnen</button>
-            <button id="cookie-accept-btn" class="cta-button">Akzeptieren</button>
-        </div>
-    </div>
-    
     <script>
+        // Hero Canvas Skript (unverändert)
         const heroCanvas = document.getElementById('hero-canvas');
         if (heroCanvas) {
             const heroCtx = heroCanvas.getContext('2d');
             heroCanvas.width = heroCanvas.parentElement.offsetWidth;
             heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-
             let heroNodes = [];
             const heroNumNodes = 100;
             const heroConnectionDistance = 220;
-
             const heroMouse = { x: undefined, y: undefined, radius: 150 };
-
             window.addEventListener('mousemove', (event) => {
                 const rect = heroCanvas.getBoundingClientRect();
                 heroMouse.x = event.clientX - rect.left;
                 heroMouse.y = event.clientY - rect.top;
             });
-            
             window.addEventListener('mouseout', () => {
                 heroMouse.x = undefined;
                 heroMouse.y = undefined;
             });
-            
             class HeroNode {
-                 constructor(x, y) {
-                    this.x = x; this.y = y;
-                    this.size = Math.random() * 2.5 + 1.5;
-                    this.baseX = this.x; this.baseY = this.y;
-                    this.density = (Math.random() * 40) + 5;
-                }
-                draw() {
-                    heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)';
-                    heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    heroCtx.closePath(); heroCtx.fill();
-                }
+                constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 40) + 5; }
+                draw() { heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)'; heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); heroCtx.closePath(); heroCtx.fill(); }
                 update() {
                     let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
                     let distance = Math.sqrt(dx * dx + dy * dy);
@@ -196,14 +181,12 @@
                     }
                 }
             }
-
             function heroInit() {
                 heroNodes = [];
                 for (let i = 0; i < heroNumNodes; i++) {
                     heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
                 }
             }
-
             function heroAnimate() {
                 heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
                 for (let i = 0; i < heroNodes.length; i++) {
@@ -212,7 +195,6 @@
                 heroConnect();
                 requestAnimationFrame(heroAnimate);
             }
-
             function heroConnect() {
                 for (let a = 0; a < heroNodes.length; a++) {
                     for (let b = a; b < heroNodes.length; b++) {
@@ -221,12 +203,14 @@
                             let opacity = 1 - (distance / heroConnectionDistance);
                             heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
                             heroCtx.lineWidth = 1;
-                            heroCtx.beginPath(); heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y); heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y); heroCtx.stroke();
+                            heroCtx.beginPath();
+                            heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y);
+                            heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y);
+                            heroCtx.stroke();
                         }
                     }
                 }
             }
-            
             let heroResizeTimer;
             window.addEventListener('resize', () => {
                 clearTimeout(heroResizeTimer);
@@ -236,19 +220,17 @@
                     heroInit();
                 }, 250);
             });
-
             heroInit();
             heroAnimate();
         }
     </script>
     
     <script>
+        // Mobile Nav Skript (unverändert)
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-
         navToggle.addEventListener('click', () => {
             const isVisible = nav.getAttribute('data-visible');
-
             if (isVisible === "false") {
                 nav.setAttribute('data-visible', true);
                 navToggle.setAttribute('aria-expanded', true);
@@ -260,42 +242,63 @@
     </script>
     
     <script>
-  // Cookie-Banner Logik
-  document.addEventListener('DOMContentLoaded', () => {
-    const cookieBanner = document.getElementById('cookie-banner');
-    
-    // Prüfen, ob das Banner-Element überhaupt auf der Seite existiert
-    if (cookieBanner) {
-      const acceptBtn = document.getElementById('cookie-accept-btn');
-      const declineBtn = document.getElementById('cookie-decline-btn');
-
-      // Funktion, um das Banner auszublenden, indem die .show-Klasse entfernt wird
-      const hideBanner = () => {
-        cookieBanner.classList.remove('show');
-      };
-
-      // Prüfen, ob der Nutzer bereits eine Auswahl getroffen hat
-      if (!localStorage.getItem('cookie_consent_neuratex')) {
-        // Wenn keine Auswahl gespeichert ist, zeige das Banner nach 1 Sekunde an
-        setTimeout(() => {
-          cookieBanner.classList.add('show');
-        }, 1500); // Leicht längere Verzögerung
-      }
-
-      // Event-Listener für den "Akzeptieren"-Button
-      acceptBtn.addEventListener('click', () => {
-        localStorage.setItem('cookie_consent_neuratex', 'accepted');
-        hideBanner();
-      });
-
-      // Event-Listener für den "Ablehnen"-Button
-      declineBtn.addEventListener('click', () => {
-        localStorage.setItem('cookie_consent_neuratex', 'declined');
-        hideBanner();
-      });
-    }
-  });
-</script>
+        window.addEventListener('DOMContentLoaded', () => {
+            CookieConsent.run({
+                guiOptions: {
+                    consentModal: {
+                        layout: 'box',
+                        position: 'bottom right',
+                        equalWeightButtons: true,
+                        flipButtons: false
+                    },
+                    preferencesModal: {
+                        layout: 'box',
+                        position: 'right',
+                        equalWeightButtons: true,
+                        flipButtons: false
+                    }
+                },
+                categories: {
+                    necessary: {
+                        readOnly: true
+                    }
+                },
+                language: {
+                    default: 'de',
+                    translations: {
+                        de: {
+                            consentModal: {
+                                title: 'Wir verwenden Cookies',
+                                description: 'Um Ihre Erfahrung auf unserer Seite zu verbessern, nutzen wir Cookies. Einige sind technisch notwendig, andere helfen uns, die Seite zu optimieren.',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                showPreferencesBtn: 'Einstellungen',
+                                closeIconLabel: 'Schließen'
+                            },
+                            preferencesModal: {
+                                title: 'Cookie-Einstellungen',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                savePreferencesBtn: 'Auswahl speichern',
+                                closeIconLabel: 'Schließen',
+                                sections: [
+                                    {
+                                        title: 'Cookie-Nutzung',
+                                        description: 'Sie können hier auswählen, welche Cookies Sie zulassen möchten.'
+                                    },
+                                    {
+                                        title: 'Notwendige Cookies',
+                                        description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
+                                        linkedCategory: 'necessary'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
