@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lernplattform – Neuratex AI</title>
+    <title>Gratis Whitepaper – Neuratex AI Lernplattform</title>
+    <meta name="description" content="Laden Sie unser kostenloses Whitepaper herunter und erfahren Sie, wie Sie die 5 häufigsten Fehler bei der KI-Implementierung vermeiden.">
     <link rel="stylesheet" href="CSS/Style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,15 +16,13 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <!-- HIER IST DIE KORREKTUR -->
-                <img src="https://www.neuratex.de/Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="leistungen.html">Leistungen</a></li>
                     <li><a href="index.html#about">Über Neuratex AI</a></li>
                     <li><a href="index.html#demo">Demo</a></li>
-                    <!-- HIER IST DIE KORREKTUR -->
                     <li><a href="kontakt.html">Kontakt</a></li>
                     <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
@@ -36,19 +35,45 @@
 
 
     <main>
-        <div class="container">
-            <section class="content-page">
-                <h1>Die Neuratex AI Lernplattform</h1>
-                <p>Diese Seite wird das Zuhause für Ihre zukünftige Lernplattform. Hier können Sie das Konzept vorstellen, die Vorteile für die Nutzer beschreiben und vielleicht eine Warteliste für Interessenten einrichten.</p>
-                <p>Mögliche Inhalte:</p>
-                <ul>
-                    <li>Was ist das Ziel der Plattform?</li>
-                    <li>Welche Kurse wird es geben?</li>
-                    <li>Für wen ist die Plattform gedacht?</li>
-                    <li>Ein Formular zur Eintragung in einen Newsletter.</li>
-                </ul>
-            </section>
-        </div>
+        <section class="page-hero">
+            <div class="container">
+                 <h1>Ihr erster Schritt zum KI-Experten</h1>
+                 <p class="subtitle">Laden Sie unser kostenloses Whitepaper herunter: "Die 5 teuersten Fehler bei der Einführung von KI – und wie Sie sie vermeiden."</p>
+            </div>
+        </section>
+
+        <section class="lead-gen-section">
+            <div class="container lead-gen-flex">
+                <div class="lead-gen-text">
+                    <h2>Was Sie im Whitepaper erwartet:</h2>
+                    <ul>
+                        <li><strong>Fehler #1: Die Tool-Falle.</strong> Warum die Auswahl einer Software niemals der erste Schritt sein sollte.</li>
+                        <li><strong>Fehler #2: Das Datenschutz-Desaster.</strong> Wie Sie sicherstellen, dass Ihre KI-Lösung von Anfang an rechtssicher ist.</li>
+                        <li><strong>Fehler #3: Mangelnde Akzeptanz im Team.</strong> Strategien, um Ihre Mitarbeiter für den Wandel zu begeistern.</li>
+                        <li><strong>Fehler #4: Der unddefinierte ROI.</strong> Wie Sie den Nutzen von KI-Projekten messbar machen.</li>
+                        <li><strong>Fehler #5: Die isolierte Insellösung.</strong> Warum eine erfolgreiche KI-Integration immer eine ganzheitliche Strategie erfordert.</li>
+                    </ul>
+                     <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekte direkt auf Erfolgskurs zu bringen.</p>
+                </div>
+                <div class="lead-gen-form-container">
+                    <h3>Jetzt kostenfrei herunterladen</h3>
+                    <form id="lead-form" action="Downloads/neuratex-whitepaper.pdf" method="get">
+                        <div class="form-group">
+                            <label for="name">Ihr Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Ihre E-Mail-Adresse</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                             <button type="submit" class="cta-button">PDF jetzt herunterladen</button>
+                        </div>
+                        <p class="form-privacy">Mit dem Absenden stimmen Sie unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="main-footer">
@@ -61,5 +86,21 @@
         </div>
     </footer>
 
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
 </body>
 </html>
