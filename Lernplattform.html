@@ -33,7 +33,6 @@
         </div>
     </header>
 
-
     <main>
         <section class="page-hero">
             <div class="container">
@@ -53,11 +52,11 @@
                         <li><strong>Fehler #4: Der unddefinierte ROI.</strong> Wie Sie den Nutzen von KI-Projekten messbar machen.</li>
                         <li><strong>Fehler #5: Die isolierte Insellösung.</strong> Warum eine erfolgreiche KI-Integration immer eine ganzheitliche Strategie erfordert.</li>
                     </ul>
-                     <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekte direkt auf Erfolgskurs zu bringen.</p>
+                     <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekten direkt auf Erfolgskurs zu bringen.</p>
                 </div>
                 <div class="lead-gen-form-container">
                     <h3>Jetzt kostenfrei herunterladen</h3>
-                    <form id="lead-form" action="Downloads/neuratex-whitepaper.pdf" method="get">
+                    <form action="[HIER_FORMULAR_ACTION_EINFÜGEN_zB_Formspree]" method="POST">
                         <div class="form-group">
                             <label for="name">Ihr Name</label>
                             <input type="text" id="name" name="name" required>
@@ -89,10 +88,8 @@
     <script>
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-
         navToggle.addEventListener('click', () => {
             const isVisible = nav.getAttribute('data-visible');
-
             if (isVisible === "false") {
                 nav.setAttribute('data-visible', true);
                 navToggle.setAttribute('aria-expanded', true);
@@ -102,5 +99,6 @@
             }
         });
     </script>
+
 </body>
 </html>
