@@ -52,24 +52,24 @@
                         <li><strong>Fehler #4: Der unddefinierte ROI.</strong> Wie Sie den Nutzen von KI-Projekten messbar machen.</li>
                         <li><strong>Fehler #5: Die isolierte Insellösung.</strong> Warum eine erfolgreiche KI-Integration immer eine ganzheitliche Strategie erfordert.</li>
                     </ul>
-                     <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekten direkt auf Erfolgskurs zu bringen.</p>
+                     <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekte direkt auf Erfolgskurs zu bringen.</p>
                 </div>
-                <div class="lead-gen-form-container">
+                <div id="form-container" class="lead-gen-form-container">
                     <h3>Jetzt kostenfrei herunterladen</h3>
-                <form action="https://getform.io/f/bwnwldxa" method="POST">
-                    <div class="form-group">
-                        <label for="name">Ihr Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Ihre E-Mail-Adresse</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="cta-button">PDF jetzt herunterladen</button>
-                    </div>
-                    <p class="form-privacy">Mit dem Absenden stimmen Sie unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</p>
-                </form>
+                    <form id="whitepaper-form">
+                        <div class="form-group">
+                            <label for="name">Ihr Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Ihre E-Mail-Adresse</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                             <button type="submit" class="cta-button">PDF jetzt herunterladen</button>
+                        </div>
+                        <p class="form-privacy">Mit dem Absenden stimmen Sie unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</p>
+                    </form>
                 </div>
             </div>
         </section>
@@ -97,6 +97,50 @@
                 nav.setAttribute('data-visible', false);
                 navToggle.setAttribute('aria-expanded', false);
             }
+        });
+    </script>
+    
+    <script>
+        // Skript zur Formular-Übermittlung an n8n
+        const form = document.getElementById('whitepaper-form');
+        const formContainer = document.getElementById('form-container');
+        const n8nWebhookUrl = 'https://kiterminagent.de:5678/webhook/bd92dbc6-6205-43ae-8d52-1685ffd06d19';
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Verhindert das Neuladen der Seite
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Wird gesendet...';
+
+            fetch(n8nWebhookUrl, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Zeigt eine Erfolgsmeldung an
+                    formContainer.innerHTML = `
+                        <h3 style="text-align: center;">Vielen Dank!</h3>
+                        <p style="text-align: center;">Das Whitepaper ist auf dem Weg in Ihr Postfach. Bitte prüfen Sie auch Ihren Spam-Ordner.</p>
+                    `;
+                } else {
+                    // Zeigt eine Fehlermeldung an
+                    throw new Error('Fehler bei der Übermittlung.');
+                }
+            })
+            .catch(error => {
+                formContainer.innerHTML = `
+                    <h3 style="text-align: center;">Ein Fehler ist aufgetreten</h3>
+                    <p style="text-align: center;">Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.</p>
+                `;
+                console.error('Error:', error);
+            });
         });
     </script>
 
