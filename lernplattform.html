@@ -54,9 +54,10 @@
                     </ul>
                      <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekte direkt auf Erfolgskurs zu bringen.</p>
                 </div>
-                <div id="form-container" class="lead-gen-form-container">
+                <div class="lead-gen-form-container">
                     <h3>Jetzt kostenfrei herunterladen</h3>
-                    <form id="whitepaper-form">
+                    <!-- KORREKTUR: Formular sendet jetzt direkt an n8n, ohne JavaScript -->
+                    <form action="https://kiterminagent.de:5678/webhook/bd92dbc6-6205-43ae-8d52-1685ffd06d19" method="POST">
                         <div class="form-group">
                             <label for="name">Ihr Name</label>
                             <input type="text" id="name" name="name" required>
@@ -100,49 +101,7 @@
         });
     </script>
     
-    <script>
-        // Skript zur Formular-Übermittlung an n8n
-        const form = document.getElementById('whitepaper-form');
-        const formContainer = document.getElementById('form-container');
-        const n8nWebhookUrl = 'https://kiterminagent.de:5678/webhook/bd92dbc6-6205-43ae-8d52-1685ffd06d19';
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); // Verhindert das Neuladen der Seite
-
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            const submitButton = form.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Wird gesendet...';
-
-            fetch(n8nWebhookUrl, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Zeigt eine Erfolgsmeldung an
-                    formContainer.innerHTML = `
-                        <h3 style="text-align: center;">Vielen Dank!</h3>
-                        <p style="text-align: center;">Das Whitepaper ist auf dem Weg in Ihr Postfach. Bitte prüfen Sie auch Ihren Spam-Ordner.</p>
-                    `;
-                } else {
-                    // Zeigt eine Fehlermeldung an
-                    throw new Error('Fehler bei der Übermittlung.');
-                }
-            })
-            .catch(error => {
-                formContainer.innerHTML = `
-                    <h3 style="text-align: center;">Ein Fehler ist aufgetreten</h3>
-                    <p style="text-align: center;">Bitte versuchen Sie es später erneut oder kontaktieren Sie uns direkt.</p>
-                `;
-                console.error('Error:', error);
-            });
-        });
-    </script>
+    <!-- KORREKTUR: Das fehlerhafte JavaScript für die Formularübermittlung wurde entfernt -->
 
 </body>
 </html>
