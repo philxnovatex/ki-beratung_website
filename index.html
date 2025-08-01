@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="CSS/Style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
 
+    <!-- Externe Cookie-Banner Bibliothek -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
 
@@ -20,6 +21,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
+                <!-- KORREKTER PFAD -->
                 <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav class="main-nav" data-visible="false">
@@ -105,6 +107,7 @@
         <section id="about" class="about-section">
             <div class="container about-flex">
                 <div class="about-image">
+                    <!-- KORREKTER PFAD -->
                     <img src="images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
                 </div>
                 <div class="about-text">
@@ -117,7 +120,7 @@
                 </div>
             </div>
         </section>
-
+        
         <section id="demo" class="demo-section">
             <div class="container">
                 <h2>Keine Theorie, sondern Praxis: KI in Aktion</h2>
@@ -151,35 +154,74 @@
             const heroCtx = heroCanvas.getContext('2d');
             heroCanvas.width = heroCanvas.parentElement.offsetWidth;
             heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-            let heroNodes = []; const heroNumNodes = 100; const heroConnectionDistance = 220;
+            let heroNodes = [];
+            const heroNumNodes = 100;
+            const heroConnectionDistance = 220;
             const heroMouse = { x: undefined, y: undefined, radius: 150 };
-            window.addEventListener('mousemove', (event) => { const rect = heroCanvas.getBoundingClientRect(); heroMouse.x = event.clientX - rect.left; heroMouse.y = event.clientY - rect.top; });
-            window.addEventListener('mouseout', () => { heroMouse.x = undefined; heroMouse.y = undefined; });
+            window.addEventListener('mousemove', (event) => {
+                const rect = heroCanvas.getBoundingClientRect();
+                heroMouse.x = event.clientX - rect.left;
+                heroMouse.y = event.clientY - rect.top;
+            });
+            window.addEventListener('mouseout', () => {
+                heroMouse.x = undefined;
+                heroMouse.y = undefined;
+            });
             class HeroNode {
                 constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 40) + 5; }
                 draw() { heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)'; heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); heroCtx.closePath(); heroCtx.fill(); }
                 update() {
-                    let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y; let distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < heroMouse.radius) { let force = (heroMouse.radius - distance) / heroMouse.radius; this.x -= (dx / distance) * force * this.density; this.y -= (dy / distance) * force * this.density;
-                    } else { if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) / 20; } if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) / 20; } }
+                    let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < heroMouse.radius) {
+                        let force = (heroMouse.radius - distance) / heroMouse.radius;
+                        this.x -= (dx / distance) * force * this.density;
+                        this.y -= (dy / distance) * force * this.density;
+                    } else {
+                        if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) / 20; }
+                        if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) / 20; }
+                    }
                 }
             }
-            function heroInit() { heroNodes = []; for (let i = 0; i < heroNumNodes; i++) { heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height)); } }
+            function heroInit() {
+                heroNodes = [];
+                for (let i = 0; i < heroNumNodes; i++) {
+                    heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
+                }
+            }
             function heroAnimate() {
                 heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-                for (let i = 0; i < heroNodes.length; i++) { heroNodes[i].update(); heroNodes[i].draw(); }
-                heroConnect(); requestAnimationFrame(heroAnimate);
+                for (let i = 0; i < heroNodes.length; i++) {
+                    heroNodes[i].update(); heroNodes[i].draw();
+                }
+                heroConnect();
+                requestAnimationFrame(heroAnimate);
             }
             function heroConnect() {
                 for (let a = 0; a < heroNodes.length; a++) {
                     for (let b = a; b < heroNodes.length; b++) {
                         let distance = Math.sqrt((heroNodes[a].x - heroNodes[b].x) ** 2 + (heroNodes[a].y - heroNodes[b].y) ** 2);
-                        if (distance < heroConnectionDistance) { let opacity = 1 - (distance / heroConnectionDistance); heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')'; heroCtx.lineWidth = 1; heroCtx.beginPath(); heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y); heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y); heroCtx.stroke(); }
+                        if (distance < heroConnectionDistance) {
+                            let opacity = 1 - (distance / heroConnectionDistance);
+                            heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
+                            heroCtx.lineWidth = 1;
+                            heroCtx.beginPath();
+                            heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y);
+                            heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y);
+                            heroCtx.stroke();
+                        }
                     }
                 }
             }
             let heroResizeTimer;
-            window.addEventListener('resize', () => { clearTimeout(heroResizeTimer); heroResizeTimer = setTimeout(() => { heroCanvas.width = heroCanvas.parentElement.offsetWidth; heroCanvas.height = heroCanvas.parentElement.offsetHeight; heroInit(); }, 250); });
+            window.addEventListener('resize', () => {
+                clearTimeout(heroResizeTimer);
+                heroResizeTimer = setTimeout(() => {
+                    heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+                    heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+                    heroInit();
+                }, 250);
+            });
             heroInit();
             heroAnimate();
         }
@@ -190,8 +232,13 @@
         const navToggle = document.querySelector('.mobile-nav-toggle');
         navToggle.addEventListener('click', () => {
             const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") { nav.setAttribute('data-visible', true); navToggle.setAttribute('aria-expanded', true);
-            } else { nav.setAttribute('data-visible', false); navToggle.setAttribute('aria-expanded', false); }
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
         });
     </script>
     
@@ -199,11 +246,23 @@
         window.addEventListener('DOMContentLoaded', () => {
             CookieConsent.run({
                 guiOptions: {
-                    consentModal: { layout: 'box', position: 'bottom right', equalWeightButtons: true, flipButtons: false },
-                    preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
+                    consentModal: {
+                        layout: 'box',
+                        position: 'bottom right',
+                        equalWeightButtons: true,
+                        flipButtons: false
+                    },
+                    preferencesModal: {
+                        layout: 'box',
+                        position: 'right',
+                        equalWeightButtons: true,
+                        flipButtons: false
+                    }
                 },
                 categories: {
-                    necessary: { readOnly: true }
+                    necessary: {
+                        readOnly: true
+                    }
                 },
                 language: {
                     default: 'de',
