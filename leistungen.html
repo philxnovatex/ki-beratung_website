@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/Style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
 </head>
 <body>
@@ -16,7 +16,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="Images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav class="main-nav" data-visible="false">
                 <ul>
@@ -98,11 +98,12 @@
                 </div>
             </div>
         </section>
-<section class="contact-section">
+
+        <section class="contact-section">
             <div class="container">
                 <h2>Bereit, aus dem Potenzial einen Plan zu machen?</h2>
                 <p>Lassen Sie uns in einer kostenlosen und unverbindlichen Potenzial-Analyse darüber sprechen, wo die größten Chancen für Ihr Unternehmen liegen. Wir identifizieren den ersten, richtigen Schritt.</p>
-                <a href="kontakt.html" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
+                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
             </div>
         </section>
     </main>
@@ -116,6 +117,21 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
 
 </body>
 </html>

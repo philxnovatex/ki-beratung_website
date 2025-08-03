@@ -23,7 +23,6 @@ body {
     color: var(--text-color);
 }
 
-/* ZENTRALE ÄNDERUNG: Container verbreitert, um mehr Platz zu schaffen */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* ------------------- */
@@ -74,11 +73,10 @@ section:last-of-type {
     border-bottom: none;
 }
 
-/* Typografie auf Standard zurückgesetzt */
 h1, h2, h3 { font-family: var(--font-primary); font-weight: 700; color: var(--headline-color); margin-bottom: 20px; }
 h1 { font-size: 3.5rem; line-height: 1.2; }
 h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
-h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geändert für Konsistenz */
+h3 { font-size: 1.5rem; color: var(--headline-color); }
 
 /* ------------------- */
 /* Hero-Sektion        */
@@ -140,8 +138,7 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
     border-color: var(--secondary-color);
 }
 .service-card p { margin-top: 15px; }
-.service-card h3 { color: var(--accent-color); } /* Farbe hier spezifisch setzen */
-
+.service-card h3 { color: var(--accent-color); }
 
 .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
 .principle-card { text-align: center; }
@@ -335,8 +332,10 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
 /* ------------------- */
 /* Cookie Banner       */
 /* ------------------- */
+/* Diese Stile werden von der externen Bibliothek geladen und sind hier nicht mehr nötig. */
+/* Wir behalten sie aber als Backup, falls die externe Quelle ausfällt. */
 .cookie-banner {
-    display: none;
+    display: none; 
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -357,22 +356,10 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
 .cookie-banner.show {
     display: flex;
 }
-.cookie-banner p {
-    margin: 0;
-    color: var(--text-color);
-}
-.cookie-banner p a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
-.cookie-banner p a:hover {
-    text-decoration: underline;
-}
-.cookie-banner-actions {
-    display: flex;
-    gap: 15px;
-    flex-shrink: 0;
-}
+.cookie-banner p { margin: 0; color: var(--text-color); }
+.cookie-banner p a { color: var(--accent-color); text-decoration: none; }
+.cookie-banner p a:hover { text-decoration: underline; }
+.cookie-banner-actions { display: flex; gap: 15px; flex-shrink: 0; }
 .cta-button-secondary {
     display: inline-block;
     background: transparent;
@@ -389,6 +376,30 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
 .cta-button-secondary:hover {
     background: var(--primary-color);
     border-color: var(--accent-color);
+}
+
+/* ------------------- */
+/* Stile für Kontakt-Seite */
+/* ------------------- */
+.contact-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 60px;
+    text-align: left;
+}
+.contact-card {
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #1e293b;
+}
+.contact-card h3 {
+    color: var(--accent-color);
+}
+.contact-card p {
+    margin-top: 15px;
+    margin-bottom: 30px;
 }
 
 /* ------------------- */
@@ -485,56 +496,6 @@ h3 { font-size: 1.5rem; color: var(--headline-color); } /* Farbe auf Weiß geän
         flex-direction: column;
         text-align: center;
     }
-}
-/* ------------------- */
-/* Stile für Kontakt-Seite */
-/* ------------------- */
-.contact-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 60px;
-    text-align: left;
-}
-.contact-card {
-    background-color: var(--card-bg);
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #1e293b;
-}
-.contact-card h3 {
-    color: var(--accent-color);
-}
-.contact-card p {
-    margin-top: 15px;
-    margin-bottom: 30px;
-}
-
-/* Responsive für Kontakt-Seite */
-@media (max-width: 768px) {
-    .contact-options {
-        grid-template-columns: 1fr;
-    }
-}
-/* ------------------- */
-/* Stile für Kontakt-Seite */
-/* ------------------- */
-.contact-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 60px;
-    text-align: left;
-}
-.contact-card {
-    background-color: var(--card-bg);
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #1e293b; /* KORRIGIERT */
-}
-
-/* Responsive für Kontakt-Seite */
-@media (max-width: 768px) {
     .contact-options {
         grid-template-columns: 1fr;
     }
