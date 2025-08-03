@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vielen Dank! – Neuratex AI</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,16 +130,18 @@
     <script>
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-        navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") {
-                nav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-            } else {
-                nav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-            }
-        });
+        if (nav && navToggle) {
+            navToggle.addEventListener('click', () => {
+                const isVisible = nav.getAttribute('data-visible');
+                if (isVisible === "false") {
+                    nav.setAttribute('data-visible', true);
+                    navToggle.setAttribute('aria-expanded', true);
+                } else {
+                    nav.setAttribute('data-visible', false);
+                    navToggle.setAttribute('aria-expanded', false);
+                }
+            });
+        }
     </script>
 
 </body>
