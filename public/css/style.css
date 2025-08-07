@@ -1,4 +1,42 @@
 /* ------------------- */
+/* Problem-Abschnitt   */
+/* ------------------- */
+.problem-section {
+    background-color: var(--bg-color);
+    padding: 100px 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.problem-line {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-bottom: 20px;
+}
+
+.problem-line.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.problem-line.highlight {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+.problem-line.accent {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}
+
+.problem-line.small {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+/* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */
 :root {
