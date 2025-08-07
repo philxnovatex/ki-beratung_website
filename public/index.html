@@ -256,34 +256,3 @@
         <div class="problem-line">Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
     </section>
     <!-- Ende Problem-Abschnitt -->
-        <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const lines = document.querySelectorAll(".problem-line");
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.classList.add("show");
-                        }, index * 200);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.3 });
-            lines.forEach(line => {
-                observer.observe(line);
-            });
-        });
-        </script>
-    <!-- Problem-Abschnitt -->
-    <section id="problem" class="problem-section">
-        <div class="problem-line">Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
-        <div class="problem-line">Wissen? Geht in Rente und verschwindet.</div>
-        <div class="problem-line">Bürokratie? Frisst jeden Tag mehr Zeit.</div>
-        <div class="problem-line">Wertschöpfung? Bleibt liegen.</div>
-        <div class="problem-line highlight">Wer so weitermacht, verliert den Anschluss.</div>
-        <div class="problem-line">Der Markt wird aussortieren, wer mithalten kann – und wer nicht.</div>
-        <div class="problem-line accent">Neuratex AI stoppt diesen Kreislauf.</div>
-        <div class="problem-line small">Prozesse verschlanken. Wissen sichern. Zeit zurückgewinnen.</div>
-        <div class="problem-line">Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
-    </section>
-    <!-- Ende Problem-Abschnitt -->
