@@ -117,143 +117,162 @@
             </ul>
         </div>
     </footer>
-        <script>
-            const heroCanvas = document.getElementById('hero-canvas');
-            if (heroCanvas) {
-                const heroCtx = heroCanvas.getContext('2d');
-                heroCanvas.width = heroCanvas.parentElement.offsetWidth;
-                heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-                let heroNodes = [];
-                const heroNumNodes = 100;
-                const heroConnectionDistance = 220;
-                const heroMouse = { x: undefined, y: undefined, radius: 150 };
-                window.addEventListener('mousemove', (event) => {
-                    const rect = heroCanvas.getBoundingClientRect();
-                    heroMouse.x = event.clientX - rect.left;
-                    heroMouse.y = event.clientY - rect.top;
-                });
-                window.addEventListener('mouseout', () => {
-                    heroMouse.x = undefined;
-                    heroMouse.y = undefined;
-                });
-                class HeroNode {
-                    constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 40) + 5; }
-                    draw() { heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)'; heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); heroCtx.closePath(); heroCtx.fill(); }
-                    update() {
-                        let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
-                        let distance = Math.sqrt(dx * dx + dy * dy);
-                        if (distance < heroMouse.radius) {
-                            let force = (heroMouse.radius - distance) / heroMouse.radius;
-                            this.x -= (dx / distance) * force * this.density;
-                            this.y -= (dy / distance) * force * this.density;
-                        } else {
-                            if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) / 20; }
-                            if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) / 20; }
-                        }
+
+    <!-- JS für Animation -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const lines = document.querySelectorAll(".problem-line");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add("show");
+                    }, index * 200);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        lines.forEach(line => observer.observe(line));
+    });
+    </script>
+    <script>
+        const heroCanvas = document.getElementById('hero-canvas');
+        if (heroCanvas) {
+            const heroCtx = heroCanvas.getContext('2d');
+            heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+            heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+            let heroNodes = [];
+            const heroNumNodes = 100;
+            const heroConnectionDistance = 220;
+            const heroMouse = { x: undefined, y: undefined, radius: 150 };
+            window.addEventListener('mousemove', (event) => {
+                const rect = heroCanvas.getBoundingClientRect();
+                heroMouse.x = event.clientX - rect.left;
+                heroMouse.y = event.clientY - rect.top;
+            });
+            window.addEventListener('mouseout', () => {
+                heroMouse.x = undefined;
+                heroMouse.y = undefined;
+            });
+            class HeroNode {
+                constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 40) + 5; }
+                draw() { heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)'; heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); heroCtx.closePath(); heroCtx.fill(); }
+                update() {
+                    let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < heroMouse.radius) {
+                        let force = (heroMouse.radius - distance) / heroMouse.radius;
+                        this.x -= (dx / distance) * force * this.density;
+                        this.y -= (dy / distance) * force * this.density;
+                    } else {
+                        if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) / 20; }
+                        if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) / 20; }
                     }
                 }
-                function heroInit() {
-                    heroNodes = [];
-                    for (let i = 0; i < heroNumNodes; i++) {
-                        heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
-                    }
-                }
-                function heroAnimate() {
-                    heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-                    for (let i = 0; i < heroNodes.length; i++) {
-                        heroNodes[i].update(); heroNodes[i].draw();
-                    }
-                    heroConnect();
-                    requestAnimationFrame(heroAnimate);
-                }
-                function heroConnect() {
-                    for (let a = 0; a < heroNodes.length; a++) {
-                        for (let b = a; b < heroNodes.length; b++) {
-                            let distance = Math.sqrt((heroNodes[a].x - heroNodes[b].x) ** 2 + (heroNodes[a].y - heroNodes[b].y) ** 2);
-                            if (distance < heroConnectionDistance) {
-                                let opacity = 1 - (distance / heroConnectionDistance);
-                                heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
-                                heroCtx.lineWidth = 1;
-                                heroCtx.beginPath();
-                                heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y);
-                                heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y);
-                                heroCtx.stroke();
-                            }
-                        }
-                    }
-                }
-                let heroResizeTimer;
-                window.addEventListener('resize', () => {
-                    clearTimeout(heroResizeTimer);
-                    heroResizeTimer = setTimeout(() => {
-                        heroCanvas.width = heroCanvas.parentElement.offsetWidth;
-                        heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-                        heroInit();
-                    }, 250);
-                });
-                heroInit();
-                heroAnimate();
             }
-        </script>
-        <script>
-            const nav = document.querySelector('.main-nav');
-            const navToggle = document.querySelector('.mobile-nav-toggle');
-            navToggle.addEventListener('click', () => {
-                const isVisible = nav.getAttribute('data-visible');
-                if (isVisible === "false") {
-                    nav.setAttribute('data-visible', true);
-                    navToggle.setAttribute('aria-expanded', true);
-                } else {
-                    nav.setAttribute('data-visible', false);
-                    navToggle.setAttribute('aria-expanded', false);
+            function heroInit() {
+                heroNodes = [];
+                for (let i = 0; i < heroNumNodes; i++) {
+                    heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
                 }
+            }
+            function heroAnimate() {
+                heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+                for (let i = 0; i < heroNodes.length; i++) {
+                    heroNodes[i].update(); heroNodes[i].draw();
+                }
+                heroConnect();
+                requestAnimationFrame(heroAnimate);
+            }
+            function heroConnect() {
+                for (let a = 0; a < heroNodes.length; a++) {
+                    for (let b = a; b < heroNodes.length; b++) {
+                        let distance = Math.sqrt((heroNodes[a].x - heroNodes[b].x) ** 2 + (heroNodes[a].y - heroNodes[b].y) ** 2);
+                        if (distance < heroConnectionDistance) {
+                            let opacity = 1 - (distance / heroConnectionDistance);
+                            heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
+                            heroCtx.lineWidth = 1;
+                            heroCtx.beginPath();
+                            heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y);
+                            heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y);
+                            heroCtx.stroke();
+                        }
+                    }
+                }
+            }
+            let heroResizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(heroResizeTimer);
+                heroResizeTimer = setTimeout(() => {
+                    heroCanvas.width = heroCanvas.parentElement.offsetWidth;
+                    heroCanvas.height = heroCanvas.parentElement.offsetHeight;
+                    heroInit();
+                }, 250);
             });
-        </script>
-        <script>
-            window.addEventListener('DOMContentLoaded', () => {
-                CookieConsent.run({
-                    guiOptions: {
-                        consentModal: { layout: 'box', position: 'bottom right', equalWeightButtons: true, flipButtons: false },
-                        preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
-                    },
-                    categories: {
-                        necessary: { readOnly: true }
-                    },
-                    language: {
-                        default: 'de',
-                        translations: {
-                            de: {
-                                consentModal: {
-                                    title: 'Wir verwenden Cookies',
-                                    description: 'Um Ihre Erfahrung auf unserer Seite zu verbessern, nutzen wir Cookies. Einige sind technisch notwendig, andere helfen uns, die Seite zu optimieren.',
-                                    acceptAllBtn: 'Alle akzeptieren',
-                                    acceptNecessaryBtn: 'Nur notwendige',
-                                    showPreferencesBtn: 'Einstellungen',
-                                    closeIconLabel: 'Schließen'
-                                },
-                                preferencesModal: {
-                                    title: 'Cookie-Einstellungen',
-                                    acceptAllBtn: 'Alle akzeptieren',
-                                    acceptNecessaryBtn: 'Nur notwendige',
-                                    savePreferencesBtn: 'Auswahl speichern',
-                                    closeIconLabel: 'Schließen',
-                                    sections: [
-                                        {
-                                            title: 'Cookie-Nutzung',
-                                            description: 'Sie können hier auswählen, welche Cookies Sie zulassen möchten.'
-                                        },
-                                        {
-                                            title: 'Notwendige Cookies',
-                                            description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
-                                            linkedCategory: 'necessary'
-                                        }
-                                    ]
-                                }
+            heroInit();
+            heroAnimate();
+        }
+    </script>
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            CookieConsent.run({
+                guiOptions: {
+                    consentModal: { layout: 'box', position: 'bottom right', equalWeightButtons: true, flipButtons: false },
+                    preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
+                },
+                categories: {
+                    necessary: { readOnly: true }
+                },
+                language: {
+                    default: 'de',
+                    translations: {
+                        de: {
+                            consentModal: {
+                                title: 'Wir verwenden Cookies',
+                                description: 'Um Ihre Erfahrung auf unserer Seite zu verbessern, nutzen wir Cookies. Einige sind technisch notwendig, andere helfen uns, die Seite zu optimieren.',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                showPreferencesBtn: 'Einstellungen',
+                                closeIconLabel: 'Schließen'
+                            },
+                            preferencesModal: {
+                                title: 'Cookie-Einstellungen',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                savePreferencesBtn: 'Auswahl speichern',
+                                closeIconLabel: 'Schließen',
+                                sections: [
+                                    {
+                                        title: 'Cookie-Nutzung',
+                                        description: 'Sie können hier auswählen, welche Cookies Sie zulassen möchten.'
+                                    },
+                                    {
+                                        title: 'Notwendige Cookies',
+                                        description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
+                                        linkedCategory: 'necessary'
+                                    }
+                                ]
                             }
                         }
                     }
-                });
+                }
             });
-        </script>
-    </body>
-    </html>
+        });
+    </script>
+</body>
+</html>

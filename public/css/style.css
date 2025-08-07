@@ -67,7 +67,7 @@ body {
 /* Header & Navigation */
 /* ------------------- */
 .main-header {
-    background-color: rgba(10, 25, 49, 0.85); 
+    background-color: rgba(10, 25, 49, 0.85);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid #1e293b;
     padding: 0.5rem 0;
@@ -76,24 +76,24 @@ body {
     z-index: 1000;
 }
 .main-header .container { display: flex; justify-content: space-between; align-items: center; }
-.logo img { 
-    height: 65px; 
-    width: auto; 
+.logo img {
+    height: 65px;
+    width: auto;
 }
 .main-nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
 .main-nav a { text-decoration: none; color: var(--headline-color); font-weight: 700; transition: color 0.3s ease; padding: 5px 0; }
 .main-nav a:hover { color: var(--accent-color); }
 
-.main-nav a.nav-highlight { 
-    background-color: var(--accent-color); 
-    color: var(--primary-color); 
+.main-nav a.nav-highlight {
+    background-color: var(--accent-color);
+    color: var(--primary-color);
     padding: 12px 25px;
-    border-radius: 8px; 
-    transition: all 0.3s ease; 
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
-.main-nav a.nav-highlight:hover { 
-    background-color: var(--headline-color); 
-    color: var(--primary-color); 
+.main-nav a.nav-highlight:hover {
+    background-color: var(--headline-color);
+    color: var(--primary-color);
 }
 
 .mobile-nav-toggle {
@@ -373,7 +373,7 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
 /* Diese Stile werden von der externen Bibliothek geladen und sind hier nicht mehr nötig. */
 /* Wir behalten sie aber als Backup, falls die externe Quelle ausfällt. */
 .cookie-banner {
-    display: none; 
+    display: none;
     position: fixed;
     bottom: 20px;
     left: 50%;
@@ -472,7 +472,7 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
     h2 { font-size: 2.2rem; }
-    
+
     .main-nav {
         position: fixed;
         inset: 0 0 0 30%;
