@@ -122,13 +122,13 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
 .hero-section {
     text-align: center;
     padding: 120px 0;
-    background-color: var(--primary-color);
+    background: radial-gradient(circle at top left, var(--secondary-color), var(--primary-color));
     position: relative;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
+    min-height: 100vh;
 }
 #hero-canvas {
     position: absolute;
