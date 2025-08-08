@@ -11,15 +11,27 @@
 }
 
 .problem-line {
+    --offset: -40px;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateX(var(--offset)) scale(0.95);
+    filter: blur(4px);
     margin-bottom: 20px;
 }
 
+.problem-line:nth-child(even) {
+    --offset: 40px;
+}
+
 .problem-line.show {
-    opacity: 1;
-    transform: translateY(0);
+    animation: problemLineIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes problemLineIn {
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        filter: blur(0);
+    }
 }
 
 .problem-line.highlight {

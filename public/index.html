@@ -38,6 +38,14 @@
     </header>
     <main>
     <!-- Hero bleibt ganz oben -->
+        <section id="hero" class="hero-section">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container">
+                <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
+                <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
+                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
+            </div>
+        </section>
         <!-- Problem-Abschnitt -->
         <section id="problem" class="problem-section">
             <div class="problem-line">Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
@@ -51,14 +59,6 @@
             <div class="problem-line">Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
         </section>
         <!-- Ende Problem-Abschnitt -->
-        <section id="hero" class="hero-section">
-            <canvas id="hero-canvas"></canvas>
-            <div class="container">
-                <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
-                <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
-                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
-            </div>
-        </section>
         <section id="services" class="services-section">
             <div class="container">
                 <h2>Ihre Abkürzung zu funktionierenden KI-Lösungen</h2>
@@ -122,98 +122,21 @@
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         const lines = document.querySelectorAll(".problem-line");
+        lines.forEach((line, i) => line.style.animationDelay = `${i * 0.15}s`);
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
+            entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add("show");
-                    }, index * 200);
+                    entry.target.classList.add("show");
                     observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.3 });
+        }, { threshold: 0.2 });
 
         lines.forEach(line => observer.observe(line));
     });
     </script>
-    <script>
-        const heroCanvas = document.getElementById('hero-canvas');
-        if (heroCanvas) {
-            const heroCtx = heroCanvas.getContext('2d');
-            heroCanvas.width = heroCanvas.parentElement.offsetWidth;
-            heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-            let heroNodes = [];
-            const heroNumNodes = 100;
-            const heroConnectionDistance = 220;
-            const heroMouse = { x: undefined, y: undefined, radius: 150 };
-            window.addEventListener('mousemove', (event) => {
-                const rect = heroCanvas.getBoundingClientRect();
-                heroMouse.x = event.clientX - rect.left;
-                heroMouse.y = event.clientY - rect.top;
-            });
-            window.addEventListener('mouseout', () => {
-                heroMouse.x = undefined;
-                heroMouse.y = undefined;
-            });
-            class HeroNode {
-                constructor(x, y) { this.x = x; this.y = y; this.size = Math.random() * 2.5 + 1.5; this.baseX = this.x; this.baseY = this.y; this.density = (Math.random() * 40) + 5; }
-                draw() { heroCtx.fillStyle = 'rgba(139, 174, 255, 0.8)'; heroCtx.beginPath(); heroCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2); heroCtx.closePath(); heroCtx.fill(); }
-                update() {
-                    let dx = heroMouse.x - this.x; let dy = heroMouse.y - this.y;
-                    let distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < heroMouse.radius) {
-                        let force = (heroMouse.radius - distance) / heroMouse.radius;
-                        this.x -= (dx / distance) * force * this.density;
-                        this.y -= (dy / distance) * force * this.density;
-                    } else {
-                        if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) / 20; }
-                        if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) / 20; }
-                    }
-                }
-            }
-            function heroInit() {
-                heroNodes = [];
-                for (let i = 0; i < heroNumNodes; i++) {
-                    heroNodes.push(new HeroNode(Math.random() * heroCanvas.width, Math.random() * heroCanvas.height));
-                }
-            }
-            function heroAnimate() {
-                heroCtx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
-                for (let i = 0; i < heroNodes.length; i++) {
-                    heroNodes[i].update(); heroNodes[i].draw();
-                }
-                heroConnect();
-                requestAnimationFrame(heroAnimate);
-            }
-            function heroConnect() {
-                for (let a = 0; a < heroNodes.length; a++) {
-                    for (let b = a; b < heroNodes.length; b++) {
-                        let distance = Math.sqrt((heroNodes[a].x - heroNodes[b].x) ** 2 + (heroNodes[a].y - heroNodes[b].y) ** 2);
-                        if (distance < heroConnectionDistance) {
-                            let opacity = 1 - (distance / heroConnectionDistance);
-                            heroCtx.strokeStyle = 'rgba(139, 174, 255, ' + opacity * 0.7 + ')';
-                            heroCtx.lineWidth = 1;
-                            heroCtx.beginPath();
-                            heroCtx.moveTo(heroNodes[a].x, heroNodes[a].y);
-                            heroCtx.lineTo(heroNodes[b].x, heroNodes[b].y);
-                            heroCtx.stroke();
-                        }
-                    }
-                }
-            }
-            let heroResizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(heroResizeTimer);
-                heroResizeTimer = setTimeout(() => {
-                    heroCanvas.width = heroCanvas.parentElement.offsetWidth;
-                    heroCanvas.height = heroCanvas.parentElement.offsetHeight;
-                    heroInit();
-                }, 250);
-            });
-            heroInit();
-            heroAnimate();
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
+    <script src="js/hero-canvas.js" defer></script>
     <script>
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
