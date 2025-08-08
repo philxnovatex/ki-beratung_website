@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('hero-canvas');
-  if (!canvas) return;
+  const hero = document.getElementById('hero');
+  if (!canvas || !hero) return;
   const ctx = canvas.getContext('2d');
   const particles = [];
   const maxParticles = window.matchMedia('(max-width: 768px)').matches ? 80 : 200;
@@ -55,14 +56,16 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   function pointerMove(e) {
-    const rect = canvas.getBoundingClientRect();
+    const rect = hero.getBoundingClientRect();
     const x = (e.clientX ?? e.touches[0].clientX) - rect.left;
     const y = (e.clientY ?? e.touches[0].clientY) - rect.top;
     addParticles(x, y);
   }
 
-  canvas.addEventListener('mousemove', pointerMove);
-  canvas.addEventListener('touchmove', pointerMove, { passive: true });
+  hero.addEventListener('mousemove', pointerMove);
+  hero.addEventListener('touchmove', pointerMove, { passive: true });
+
+  addParticles(canvas.clientWidth / 2, canvas.clientHeight / 2);
 
   function animate() {
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
