@@ -22,11 +22,7 @@
     transform: translateY(0);
 }
 
-.problem-line.highlight {
-    font-size: 1.8rem;
-    color: var(--accent-color);
-}
-
+.problem-line.highlight,
 .problem-line.accent {
     font-size: 1.8rem;
     color: var(--accent-color);
