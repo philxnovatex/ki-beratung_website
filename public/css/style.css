@@ -1,3 +1,40 @@
+/* Leistungen: Scroll- und Hover-Animationen */
+.featured-section {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+.featured-section.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+.leistung-icon {
+    display: inline-block;
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.leistung-icon.icon-animate {
+    animation: iconWobble 0.5s;
+}
+@keyframes iconWobble {
+    0% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-10deg) scale(1.1); }
+    40% { transform: rotate(10deg) scale(1.1); }
+    60% { transform: rotate(-8deg) scale(1.05); }
+    80% { transform: rotate(8deg) scale(1.05); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+.featured-section .text-container {
+    transition: box-shadow 0.3s, transform 0.3s;
+    border-radius: 12px;
+}
+.featured-section.in-view .text-container:hover {
+    box-shadow: 0 8px 32px rgba(24,90,219,0.15);
+    transform: translateY(-6px) scale(1.03);
+    background: rgba(24,90,219,0.04);
+}
 /* ------------------- */
 /* Problem-Abschnitt   */
 /* ------------------- */

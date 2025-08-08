@@ -1,116 +1,117 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gratis Leitfaden: In 3 Schritten den Kundenservice automatisieren</title>
-    <meta name="description" content="Lernen Sie, wie Sie ohne Programmierkenntnisse Service-Kosten senken und Kunden glücklicher machen. Laden Sie den Leitfaden herunter & starten Sie noch heute.">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+/* ------------------- */
+/* Problem-Abschnitt   */
+/* ------------------- */
+.problem-section {"UTF-8">
+    background: linear-gradient(135deg, #0A1931 0%, #112240 100%);le=1.0">
+    padding: 100px 20px;den: In 3 Schritten den Kundenservice automatisieren</title>
+    text-align: center;tion" content="Lernen Sie, wie Sie ohne Programmierkenntnisse Service-Kosten senken und Kunden glücklicher machen. Laden Sie den Leitfaden herunter & starten Sie noch heute.">
+    font-size: 1.5rem;ouch-icon" sizes="180x180" href="apple-touch-icon.png">
+    font-weight: 700;href="favicon.ico">
+    line-height: 1.6;type="image/png" sizes="32x32" href="favicon-32x32.png">
+}   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <style>
-        .page-hero .container {
-            margin-bottom: 8px !important;
-        }
-        .page-hero .subtitle {
+.problem-line {
+    opacity: 0;ero .container {
+    transform: translateY(20px) scale(0.95);
+    margin-bottom: 20px;
+}       .page-hero .subtitle {
             margin-bottom: 4px !important;
-        }
-    </style>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <header class="main-header">
+@keyframes problemLineIn {
+    0% {yle>
+        opacity: 0;esheet" href="css/style.css">
+        transform: translateY(20px) scale(0.95);oogleapis.com">
+    }link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    100% {href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}   <header class="main-header">
         <div class="container">
-            <a href="index.html" class="logo">
-                <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
-            </a>
+.problem-line.show {"index.html" class="logo">
+    animation: problemLineIn 1s ease forwards;.jpg" alt="Neuratex AI Logo">
+}           </a>
             <nav class="main-nav" data-visible="false">
-                <ul>
-                    <li><a href="leistungen.html">Leistungen</a></li>
-                    <li><a href="index.html#about">Über Neuratex AI</a></li>
-                    <li><a href="index.html#demo">Demo</a></li>
+.problem-line.highlight {
+    font-size: 1.8rem;i><a href="leistungen.html">Leistungen</a></li>
+    color: var(--accent-color);="index.html#about">Über Neuratex AI</a></li>
+}                   <li><a href="index.html#demo">Demo</a></li>
                     <li><a href="kontakt.html">Kontakt</a></li>
-                    <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
-                </ul>
-            </nav>
-            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+.problem-line.accent {i><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+    font-size: 1.8rem;
+    color: var(--accent-color);
+}           <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
                 <span class="sr-only">Menü</span>
-            </button>
-        </div>
-    </header>
-
+.problem-line.small {
+    font-size: 1.2rem;
+    font-weight: 400;
+}
     <main>
-        <section class="page-hero">
-            <div class="container">
-                 <h1>Ihr erster Schritt zum KI-Experten</h1>
-                 <p class="subtitle">Laden Sie unser kostenloses Whitepaper herunter: "Die 5 teuersten Fehler bei der Einführung von KI – und wie Sie sie vermeiden."</p>
-            </div>
-        </section>
-
-        <section class="lead-gen-section">
-            <div class="container lead-gen-flex">
-                <div class="lead-gen-text">
-                    <h2>Was Sie im Whitepaper erwartet:</h2>
-                    <ul>
-                        <li><strong>Fehler #1: Die Tool-Falle.</strong> Warum die Auswahl einer Software niemals der erste Schritt sein sollte.</li>
-                        <li><strong>Fehler #2: Das Datenschutz-Desaster.</strong> Wie Sie sicherstellen, dass Ihre KI-Lösung von Anfang an rechtssicher ist.</li>
-                        <li><strong>Fehler #3: Mangelnde Akzeptanz im Team.</strong> Strategien, um Ihre Mitarbeiter für den Wandel zu begeistern.</li>
-                        <li><strong>Fehler #4: Der unddefinierte ROI.</strong> Wie Sie den Nutzen von KI-Projekten messbar machen.</li>
-                        <li><strong>Fehler #5: Die isolierte Insellösung.</strong> Warum eine erfolgreiche KI-Integration immer eine ganzheitliche Strategie erfordert.</li>
-                    </ul>
+.problem-icon {n class="page-hero">
+    margin-right: 8px;="container">
+    color: var(--accent-color); Schritt zum KI-Experten</h1>
+}                <p class="subtitle">Laden Sie unser kostenloses Whitepaper herunter: "Die 5 teuersten Fehler bei der Einführung von KI – und wie Sie sie vermeiden."</p>
+/* ------------------- */
+/* Reset & Grundstile  */
+/* ------------------- */
+:root { <section class="lead-gen-section">
+    --primary-color: #0A1931;iner lead-gen-flex">
+    --secondary-color: #185ADB;d-gen-text">
+    --accent-color: #FFC947;Sie im Whitepaper erwartet:</h2>
+    --bg-color: #0A1931;
+    --card-bg: #112240; <li><strong>Fehler #1: Die Tool-Falle.</strong> Warum die Auswahl einer Software niemals der erste Schritt sein sollte.</li>
+    --headline-color: #f8fafc;trong>Fehler #2: Das Datenschutz-Desaster.</strong> Wie Sie sicherstellen, dass Ihre KI-Lösung von Anfang an rechtssicher ist.</li>
+    --text-color: #cbd5e1;i><strong>Fehler #3: Mangelnde Akzeptanz im Team.</strong> Strategien, um Ihre Mitarbeiter für den Wandel zu begeistern.</li>
+    --font-primary: 'Inter', sans-serif;er #4: Der unddefinierte ROI.</strong> Wie Sie den Nutzen von KI-Projekten messbar machen.</li>
+    --font-secondary: 'Roboto Mono', monospace;Die isolierte Insellösung.</strong> Warum eine erfolgreiche KI-Integration immer eine ganzheitliche Strategie erfordert.</li>
+}                   </ul>
                      <p>Erhalten Sie praxiserprobte Lösungsansätze, die Ihnen helfen, teure Umwege zu vermeiden und Ihre KI-Projekte direkt auf Erfolgskurs zu bringen.</p>
-                </div>
-                <div class="lead-gen-form-container">
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }gen-form-container">
                     <h3>Jetzt kostenfrei herunterladen</h3>
-                    <form action="https://n8n.kiterminagent.de/webhook/pdf-request" method="POST">
-                        <div class="form-group">
-                            <label for="name">Ihr Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
+body {              <form action="https://n8n.kiterminagent.de/webhook/pdf-request" method="POST">
+    font-family: var(--font-primary);orm-group">
+    line-height: 1.7;       <label for="name">Ihr Name</label>
+    background-color: var(--bg-color);e="text" id="name" name="name" required>
+    color: var(--text-color);>
+}                       <div class="form-group">
                             <label for="email">Ihre E-Mail-Adresse</label>
-                            <input type="email" id="email" name="email" required>
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }mail" required>
                         </div>
-                        <div class="form-group">
-                             <button type="submit" class="cta-button">PDF jetzt herunterladen</button>
-                        </div>
-                        <p class="form-privacy">Mit dem Absenden stimmen Sie unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</p>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
-            <ul>
-                <li><a href="impressum.html">Impressum</a></li>
-                <li><a href="datenschutz.html">Datenschutz</a></li>
-            </ul>
-        </div>
-    </footer>
-
+/* ------------------- */div class="form-group">
+/* Header & Navigation */    <button type="submit" class="cta-button">PDF jetzt herunterladen</button>
+/* ------------------- *//div>
+.main-header {          <p class="form-privacy">Mit dem Absenden stimmen Sie unserer <a href="datenschutz.html">Datenschutzerklärung</a> zu.</p>
+    background-color: rgba(10, 25, 49, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1e293b;
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;"main-footer">
+}       <div class="container">
+.main-header .container { display: flex; justify-content: space-between; align-items: center; }
+.logo img { <ul>
+    height: 65px;li><a href="impressum.html">Impressum</a></li>
+    width: auto;<li><a href="datenschutz.html">Datenschutz</a></li>
+}           </ul>
+.main-nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
+.main-nav a { text-decoration: none; color: var(--headline-color); font-weight: 700; transition: color 0.3s ease; padding: 5px 0; }
+.main-nav a:hover { color: var(--accent-color); }
     <script>
-        const nav = document.querySelector('.main-nav');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") {
-                nav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-            } else {
-                nav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-            }
+.main-nav a.nav-highlight {t.querySelector('.main-nav');
+    background-color: var(--accent-color);lector('.mobile-nav-toggle');
+    color: var(--primary-color);er('click', () => {
+    padding: 12px 25px;ible = nav.getAttribute('data-visible');
+    border-radius: 8px;le === "false") {
+    transition: all 0.3s ease;te('data-visible', true);
+}               navToggle.setAttribute('aria-expanded', true);
+.main-nav a.nav-highlight:hover {
+    background-color: var(--headline-color);le', false);
+    color: var(--primary-color);ribute('aria-expanded', false);
+}           }
         });
-    </script>
-
-</body>
+.mobile-nav-toggle {
+    display: none;
+}/body>
 </html>
+/* ------------------- *//* Sektionen Allgemein *//* ------------------- */section {    padding: 100px 0;    border-bottom: 1px solid #1e293b;}section:last-of-type {    border-bottom: none;}h1, h2, h3 { font-family: var(--font-primary); font-weight: 700; color: var(--headline-color); margin-bottom: 20px; }h1 { font-size: 3.5rem; line-height: 1.2; }h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }h3 { font-size: 1.5rem; color: var(--headline-color); }/* ------------------- *//* Hero-Sektion        *//* ------------------- */.hero-section {    text-align: center;    padding: 120px 0;    background: radial-gradient(circle at top left, #10316b, var(--primary-color));    position: relative;    overflow: hidden;    display: flex;    align-items: center;    justify-content: center;    min-height: 100vh;}#hero-canvas {    position: absolute;    top: 0;    left: 0;    width: 100%;    height: 100%;    z-index: 1;}.hero-section .container {    position: relative;    z-index: 2;}.hero-section .subtitle { font-size: 1.25rem; max-width: 750px; margin: 0 auto 40px; color: var(--text-color); }.cta-button { display: inline-block; background: var(--accent-color); color: var(--primary-color); font-weight: 700; padding: 15px 35px; border-radius: 8px; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; font-size: 1rem; border: 2px solid var(--accent-color); }.cta-button:hover { transform: translateY(-3px); box-shadow: 0 6px 40px rgba(255, 201, 71, 0.7); }/* ------------------- *//* Komponenten & Layout-Blöcke *//* ------------------- */.services-section, .about-section, .contact-section {    background-color: var(--bg-color);}.principles-section, .demo-section {    background-color: var(--card-bg);}.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }.service-card-link {    text-decoration: none;    color: inherit;    display: block;}.service-card {    background-color: var(--card-bg);    padding: 40px;    border-radius: 12px;    border: 1px solid #1e293b;    transition: transform 0.3s ease, border-color 0.3s ease;    height: 100%;}.service-card:hover {    transform: translateY(-5px);    border-color: var(--secondary-color);}.service-card p { margin-top: 15px; }.service-card h3 { color: var(--accent-color); }.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }.principle-card { text-align: center; }.principle-card span { font-family: var(--font-secondary); font-size: 2rem; font-weight: 700; color: var(--accent-color); display: block; margin-bottom: 10px; }.principle-card h3 { margin-bottom: 10px; }.about-flex { display: flex; align-items: center; gap: 60px; }.about-image img { max-width: 350px; border-radius: 50%; box-shadow: 0 0 40px rgba(24, 90, 219, 0.5); border: 2px solid var(--secondary-color); }.about-text { flex: 1; }.about-text h2 { text-align: left; margin-bottom: 20px; }.demo-section .container { text-align: center; }.demo-section p {    margin-bottom: 40px;}.video-placeholder { max-width: 800px; margin: 0 auto; background-color: #000; aspect-ratio: 16 / 9; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #fff; font-family: var(--font-secondary); border: 2px solid var(--accent-color); }.contact-section .container { text-align: center; }.contact-section p {    margin-bottom: 40px;}/* ------------------- *//* Styles für Unterseiten *//* ------------------- */.page-hero {    padding: 80px 0;    text-align: center;    background-color: var(--card-bg);}.page-hero .subtitle {    font-size: 1.3rem;    max-width: 750px;    margin: 0 auto 40px;    color: var(--accent-color);    font-weight: 700;}.quick-nav {    display: flex;    justify-content: center;    gap: 15px;    flex-wrap: wrap;}.quick-nav-button {    background-color: var(--accent-color);    color: var(--primary-color);    padding: 10px 20px;    border-radius: 8px;    text-decoration: none;    font-weight: 700;    transition: all 0.3s ease;}.quick-nav-button:hover {    background-color: var(--headline-color);    transform: translateY(-2px);}.featured-section {    padding: 100px 0;    border-bottom: 1px solid #1e293b;}.featured-section:nth-child(even) {    background-color: var(--bg-color);}.featured-section:nth-child(odd) {    background-color: var(--card-bg);}.featured-section .container {    display: flex;    align-items: center;    gap: 60px;}.featured-section .image-container {    flex-basis: 45%;    flex-shrink: 0;}.featured-section .image-container img {    width: 100%;    height: auto;    border-radius: 12px;}.featured-section .text-container {    flex-basis: 55%;}.featured-section.text-only .container {    display: block;}.featured-section.text-only .text-container {    max-width: 800px;    margin: 0 auto;}.featured-section .text-container h2 {    text-align: left;    margin-bottom: 10px;}.featured-section .text-container h3 {    color: var(--accent-color);    margin-bottom: 20px;}.featured-section.alt-layout .container {    flex-direction: row-reverse;}/* ------------------- *//* Lead Gen Form (Lernplattform) *//* ------------------- */.lead-gen-section {    padding: 100px 0;    background-color: var(--card-bg);}.lead-gen-flex {    display: flex;    gap: 60px;    align-items: flex-start;}.lead-gen-text {    flex-basis: 60%;}.lead-gen-text h2 {    text-align: left;    margin-bottom: 30px;}.lead-gen-text ul {    list-style: none;    margin-bottom: 30px;}.lead-gen-text ul li {    padding-left: 25px;    position: relative;    margin-bottom: 15px;}.lead-gen-text ul li::before {    content: '✓';    color: var(--accent-color);    position: absolute;    left: 0;    font-weight: 700;}.lead-gen-form-container {    flex-basis: 40%;    background-color: var(--primary-color);    padding: 40px;    border-radius: 12px;    border: 1px solid #1e293b;}.lead-gen-form-container h3 {    text-align: center;    margin-bottom: 30px;    font-size: 1.8rem;}.form-group {    margin-bottom: 20px;}.form-group label {    display: block;    margin-bottom: 8px;    font-weight: 700;    color: var(--headline-color);}.form-group input {    width: 100%;    padding: 12px;    background-color: var(--card-bg);    border: 1px solid #1e293b;    border-radius: 8px;    color: var(--text-color);    font-size: 1rem;}.form-group input:focus {    outline: none;    border-color: var(--secondary-color);}.form-group .cta-button {    width: 100%;    margin-top: 10px;}.form-privacy {    font-size: 0.8rem;    text-align: center;    margin-top: 20px;    color: var(--text-color);}.form-privacy a {    color: var(--accent-color);    text-decoration: none;}.form-privacy a:hover {    text-decoration: underline;}/* ------------------- *//* Cookie Banner       *//* ------------------- *//* Diese Stile werden von der externen Bibliothek geladen und sind hier nicht mehr nötig. *//* Wir behalten sie aber als Backup, falls die externe Quelle ausfällt. */.cookie-banner {    display: none;    position: fixed;    bottom: 20px;    left: 50%;    transform: translateX(-50%);    width: calc(100% - 40px);    max-width: 1100px;    background-color: var(--card-bg);    padding: 25px;    border-radius: 12px;    border: 1px solid #1e293b;    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);    z-index: 2000;    display: flex;    justify-content: space-between;    align-items: center;    gap: 20px;}.cookie-banner.show {    display: flex;}.cookie-banner p { margin: 0; color: var(--text-color); }.cookie-banner p a { color: var(--accent-color); text-decoration: none; }.cookie-banner p a:hover { text-decoration: underline; }.cookie-banner-actions { display: flex; gap: 15px; flex-shrink: 0; }.cta-button-secondary {    display: inline-block;    background: transparent;    color: var(--headline-color);    font-weight: 700;    padding: 13px 35px;    border-radius: 8px;    text-decoration: none;    transition: all 0.3s ease;    font-size: 1rem;    border: 2px solid #1e293b;    cursor: pointer;}.cta-button-secondary:hover {    background: var(--primary-color);    border-color: var(--accent-color);}/* ------------------- *//* Stile für Kontakt-Seite *//* ------------------- */.contact-options {    display: grid;    grid-template-columns: 1fr 1fr;    gap: 40px;    margin-top: 60px;    text-align: left;}.contact-card {    background-color: var(--card-bg);    padding: 40px;    border-radius: 12px;    border: 1px solid #1e293b;}.contact-card h3 {    color: var(--accent-color);}.contact-card p {    margin-top: 15px;    margin-bottom: 30px;}/* ------------------- *//* Footer              *//* ------------------- */.main-footer {    background: var(--primary-color);    border-top: 1px solid #1e293b;    color: var(--text-color);    padding: 3rem 0;    text-align: center;}.main-footer .container { display: flex; justify-content: space-between; align-items: center; }.main-footer ul { list-style: none; display: flex; gap: 1.5rem; }.main-footer a { color: var(--text-color); text-decoration: none; transition: color 0.3s ease; }.main-footer a:hover { color: var(--accent-color); }/* ------------------- *//* Responsive Design   *//* ------------------- */@media (max-width: 900px) {    .lead-gen-flex {        flex-direction: column;        align-items: center;    }    .lead-gen-text, .lead-gen-form-container {        flex-basis: 100%;        max-width: 600px;    }}@media (max-width: 768px) {    h1 { font-size: 2.5rem; }    h2 { font-size: 2.2rem; }    .main-nav {        position: fixed;        inset: 0 0 0 30%;        flex-direction: column;        padding: min(20vh, 10rem) 2em;        background: hsl(0 0% 0% / 0.8);        backdrop-filter: blur(1rem);        transform: translateX(100%);        transition: transform 350ms ease-out;    }    .main-nav[data-visible="true"] {        transform: translateX(0%);    }    .main-nav ul {        flex-direction: column;        gap: 3rem;    }    .mobile-nav-toggle {        display: block;        position: absolute;        z-index: 9999;        background-color: transparent;        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");        background-repeat: no-repeat;        width: 2rem;        height: 2rem;        border: 0;        top: 2rem;        right: 2rem;    }    .mobile-nav-toggle[aria-expanded="true"] {        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");    }    .sr-only {        position: absolute;        width: 1px;        height: 1px;        padding: 0;        margin: -1px;        overflow: hidden;        clip: rect(0, 0, 0, 0);        white-space: nowrap;        border: 0;    }    .logo img { height: 50px; }    .services-grid { grid-template-columns: 1fr; }    .about-flex { flex-direction: column; text-align: center; }    .about-text h2 { text-align: center; }    .main-footer .container { flex-direction: column; gap: 1rem; }    .featured-section .container,    .featured-section.alt-layout .container {        flex-direction: column;    }    .featured-section .text-container h2 {        text-align: center;    }    .cookie-banner {        flex-direction: column;        text-align: center;    }    .contact-options {        grid-template-columns: 1fr;    }}
