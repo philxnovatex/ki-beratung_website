@@ -10,6 +10,10 @@
     line-height: 1.6;
 }
 
+.problem-section h2 {
+    margin-bottom: 40px;
+}
+
 .problem-line {
     opacity: 0;
     transform: translateY(20px);
