@@ -118,25 +118,7 @@
         </div>
     </footer>
 
-    <!-- JS für Animation -->
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const lines = document.querySelectorAll(".problem-line");
-        lines.forEach((line, idx) => line.dataset.index = idx);
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const delay = entry.target.dataset.index * 150;
-                    entry.target.style.transitionDelay = `${delay}ms`;
-                    entry.target.classList.add("show");
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.2 });
-
-        lines.forEach(line => observer.observe(line));
-    });
-    </script>
+    <script src="js/problem-animation.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
     <script src="js/hero-canvas.js" defer></script>
     <script>
