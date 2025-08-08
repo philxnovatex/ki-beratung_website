@@ -52,16 +52,17 @@
         <div id="pin-scroll-wrap" class="problem-scroll-wrapper">
             <div id="pin-scroll">
                 <svg id="pin-scroll-svg" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="20" fill="var(--accent-color)" />
+                    <rect x="25" y="25" width="50" height="50" rx="6" ry="6" fill="none" stroke="var(--accent-color)" stroke-width="4" />
+                    <text x="50" y="57" text-anchor="middle" fill="var(--accent-color)" font-size="28" font-family="Inter, sans-serif">AI</text>
                     <g stroke="var(--accent-color)" stroke-width="4">
-                        <line x1="50" y1="2" x2="50" y2="15" />
-                        <line x1="50" y1="85" x2="50" y2="98" />
-                        <line x1="2" y1="50" x2="15" y2="50" />
-                        <line x1="85" y1="50" x2="98" y2="50" />
-                        <line x1="17" y1="17" x2="26" y2="26" />
-                        <line x1="74" y1="74" x2="83" y2="83" />
-                        <line x1="17" y1="83" x2="26" y2="74" />
-                        <line x1="74" y1="26" x2="83" y2="17" />
+                        <line x1="50" y1="2" x2="50" y2="25" />
+                        <line x1="50" y1="75" x2="50" y2="98" />
+                        <line x1="2" y1="50" x2="25" y2="50" />
+                        <line x1="75" y1="50" x2="98" y2="50" />
+                        <line x1="25" y1="25" x2="15" y2="15" />
+                        <line x1="75" y1="25" x2="85" y2="15" />
+                        <line x1="25" y1="75" x2="15" y2="85" />
+                        <line x1="75" y1="75" x2="85" y2="85" />
                     </g>
                 </svg>
             </div>
@@ -164,9 +165,9 @@
                 scrub: 1,
                 pin: true,
                 trigger: "#pin-scroll",
-                start: "top top",
+                start: "top center",
                 endTrigger: "#pin-scroll-wrap",
-                end: "bottom 50%",
+                end: "bottom center",
             },
         });
         tl.to("#pin-scroll-svg", {
