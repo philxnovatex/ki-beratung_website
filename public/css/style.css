@@ -14,7 +14,7 @@
 .problem-line {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
-    margin-bottom: 40px;
+    margin-bottom: 60px;
 }
 
 @keyframes problemLineIn {
@@ -54,7 +54,7 @@
 
 .problem-scroll-wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     gap: 40px;
 }
