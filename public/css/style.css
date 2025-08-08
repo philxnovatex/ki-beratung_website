@@ -45,12 +45,13 @@
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 1.6;
+    flex: 1;
 }
 
 .problem-line {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 @keyframes problemLineIn {
@@ -86,6 +87,22 @@
 .problem-icon {
     margin-right: 8px;
     color: var(--accent-color);
+}
+
+.problem-windmill-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+#pin-windmill {
+    width: 150px;
+}
+
+#pin-windmill svg {
+    width: 100%;
+    height: auto;
 }
 /* ------------------- */
 /* Reset & Grundstile  */
