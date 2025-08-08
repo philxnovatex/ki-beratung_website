@@ -49,17 +49,34 @@
             </div>
         </section>
         <!-- Problem-Abschnitt -->
-        <section id="problem" class="problem-section">
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wissen? Geht in Rente und verschwindet.</div>
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Bürokratie? Frisst jeden Tag mehr Zeit.</div>
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wertschöpfung? Bleibt liegen.</div>
-            <div class="problem-line highlight"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wer so weitermacht, verliert den Anschluss.</div>
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Der Markt wird aussortieren, wer mithalten kann – und wer nicht.</div>
-            <div class="problem-line accent"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Neuratex AI stoppt diesen Kreislauf.</div>
-            <div class="problem-line small"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Prozesse verschlanken. Wissen sichern. Zeit zurückgewinnen.</div>
-            <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
-        </section>
+        <div id="pin-scroll-wrap" class="problem-scroll-wrapper">
+            <div id="pin-scroll">
+                <svg id="pin-scroll-svg" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="20" fill="var(--accent-color)" />
+                    <g stroke="var(--accent-color)" stroke-width="4">
+                        <line x1="50" y1="2" x2="50" y2="15" />
+                        <line x1="50" y1="85" x2="50" y2="98" />
+                        <line x1="2" y1="50" x2="15" y2="50" />
+                        <line x1="85" y1="50" x2="98" y2="50" />
+                        <line x1="17" y1="17" x2="26" y2="26" />
+                        <line x1="74" y1="74" x2="83" y2="83" />
+                        <line x1="17" y1="83" x2="26" y2="74" />
+                        <line x1="74" y1="26" x2="83" y2="17" />
+                    </g>
+                </svg>
+            </div>
+            <section id="problem" class="problem-section">
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wissen? Geht in Rente und verschwindet.</div>
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Bürokratie? Frisst jeden Tag mehr Zeit.</div>
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wertschöpfung? Bleibt liegen.</div>
+                <div class="problem-line highlight"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wer so weitermacht, verliert den Anschluss.</div>
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Der Markt wird aussortieren, wer mithalten kann – und wer nicht.</div>
+                <div class="problem-line accent"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Neuratex AI stoppt diesen Kreislauf.</div>
+                <div class="problem-line small"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Prozesse verschlanken. Wissen sichern. Zeit zurückgewinnen.</div>
+                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
+            </section>
+        </div>
         <!-- Ende Problem-Abschnitt -->
         <section id="services" class="services-section">
             <div class="container">
@@ -137,6 +154,24 @@
 
         lines.forEach(line => observer.observe(line));
     });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                scrub: 1,
+                pin: true,
+                trigger: "#pin-scroll",
+                start: "top top",
+                endTrigger: "#pin-scroll-wrap",
+                end: "bottom 50%",
+            },
+        });
+        tl.to("#pin-scroll-svg", {
+            rotateZ: 900,
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
     <script src="js/hero-canvas.js" defer></script>
