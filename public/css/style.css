@@ -46,12 +46,16 @@
     font-weight: 700;
     line-height: 1.6;
     flex: 1;
+    position: relative;
+    overflow: hidden;
 }
 
 .problem-line {
     opacity: 0;
     transform: translateY(20px) scale(0.95);
     margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
 }
 
 @keyframes problemLineIn {
@@ -104,6 +108,7 @@
     width: 100%;
     height: auto;
 }
+.problem-section .bg-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */
@@ -224,6 +229,17 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
 .principles-section, .demo-section {
     background-color: var(--card-bg);
 }
+
+/* Scroll Progress Bar */
+.scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; }
+.scroll-progress.active { transform:scaleY(1); }
+
+/* Enhanced Service Cards + Icons */
+.services-grid .service-card { opacity:0; transform:translateY(60px) scale(.97); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1), box-shadow .3s; box-shadow:0 2px 12px rgba(30,41,59,.08); }
+.services-grid .service-card.in-view { opacity:1; transform:translateY(0) scale(1); box-shadow:0 8px 32px rgba(30,41,59,.12); }
+.service-icon { display:flex; justify-content:center; align-items:center; margin:0 auto 18px; width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#1e293b 60%, var(--accent-color) 100%); box-shadow:0 4px 24px rgba(255,201,71,.15); font-size:2.5rem; color:#fff; transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
+.services-grid .service-card:hover .service-icon { transform:scale(1.15) rotate(-6deg); box-shadow:0 8px 32px rgba(255,201,71,.35); }
+.services-grid .service-card:hover { box-shadow:0 12px 40px rgba(255,201,71,.18); transform:translateY(-8px) scale(1.03); }
 
 .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
 .service-card-link {
