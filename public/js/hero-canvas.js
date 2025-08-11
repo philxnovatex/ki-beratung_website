@@ -24,9 +24,9 @@ window.addEventListener('DOMContentLoaded', () => {
     scene.add(group);
 
     // Parameters
-    const NODE_COUNT = isHero ? 160 : 90;
-    const spreadXY = isHero ? 650 : 500;
-    const spreadZ = isHero ? 800 : 500;
+  const NODE_COUNT = isHero ? 230 : 90; // more density for hero
+  const spreadXY = isHero ? 720 : 500;
+  const spreadZ = isHero ? 880 : 500;
     const positions = new Float32Array(NODE_COUNT * 3);
 
     for(let i=0;i<NODE_COUNT;i++){
@@ -57,8 +57,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Lines (proximity based instead of random probability alone)
     const linePositions = [];
-    const maxLinks = isHero ? 9 : 7;
-    const maxDistSq = isHero ? 140*140 : 120*120;
+    const maxLinks = isHero ? 11 : 7;
+    const maxDistSq = isHero ? 170*170 : 120*120;
     for(let i=0;i<NODE_COUNT;i++){
       let links = 0;
       const ax = positions[i*3], ay = positions[i*3+1], az = positions[i*3+2];
@@ -66,14 +66,14 @@ window.addEventListener('DOMContentLoaded', () => {
         const bx = positions[j*3], by = positions[j*3+1], bz = positions[j*3+2];
         const dx = ax-bx, dy = ay-by, dz = az-bz;
         const distSq = dx*dx+dy*dy+dz*dz;
-        if(distSq < maxDistSq && Math.random() < 0.55){
+        if(distSq < maxDistSq && Math.random() < 0.65){
           linePositions.push(ax,ay,az,bx,by,bz); links++;
         }
       }
     }
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
-  const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.55 });
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.63 });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     group.add(lines);
 
@@ -96,7 +96,8 @@ window.addEventListener('DOMContentLoaded', () => {
       let t=0;
       const baseSize = pulseMat.size;
       function pulseTick(){
-        t+=0.01; pulseMat.size = baseSize + Math.sin(t*2)*0.7; requestAnimationFrame(pulseTick);
+        t+=0.01; pulseMat.size = baseSize + Math.sin(t*2.2)*0.9; requestAnimationFrame(pulseTick);
+        lineMat.opacity = 0.5 + Math.sin(t*1.1)*0.13; // subtle breathing lines
       }
       pulseTick();
       // Light sweep plane to simulate scanning
@@ -113,6 +114,39 @@ window.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(sweepTick);
       }
       sweepTick();
+
+      // Orange squares (instanced planes) for AI tile vibe
+      const tileCount = 70;
+      const tileGeo = new THREE.PlaneGeometry(14,14);
+      const tileMat = new THREE.MeshBasicMaterial({ color: 0xffc947, transparent:true, opacity:0.75 });
+      const tiles = new THREE.InstancedMesh(tileGeo, tileMat, tileCount);
+      const dummy = new THREE.Object3D();
+      for(let i=0;i<tileCount;i++){
+        dummy.position.set(
+          (Math.random()*2-1)*spreadXY*0.9,
+          (Math.random()*2-1)*420,
+          (Math.random()*2-1)*spreadZ*0.65
+        );
+        dummy.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, Math.random()*Math.PI);
+        const s = 0.6 + Math.random()*0.9;
+        dummy.scale.set(s,s,s);
+        dummy.updateMatrix();
+        tiles.setMatrixAt(i, dummy.matrix);
+      }
+      scene.add(tiles);
+      let tileTime=0;
+      function tilesAnim(){
+        tileTime+=0.01;
+        for(let i=0;i<tileCount;i+=3){ // animate subset for performance
+          tiles.getMatrixAt(i, dummy.matrix);
+          dummy.rotation.z += 0.004;
+          dummy.updateMatrix();
+          tiles.setMatrixAt(i, dummy.matrix);
+        }
+        tiles.instanceMatrix.needsUpdate = true;
+        requestAnimationFrame(tilesAnim);
+      }
+      tilesAnim();
     }
 
     function resize(){
@@ -147,8 +181,8 @@ window.addEventListener('DOMContentLoaded', () => {
   group.rotation.x += isHero ? 0.00028 : 0.00022;
       if(isHero){
         // Parallax shift
-        group.position.x += ((mouseX * 40) - group.position.x) * 0.03;
-        group.position.y += ((-mouseY * 40) - group.position.y) * 0.03;
+  group.position.x += ((mouseX * 70) - group.position.x) * 0.04;
+  group.position.y += ((-mouseY * 70) - group.position.y) * 0.04;
 
         // Autonomous node drift + occasional repulsion burst
         if(velocities){
@@ -163,9 +197,9 @@ window.addEventListener('DOMContentLoaded', () => {
               if(p[idx+1] > 420 || p[idx+1] < -420) velocities[idx+1] *= -1;
               if(p[idx+2] > spreadZ || p[idx+2] < -spreadZ) velocities[idx+2] *= -1;
               if(repulseTimer > 0){
-                const fx = p[idx] * 0.015;
-                const fy = p[idx+1] * 0.015;
-                const fz = p[idx+2] * 0.015;
+                const fx = p[idx] * 0.02;
+                const fy = p[idx+1] * 0.02;
+                const fz = p[idx+2] * 0.02;
                 velocities[idx]   += fx;
                 velocities[idx+1] += fy;
                 velocities[idx+2] += fz;
