@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intelligente Automatisierung: Chatbots & KI, die Ihr Team entlasten</title>
     <meta name="description" content="Endlose Routineanfragen binden Ihre besten Mitarbeiter? Neuratex AI entwickelt Chat- & Voicebots, die 80% des Supports automatisieren. Mehr Zeit fürs Wesentliche.">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" href="favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <!-- Favicons (root-relative for reliability) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,13 +26,13 @@
             <a href="index.html" class="logo">
                 <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
-            <nav class="main-nav" data-visible="false">
+        <nav class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="leistungen.html">Leistungen</a></li>
                     <li><a href="#about">Über Neuratex AI</a></li>
                     <li><a href="#demo">Demo</a></li>
                     <li><a href="kontakt.html">Kontakt</a></li>
-                    <li><a href="public/lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+            <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
             </nav>
             <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
@@ -49,7 +51,7 @@
             </div>
         </section>
         <!-- Problem-Abschnitt -->
-        <div id="pin-windmill-wrap" class="problem-windmill-wrapper">
+    <div id="pin-windmill-wrap" class="problem-windmill-wrapper">
             <div id="pin-windmill">
                 <svg id="pin-windmill-svg" viewBox="0 0 100 100">
                     <g fill="var(--accent-color)">
@@ -61,6 +63,8 @@
                 </svg>
             </div>
             <section id="problem" class="problem-section">
+        <!-- Netzwerk-Canvas als Hintergrund -->
+        <canvas class="bg-canvas" data-canvas="network"></canvas>
                 <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
                 <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wissen? Geht in Rente und verschwindet.</div>
                 <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Bürokratie? Frisst jeden Tag mehr Zeit.</div>
@@ -77,10 +81,34 @@
             <div class="container">
                 <h2>Ihre Abkürzung zu funktionierenden KI-Lösungen</h2>
                 <div class="services-grid">
-                    <a href="leistungen.html" class="service-card-link"><div class="service-card"><h3>Vorträge & Keynotes</h3><p>Wir trennen Hype von Realität und zeigen verständlich die konkreten Chancen von KI für Ihre Branche und Ihr Unternehmen auf.</p></div></a>
-                    <a href="leistungen.html" class="service-card-link"><div class="service-card"><h3>Praxis-Workshops</h3><p>Wir befähigen Ihre Führungskräfte und Teams, KI-Potenziale selbst zu erkennen und neue Werkzeuge gewinnbringend zu nutzen.</p></div></a>
-                    <a href="leistungen.html" class="service-card-link"><div class="service-card"><h3>KI-Strategieentwicklung</h3><p>Sie erhalten von uns einen maßgeschneiderten und wasserdichten Fahrplan für die erfolgreiche KI-Integration in Ihr Geschäft.</p></div></a>
-                    <a href="leistungen.html" class="service-card-link"><div class="service-card"><h3>Prozessautomatisierung</h3><p>Wir konzipieren und implementieren intelligente KI-Agenten, die Ihre Prozesse beschleunigen und wertvolle Ressourcen freisetzen.</p></div></a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+                            <h3>Vorträge & Keynotes</h3>
+                            <p>Wir trennen Hype von Realität und zeigen verständlich die konkreten Chancen von KI für Ihre Branche und Ihr Unternehmen auf.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                            <h3>Praxis-Workshops</h3>
+                            <p>Wir befähigen Ihre Führungskräfte und Teams, KI-Potenziale selbst zu erkennen und neue Werkzeuge gewinnbringend zu nutzen.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-route"></i></div>
+                            <h3>KI-Strategieentwicklung</h3>
+                            <p>Sie erhalten von uns einen maßgeschneiderten und wasserdichten Fahrplan für die erfolgreiche KI-Integration in Ihr Geschäft.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
+                            <h3>Prozessautomatisierung</h3>
+                            <p>Wir konzipieren und implementieren intelligente KI-Agenten, die Ihre Prozesse beschleunigen und wertvolle Ressourcen freisetzen.</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
@@ -132,6 +160,9 @@
         </div>
     </footer>
 
+    <!-- Scroll Progress Element -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
     <!-- JS für Animation -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -159,18 +190,17 @@
                 scrub: 1,
                 pin: true,
                 trigger: "#pin-windmill",
-                start: "50% 50%",
+                start: "top center",
                 endTrigger: "#pin-windmill-wrap",
-                end: "bottom 50%",
+                end: "bottom center",
             },
         });
-        tl.to("#pin-windmill-svg", {
-            rotateZ: 900,
-        });
+        tl.to("#pin-windmill-svg", { rotateZ: 900 });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
     <script src="js/hero-canvas.js" defer></script>
     <script>
+        // Mobile Navigation
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
         navToggle.addEventListener('click', () => {
@@ -183,6 +213,36 @@
                 navToggle.setAttribute('aria-expanded', false);
             }
         });
+
+        // Service Cards Reveal
+        const serviceCards = document.querySelectorAll('.services-grid .service-card');
+        if ('IntersectionObserver' in window) {
+            const scObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        scObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            serviceCards.forEach(c => scObserver.observe(c));
+        } else {
+            serviceCards.forEach(c => c.classList.add('in-view'));
+        }
+        // Fallback: falls irgendetwas klemmt -> nach 2s sichtbar machen
+        setTimeout(() => serviceCards.forEach(c => c.classList.add('in-view')), 2000);
+
+        // Scroll Progress
+        const scrollBar = document.getElementById('scroll-progress');
+        function updateScrollBar(){
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            scrollBar.style.transform = `scaleY(${progress})`;
+            scrollBar.classList.add('active');
+        }
+        window.addEventListener('scroll', updateScrollBar, { passive: true });
+        updateScrollBar();
     </script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
