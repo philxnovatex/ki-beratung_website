@@ -221,10 +221,31 @@ section:last-of-type {
     border-bottom: none;
 }
 
-h1, h2, h3 { font-family: var(--font-primary); font-weight: 700; color: var(--headline-color); margin-bottom: 20px; }
-h1 { font-size: 3.5rem; line-height: 1.2; }
-h2 { font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
-h3 { font-size: 1.5rem; color: var(--headline-color); }
+/* Unified Headings */
+h1, h2, h3 {
+    --unified-heading-size: 2.4rem;
+    font-family: var(--font-primary);
+    font-weight: 700;
+    color: var(--headline-color);
+    margin-bottom: 24px;
+    line-height: 1.25;
+    position: relative;
+    transition: color .3s ease;
+}
+h1, h2, h3 { font-size: var(--unified-heading-size); }
+/* Maintain spacing differences where needed */
+h2 { text-align: center; margin-bottom: 55px; }
+/* Smaller contextual headings overrides */
+.service-card h3, .principle-card h3, .lead-gen-form-container h3, .contact-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+/* Flash / Glow animation */
+@keyframes headingFlash {
+    0% { color: var(--headline-color); text-shadow: none; }
+    20% { color: var(--accent-color); text-shadow: 0 0 10px rgba(255,201,71,0.9), 0 0 24px rgba(255,201,71,0.5); }
+    55% { color: var(--accent-color); text-shadow: 0 0 6px rgba(255,201,71,0.7); }
+    100% { color: var(--headline-color); text-shadow: none; }
+}
+.heading-watch.hover-flash:hover { animation: headingFlash 1.2s ease; }
+.heading-watch.heading-in-view { animation: headingFlash 1.2s ease; }
 
 /* ------------------- */
 /* Hero-Sektion        */
@@ -297,7 +318,10 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
     border-color: var(--secondary-color);
 }
 .service-card p { margin-top: 15px; }
-.service-card h3 { color: var(--accent-color); }
+/* Headings inside cards now inherit unified white base; optional subtle accent underline on hover */
+.service-card h3 { color: var(--headline-color); position:relative; }
+.service-card h3::after { content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:linear-gradient(90deg,var(--accent-color), rgba(255,201,71,0)); transition:width .4s ease; }
+.service-card:hover h3::after { width: 70%; }
 
 .principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
 .principle-card { text-align: center; }
@@ -596,13 +620,13 @@ h3 { font-size: 1.5rem; color: var(--headline-color); }
 
     .main-nav {
         position: fixed;
-        inset: 0 0 0 30%;
+        inset: 0 0 0 0;
         flex-direction: column;
-        padding: min(20vh, 10rem) 2em;
-        background: hsl(0 0% 0% / 0.8);
-        backdrop-filter: blur(1rem);
+        padding: min(15vh, 8rem) 2.5em 4rem;
+        background: linear-gradient(135deg, rgba(10,25,49,0.95), rgba(17,34,64,0.92));
+        backdrop-filter: blur(1.2rem);
         transform: translateX(100%);
-        transition: transform 350ms ease-out;
+        transition: transform 320ms ease-out;
     }
     .main-nav[data-visible="true"] {
         transform: translateX(0%);

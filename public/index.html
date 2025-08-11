@@ -213,6 +213,25 @@
         } else {
             lines.forEach(l => l.classList.add('show'));
         }
+
+        // Unified heading watch (exclude small contextual card headings)
+        const watched = Array.from(document.querySelectorAll('h1, h2, h3'))
+            .filter(h => !h.closest('.service-card, .principle-card, .lead-gen-form-container, .contact-card'));
+        watched.forEach(h => h.classList.add('heading-watch','hover-flash'));
+        if('IntersectionObserver' in window){
+            const hObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        entry.target.classList.add('heading-in-view');
+                        // remove after animation ends so it can trigger again if desired
+                        entry.target.addEventListener('animationend', () => {
+                            entry.target.classList.remove('heading-in-view');
+                        }, { once: true });
+                    }
+                });
+            }, { threshold: 0.4 });
+            watched.forEach(h => hObserver.observe(h));
+        }
     });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
