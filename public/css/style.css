@@ -93,22 +93,11 @@
     color: var(--accent-color);
 }
 
-.problem-windmill-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-}
-
-#pin-windmill {
-    width: 150px;
-}
-
-#pin-windmill svg {
-    width: 100%;
-    height: auto;
-}
-.problem-section .bg-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+.problem-section--simple { padding: 120px 0 80px; }
+.problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; }
+.problem-section--simple .problem-line { margin-bottom: 34px; }
+.problem-section--simple .problem-line.highlight { font-size:1.9rem; }
+.problem-section--simple .problem-line.accent { font-size:1.9rem; }
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */

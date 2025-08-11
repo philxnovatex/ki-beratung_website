@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intelligente Automatisierung: Chatbots & KI, die Ihr Team entlasten</title>
     <meta name="description" content="Endlose Routineanfragen binden Ihre besten Mitarbeiter? Neuratex AI entwickelt Chat- & Voicebots, die 80% des Supports automatisieren. Mehr Zeit fürs Wesentliche.">
-    <!-- Favicons (root-relative for reliability) -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <!-- Favicons (relative paths so they work when /public is deploy root) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="manifest" href="site.webmanifest">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,32 +52,21 @@
                 <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
             </div>
         </section>
-        <!-- Problem-Abschnitt -->
-    <div id="pin-windmill-wrap" class="problem-windmill-wrapper">
-            <div id="pin-windmill">
-                <svg id="pin-windmill-svg" viewBox="0 0 100 100">
-                    <g fill="var(--accent-color)">
-                        <rect x="45" y="5" width="10" height="30"/>
-                        <rect x="45" y="65" width="10" height="30"/>
-                        <rect x="5" y="45" width="30" height="10"/>
-                        <rect x="65" y="45" width="30" height="10"/>
-                    </g>
-                </svg>
+        <!-- Problem-Abschnitt (neu aufgebaut) -->
+        <section id="problem" class="problem-section problem-section--simple" aria-labelledby="problem-heading">
+            <div class="container problem-lines" id="problem-heading">
+                <div class="problem-line">Fachkräfte? Kaum zu finden und schwer zu halten.</div>
+                <div class="problem-line">Wissen? Geht mit den letzten Mitarbeitern in Rente.</div>
+                <div class="problem-line">Bürokratie? Frisst jeden Tag mehr Zeit.</div>
+                <div class="problem-line">Wertschöpfung? Bleibt liegen.</div>
+                <div class="problem-line highlight">Wer so weitermacht, verliert den Anschluss.</div>
+                <div class="problem-line">Der Markt trennt bald klar zwischen denen, die mithalten und denen, die aussortiert werden.</div>
+                <div class="problem-line accent">Neuratex AI durchbricht diesen Kreislauf.</div>
+                <div class="problem-line small">Prozesse verschlanken.</div>
+                <div class="problem-line small">Wissen sichern. Zeit zurückgewinnen.</div>
+                <div class="problem-line">Mit intelligenten und DSGVO konformen Automatisierungen.</div>
             </div>
-            <section id="problem" class="problem-section">
-        <!-- Netzwerk-Canvas als Hintergrund -->
-        <canvas class="bg-canvas" data-canvas="network"></canvas>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Fachkräfte? Kaum zu finden – und schwer zu halten.</div>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wissen? Geht in Rente und verschwindet.</div>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Bürokratie? Frisst jeden Tag mehr Zeit.</div>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wertschöpfung? Bleibt liegen.</div>
-                <div class="problem-line highlight"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Wer so weitermacht, verliert den Anschluss.</div>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Der Markt wird aussortieren, wer mithalten kann – und wer nicht.</div>
-                <div class="problem-line accent"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Neuratex AI stoppt diesen Kreislauf.</div>
-                <div class="problem-line small"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Prozesse verschlanken. Wissen sichern. Zeit zurückgewinnen.</div>
-                <div class="problem-line"><span class="problem-icon"><i class="fa-solid fa-circle-exclamation"></i></span>Mit intelligenten, DSGVO-konformen Automatisierungen.</div>
-            </section>
-        </div>
+        </section>
         <!-- Ende Problem-Abschnitt -->
         <section id="services" class="services-section">
             <div class="container">
@@ -218,20 +207,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                scrub: 1,
-                pin: true,
-                trigger: "#pin-windmill",
-                start: "top center",
-                endTrigger: "#pin-windmill-wrap",
-                end: "bottom center",
-            },
-        });
-        tl.to("#pin-windmill-svg", { rotateZ: 900 });
-    </script>
+    <!-- Entfernt: Windmill/Pin Animation -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
     <script src="js/hero-canvas.js" defer></script>
     <script src="js/sections/ki-anwendungen.js" defer></script>
