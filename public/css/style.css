@@ -69,14 +69,14 @@
 .problem-lines::before {
     content: "";
     position: absolute;
-    left: 50%;
+    left: 15px;
     top: 0;
-    transform: translateX(-50%);
-    width: 4px;
+    width: 6px;
     height: 100%;
     background: linear-gradient(var(--accent-color), rgba(255,201,71,0));
     filter: drop-shadow(0 0 8px rgba(255,201,71,0.6));
     opacity: 0.9;
+    border-radius:3px;
 }
 .problem-line { position: relative; }
 .problem-line::after {
@@ -123,15 +123,8 @@
     animation: problemLineIn 1s ease forwards;
 }
 
-.problem-line.highlight {
-    font-size: 1.8rem;
-    color: var(--accent-color);
-}
-
-.problem-line.accent {
-    font-size: 1.8rem;
-    color: var(--accent-color);
-}
+.problem-line.highlight { color: var(--accent-color); }
+.problem-line.accent { color: var(--accent-color); }
 
 .problem-line.small {
     font-size: 1.2rem;
@@ -144,10 +137,9 @@
 }
 
 .problem-section--simple { padding: 120px 0 80px; }
-.problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; }
-.problem-section--simple .problem-line { margin-bottom: 34px; }
-.problem-section--simple .problem-line.highlight { font-size:1.9rem; }
-.problem-section--simple .problem-line.accent { font-size:1.9rem; }
+.problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; padding-left: 55px; text-align:left; }
+.problem-section--simple .problem-line { margin-bottom: 30px; font-size:1.5rem; }
+.problem-section--simple .problem-line.small { font-size:1.3rem; }
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */

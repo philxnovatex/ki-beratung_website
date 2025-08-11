@@ -40,7 +40,17 @@ window.addEventListener('DOMContentLoaded', () => {
       positions[i*3 + 2] = rz * spreadZ * d;
     }
     const nodeGeo = new THREE.BufferGeometry();
-    nodeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const posAttr = new THREE.BufferAttribute(positions, 3);
+    nodeGeo.setAttribute('position', posAttr);
+    // Velocity array for subtle autonomous motion (hero only)
+    const velocities = isHero ? new Float32Array(NODE_COUNT * 3) : null;
+    if(velocities){
+      for(let i=0;i<NODE_COUNT;i++){
+        velocities[i*3] = (Math.random()*2-1)*0.15;
+        velocities[i*3+1] = (Math.random()*2-1)*0.12;
+        velocities[i*3+2] = (Math.random()*2-1)*0.15;
+      }
+    }
   const nodeMat = new THREE.PointsMaterial({ color: 0xffc947, size: isHero ? 3.2 : 2.8, sizeAttenuation: true });
     const nodes = new THREE.Points(nodeGeo, nodeMat);
     group.add(nodes);
@@ -116,10 +126,58 @@ window.addEventListener('DOMContentLoaded', () => {
     resize();
     window.addEventListener('resize', resize);
 
+    let mouseX = 0, mouseY = 0;
+    if(isHero){
+      window.addEventListener('mousemove', e => {
+        const cx = window.innerWidth/2;
+        const cy = window.innerHeight/2;
+        mouseX = (e.clientX - cx)/cx;
+        mouseY = (e.clientY - cy)/cy;
+      }, { passive:true });
+    }
+
+    let repulseTimer = 0;
+    if(isHero){
+      canvas.addEventListener('click', () => { repulseTimer = 1; });
+    }
+
     function animate(){
       requestAnimationFrame(animate);
   group.rotation.y += isHero ? 0.0007 : 0.00055;
   group.rotation.x += isHero ? 0.00028 : 0.00022;
+      if(isHero){
+        // Parallax shift
+        group.position.x += ((mouseX * 40) - group.position.x) * 0.03;
+        group.position.y += ((-mouseY * 40) - group.position.y) * 0.03;
+
+        // Autonomous node drift + occasional repulsion burst
+        if(velocities){
+          const p = posAttr.array;
+            for(let i=0;i<NODE_COUNT;i++){
+              const idx = i*3;
+              p[idx]   += velocities[idx];
+              p[idx+1] += velocities[idx+1];
+              p[idx+2] += velocities[idx+2];
+              // Bounds & bounce
+              if(p[idx] > spreadXY || p[idx] < -spreadXY) velocities[idx] *= -1;
+              if(p[idx+1] > 420 || p[idx+1] < -420) velocities[idx+1] *= -1;
+              if(p[idx+2] > spreadZ || p[idx+2] < -spreadZ) velocities[idx+2] *= -1;
+              if(repulseTimer > 0){
+                const fx = p[idx] * 0.015;
+                const fy = p[idx+1] * 0.015;
+                const fz = p[idx+2] * 0.015;
+                velocities[idx]   += fx;
+                velocities[idx+1] += fy;
+                velocities[idx+2] += fz;
+              }
+            }
+            if(repulseTimer > 0){
+              repulseTimer -= 0.02;
+              if(repulseTimer < 0) repulseTimer = 0;
+            }
+            posAttr.needsUpdate = true;
+        }
+      }
       renderer.render(scene, camera);
     }
     animate();
