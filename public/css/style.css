@@ -69,7 +69,7 @@
 .problem-lines::before {
     content: "";
     position: absolute;
-    left: 15px;
+    left: 0;
     top: 0;
     width: 6px;
     height: 100%;
@@ -133,8 +133,8 @@
 .problem-line.accent { color: var(--accent-color); }
 
 .problem-line.small {
-    font-size: 1.2rem;
-    font-weight: 400;
+    font-size: 1.5rem;
+    font-weight: 500;
 }
 
 .problem-icon {
@@ -143,9 +143,9 @@
 }
 
 .problem-section--simple { padding: 120px 0 80px; }
-.problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; padding-left: 55px; text-align:left; }
+.problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; padding-left: 85px; text-align:left; }
 .problem-section--simple .problem-line { margin-bottom: 30px; font-size:1.5rem; }
-.problem-section--simple .problem-line.small { font-size:1.3rem; }
+.problem-section--simple .problem-line.small { font-size:1.5rem; }
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */
