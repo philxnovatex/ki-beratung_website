@@ -191,18 +191,22 @@
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         const lines = document.querySelectorAll(".problem-line");
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add("show");
-                    }, index * 300);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.3 });
-
-        lines.forEach(line => observer.observe(line));
+        if('IntersectionObserver' in window){
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        const idx = [...lines].indexOf(entry.target);
+                        const baseDelay = 140; // ms
+                        const jitter = Math.random()*120; // subtle randomness
+                        setTimeout(()=> entry.target.classList.add('show'), baseDelay*idx + jitter);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.25 });
+            lines.forEach(l => observer.observe(l));
+        } else {
+            lines.forEach(l => l.classList.add('show'));
+        }
     });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

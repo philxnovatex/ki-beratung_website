@@ -1,68 +1,102 @@
 window.addEventListener('DOMContentLoaded', () => {
-  if (!window.THREE) return;
+  if(!window.THREE) return;
 
-  const canvases = [];
   const hero = document.getElementById('hero-canvas');
-  if (hero) canvases.push(hero);
-  document.querySelectorAll('[data-canvas="network"]').forEach(c => canvases.push(c));
+  if(hero){ initNetwork(hero, { mode: 'hero' }); }
 
-  canvases.forEach(initNetworkCanvas);
-
-  function initNetworkCanvas(canvas){
+  function initNetwork(canvas, { mode }) {
+    const isHero = mode === 'hero';
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1200);
-  camera.position.z = 260;
+    const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 1600);
+    camera.position.z = isHero ? 410 : 260;
+
+    // Subtle gradient backdrop plane (adds depth if hero)
+    if(isHero){
+      const gradGeo = new THREE.PlaneGeometry(1600, 1600, 1, 1);
+      const gradMat = new THREE.MeshBasicMaterial({ color: 0x0b1733, transparent: true, opacity: 0.6 });
+      const plane = new THREE.Mesh(gradGeo, gradMat);
+      plane.position.z = -400;
+      scene.add(plane);
+    }
+
     const group = new THREE.Group();
     scene.add(group);
 
-  const isProblem = canvas.classList.contains('bg-canvas');
-  const NODE_COUNT = isProblem ? 90 : 60;
+    // Parameters
+    const NODE_COUNT = isHero ? 160 : 90;
+    const spreadXY = isHero ? 650 : 500;
+    const spreadZ = isHero ? 800 : 500;
     const positions = new Float32Array(NODE_COUNT * 3);
-    for (let i = 0; i < NODE_COUNT; i++) {
-      // Spread wider horizontally for background, compress vertically towards top
-      positions[i * 3] = (Math.random() - 0.5) * (isProblem ? 600 : 300);
-      const yRange = isProblem ? 500 : 300;
-      const yBias = isProblem ? -150 : 0; // push upwards so appears from top
-      positions[i * 3 + 1] = (Math.random() - 0.1) * yRange + yBias; // slight upward bias
-      positions[i * 3 + 2] = (Math.random() - 0.5) * (isProblem ? 600 : 300);
+
+    for(let i=0;i<NODE_COUNT;i++){
+      // Distribute in a sphere-ish volume with bias to center but full height
+      const rx = (Math.random()*2-1);
+      const ry = (Math.random()*2-1);
+      const rz = (Math.random()*2-1);
+      const d = Math.cbrt(Math.random()); // denser core
+      positions[i*3]     = rx * spreadXY * d;
+      positions[i*3 + 1] = ry * (isHero ? 420 : 300) * d; // full vertical coverage
+      positions[i*3 + 2] = rz * spreadZ * d;
     }
     const nodeGeo = new THREE.BufferGeometry();
     nodeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const nodeMat = new THREE.PointsMaterial({ color: 0xffc947, size: 3, sizeAttenuation: true });
+    const nodeMat = new THREE.PointsMaterial({ color: 0xffc947, size: isHero ? 3.4 : 3, sizeAttenuation: true });
     const nodes = new THREE.Points(nodeGeo, nodeMat);
     group.add(nodes);
 
+    // Lines (proximity based instead of random probability alone)
     const linePositions = [];
-    for (let i = 0; i < NODE_COUNT; i++) {
-      for (let j = i + 1; j < NODE_COUNT; j++) {
-        if (Math.random() < 0.06) {
-          linePositions.push(
-            positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
-            positions[j * 3], positions[j * 3 + 1], positions[j * 3 + 2]
-          );
+    const maxLinks = isHero ? 9 : 7;
+    const maxDistSq = isHero ? 140*140 : 120*120;
+    for(let i=0;i<NODE_COUNT;i++){
+      let links = 0;
+      const ax = positions[i*3], ay = positions[i*3+1], az = positions[i*3+2];
+      for(let j=i+1;j<NODE_COUNT && links < maxLinks;j++){
+        const bx = positions[j*3], by = positions[j*3+1], bz = positions[j*3+2];
+        const dx = ax-bx, dy = ay-by, dz = az-bz;
+        const distSq = dx*dx+dy*dy+dz*dz;
+        if(distSq < maxDistSq && Math.random() < 0.55){
+          linePositions.push(ax,ay,az,bx,by,bz); links++;
         }
       }
     }
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.5 });
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.42 });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     group.add(lines);
 
-    function resize(){
-      // Force bg canvas to match section height if needed
-      if(isProblem){
-        const section = canvas.closest('.problem-section');
-        if(section){
-          canvas.style.height = section.offsetHeight + 'px';
-        }
+    // Add a pulsing radial sprite cluster for subtle WOW
+    if(isHero){
+      const pulseGeo = new THREE.BufferGeometry();
+      const PULSE_COUNT = 40;
+      const pPositions = new Float32Array(PULSE_COUNT * 3);
+      for(let i=0;i<PULSE_COUNT;i++){
+        const a = Math.random()*Math.PI*2;
+        const r = 40 + Math.random()*140;
+        pPositions[i*3] = Math.cos(a)*r;
+        pPositions[i*3+1] = (Math.random()*2-1)*40;
+        pPositions[i*3+2] = Math.sin(a)*r;
       }
+      pulseGeo.setAttribute('position', new THREE.BufferAttribute(pPositions,3));
+      const pulseMat = new THREE.PointsMaterial({ color: 0x185adb, size: 2.2, transparent:true, opacity:0.55 });
+      const pulse = new THREE.Points(pulseGeo, pulseMat);
+      group.add(pulse);
+      let t=0;
+      const baseSize = pulseMat.size;
+      function pulseTick(){
+        t+=0.01; pulseMat.size = baseSize + Math.sin(t*2)*0.8; requestAnimationFrame(pulseTick);
+      }
+      pulseTick();
+    }
+
+    function resize(){
       const rect = canvas.getBoundingClientRect();
       const w = rect.width;
-      const h = rect.height || 400;
+      const h = rect.height || (isHero ? window.innerHeight : 400);
       renderer.setSize(w, h, false);
-      camera.aspect = w / h || 1;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
     }
     resize();
@@ -70,8 +104,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function animate(){
       requestAnimationFrame(animate);
-  group.rotation.y += 0.0008;
-  group.rotation.x += 0.00035;
+      group.rotation.y += isHero ? 0.0009 : 0.0006;
+      group.rotation.x += isHero ? 0.00035 : 0.00025;
       renderer.render(scene, camera);
     }
     animate();
