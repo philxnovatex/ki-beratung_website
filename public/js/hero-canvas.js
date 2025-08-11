@@ -41,7 +41,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     const nodeGeo = new THREE.BufferGeometry();
     nodeGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const nodeMat = new THREE.PointsMaterial({ color: 0xffc947, size: isHero ? 3.4 : 3, sizeAttenuation: true });
+  const nodeMat = new THREE.PointsMaterial({ color: 0xffc947, size: isHero ? 3.2 : 2.8, sizeAttenuation: true });
     const nodes = new THREE.Points(nodeGeo, nodeMat);
     group.add(nodes);
 
@@ -63,12 +63,12 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     const lineGeo = new THREE.BufferGeometry();
     lineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(linePositions), 3));
-    const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.42 });
+  const lineMat = new THREE.LineBasicMaterial({ color: 0x185adb, transparent: true, opacity: 0.55 });
     const lines = new THREE.LineSegments(lineGeo, lineMat);
     group.add(lines);
 
     // Add a pulsing radial sprite cluster for subtle WOW
-    if(isHero){
+  if(isHero){
       const pulseGeo = new THREE.BufferGeometry();
       const PULSE_COUNT = 40;
       const pPositions = new Float32Array(PULSE_COUNT * 3);
@@ -86,9 +86,23 @@ window.addEventListener('DOMContentLoaded', () => {
       let t=0;
       const baseSize = pulseMat.size;
       function pulseTick(){
-        t+=0.01; pulseMat.size = baseSize + Math.sin(t*2)*0.8; requestAnimationFrame(pulseTick);
+        t+=0.01; pulseMat.size = baseSize + Math.sin(t*2)*0.7; requestAnimationFrame(pulseTick);
       }
       pulseTick();
+      // Light sweep plane to simulate scanning
+      const sweepGeo = new THREE.PlaneGeometry(1400, 1400);
+      const sweepMat = new THREE.MeshBasicMaterial({ color: 0x185adb, transparent:true, opacity:0.05 });
+      const sweep = new THREE.Mesh(sweepGeo, sweepMat);
+      sweep.rotation.x = Math.PI/2;
+      sweep.position.y = -500;
+      scene.add(sweep);
+      let sweepDir = 1;
+      function sweepTick(){
+        sweep.position.y += 1.2 * sweepDir;
+        if(sweep.position.y > 420) sweepDir = -1; else if(sweep.position.y < -500) sweepDir = 1;
+        requestAnimationFrame(sweepTick);
+      }
+      sweepTick();
     }
 
     function resize(){
@@ -104,8 +118,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     function animate(){
       requestAnimationFrame(animate);
-      group.rotation.y += isHero ? 0.0009 : 0.0006;
-      group.rotation.x += isHero ? 0.00035 : 0.00025;
+  group.rotation.y += isHero ? 0.0007 : 0.00055;
+  group.rotation.x += isHero ? 0.00028 : 0.00022;
       renderer.render(scene, camera);
     }
     animate();
