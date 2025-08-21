@@ -280,6 +280,39 @@ h2 { text-align: center; margin-bottom: 55px; }
 .principles-section, .demo-section {
     background-color: var(--card-bg);
 }
+/* Timeline (replaces principles) */
+.timeline-section { background: var(--card-bg); }
+.timeline { position: relative; display: flex; gap: 30px; justify-content: space-between; }
+.timeline::before { content:""; position:absolute; top: 26px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, #0f2344, var(--accent-color)); opacity:.5; border-radius:2px; }
+.timeline-item { position: relative; width: 100%; max-width: 360px; text-align: left; margin: 0 auto; }
+.timeline-item::before { content:""; position:absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #0a1931; border: 3px solid var(--accent-color); border-radius:50%; z-index:1; box-shadow:0 0 12px rgba(255,201,71,.35); }
+.timeline-item h3 { margin-top: 48px; font-size: 1.4rem; color: var(--headline-color); }
+.timeline-item ul { list-style: none; padding: 0; margin: 12px 0 0; }
+.timeline-item li { position: relative; padding-left: 22px; margin: 6px 0; }
+.timeline-item li::before { content: '✔'; position: absolute; left: 0; color: #22c55e; }
+
+/* Reifegrad Check */
+.reifegrad-section { background: var(--bg-color); border-top: 1px solid #1e293b; }
+.reifegrad-intro { max-width: 820px; margin: 0 auto 1.5rem; color: var(--text-color); }
+.reifegrad-form { max-width: 900px; margin: 0 auto; background: var(--card-bg); border: 1px solid #1e293b; border-radius: 12px; padding: 24px; }
+.question-block { margin-bottom: 1.25rem; }
+.question-block p { font-weight: 700; margin-bottom: .5rem; }
+.question-block label { display:block; padding:.75rem 1rem; margin-bottom:.5rem; background: #0d2243; border:1px solid #1e293b; border-radius: 8px; cursor: pointer; transition: background .2s, border-color .2s; }
+.question-block label:hover { background:#0f274d; border-color:#23406f; }
+.question-block input[type="radio"] { margin-right: .65rem; accent-color: var(--accent-color); }
+.reifegrad-btn { padding: .9rem 1.6rem; font-weight:700; background: var(--accent-color); border:2px solid var(--accent-color); color: var(--primary-color); border-radius:8px; cursor:pointer; }
+.reifegrad-btn:hover { background: #ffe08e; }
+.reifegrad-results { max-width: 900px; margin: 1.5rem auto 0; }
+.result-card { background: var(--card-bg); border:1px solid #1e293b; border-radius:12px; padding: 1.5rem; }
+.result-card[hidden] { display:none; }
+.result-card h3 { font-size: 1.4rem; margin-top: 0; }
+.result-card .next-step { margin-top: 1rem; padding-top:1rem; border-top:1px solid #1e293b; }
+
+/* Tech section */
+.tech-section { max-width: 1000px; margin: 4rem auto; padding: 2rem; background: #0f2242; border-left: 5px solid var(--accent-color); border-radius: 8px; }
+.tech-section h3 { font-size: 1.6rem; margin-top: 0; }
+.tech-logos { display:flex; gap: 2.2rem; justify-content:center; align-items:center; margin-top: 1.5rem; filter: grayscale(100%); opacity:.8; }
+.tech-logos img { height: 38px; max-width: 120px; }
 
 /* Scroll Progress Bar */
 .scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; opacity:0; }
