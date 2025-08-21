@@ -103,6 +103,19 @@
                 </div>
             </div>
         </section>
+        <!-- Tech/Infra Section: inserted above KI-Anwendungen -->
+        <section class="tech-section" aria-labelledby="tech-heading">
+            <div class="container">
+                <h2 id="tech-heading">Ihre Infrastruktur, unsere Expertise. Maximale Flexibilität für Ihren Erfolg.</h2>
+                <p>Wir wissen, dass jedes Unternehmen eine einzigartige technologische Ausgangslage hat. Deshalb zwingen wir Sie in kein starres Korsett. Unsere Philosophie ist die der Technologieoffenheit: Die beste Lösung ist die, die perfekt zu Ihnen, Ihren Prozessen und Ihrer bestehenden IT-Landschaft passt.</p>
+                <p>Egal, ob Sie Ihre ersten Schritte in die Cloud planen oder bereits fest in der Welt von Amazon Web Services (AWS), Microsoft Azure oder der Google Cloud Platform verankert sind – wir stellen uns auf Sie ein. Wir konzipieren und implementieren KI-Lösungen, die sich nahtlos in Ihre Systeme integrieren.</p>
+                <div class="tech-logos" aria-label="Unterstützte Cloud-Plattformen">
+                    <img src="images/aws.svg" alt="Amazon Web Services (AWS)">
+                    <img src="images/azure.svg" alt="Microsoft Azure">
+                    <img src="images/google-cloud.svg" alt="Google Cloud Platform">
+                </div>
+            </div>
+        </section>
         <!-- KI Anwendungen Abschnitt -->
         <section id="ki-anwendungen" class="ki-apps-section" aria-labelledby="ki-anwendungen-heading">
             <div class="container">
@@ -199,7 +212,7 @@
                 <h2>Wo stehen Sie auf Ihrer KI-Reise?</h2>
                 <p class="reifegrad-intro">Machen Sie den 2‑Minuten‑Reifegrad‑Check und erhalten Sie eine sofortige Einschätzung.</p>
                 <form id="quizForm" class="reifegrad-form">
-                    <div class="question-block">
+                    <div class="question-block quiz-step" data-step="1">
                         <p>1. Wie ist KI in Ihrer Unternehmensstrategie verankert?</p>
                         <label><input type="radio" name="q1" value="1" required> Wir diskutieren, haben aber noch keinen festen Plan.</label>
                         <label><input type="radio" name="q1" value="2"> Wir haben erste Ideen und probieren Dinge in einzelnen Projekten aus.</label>
@@ -207,23 +220,23 @@
                         <label><input type="radio" name="q1" value="4"> Wir haben eine offizielle, unternehmensweite KI‑Roadmap.</label>
                         <label><input type="radio" name="q1" value="5"> Unsere gesamte Geschäftsstrategie wird maßgeblich durch KI mitgestaltet.</label>
                     </div>
-                    <div class="question-block">
+                    <div class="question-block quiz-step" data-step="2" style="display:none">
                         <p>2. Wie gehen Sie mit den für KI benötigten Daten um?</p>
-                        <label><input type="radio" name="q2" value="1" required> Unsere Daten sind in verschiedenen Systemen verstreut.</label>
-                        <label><input type="radio" name="q2" value="2"> Für einzelne Projekte sammeln wir die notwendigen Daten manuell.</label>
-                        <label><input type="radio" name="q2" value="3"> Wir haben zentrale Datenbanken und Prozesse zur Datenqualitätssicherung.</label>
-                        <label><input type="radio" name="q2" value="4"> Wir verfügen über eine skalierbare Datenplattform und automatisierte Pipelines.</label>
-                        <label><input type="radio" name="q2" value="5"> Daten sind unser wertvollstes Gut; wir nutzen sie in Echtzeit zur Steuerung.</label>
+                        <label><input type="radio" name="q2" value="1" required disabled> Unsere Daten sind in verschiedenen Systemen verstreut.</label>
+                        <label><input type="radio" name="q2" value="2" disabled> Für einzelne Projekte sammeln wir die notwendigen Daten manuell.</label>
+                        <label><input type="radio" name="q2" value="3" disabled> Wir haben zentrale Datenbanken und Prozesse zur Datenqualitätssicherung.</label>
+                        <label><input type="radio" name="q2" value="4" disabled> Wir verfügen über eine skalierbare Datenplattform und automatisierte Pipelines.</label>
+                        <label><input type="radio" name="q2" value="5" disabled> Daten sind unser wertvollstes Gut; wir nutzen sie in Echtzeit zur Steuerung.</label>
                     </div>
-                    <div class="question-block">
+                    <div class="question-block quiz-step" data-step="3" style="display:none">
                         <p>3. Wie ist das KI‑Wissen in Ihrem Team verankert?</p>
-                        <label><input type="radio" name="q3" value="1" required> Einzelne Mitarbeiter sind neugierig und probieren privat Dinge aus.</label>
-                        <label><input type="radio" name="q3" value="2"> Es gibt einige wenige Experten, die als Ansprechpartner dienen.</label>
-                        <label><input type="radio" name="q3" value="3"> Wir führen gezielte Schulungen durch und bauen Wissen auf.</label>
-                        <label><input type="radio" name="q3" value="4"> Wir haben ein unternehmensweites Weiterbildungsprogramm.</label>
-                        <label><input type="radio" name="q3" value="5"> KI‑Kompetenz ist eine Kernanforderung in fast allen Bereichen.</label>
+                        <label><input type="radio" name="q3" value="1" required disabled> Einzelne Mitarbeiter sind neugierig und probieren privat Dinge aus.</label>
+                        <label><input type="radio" name="q3" value="2" disabled> Es gibt einige wenige Experten, die als Ansprechpartner dienen.</label>
+                        <label><input type="radio" name="q3" value="3" disabled> Wir führen gezielte Schulungen durch und bauen Wissen auf.</label>
+                        <label><input type="radio" name="q3" value="4" disabled> Wir haben ein unternehmensweites Weiterbildungsprogramm.</label>
+                        <label><input type="radio" name="q3" value="5" disabled> KI‑Kompetenz ist eine Kernanforderung in fast allen Bereichen.</label>
                     </div>
-                    <button type="submit" class="reifegrad-btn">Jetzt auswerten</button>
+                    <button id="quizSubmit" type="submit" class="reifegrad-btn" style="display:none">Jetzt auswerten</button>
                 </form>
                 <div id="resultsContainer" class="reifegrad-results" aria-live="polite">
                     <div id="result-1" class="result-card" hidden>
@@ -432,6 +445,28 @@
         (function(){
             const form = document.getElementById('quizForm');
             if(!form) return;
+            const steps = Array.from(form.querySelectorAll('.quiz-step'));
+            const submitBtn = document.getElementById('quizSubmit');
+
+            // Progressive disclosure: show next question when current answered
+            steps.forEach((step, idx) => {
+                step.addEventListener('change', (e) => {
+                    const answered = step.querySelector('input[type="radio"]:checked');
+                    if(!answered) return;
+                    // enable next step inputs and show it
+                    const next = steps[idx+1];
+                    if(next){
+                        next.style.display = '';
+                        next.querySelectorAll('input[type="radio"]').forEach(inp => inp.disabled = false);
+                        // focus first label for accessibility
+                        const firstLabel = next.querySelector('label');
+                        if(firstLabel){ firstLabel.focus?.(); }
+                    } else {
+                        // last step answered -> show submit
+                        submitBtn.style.display = '';
+                    }
+                });
+            });
             form.addEventListener('submit', function(e){
                 e.preventDefault();
                 const data = new FormData(form);
