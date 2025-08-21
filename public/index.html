@@ -212,390 +212,178 @@
                 <h2>Wo stehen Sie auf Ihrer KI-Reise?</h2>
                 <p class="reifegrad-intro">Machen Sie den 2‑Minuten‑Reifegrad‑Check und erhalten Sie eine sofortige Einschätzung.</p>
                 <form id="quizForm" class="reifegrad-form">
-                    <div class="quiz-progress"><span id="quiz-counter" aria-live="polite">Frage 1 von 40</span></div>
+                    <div class="quiz-progress"><span id="quiz-counter" aria-live="polite">Frage 1 von 17</span></div>
 
-                    <!-- Modul 1: Grundlegendes & Technisches Verständnis -->
-                    <div class="question-block quiz-step" data-step="1" data-type="likert" data-module="1">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.1 Ich kann die Begriffe „Künstliche Intelligenz“, „Maschinelles Lernen“ und „Deep Learning“ voneinander abgrenzen.</p>
+                    <!-- Dimension 1: Grundlagen -->
+                    <div class="question-block quiz-step" data-step="1" data-type="likert" data-module="Grundlagen">
+                        <div class="module-divider"><span>Dimension 1: Grundlegendes & Technisches Verständnis</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie schätzt du dein grundsätzliches Verständnis von KI-Begriffen (z.B. "Machine Learning", "Neuronales Netz", "LLM") ein?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q1_1" value="1" required> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q1_1" value="2"> 2</label>
-                            <label><input type="radio" name="q1_1" value="3"> 3</label>
-                            <label><input type="radio" name="q1_1" value="4"> 4</label>
-                            <label><input type="radio" name="q1_1" value="5"> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q1" value="A" required> A) Sehr gering</label>
+                            <label><input type="radio" name="q1" value="B"> B) Eher gering</label>
+                            <label><input type="radio" name="q1" value="C"> C) Mittelmäßig</label>
+                            <label><input type="radio" name="q1" value="D"> D) Eher hoch</label>
+                            <label><input type="radio" name="q1" value="E"> E) Sehr hoch</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="2" data-type="likert" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.2 Ich verstehe, warum die Qualität und Quantität von Daten für die Leistung eines KI-Modells entscheidend ist.</p>
+                    <div class="question-block quiz-step" data-step="2" data-type="single_choice" data-module="Grundlagen" style="display:none">
+                        <p class="question-title">Was ist die primäre Aufgabe eines "Large Language Model" (LLM) wie GPT-4?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q1_2" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q1_2" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q1_2" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q1_2" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q1_2" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q2" value="A" required disabled> A) Bilder und Videos zu erstellen.</label>
+                            <label><input type="radio" name="q2" value="B" disabled> B) Komplexe mathematische Gleichungen zu lösen.</label>
+                            <label><input type="radio" name="q2" value="C" disabled> C) Menschliche Sprache zu verstehen und statistisch wahrscheinliche Wortfolgen zu generieren.</label>
+                            <label><input type="radio" name="q2" value="D" disabled> D) Physische Roboter zu steuern.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="3" data-type="likert" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.3 Ich fühle mich sicher, den Unterschied zwischen einer „schwachen KI“ und einer hypothetischen „starken KI“ zu erklären.</p>
+                    <div class="question-block quiz-step" data-step="3" data-type="scenario" data-module="Grundlagen" style="display:none">
+                        <p class="question-title">Eine Kollegin behauptet: "KI-Systeme lernen wie Menschen und verstehen den Inhalt, den sie produzieren." Welche Aussage ist am präzisesten?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q1_3" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q1_3" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q1_3" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q1_3" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q1_3" value="5" disabled> 5 – stimme voll und ganz zu</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="4" data-type="mc" data-correct="c" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.4 Welches Merkmal ist charakteristisch für generative KI-Modelle wie ChatGPT?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q1_4" value="a" required disabled> <span class="choice-prefix">a)</span> Sie können nur vordefinierte Aufgaben ausführen.</label>
-                            <label><input type="radio" name="q1_4" value="b" disabled> <span class="choice-prefix">b)</span> Sie lernen ausschließlich aus explizit programmierten Regeln.</label>
-                            <label><input type="radio" name="q1_4" value="c" disabled> <span class="choice-prefix">c)</span> Sie können neue, originäre Inhalte (Text, Bilder etc.) erzeugen.</label>
-                            <label><input type="radio" name="q1_4" value="d" disabled> <span class="choice-prefix">d)</span> Sie sind in der Lage, menschliches Bewusstsein zu simulieren.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="5" data-type="mc" data-correct="b" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.5 Was ist ein „Large Language Model“ (LLM)?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q1_5" value="a" required disabled> <span class="choice-prefix">a)</span> Ein großes physisches Buch, das alle bekannten Sprachen enthält.</label>
-                            <label><input type="radio" name="q1_5" value="b" disabled> <span class="choice-prefix">b)</span> Ein neuronales Netzwerk, das auf riesigen Mengen von Textdaten trainiert wurde.</label>
-                            <label><input type="radio" name="q1_5" value="c" disabled> <span class="choice-prefix">c)</span> Eine Software zur Übersetzung von einer Sprache in eine andere.</label>
-                            <label><input type="radio" name="q1_5" value="d" disabled> <span class="choice-prefix">d)</span> Ein Algorithmus zur Komprimierung von Textdateien.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="6" data-type="mc" data-correct="c" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.6 Ein KI-System lernt Katzen mit gelabelten Bildern zu erkennen. Welche Lernart ist das?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q1_6" value="a" required disabled> <span class="choice-prefix">a)</span> Unüberwachtes Lernen</label>
-                            <label><input type="radio" name="q1_6" value="b" disabled> <span class="choice-prefix">b)</span> Verstärkendes Lernen</label>
-                            <label><input type="radio" name="q1_6" value="c" disabled> <span class="choice-prefix">c)</span> Überwachtes Lernen</label>
-                            <label><input type="radio" name="q1_6" value="d" disabled> <span class="choice-prefix">d)</span> Generatives Lernen</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="7" data-type="mc" data-correct="b" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.7 Präziseste Erwiderung: „KI ist objektiv, da sie keine Emotionen hat.“</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q1_7" value="a" required disabled> <span class="choice-prefix">a)</span> Korrekt. Maschinen sind nicht voreingenommen.</label>
-                            <label><input type="radio" name="q1_7" value="b" disabled> <span class="choice-prefix">b)</span> Falsch. KI kann Bias aus Trainingsdaten widerspiegeln.</label>
-                            <label><input type="radio" name="q1_7" value="c" disabled> <span class="choice-prefix">c)</span> Teilweise richtig wegen Hackerangriffen.</label>
-                            <label><input type="radio" name="q1_7" value="d" disabled> <span class="choice-prefix">d)</span> Irrelevant, da immer Menschen prüfen.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="8" data-type="mc" data-correct="c" data-module="1" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 1 · Grundlegendes & Technisches Verständnis</span>1.8 Modellwahl bei Kundenabwanderung: wichtigster Faktor bzgl. Nachvollziehbarkeit?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q1_8" value="a" required disabled> <span class="choice-prefix">a)</span> Rechenleistung</label>
-                            <label><input type="radio" name="q1_8" value="b" disabled> <span class="choice-prefix">b)</span> Popularität</label>
-                            <label><input type="radio" name="q1_8" value="c" disabled> <span class="choice-prefix">c)</span> Erklärbarkeit und Interpretierbarkeit</label>
-                            <label><input type="radio" name="q1_8" value="d" disabled> <span class="choice-prefix">d)</span> Anzahl Datenpunkte</label>
+                            <label><input type="radio" name="q3" value="A" required disabled> A) Das ist korrekt. KI-Systeme entwickeln ein echtes Bewusstsein und Verständnis.</label>
+                            <label><input type="radio" name="q3" value="B" disabled> B) Das ist nicht ganz richtig. KI-Systeme erkennen Muster in riesigen Datenmengen und treffen darauf basierend Vorhersagen, ohne ein echtes "Verständnis" zu haben.</label>
+                            <label><input type="radio" name="q3" value="C" disabled> C) Das ist falsch. KI-Systeme sind nur einfache Wenn-Dann-Abfolgen und können nicht lernen.</label>
                         </div>
                     </div>
 
-                    <!-- Modul 2: Praktische Anwendung & Interaktion -->
-                    <div class="question-block quiz-step" data-step="9" data-type="likert" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.1 Ich kann für eine Aufgabe ein passendes KI-Tool auswählen.</p>
+                    <!-- Dimension 2: Anwendung -->
+                    <div class="question-block quiz-step" data-step="4" data-type="likert" data-module="Anwendung" style="display:none">
+                        <div class="module-divider"><span>Dimension 2: Praktische Anwendung & Interaktion</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie oft nutzt du KI-gestützte Werkzeuge (z.B. ChatGPT, Copilot, Midjourney, Grammarly, intelligente Suchen) bewusst bei deiner Arbeit?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q2_1" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q2_1" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q2_1" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q2_1" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q2_1" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q4" value="A" required disabled> A) Nie</label>
+                            <label><input type="radio" name="q4" value="B" disabled> B) Selten</label>
+                            <label><input type="radio" name="q4" value="C" disabled> C) Gelegentlich</label>
+                            <label><input type="radio" name="q4" value="D" disabled> D) Regelmäßig</label>
+                            <label><input type="radio" name="q4" value="E" disabled> E) Täglich</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="10" data-type="likert" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.2 Ich nutze Strategien, um die Qualität von KI-Antworten zu verbessern.</p>
+                    <div class="question-block quiz-step" data-step="5" data-type="scenario" data-module="Anwendung" style="display:none">
+                        <p class="question-title">Du möchtest mit einer Bild-KI ein Foto von "einem Astronauten auf einem Pferd" erstellen. Das erste Ergebnis wirkt wie ein Cartoon, du möchtest es aber fotorealistisch. Welcher Prompt wäre die beste Verbesserung?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q2_2" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q2_2" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q2_2" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q2_2" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q2_2" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q5" value="A" required disabled> A) "Mach ein besseres Bild."</label>
+                            <label><input type="radio" name="q5" value="B" disabled> B) "Astronaut auf einem Pferd, fotorealistisch, detailliert, 8k, studiolicht."</label>
+                            <label><input type="radio" name="q5" value="C" disabled> C) "Kein Cartoon, sondern ein Foto von einem Astronauten."</label>
+                            <label><input type="radio" name="q5" value="D" disabled> D) "Ich brauche ein Bild von einem Astronauten und einem Pferd."</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="11" data-type="likert" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.3 Ich kenne Anwendungsfälle in meinem Arbeitsumfeld.</p>
+                    <div class="question-block quiz-step" data-step="6" data-type="scenario" data-module="Anwendung" style="display:none">
+                        <p class="question-title">Du lässt eine KI einen langen Bericht für dich zusammenfassen. Was ist der wichtigste nächste Schritt, bevor du die Zusammenfassung verwendest?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q2_3" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q2_3" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q2_3" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q2_3" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q2_3" value="5" disabled> 5 – stimme voll und ganz zu</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="12" data-type="mc" data-correct="c" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.4 Formatierte Ausgabe von generativer KI erreichen Sie am besten durch …</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q2_4" value="a" required disabled> <span class="choice-prefix">a)</span> Wiederholt fragen, bis es passt.</label>
-                            <label><input type="radio" name="q2_4" value="b" disabled> <span class="choice-prefix">b)</span> Um Kreativität bitten.</label>
-                            <label><input type="radio" name="q2_4" value="c" disabled> <span class="choice-prefix">c)</span> Klare Formatvorgaben + Beispiel im Prompt.</label>
-                            <label><input type="radio" name="q2_4" value="d" disabled> <span class="choice-prefix">d)</span> Temperatur auf Maximum setzen.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="13" data-type="mc" data-correct="d" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.5 Ungeeigneter Anwendungsfall für öffentlichen Chatbot:</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q2_5" value="a" required disabled> <span class="choice-prefix">a)</span> Brainstorming Marketingidee</label>
-                            <label><input type="radio" name="q2_5" value="b" disabled> <span class="choice-prefix">b)</span> Artikel zusammenfassen</label>
-                            <label><input type="radio" name="q2_5" value="c" disabled> <span class="choice-prefix">c)</span> E-Mail formulieren</label>
-                            <label><input type="radio" name="q2_5" value="d" disabled> <span class="choice-prefix">d)</span> Interne Datei mit sensiblen Daten analysieren</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="14" data-type="mc" data-correct="b" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.6 Intelligenteste Nutzung bei Präsentation zu Markttrends?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q2_6" value="a" required disabled> <span class="choice-prefix">a)</span> Vollständig von KI generieren lassen.</label>
-                            <label><input type="radio" name="q2_6" value="b" disabled> <span class="choice-prefix">b)</span> KI für Struktur, Recherche und Formulierungen nutzen, Fakten prüfen.</label>
-                            <label><input type="radio" name="q2_6" value="c" disabled> <span class="choice-prefix">c)</span> Alles selbst schreiben, KI nur Korrektur.</label>
-                            <label><input type="radio" name="q2_6" value="d" disabled> <span class="choice-prefix">d)</span> KI komplett meiden.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="15" data-type="mc" data-correct="c" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.7 Produktivster nächster Schritt nach suboptimaler KI-Antwort?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q2_7" value="a" required disabled> <span class="choice-prefix">a)</span> Gleichen Prompt wiederholen.</label>
-                            <label><input type="radio" name="q2_7" value="b" disabled> <span class="choice-prefix">b)</span> Neuen Chat mit anderer Frage starten.</label>
-                            <label><input type="radio" name="q2_7" value="c" disabled> <span class="choice-prefix">c)</span> Spezifisches Feedback geben und Überarbeitung erbitten.</label>
-                            <label><input type="radio" name="q2_7" value="d" disabled> <span class="choice-prefix">d)</span> Antwort ignorieren, manuell erledigen.</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="16" data-type="mc" data-correct="b" data-module="2" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 2 · Praktische Anwendung & Interaktion</span>2.8 Am besten automatisierbar durch aktuelle KI-Systeme:</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q2_8" value="a" required disabled> <span class="choice-prefix">a)</span> Kritisches Feedbackgespräch führen</label>
-                            <label><input type="radio" name="q2_8" value="b" disabled> <span class="choice-prefix">b)</span> Entwurf des Team-Newsletters aus Stichpunkten erstellen</label>
-                            <label><input type="radio" name="q2_8" value="c" disabled> <span class="choice-prefix">c)</span> Finale Budgetentscheidung treffen</label>
-                            <label><input type="radio" name="q2_8" value="d" disabled> <span class="choice-prefix">d)</span> Vertrauensbeziehung aufbauen</label>
+                            <label><input type="radio" name="q6" value="A" required disabled> A) Auf Rechtschreibfehler prüfen.</label>
+                            <label><input type="radio" name="q6" value="B" disabled> B) Mit dem Original auf sachliche Korrektheit/ Auslassungen abgleichen.</label>
+                            <label><input type="radio" name="q6" value="C" disabled> C) In ein anderes Format (z.B. PDF) umwandeln.</label>
+                            <label><input type="radio" name="q6" value="D" disabled> D) Nichts, die KI macht das schon richtig.</label>
                         </div>
                     </div>
 
-                    <!-- Modul 3: Kritische Bewertung & Urteilsvermögen -->
-                    <div class="question-block quiz-step" data-step="17" data-type="likert" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.1 Ich prüfe KI-Informationen auf Richtigkeit, bevor ich sie verwende.</p>
+                    <!-- Dimension 3: Bewertung -->
+                    <div class="question-block quiz-step" data-step="7" data-type="likert" data-module="Bewertung" style="display:none">
+                        <div class="module-divider"><span>Dimension 3: Kritische Bewertung & Urteilsvermögen</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie sicher fühlst du dich, die Qualität und Vertrauenswürdigkeit von KI-generierten Inhalten (Texte, Bilder) zu bewerten?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q3_1" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q3_1" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q3_1" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q3_1" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q3_1" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q7" value="A" required disabled> A) Sehr unsicher</label>
+                            <label><input type="radio" name="q7" value="B" disabled> B) Eher unsicher</label>
+                            <label><input type="radio" name="q7" value="C" disabled> C) Neutral</label>
+                            <label><input type="radio" name="q7" value="D" disabled> D) Eher sicher</label>
+                            <label><input type="radio" name="q7" value="E" disabled> E) Sehr sicher</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="18" data-type="likert" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.2 Ich bin mir Bias in Trainingsdaten bewusst.</p>
+                    <div class="question-block quiz-step" data-step="8" data-type="single_choice" data-module="Bewertung" style="display:none">
+                        <p class="question-title">Der Begriff "KI-Halluzination" beschreibt am besten...</p>
                         <div class="answers">
-                            <label><input type="radio" name="q3_2" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q3_2" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q3_2" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q3_2" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q3_2" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q8" value="A" required disabled> A) ...kreatives Denken der KI.</label>
+                            <label><input type="radio" name="q8" value="B" disabled> B) ...eine Cybersicherheits-Attacke.</label>
+                            <label><input type="radio" name="q8" value="C" disabled> C) ...wenn eine KI überzeugend klingende, aber falsche Informationen ausgibt.</label>
+                            <label><input type="radio" name="q8" value="D" disabled> D) ...visuelle Effekte einer Bild-KI.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="19" data-type="likert" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.3 Ich kenne Strategien zur Verifizierung von KI-Informationen.</p>
+                    <div class="question-block quiz-step" data-step="9" data-type="scenario" data-module="Bewertung" style="display:none">
+                        <p class="question-title">Marktrecherche liefert überwiegend positive Daten zu einem Produkt und ignoriert negative Studien. Was ist die wahrscheinlichste Ursache?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q3_3" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q3_3" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q3_3" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q3_3" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q3_3" value="5" disabled> 5 – stimme voll und ganz zu</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="20" data-type="mc" data-correct="b" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.4 Wenn ein KI-Modell falsche Fakten erfindet, spricht man von …</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q3_4" value="a" required disabled> <span class="choice-prefix">a)</span> Software-Bug</label>
-                            <label><input type="radio" name="q3_4" value="b" disabled> <span class="choice-prefix">b)</span> Halluzination</label>
-                            <label><input type="radio" name="q3_4" value="c" disabled> <span class="choice-prefix">c)</span> Datenvergiftung</label>
-                            <label><input type="radio" name="q3_4" value="d" disabled> <span class="choice-prefix">d)</span> Algorithmischer Bias</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="21" data-type="mc" data-correct="b" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.5 Bevorzugung westlicher Namen in Bewerberauswahl ist …</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q3_5" value="a" required disabled> <span class="choice-prefix">a)</span> Mangelnde Rechenleistung</label>
-                            <label><input type="radio" name="q3_5" value="b" disabled> <span class="choice-prefix">b)</span> Algorithmischer Bias</label>
-                            <label><input type="radio" name="q3_5" value="c" disabled> <span class="choice-prefix">c)</span> Notwendige Korrelation</label>
-                            <label><input type="radio" name="q3_5" value="d" disabled> <span class="choice-prefix">d)</span> Zufälliger Fehler</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="22" data-type="mc" data-correct="c" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.6 Wichtigster Schritt vor Übernahme detaillierter KI-Infos in Bericht?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q3_6" value="a" required disabled> <span class="choice-prefix">a)</span> Umformulieren gegen Plagiat</label>
-                            <label><input type="radio" name="q3_6" value="b" disabled> <span class="choice-prefix">b)</span> Flüssigen Stil prüfen</label>
-                            <label><input type="radio" name="q3_6" value="c" disabled> <span class="choice-prefix">c)</span> Quellen und Fakten manuell verifizieren</label>
-                            <label><input type="radio" name="q3_6" value="d" disabled> <span class="choice-prefix">d)</span> KI nach Sicherheit fragen</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="23" data-type="mc" data-correct="b" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.7 CEO-Bilder: nur weiße Männer → Interpretation?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q3_7" value="a" required disabled> <span class="choice-prefix">a)</span> Prompt missverstanden</label>
-                            <label><input type="radio" name="q3_7" value="b" disabled> <span class="choice-prefix">b)</span> Bias in Trainingsdaten, Stereotype werden verstärkt</label>
-                            <label><input type="radio" name="q3_7" value="c" disabled> <span class="choice-prefix">c)</span> System defekt</label>
-                            <label><input type="radio" name="q3_7" value="d" disabled> <span class="choice-prefix">d)</span> Exakte Darstellung der Realität</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="24" data-type="mc" data-correct="c" data-module="3" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 3 · Kritische Bewertung & Urteilsvermögen</span>3.8 Sarkastische Rezension als „sehr positiv“ → Schwäche in …</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q3_8" value="a" required disabled> <span class="choice-prefix">a)</span> Verarbeitung großer Datenmengen</label>
-                            <label><input type="radio" name="q3_8" value="b" disabled> <span class="choice-prefix">b)</span> Mustererkennung</label>
-                            <label><input type="radio" name="q3_8" value="c" disabled> <span class="choice-prefix">c)</span> Verständnis von Kontext, Nuancen und Subtext</label>
-                            <label><input type="radio" name="q3_8" value="d" disabled> <span class="choice-prefix">d)</span> Geschwindigkeit der Analyse</label>
+                            <label><input type="radio" name="q9" value="A" required disabled> A) Die KI hat eine eigene Meinung.</label>
+                            <label><input type="radio" name="q9" value="B" disabled> B) Unausgewogener Datensatz (Bias) oder zu enger Prompt.</label>
+                            <label><input type="radio" name="q9" value="C" disabled> C) Die KI ist defekt.</label>
+                            <label><input type="radio" name="q9" value="D" disabled> D) Negative Studien sind schwerer zu verstehen.</label>
                         </div>
                     </div>
 
-                    <!-- Modul 4: Ethisches & Rechtliches Bewusstsein -->
-                    <div class="question-block quiz-step" data-step="25" data-type="likert" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.1 Ich kenne DSGVO-Grundanforderungen beim KI-Einsatz.</p>
+                    <!-- Dimension 4: Ethik & Recht -->
+                    <div class="question-block quiz-step" data-step="10" data-type="likert" data-module="Ethik_Recht" style="display:none">
+                        <div class="module-divider"><span>Dimension 4: Ethisches & Rechtliches Bewusstsein</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie vertraut bist du mit den ethischen und datenschutzrechtlichen (DSGVO) Herausforderungen beim Einsatz von KI?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q4_1" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q4_1" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q4_1" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q4_1" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q4_1" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q10" value="A" required disabled> A) Gar nicht vertraut</label>
+                            <label><input type="radio" name="q10" value="B" disabled> B) Wenig vertraut</label>
+                            <label><input type="radio" name="q10" value="C" disabled> C) Etwas vertraut</label>
+                            <label><input type="radio" name="q10" value="D" disabled> D) Ziemlich vertraut</label>
+                            <label><input type="radio" name="q10" value="E" disabled> E) Sehr vertraut</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="26" data-type="likert" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.2 Ich verstehe die Bedeutung von Transparenz und Erklärbarkeit.</p>
+                    <div class="question-block quiz-step" data-step="11" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Ein Kollege will Kundendaten in ein externes KI-Tool kopieren, um Ideen zu erhalten. Was ist die größte rechtliche Gefahr?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q4_2" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q4_2" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q4_2" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q4_2" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q4_2" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q11" value="A" required disabled> A) Das KI-Tool könnte falsche Ideen generieren.</label>
+                            <label><input type="radio" name="q11" value="B" disabled> B) Verstoß gegen DSGVO: personenbezogene Daten an Dritte.</label>
+                            <label><input type="radio" name="q11" value="C" disabled> C) Ergebnis könnte urheberrechtlich geschützt sein.</label>
+                            <label><input type="radio" name="q11" value="D" disabled> D) Server steht in einem anderen Land.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="27" data-type="likert" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.3 Ich kann ethische Fragestellungen erkennen und ansprechen.</p>
+                    <div class="question-block quiz-step" data-step="12" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Screening-Tool benachteiligt systematisch Bewerber aus bestimmten PLZ. Worauf deutet das hin?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q4_3" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q4_3" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q4_3" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q4_3" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q4_3" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q12" value="A" required disabled> A) Technischer Fehler im Algorithmus.</label>
+                            <label><input type="radio" name="q12" value="B" disabled> B) Bias in den Trainingsdaten → diskriminierende Ergebnisse.</label>
+                            <label><input type="radio" name="q12" value="C" disabled> C) Bewerber sind objektiv ungeeigneter.</label>
+                            <label><input type="radio" name="q12" value="D" disabled> D) Bewusste Entscheidung der Programmierer.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="28" data-type="mc" data-correct="c" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.4 Kernprinzip der KI-Ethik/EU AI Act:</p>
+                    <div class="question-block quiz-step" data-step="13" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Wer trägt in der Regel die Verantwortung für Ergebnisse, die du mit einem KI-Tool erzeugst und veröffentlichst?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q4_4" value="a" required disabled> <span class="choice-prefix">a)</span> Gewinne maximieren um jeden Preis</label>
-                            <label><input type="radio" name="q4_4" value="b" disabled> <span class="choice-prefix">b)</span> Vollständige Autonomie ohne Aufsicht</label>
-                            <label><input type="radio" name="q4_4" value="c" disabled> <span class="choice-prefix">c)</span> Menschliche Aufsicht und Kontrolle</label>
-                            <label><input type="radio" name="q4_4" value="d" disabled> <span class="choice-prefix">d)</span> Geheimhaltung von Algorithmen</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="29" data-type="mc" data-correct="b" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.5 Wesentliche Anforderung an KI für Kreditentscheidungen:</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q4_5" value="a" required disabled> <span class="choice-prefix">a)</span> Schnellste Entscheidungen</label>
-                            <label><input type="radio" name="q4_5" value="b" disabled> <span class="choice-prefix">b)</span> Diskriminierung vermeiden, faire Ergebnisse</label>
-                            <label><input type="radio" name="q4_5" value="c" disabled> <span class="choice-prefix">c)</span> Nur eigene Daten verwenden</label>
-                            <label><input type="radio" name="q4_5" value="d" disabled> <span class="choice-prefix">d)</span> Für Endnutzer kostenlos</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="30" data-type="mc" data-correct="c" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.6 Tool will alle Eingaben fürs Training nutzen. Vorgehen?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q4_6" value="a" required disabled> <span class="choice-prefix">a)</span> Sofort breit einführen</label>
-                            <label><input type="radio" name="q4_6" value="b" disabled> <span class="choice-prefix">b)</span> Nur mit fiktiven Daten testen</label>
-                            <label><input type="radio" name="q4_6" value="c" disabled> <span class="choice-prefix">c)</span> Nutzung unterlassen und IT/Recht konsultieren</label>
-                            <label><input type="radio" name="q4_6" value="d" disabled> <span class="choice-prefix">d)</span> Nutzen, aber keine wichtigen Infos eingeben</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="31" data-type="mc" data-correct="c" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.7 Personalplanung: Mitarbeitenden übergehen wegen „Ausfallrisiko“. Reaktion?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q4_7" value="a" required disabled> <span class="choice-prefix">a)</span> Empfehlung akzeptieren</label>
-                            <label><input type="radio" name="q4_7" value="b" disabled> <span class="choice-prefix">b)</span> Empfehlung ignorieren, nur Bauchgefühl</label>
-                            <label><input type="radio" name="q4_7" value="c" disabled> <span class="choice-prefix">c)</span> KI nur als einen Faktor nutzen, ganzheitlich fair entscheiden</label>
-                            <label><input type="radio" name="q4_7" value="d" disabled> <span class="choice-prefix">d)</span> Mitarbeitenden nach Gefühl fragen</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="32" data-type="mc" data-correct="b" data-module="4" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 4 · Ethisches & Rechtliches Bewusstsein</span>4.8 Tastaturüberwachung zur Produktivitätsmessung: Hauptanliegen?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q4_8" value="a" required disabled> <span class="choice-prefix">a)</span> Technische Robustheit/Sicherheit</label>
-                            <label><input type="radio" name="q4_8" value="b" disabled> <span class="choice-prefix">b)</span> Recht auf Privatsphäre, unverhältnismäßige Überwachung</label>
-                            <label><input type="radio" name="q4_8" value="c" disabled> <span class="choice-prefix">c)</span> Ökologische Nachhaltigkeit</label>
-                            <label><input type="radio" name="q4_8" value="d" disabled> <span class="choice-prefix">d)</span> Vielfalt und Inklusion</label>
+                            <label><input type="radio" name="q13" value="A" required disabled> A) Der Entwickler des KI-Tools.</label>
+                            <label><input type="radio" name="q13" value="B" disabled> B) Niemand, da von Maschine erzeugt.</label>
+                            <label><input type="radio" name="q13" value="C" disabled> C) Ich als Anwender, der freigibt.</label>
+                            <label><input type="radio" name="q13" value="D" disabled> D) Das Unternehmen.</label>
                         </div>
                     </div>
 
-                    <!-- Modul 5: Strategische & Gesellschaftliche Perspektive -->
-                    <div class="question-block quiz-step" data-step="33" data-type="likert" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.1 Ich verfolge aktiv KI-Auswirkungen auf den Arbeitsmarkt.</p>
+                    <!-- Dimension 5: Strategie -->
+                    <div class="question-block quiz-step" data-step="14" data-type="likert" data-module="Strategie" style="display:none">
+                        <div class="module-divider"><span>Dimension 5: Strategische & Gesellschaftliche Perspektive</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Inwieweit fühlst du dich in der Lage, Chancen und Risiken von KI für dein Arbeitsumfeld und das Unternehmen einzuschätzen?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q5_1" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q5_1" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q5_1" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q5_1" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q5_1" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q14" value="A" required disabled> A) Gar nicht</label>
+                            <label><input type="radio" name="q14" value="B" disabled> B) Kaum</label>
+                            <label><input type="radio" name="q14" value="C" disabled> C) Teils / teils</label>
+                            <label><input type="radio" name="q14" value="D" disabled> D) Größtenteils</label>
+                            <label><input type="radio" name="q14" value="E" disabled> E) Voll und ganz</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="34" data-type="likert" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.2 Ich bin mir gesellschaftlicher Risiken (z. B. Deepfakes) bewusst.</p>
+                    <div class="question-block quiz-step" data-step="15" data-type="scenario" data-module="Strategie" style="display:none">
+                        <p class="question-title">Wenn wir über den Einsatz von KI zur Automatisierung von Routineaufgaben sprechen – welches Beispiel ist am treffendsten?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q5_2" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q5_2" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q5_2" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q5_2" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q5_2" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q15" value="A" required disabled> A) KI brainstormt eine neue Produktlinie.</label>
+                            <label><input type="radio" name="q15" value="B" disabled> B) KI kategorisiert E-Mails automatisch und leitet sie weiter.</label>
+                            <label><input type="radio" name="q15" value="C" disabled> C) KI führt ein komplexes Mitarbeitergespräch.</label>
+                            <label><input type="radio" name="q15" value="D" disabled> D) KI trifft die finale Unternehmensstrategie.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="35" data-type="likert" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.3 Ich sehe KI als Treiber für neue Geschäftsmodelle.</p>
+                    <div class="question-block quiz-step" data-step="16" data-type="scenario" data-module="Strategie" style="display:none">
+                        <p class="question-title">Welche Aussage beschreibt die größte Chance von KI für Unternehmen am besten?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q5_3" value="1" required disabled> 1 – stimme überhaupt nicht zu</label>
-                            <label><input type="radio" name="q5_3" value="2" disabled> 2</label>
-                            <label><input type="radio" name="q5_3" value="3" disabled> 3</label>
-                            <label><input type="radio" name="q5_3" value="4" disabled> 4</label>
-                            <label><input type="radio" name="q5_3" value="5" disabled> 5 – stimme voll und ganz zu</label>
+                            <label><input type="radio" name="q16" value="A" required disabled> A) Vollständige Abschaffung menschlicher Arbeit.</label>
+                            <label><input type="radio" name="q16" value="B" disabled> B) Effizienzsteigerung durch Automatisierung + Unterstützung bei komplexen Entscheidungen.</label>
+                            <label><input type="radio" name="q16" value="C" disabled> C) Erstellung lustiger Katzenbilder.</label>
+                            <label><input type="radio" name="q16" value="D" disabled> D) Reduzierung der Serverkosten.</label>
                         </div>
                     </div>
-                    <div class="question-block quiz-step" data-step="36" data-type="mc" data-correct="b" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.4 Sorge, dass KI Intelligenz übertrifft, wird genannt …</p>
+                    <div class="question-block quiz-step" data-step="17" data-type="mood" data-module="Strategie" style="display:none">
+                        <p class="question-title">Welche Emotion beschreibt deine Haltung zur Zukunft mit KI am ehesten?</p>
                         <div class="answers">
-                            <label><input type="radio" name="q5_4" value="a" required disabled> <span class="choice-prefix">a)</span> Mooresches Gesetz</label>
-                            <label><input type="radio" name="q5_4" value="b" disabled> <span class="choice-prefix">b)</span> Technologische Singularität</label>
-                            <label><input type="radio" name="q5_4" value="c" disabled> <span class="choice-prefix">c)</span> Turing-Test</label>
-                            <label><input type="radio" name="q5_4" value="d" disabled> <span class="choice-prefix">d)</span> Algorithmische Konvergenz</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="37" data-type="mc" data-correct="c" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.5 Historische technologische Revolutionen zeigen …</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q5_5" value="a" required disabled> <span class="choice-prefix">a)</span> Nur Verlust von Arbeitsplätzen</label>
-                            <label><input type="radio" name="q5_5" value="b" disabled> <span class="choice-prefix">b)</span> Keine Auswirkungen</label>
-                            <label><input type="radio" name="q5_5" value="c" disabled> <span class="choice-prefix">c)</span> Verdrängung und Schaffung neuer Tätigkeiten</label>
-                            <label><input type="radio" name="q5_5" value="d" disabled> <span class="choice-prefix">d)</span> Reduzierte Arbeitszeit für alle</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="38" data-type="mc" data-correct="b" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.6 Differenzierteste Perspektive: „KI übernimmt alle Jobs“</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q5_6" value="a" required disabled> <span class="choice-prefix">a)</span> Unbegründet; betrifft wenige Berufe</label>
-                            <label><input type="radio" name="q5_6" value="b" disabled> <span class="choice-prefix">b)</span> Automatisiert Aufgaben, nicht ganze Berufe</label>
-                            <label><input type="radio" name="q5_6" value="c" disabled> <span class="choice-prefix">c)</span> Führt zu Massenarbeitslosigkeit</label>
-                            <label><input type="radio" name="q5_6" value="d" disabled> <span class="choice-prefix">d)</span> Nur manuelle Tätigkeiten sicher</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="39" data-type="mc" data-correct="b" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.7 Freigesetzte Kapazitäten: strategische Chance?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q5_7" value="a" required disabled> <span class="choice-prefix">a)</span> Personalkosten reduzieren</label>
-                            <label><input type="radio" name="q5_7" value="b" disabled> <span class="choice-prefix">b)</span> Mitarbeitende für komplexe, wertschöpfende Aufgaben einsetzen</label>
-                            <label><input type="radio" name="q5_7" value="c" disabled> <span class="choice-prefix">c)</span> Kundenservice komplett verlagern</label>
-                            <label><input type="radio" name="q5_7" value="d" disabled> <span class="choice-prefix">d)</span> Nur textbasierter Support</label>
-                        </div>
-                    </div>
-                    <div class="question-block quiz-step" data-step="40" data-type="mc" data-correct="c" data-module="5" style="display:none">
-                        <p class="question-title"><span class="module-label">Modul 5 · Strategische & Gesellschaftliche Perspektive</span>5.8 Video mit kontroverser Aussage wirkt echt. Verantwortungsvolle Reaktion?</p>
-                        <div class="answers">
-                            <label><input type="radio" name="q5_8" value="a" required disabled> <span class="choice-prefix">a)</span> Sofort teilen</label>
-                            <label><input type="radio" name="q5_8" value="b" disabled> <span class="choice-prefix">b)</span> Kommentieren und zustimmen/widersprechen</label>
-                            <label><input type="radio" name="q5_8" value="c" disabled> <span class="choice-prefix">c)</span> Skeptisch bleiben, verifizieren, nicht sofort teilen</label>
-                            <label><input type="radio" name="q5_8" value="d" disabled> <span class="choice-prefix">d)</span> Ignorieren</label>
+                            <label><input type="radio" name="q17" value="A" required disabled> A) Besorgnis / Angst</label>
+                            <label><input type="radio" name="q17" value="B" disabled> B) Skepsis / Unsicherheit</label>
+                            <label><input type="radio" name="q17" value="C" disabled> C) Neutrale Erwartung</label>
+                            <label><input type="radio" name="q17" value="D" disabled> D) Neugier / Interesse</label>
+                            <label><input type="radio" name="q17" value="E" disabled> E) Optimismus / Begeisterung</label>
                         </div>
                     </div>
 
@@ -804,7 +592,7 @@
         });
     </script>
     <script>
-        // Quiz evaluation (40-step sequential flow with progress)
+        // Quiz evaluation (17-step with modules, feedback, and subscores)
         (function(){
             const form = document.getElementById('quizForm');
             if(!form) return;
@@ -818,10 +606,53 @@
             };
             updateCounter(0);
 
+            // Scoring map per type
+            const likertMap = { A:1, B:2, C:3, D:4, E:5 };
+            // Correct answers and feedback per non-likert
+            const correctMap = {
+                q2:'C', q3:'B', q5:'B', q6:'B', q8:'C', q9:'B', q11:'B', q12:'B', q13:'C', q15:'B', q16:'B'
+            };
+            const feedbackMap = {
+                q2:{C:'Richtig: LLMs modellieren Sprache und generieren wahrscheinliche Wortfolgen.', default:'Hinweis: LLMs generieren Sprache; Bilder/Videos erstellt eine Bild-/Video-KI.'},
+                q3:{B:'Richtig: Muster und Statistik, kein „Verständnis“ im menschlichen Sinn.', default:'KI erkennt Muster und Vorhersagen, aber kein echtes Bewusstsein.'},
+                q5:{B:'Richtig: Klare Parameter + Stilhinweise führen zu fotorealistischen Ergebnissen.', default:'Besser: klare Stil-/Qualitätsangaben (fotorealistisch, Licht, Auflösung).'},
+                q6:{B:'Richtig: Immer Abgleich mit der Quelle auf Vollständigkeit/Korrektheit.', default:'Wichtig: Inhalte kritisch prüfen und mit Original abgleichen.'},
+                q8:{C:'Richtig: „Halluzination“ = überzeugend, aber falsch.', default:'Achte auf plausible, aber falsche Aussagen – das nennt man Halluzination.'},
+                q9:{B:'Richtig: Bias/Prompting kann zu einseitigen Ergebnissen führen.', default:'Vermutlich Bias im Datensatz oder zu enger Prompt.'},
+                q11:{B:'Richtig: DSGVO-Risiko bei personenbezogenen Daten an Dritte.', default:'Achtung: Personenbezogene Daten nicht in externe Tools kopieren.'},
+                q12:{B:'Richtig: Trainingsbias → diskriminierende Resultate.', default:'Hinweis: Verzerrte Trainingsdaten können diskriminieren.'},
+                q13:{C:'Richtig: Verantwortung liegt in der Regel beim freigebenden Anwender/Unternehmen.', default:'Üblicherweise trägt der freigebende Anwender bzw. das Unternehmen Verantwortung.'},
+                q15:{B:'Richtig: E-Mails klassifizieren/weiterleiten = typischer Automatisierungsfall.', default:'Automatisierung zielt auf wiederkehrende Routineaufgaben.'},
+                q16:{B:'Richtig: Effizienz + Assistenz bei Entscheidungen sind Hauptchancen.', default:'Größte Chance: Effizienz plus bessere Entscheidungen.'}
+            };
+
+            // Sequential reveal + inline feedback
             steps.forEach((step, idx) => {
                 step.addEventListener('change', () => {
-                    const answered = step.querySelector('input[type="radio"]:checked');
-                    if(!answered) return;
+                    const input = step.querySelector('input[type="radio"]:checked');
+                    if(!input) return;
+                    const qName = input.name;
+                    const type = step.dataset.type;
+
+                    // feedback node
+                    let fb = step.querySelector('.answer-feedback');
+                    if(!fb){
+                        fb = document.createElement('div');
+                        fb.className = 'answer-feedback';
+                        step.appendChild(fb);
+                    }
+                    if(type === 'likert' || type === 'mood'){
+                        fb.textContent = 'Antwort gespeichert.';
+                        fb.className = 'answer-feedback saved';
+                    } else {
+                        const correct = correctMap[qName];
+                        const isCorrect = correct && input.value === correct;
+                        const fbt = feedbackMap[qName];
+                        const text = (fbt && (isCorrect ? fbt[correct] : fbt.default)) || (isCorrect ? 'Richtig.' : 'Nicht ganz.');
+                        fb.textContent = text;
+                        fb.className = 'answer-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                    }
+
                     const next = steps[idx+1];
                     if(next){
                         next.style.display = '';
@@ -836,48 +667,74 @@
 
             form.addEventListener('submit', function(e){
                 e.preventDefault();
-                const data = new FormData(form);
-                // Scoring: Likert (1-5) accumulate; MC (correct=1 else 0)
-                let moduleScores = {1:0,2:0,3:0,4:0,5:0};
-                let moduleMax = {1:0,2:0,3:0,4:0,5:0};
+                const stepsLocal = steps;
+                // Dimension buckets
+                const dims = ['Grundlagen','Anwendung','Bewertung','Ethik_Recht','Strategie'];
+                const scores = { Grundlagen:0, Anwendung:0, Bewertung:0, Ethik_Recht:0, Strategie:0 };
+                const maxes  = { Grundlagen:0, Anwendung:0, Bewertung:0, Ethik_Recht:0, Strategie:0 };
 
-                steps.forEach(step => {
+                stepsLocal.forEach(step => {
                     const type = step.dataset.type;
-                    const module = parseInt(step.dataset.module,10);
-                    const input = step.querySelector('input[type="radio"]:checked');
-                    if(!input) return;
+                    const mod = step.dataset.module;
+                    const selected = step.querySelector('input[type="radio"]:checked');
+                    if(!selected) return;
+
                     if(type === 'likert'){
-                        const val = parseInt(input.value,10) || 0;
-                        moduleScores[module] += val;
-                        moduleMax[module] += 5;
-                    } else if(type === 'mc'){
-                        const correct = step.dataset.correct;
-                        moduleScores[module] += (input.value === correct) ? 1 : 0;
-                        moduleMax[module] += 1;
+                        scores[mod] += likertMap[selected.value] || 0;
+                        maxes[mod]  += 5;
+                    } else if(type === 'single_choice' || type === 'scenario'){
+                        const qName = selected.name;
+                        const isCorrect = selected.value === (correctMap[qName] || '');
+                        scores[mod] += isCorrect ? 1 : 0;
+                        maxes[mod]  += 1;
+                    } else if(type === 'mood'){
+                        // Neutral contribution (captures Haltung, nicht „richtig/falsch“)
+                        const moodMap = { A:1, B:2, C:3, D:4, E:5 };
+                        scores[mod] += moodMap[selected.value] || 0;
+                        maxes[mod]  += 5;
                     }
                 });
 
-                // Compute overall level based on normalized average across modules
-                let totalPct = 0; let mods = 0;
-                Object.keys(moduleScores).forEach(k=>{
-                    const max = moduleMax[k]||0;
-                    if(max>0){
-                        totalPct += (moduleScores[k] / max);
-                        mods++;
-                    }
+                // Normalize to 0..1 per dimension and compute overall avg
+                let totalPct = 0; let count = 0;
+                const percent = {};
+                Object.keys(scores).forEach(k => {
+                    const p = maxes[k] ? (scores[k] / maxes[k]) : 0;
+                    percent[k] = p;
+                    if(maxes[k] > 0){ totalPct += p; count++; }
                 });
-                const avgPct = mods ? (totalPct / mods) : 0;
+                const avgPct = count ? totalPct / count : 0;
 
-                // Map to 3 levels like before, but smoother thresholds
+                // Map overall to 3 levels
                 let level = 1;
-                if(avgPct >= 0.45) level = 2; // solider Einstieg
-                if(avgPct >= 0.7) level = 3;  // fortgeschritten
+                if(avgPct >= 0.45) level = 2;
+                if(avgPct >= 0.7) level = 3;
 
+                // Render results
                 form.style.display = 'none';
                 const container = document.getElementById('resultsContainer');
                 container.style.display = 'block';
                 const card = document.getElementById('result-' + level);
-                if(card){ card.hidden = false; }
+                if(card){
+                    card.hidden = false;
+                    // Inject subscores list
+                    let subs = card.querySelector('.subscores');
+                    if(!subs){
+                        subs = document.createElement('div');
+                        subs.className = 'subscores';
+                        const h = document.createElement('h4');
+                        h.textContent = 'Teilbereiche (Subscores)';
+                        const ul = document.createElement('ul');
+                        Object.entries(percent).forEach(([k,v]) => {
+                            const li = document.createElement('li');
+                            li.textContent = `${k}: ${Math.round(v*100)}%`;
+                            ul.appendChild(li);
+                        });
+                        subs.appendChild(h);
+                        subs.appendChild(ul);
+                        card.appendChild(subs);
+                    }
+                }
             });
         })();
     </script>
