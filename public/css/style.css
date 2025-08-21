@@ -311,10 +311,16 @@ h2 { text-align: center; margin-bottom: 55px; }
 /* Tech section */
 .tech-section { max-width: 1000px; margin: 4rem auto 6rem; padding: 2rem; background: #0f2242; border-left: 5px solid var(--accent-color); border-radius: 8px; }
 .tech-section h3 { font-size: 1.6rem; margin-top: 0; }
-.tech-logos { display:flex; gap: 2.2rem; justify-content:center; align-items:center; margin: 1.2rem auto 0; filter: grayscale(100%); opacity:.85; flex-wrap: wrap; }
-.tech-logos img { height: 42px; max-width: 160px; width: auto; object-fit: contain; object-position: center; }
+.tech-logos { display:flex; gap: 3rem; justify-content:center; align-items:center; margin: 1.2rem auto 0; filter: grayscale(100%); opacity:.85; flex-wrap: wrap; }
+.tech-logos img { height: 54px; max-width: 200px; width: auto; object-fit: contain; object-position: center; }
+/* Make AWS a tick larger */
+.tech-logos img[alt*="AWS" i],
+.tech-logos img[src*="aws" i] { height: 60px; }
 @media (min-width: 900px){
-    .tech-logos img { height: 50px; }
+    .tech-logos { gap: 3.5rem; }
+    .tech-logos img { height: 68px; }
+    .tech-logos img[alt*="AWS" i],
+    .tech-logos img[src*="aws" i] { height: 75px; }
 }
 
 /* Scroll Progress Bar */
