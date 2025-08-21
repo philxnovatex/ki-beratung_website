@@ -14,17 +14,11 @@
   border-bottom: 1px solid #1e293b;
 }
 .ki-apps__title {
-  font-size: 2.8rem; /* align with global h2 */
-  line-height: 1.2;
+  font-size: var(--unified-heading-size, 2.4rem);
+  line-height: 1.25;
   text-align: center;
-  margin: 0 0 2.5rem;
-  position: relative;
-  --underline-h: 4px;
-  background: linear-gradient(90deg,var(--ntx-accent),var(--ntx-accent)) bottom center/0% var(--underline-h) no-repeat;
-  transition: background-size .8s ease .15s, letter-spacing .6s ease;
+  margin: 0 0 55px;
 }
-.prefers-reduced-motion .ki-apps__title { transition: none; }
-.ki-apps-section.revealed .ki-apps__title { background-size: 90% var(--underline-h); letter-spacing: .5px; }
 
 .ki-apps__intro {
   max-width: 900px;

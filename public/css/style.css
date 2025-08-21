@@ -58,14 +58,15 @@
     pointer-events: none;
 }
 .problem-section::before {
-        /* Left accent bar is the first background layer */
-        background:
-            linear-gradient(to right, var(--accent-color), rgba(255,201,71,0)) left top / 6px 100% no-repeat,
-            radial-gradient(circle at 50% 20%, rgba(24,90,219,0.35), transparent 60%),
-            radial-gradient(circle at 80% 70%, rgba(255,201,71,0.18), transparent 65%);
-        mix-blend-mode: screen;
-        opacity: .55;
-        animation: barPulse 4s ease-in-out infinite;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    background: linear-gradient(var(--accent-color), rgba(255,201,71,0));
+    border-radius: 3px;
+    animation: barPulse 4s ease-in-out infinite;
 }
 .problem-section::after {
     background: linear-gradient(to bottom, rgba(10,25,49,0) 0%, rgba(10,25,49,0.85) 90%);
@@ -92,7 +93,7 @@
     filter: drop-shadow(0 0 6px rgba(255,201,71,0.6));
 }
 .problem-line.show::after { transform: translateY(-50%) scale(1); opacity: 1; }
-.problem-line.show { text-shadow: 0 0 20px rgba(255,201,71,0.25), 0 0 6px rgba(24,90,219,0.55); }
+.problem-line.show { text-shadow: 0 0 14px rgba(255,201,71,0.18), 0 0 4px rgba(24,90,219,0.35); }
 .problem-line.highlight { letter-spacing: .5px; }
 .problem-line.accent { letter-spacing: .5px; }
 .problem-line.small { font-weight:500; }
@@ -281,8 +282,8 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 /* Scroll Progress Bar */
-.scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; }
-.scroll-progress.active { transform:scaleY(1); }
+.scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; opacity:0; }
+.scroll-progress.active { transform:scaleY(1); opacity:1; }
 
 /* Enhanced Service Cards + Icons */
 .services-grid .service-card { opacity:0; transform:translateY(60px) scale(.97); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1), box-shadow .3s; box-shadow:0 2px 12px rgba(30,41,59,.08); }

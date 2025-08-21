@@ -275,15 +275,26 @@
 
         // Scroll Progress
         const scrollBar = document.getElementById('scroll-progress');
+        const problemEl = document.getElementById('problem');
+        let progressActive = false;
         function updateScrollBar(){
+            if(!progressActive) return;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = docHeight > 0 ? scrollTop / docHeight : 0;
             scrollBar.style.transform = `scaleY(${progress})`;
             scrollBar.classList.add('active');
         }
+        function checkActivateBar(){
+            const rect = problemEl.getBoundingClientRect();
+            if(rect.top <= window.innerHeight * 0.9){
+                progressActive = true;
+                updateScrollBar();
+                window.removeEventListener('scroll', checkActivateBar);
+            }
+        }
         window.addEventListener('scroll', updateScrollBar, { passive: true });
-        updateScrollBar();
+        window.addEventListener('scroll', checkActivateBar, { passive: true });
     </script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
