@@ -277,7 +277,7 @@
         const scrollBar = document.getElementById('scroll-progress');
         const problemEl = document.getElementById('problem');
         let progressActive = false;
-        function updateScrollBar(){
+    function updateScrollBar(){
             if(!progressActive) return;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -289,6 +289,7 @@
             const rect = problemEl.getBoundingClientRect();
             if(rect.top <= window.innerHeight * 0.9){
                 progressActive = true;
+        scrollBar.style.display = 'block';
                 updateScrollBar();
                 window.removeEventListener('scroll', checkActivateBar);
             }

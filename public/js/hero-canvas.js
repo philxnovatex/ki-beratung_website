@@ -12,13 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1600);
     camera.position.z = isHero ? 430 : 260;
 
-    if(isHero){
-      const gradGeo = new THREE.PlaneGeometry(1600, 1600);
-      const gradMat = new THREE.MeshBasicMaterial({ color: 0x0b1733, transparent: true, opacity: 0.55 });
-      const plane = new THREE.Mesh(gradGeo, gradMat);
-      plane.position.z = -420;
-      scene.add(plane);
-    }
+  // No extra background plane; rely on CSS background to avoid left tint bands
 
     const group = new THREE.Group();
     scene.add(group);

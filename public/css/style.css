@@ -246,7 +246,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 .hero-section {
     text-align: center;
     padding: 120px 0;
-    background: radial-gradient(circle at top left, #10316b, var(--primary-color));
+    background: linear-gradient(180deg, #0b1e3a 0%, var(--primary-color) 100%);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -283,7 +283,8 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 /* Scroll Progress Bar */
 .scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; opacity:0; }
-.scroll-progress.active { transform:scaleY(1); opacity:1; }
+    .scroll-progress { position: fixed; left:0; top:0; width:6px; height:100vh; background:linear-gradient(180deg,var(--accent-color) 0%, #1e293b 100%); border-radius:0 8px 8px 0; z-index:1500; transform:scaleY(0); transform-origin:top; transition:transform .2s; opacity:0; display:none; }
+    .scroll-progress.active { transform:scaleY(1); opacity:1; display:block; }
 
 /* Enhanced Service Cards + Icons */
 .services-grid .service-card { opacity:0; transform:translateY(60px) scale(.97); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1), box-shadow .3s; box-shadow:0 2px 12px rgba(30,41,59,.08); }
