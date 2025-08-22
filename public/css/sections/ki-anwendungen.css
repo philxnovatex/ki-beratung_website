@@ -73,20 +73,13 @@
 
 /* Media placeholder */
 .ki-apps__media { margin: -0.5rem -0.5rem 1rem; padding:0; }
-.ki-apps__img-ph {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 10px;
-  background:
-    linear-gradient(135deg, rgba(24,90,219,0.25), rgba(255,201,71,0.18)),
-    repeating-linear-gradient(60deg, rgba(255,255,255,0.05) 0 8px, transparent 8px 16px),
-    #10233f;
-  position: relative;
-  overflow: hidden;
-}
-.ki-apps__img-ph::after {
-  content:""; position:absolute; inset:0; background: linear-gradient(120deg, transparent 0%, rgba(255,201,71,0.15) 40%, transparent 80%); transform: translateX(-100%); animation: phShine 4.5s linear infinite; mix-blend-mode: screen;
-}
+.ki-apps__img { width:100%; height:auto; display:block; aspect-ratio:16/9; object-fit:cover; border-radius:10px; background-color:#10233f; }
+/* Fallback animation kept for cards without an image */
+.ki-apps__img-ph { width: 100%; aspect-ratio: 16/9; border-radius: 10px; background:
+  linear-gradient(135deg, rgba(24,90,219,0.25), rgba(255,201,71,0.18)),
+  repeating-linear-gradient(60deg, rgba(255,255,255,0.05) 0 8px, transparent 8px 16px),
+  #10233f; position: relative; overflow: hidden; }
+.ki-apps__img-ph::after { content:""; position:absolute; inset:0; background: linear-gradient(120deg, transparent 0%, rgba(255,201,71,0.15) 40%, transparent 80%); transform: translateX(-100%); animation: phShine 4.5s linear infinite; mix-blend-mode: screen; }
 @keyframes phShine { to { transform: translateX(100%); } }
 
 .ki-apps__card.in-view { opacity: 1; transform: translateY(0); }
