@@ -26,14 +26,56 @@
   </header>
 
   <main>
-    <section class="page-hero">
-      <div class="container">
-        <h1>Das Neuratex‑Prinzip</h1>
-        <p class="subtitle">Ein erprobtes Beratungsframework, um KI‑Projekte strategisch, technologisch und organisatorisch zum Erfolg zu führen. Hier erklären wir die drei Phasen und wie Sie echten, nachhaltigen Geschäftsnutzen erzielen.</p>
+    <!-- Full-width hero for the Lernplattform -->
+    <section class="page-hero hero-fullwidth" style="padding:80px 0; background:linear-gradient(180deg,#07142a,#0b2540);">
+      <div class="container" style="max-width:1200px; text-align:center;">
+        <h1 style="color:#fff; font-size:2.6rem; margin-bottom:8px;">Ihre KI Lernplattform</h1>
+        <p class="subtitle" style="color:#cbd5e1; font-size:1.1rem; max-width:900px; margin:0 auto">Lernen Sie die Grundlagen, Konzepte und Praxistricks rund um Künstliche Intelligenz – kompakt, verständlich und einsatzbereit.</p>
       </div>
     </section>
 
-    <!-- Drei Schritte (links → rechts) -->
+    <!-- Podcast directly under hero -->
+    <section class="podcast-section" aria-labelledby="podcast-heading">
+      <div class="container">
+        <div class="podcast-banner" role="region" aria-labelledby="podcast-heading">
+          <h2 id="podcast-heading">KI Grundlagen, erklärt von KI</h2>
+          <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfährst du die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
+        </div>
+
+        <div class="podcast-player" style="text-align:center; margin-top:18px;">
+          <audio id="ki-podcast-audio" controls preload="none" controlsList="nodownload">
+            <source src="audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
+            <source src="audio/ki-podcast.m4a" type="audio/mp4">
+            <source src="audio/ki-podcast.mp3" type="audio/mpeg">
+            Ihr Browser unterstützt das Audio‑Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modern 'under construction' banner -->
+    <section class="site-note-spotlight" aria-hidden="false" style="padding:20px 0;">
+      <div class="container">
+        <div class="site-note-modern" role="status" aria-live="polite" style="display:flex; gap:16px; align-items:center; justify-content:space-between; background:linear-gradient(90deg,#0f2344, #112240); color:#e6f0ff; padding:18px; border-radius:12px; box-shadow:0 12px 30px rgba(4,8,20,0.5);">
+          <div style="display:flex; gap:14px; align-items:center;">
+            <div style="width:52px; height:52px; background:linear-gradient(135deg,var(--accent-color), #ff8a4b); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+              <!-- simple futuristic icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 12h18" stroke="#07142a" stroke-width="1.6" stroke-linecap="round"/><path d="M7 8h10v8H7z" fill="#07142a" opacity="0.06"/></svg>
+            </div>
+            <div>
+              <strong style="display:block; font-size:1.05rem;">Website im Aufbau</strong>
+              <span style="display:block; color:#9fb3d9;">Zahlreiche neue Inhalte zur Lernplattform kommen in Kürze. Bleiben Sie dran.</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <a class="cta-button" href="lernplattform.html#whitepaper" style="background:var(--accent-color); color:var(--primary-color);">Whitepaper anfordern</a>
+            <button class="site-note-dismiss" aria-label="Hinweis schließen" style="background:transparent; border:1px solid rgba(255,255,255,0.06); color:#e6f0ff; padding:8px 10px; border-radius:8px;">Schließen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Now the Neuratex principle and form -->
     <section class="principles-overview" aria-labelledby="principles-heading">
       <div class="container">
         <h2 id="principles-heading" style="text-align:center; margin-bottom:1rem">Die drei Phasen</h2>
@@ -57,7 +99,6 @@
       </div>
     </section>
 
-    <!-- Zweispaltiges Layout: links Text + Gründe, rechts Kontaktformular -->
     <section class="lead-gen-section">
       <div class="container lead-gen-flex" style="display:flex; gap:40px; align-items:flex-start;">
         <div class="lead-gen-text" style="flex:1;">
@@ -75,7 +116,7 @@
         </div>
 
         <div class="lead-gen-form-container" style="flex-basis:380px;">
-          <h3>Neuratex‑Prinzip anfordern</h3>
+          <h3 id="whitepaper">Neuratex‑Prinzip anfordern</h3>
           <form id="whitepaper-form" action="danke.html" method="get" novalidate>
             <div class="form-group">
               <label for="name">Ihr Name</label>
