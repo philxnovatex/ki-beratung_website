@@ -68,8 +68,11 @@
             </div>
           </div>
           <div style="display:flex; gap:12px; align-items:center;">
-            <a class="cta-button" href="lernplattform.html#whitepaper" style="background:var(--accent-color); color:var(--primary-color);">Whitepaper anfordern</a>
-            <button class="site-note-dismiss" aria-label="Hinweis schließen" style="background:transparent; border:1px solid rgba(255,255,255,0.06); color:#e6f0ff; padding:8px 10px; border-radius:8px;">Schließen</button>
+            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center;">
+              <label for="newsletter-email" style="display:none">E‑Mail</label>
+              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
+              <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Für Newsletter eintragen und up to date bleiben</button>
+            </form>
           </div>
         </div>
       </div>
@@ -77,6 +80,9 @@
 
     <!-- Now the Neuratex principle and form -->
     <section class="principles-overview" aria-labelledby="principles-heading">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:0.6rem;">Der Neuratex‑Ansatz</h2>
+      </div>
       <div class="container">
         <h2 id="principles-heading" style="text-align:center; margin-bottom:1rem">Die drei Phasen</h2>
         <div class="principles-grid" style="display:flex; gap:24px; justify-content:space-between;">
@@ -165,27 +171,29 @@
       })();
     </script>
 
-  <!-- Podcast: KI‑Generierter Podcast (vor dem Hinweis-Banner) -->
-  <section class="podcast-section" aria-labelledby="podcast-heading">
-    <div class="container">
-      <div class="podcast-banner" role="region" aria-labelledby="podcast-heading">
-    <h2 id="podcast-heading">KI Grundlagen, erklärt von KI</h2>
-    <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfährst du die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
-      </div>
+    <script>
+      // Newsletter: save emails to localStorage (simple collector)
+      (function(){
+        const form = document.getElementById('newsletter-form');
+        if(!form) return;
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          const input = document.getElementById('newsletter-email');
+          const email = input && input.value && input.value.trim();
+          if(!email) { alert('Bitte E‑Mail angeben.'); return; }
+          try{
+            const list = JSON.parse(localStorage.getItem('newsletterList')||'[]');
+            if(list.includes(email)){ alert('Diese E‑Mail ist bereits eingetragen.'); return; }
+            list.push(email);
+            localStorage.setItem('newsletterList', JSON.stringify(list));
+            input.value='';
+            alert('Danke — Sie sind eingetragen.');
+          }catch(err){ console.error(err); alert('Fehler beim Speichern.'); }
+        });
+      })();
+    </script>
 
-      <div class="podcast-player" style="text-align:center; margin-top:18px;">
-        <!-- Platzhalter‑Pfad: lege die Datei in public/audio/ki-podcast.mp3 ab -->
-        <audio id="ki-podcast-audio" controls preload="none" controlsList="nodownload">
-          <!-- M4A (AAC) first, MP3 fallback -->
-          <source src="audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
-          <source src="audio/ki-podcast.m4a" type="audio/mp4">
-          <source src="audio/ki-podcast.mp3" type="audio/mpeg">
-          Ihr Browser unterstützt das Audio‑Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
-        </audio>
-        
-      </div>
-    </div>
-  </section>
+  
 
   <!-- Lernplattform Hinweis-Banner (vor dem Footer) -->
   <div class="site-note-banner" role="status" aria-live="polite">
@@ -198,22 +206,11 @@
         </svg>
       </div>
       <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
-      <button class="site-note-close" aria-label="Hinweis schließen">✕</button>
+  <!-- Close button removed on request -->
     </div>
   </div>
 
-  <script>
-  (function(){
-    const banner = document.querySelector('.site-note-banner');
-    if(!banner) return;
-    const closeBtn = banner.querySelector('.site-note-close');
-    const icon = banner.querySelector('.site-note-icon');
-    let dir = 1, offset = 0;
-    function anim(){ offset += 0.12*dir; if(offset>3||offset<-3) dir=-dir; if(icon) icon.style.transform = `translateY(${offset}px)`; requestAnimationFrame(anim); }
-    requestAnimationFrame(anim);
-    closeBtn.addEventListener('click', ()=>{ banner.style.transition='opacity .28s, max-height .35s'; banner.style.opacity=0; banner.style.maxHeight='0px'; setTimeout(()=> banner.remove(),360); });
-  })();
-  </script>
+  <!-- Footer banner left static (no close handler) -->
 
   <footer class="main-footer">
     <div class="container">
