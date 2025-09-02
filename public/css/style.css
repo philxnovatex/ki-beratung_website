@@ -36,6 +36,71 @@
     background: rgba(24,90,219,0.04);
 }
 /* ------------------- */
+
+/* ------------------- */
+/* Mobile / Accessibility fixes (fallbacks & tap targets) */
+@media (max-width: 900px) {
+    /* Hide heavy canvas on small screens and use a lightweight fallback background */
+    #hero-canvas { display: none !important; }
+    .hero-section {
+        background-image: url('../images/smart.jpg');
+        background-size: cover;
+        background-position: center;
+        min-height: 60vh;
+        padding: 60px 12px;
+    }
+
+    /* Mobile nav toggle visible and touch-friendly */
+    .mobile-nav-toggle {
+        display: block;
+        background: transparent;
+        border: none;
+        color: var(--headline-color);
+        font-size: 1.1rem;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 1800;
+    }
+
+    /* Fullscreen mobile nav overlay when opened */
+    .main-nav {
+        position: fixed;
+        inset: 0; /* top/right/bottom/left */
+        background: rgba(6,11,23,0.96);
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1.6rem;
+        padding: 3.6rem 1.6rem;
+        z-index: 1750;
+    }
+    .main-nav[data-visible="true"] { display: flex; }
+    .main-nav ul { flex-direction: column; gap: 1.2rem; }
+    .main-nav a { font-size: 1.15rem; }
+
+    /* Make primary CTA buttons easier to tap */
+    .cta-button, .reifegrad-btn {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 14px 18px;
+        min-height: 48px;
+        font-size: 1.02rem;
+        text-align: center;
+    }
+
+    /* Improve form readability on small screens */
+    .reifegrad-form { padding: 18px; }
+    .question-title { font-size: 1rem; }
+    .question-block label { padding: .65rem .9rem; }
+}
+
+/* small adjustments for very small devices */
+@media (max-width: 420px) {
+    .hero-section { min-height: 50vh; padding: 48px 12px; }
+    .logo img { height: 52px; }
+}
 /* Problem-Abschnitt   */
 /* ------------------- */
 .problem-section {
@@ -338,6 +403,15 @@ h2 { text-align: center; margin-bottom: 55px; }
     .tech-logos img { height: 68px; }
     .tech-logos img[alt*="AWS" i],
     .tech-logos img[src*="aws" i] { height: 75px; }
+}
+
+/* Responsive: stack principles timeline items vertically on small screens */
+@media (max-width: 720px) {
+    .timeline { display:block; }
+    .timeline::before { top: 8px; left: 6px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, #0f2344, var(--accent-color)); }
+    .timeline-item { max-width: none; margin: 18px 0; padding-left: 28px; }
+    .timeline-item::before { left: 8px; transform: none; top: 8px; }
+    .timeline-item h3 { margin-top: 0.4rem; }
 }
 
 /* Scroll Progress Bar */
