@@ -828,3 +828,11 @@ h2 { text-align: center; margin-bottom: 55px; }
   .timeline-item { max-width: none; margin: 20px 0; padding-left: 72px; }
   .timeline-item::before { left: 18px; transform: none; top: 10px; }
 }
+
+/* --- Podcast Section --- */
+.podcast-section { padding: 48px 0; background: linear-gradient(180deg, rgba(255,201,71,0.02), transparent); }
+.podcast-banner { background: linear-gradient(90deg, #07142a, #0f2344); color: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 30px rgba(2,6,23,0.6); text-align: center; }
+.podcast-banner h2 { margin: 0 0 8px; color: var(--accent-color); }
+.podcast-intro { color: #cbd5e1; margin: 0 auto; max-width: 820px; }
+.podcast-player audio { width: 100%; max-width: 640px; height: 48px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+.podcast-player p { margin-top: 8px; }

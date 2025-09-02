@@ -124,6 +124,28 @@
       })();
     </script>
 
+  <!-- Podcast: KI‑Generierter Podcast (vor dem Hinweis-Banner) -->
+  <section class="podcast-section" aria-labelledby="podcast-heading">
+    <div class="container">
+      <div class="podcast-banner" role="region" aria-labelledby="podcast-heading">
+        <h2 id="podcast-heading">KI‑Podcast: Kurz & verständlich</h2>
+        <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfährst du die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
+      </div>
+
+      <div class="podcast-player" style="text-align:center; margin-top:18px;">
+        <!-- Platzhalter‑Pfad: lege die Datei in public/audio/ki-podcast.mp3 ab -->
+        <audio id="ki-podcast-audio" controls preload="none" controlsList="nodownload">
+          <!-- M4A (AAC) first, MP3 fallback -->
+          <source src="audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
+          <source src="audio/ki-podcast.m4a" type="audio/mp4">
+          <source src="audio/ki-podcast.mp3" type="audio/mpeg">
+          Ihr Browser unterstützt das Audio‑Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
+        </audio>
+        <p style="margin-top:8px; color:#9fb3d9; font-size:.95rem">Datei nicht vorhanden? Lege die Podcast‑Datei als <code>public/audio/ki-podcast.m4a</code> oder alternativ als <code>public/audio/ki-podcast.mp3</code> ab. Achte darauf, dass der Server die korrekten MIME‑Typen liefert (z. B. <code>audio/mp4</code> für .m4a).</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Lernplattform Hinweis-Banner (vor dem Footer) -->
   <div class="site-note-banner" role="status" aria-live="polite">
     <div class="site-note-inner container">
