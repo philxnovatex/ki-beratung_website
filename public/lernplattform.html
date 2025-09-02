@@ -7,10 +7,93 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header class="main-header"><div class="container"><a href="index.html" class="logo"><img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a></div></header>
+  <header class="main-header">
+    <div class="container">
+      <a href="index.html" class="logo"><img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
+      <nav class="main-nav" data-visible="false">
+        <ul>
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="index.html#about">Über Neuratex AI</a></li>
+          <li><a href="index.html#demo">Demo</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+        <span class="sr-only">Menü</span>
+      </button>
+    </div>
+  </header>
+
   <main>
-    <section class="page-hero"><div class="container"><h1>Ihr nächster Schritt zum KI-Experten</h1></div></section>
-    <section class="lead-gen-section"><div class="container lead-gen-flex"></div></section>
+    <section class="page-hero">
+      <div class="container">
+        <h1>Ihr nächster Schritt zum KI‑Experten</h1>
+        <p class="subtitle">Laden Sie unser Whitepaper herunter und erhalten Sie eine praxisnahe Schritt-für-Schritt-Anleitung zur Automatisierung Ihres Kundenservice.</p>
+      </div>
+    </section>
+
+    <section class="lead-gen-section">
+      <div class="container lead-gen-flex">
+        <div class="lead-gen-text">
+          <h2>Whitepaper: In 3 Schritten den Kundenservice automatisieren</h2>
+          <p class="lead">Dieses Whitepaper erklärt, wie Sie mit KI-Agenten Prozesse identifizieren, prototypisch umsetzen und in den Live‑Betrieb bringen — inklusive Checklisten und Praxisbeispielen.</p>
+          <ul>
+            <li>Klare Erklärungen zu KI‑Agenten und Architektur</li>
+            <li>Praxisnahe Beispiele aus Support und Helpdesk</li>
+            <li>Konkrete Handlungsempfehlungen für Ihr Team</li>
+          </ul>
+          <p style="margin-top:1rem">Alternativ können Sie das Whitepaper direkt herunterladen, nachdem Sie das Formular abgeschickt haben.</p>
+        </div>
+
+        <div class="lead-gen-form-container">
+          <h3>Whitepaper anfordern</h3>
+          <form id="whitepaper-form" action="danke.html" method="get" novalidate>
+            <div class="form-group">
+              <label for="name">Ihr Name</label>
+              <input id="name" name="name" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="email">E‑Mail</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Unternehmen</label>
+              <input id="company" name="company" type="text">
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+              <input id="privacy" type="checkbox" required>
+              <label for="privacy" style="margin:0;">Ich habe die <a href="datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
+            </div>
+            <button type="submit" class="cta-button">Whitepaper anfordern</button>
+            <p class="form-privacy">Sie erhalten das Whitepaper per Download und werden anschließend zur Dankeseite weitergeleitet.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Formular: Download + Weiterleitung zur Danke-Seite
+      (function(){
+        const form = document.getElementById('whitepaper-form');
+        if(!form) return;
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          // einfache Validierung
+          const email = form.querySelector('#email');
+          const name = form.querySelector('#name');
+          const privacy = form.querySelector('#privacy');
+          if(!name.value || !email.value || !privacy.checked){
+            alert('Bitte füllen Sie Name, E‑Mail aus und bestätigen Sie die Datenschutzerklärung.');
+            return;
+          }
+          // Trigger Download (navigiert zum PDF). Bei Bedarf hier Analytics / POST einbauen.
+          window.location.href = 'downloads/neuratex-whitepaper.pdf';
+          // Nach kurzer Verzögerung weiter zur Danke-Seite
+          setTimeout(()=> { window.location.href = 'danke.html'; }, 800);
+        });
+      })();
+    </script>
 
   <!-- Lernplattform Hinweis-Banner (vor dem Footer) -->
   <div class="site-note-banner" role="status" aria-live="polite">
@@ -46,5 +129,6 @@
       <ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul>
     </div>
   </footer>
+
 </body>
 </html>
