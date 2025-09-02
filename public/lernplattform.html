@@ -1,1 +1,50 @@
-﻿
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Whitepaper: In 3 Schritten den Kundenservice automatisieren</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="main-header"><div class="container"><a href="index.html" class="logo"><img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a></div></header>
+  <main>
+    <section class="page-hero"><div class="container"><h1>Ihr nächster Schritt zum KI-Experten</h1></div></section>
+    <section class="lead-gen-section"><div class="container lead-gen-flex"></div></section>
+
+  <!-- Lernplattform Hinweis-Banner (vor dem Footer) -->
+  <div class="site-note-banner" role="status" aria-live="polite">
+    <div class="site-note-inner container">
+      <div class="site-note-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="sn-grad-2" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
+          <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-2)"/>
+          <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
+        </svg>
+      </div>
+      <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
+      <button class="site-note-close" aria-label="Hinweis schließen">✕</button>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const banner = document.querySelector('.site-note-banner');
+    if(!banner) return;
+    const closeBtn = banner.querySelector('.site-note-close');
+    const icon = banner.querySelector('.site-note-icon');
+    let dir = 1, offset = 0;
+    function anim(){ offset += 0.12*dir; if(offset>3||offset<-3) dir=-dir; if(icon) icon.style.transform = `translateY(${offset}px)`; requestAnimationFrame(anim); }
+    requestAnimationFrame(anim);
+    closeBtn.addEventListener('click', ()=>{ banner.style.transition='opacity .28s, max-height .35s'; banner.style.opacity=0; banner.style.maxHeight='0px'; setTimeout(()=> banner.remove(),360); });
+  })();
+  </script>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+      <ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul>
+    </div>
+  </footer>
+</body>
+</html>
