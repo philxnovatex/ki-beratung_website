@@ -16,7 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Upload static site artifact
+      - name: Configure Pages
+        uses: actions/configure-pages@v3
+
+      - name: Upload site artifact
         uses: actions/upload-pages-artifact@v1
         with:
           path: public
