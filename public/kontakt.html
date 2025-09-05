@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kostenlose Analyse: Wo lohnt sich Automatisierung für Sie am meisten?</title>
+    <meta name="description" content="Reservieren Sie Ihre kostenlose 30-Minuten-Potenzialanalyse. Wir zeigen Ihnen unverbindlich, an welcher Stelle Sie mit KI am schnellsten Kosten sparen können.">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo"><img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
+            <nav class="main-nav" data-visible="false">
+                <ul>
+                    <li><a href="leistungen.html">Leistungen</a></li>
+                    <li><a href="index.html#about">Über Neuratex AI</a></li>
+                    <li><a href="index.html#demo">Demo</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+                    <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="sr-only">Menü</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <h1>Nehmen Sie Kontakt auf</h1>
+                <p class="subtitle" style="color: var(--text-color);">Wir freuen uns darauf, von Ihnen zu hören und Ihre Fragen zu beantworten.</p>
+                
+                <div class="contact-options">
+                    <div class="contact-card">
+                        <h3>Direkt per E-Mail</h3>
+                        <p>Für allgemeine Anfragen oder detaillierte Projektbesprechungen erreichen Sie uns am besten per E-Mail.</p>
+                           <a href="mailto:philippkoch@neuratex.de" class="cta-button">philippkoch@neuratex.de</a>
+                    </div>
+                    <div class="contact-card">
+                        <h3>Termin buchen</h3>
+                        <p>Buchen Sie direkt einen Termin für eine kostenlose und unverbindliche Potenzial-Analyse in unserem Kalender.</p>
+                        <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Kalender öffnen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+            <ul>
+                <li><a href="impressum.html">Impressum</a></li>
+                <li><a href="datenschutz.html">Datenschutz</a></li>
+            </ul>
+        </div>
+    </footer>
+
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+    </script>
+
+</body>
+</html>

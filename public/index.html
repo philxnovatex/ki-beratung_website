@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligente Automatisierung: Chatbots & KI, die Ihr Team entlasten</title>
+    <meta name="description" content="Endlose Routineanfragen binden Ihre besten Mitarbeiter? Neuratex AI entwickelt Chat- & Voicebots, die 80% des Supports automatisieren. Mehr Zeit fürs Wesentliche.">
+    <!-- Favicons (relative paths so they work when /public is deploy root) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    <link rel="stylesheet" href="css/sections/ki-anwendungen.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+            </a>
+            <nav id="primary-navigation" class="main-nav" data-visible="false">
+                <ul>
+                    <li><a href="leistungen.html">Leistungen</a></li>
+                    <li><a href="#ki-anwendungen">KI-Anwendungen</a></li>
+                    <li><a href="#about">Über Neuratex AI</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="kontakt.html">Kontakt</a></li>
+            <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="sr-only">Menü</span>
+            </button>
+        </div>
+    </header>
+    <main>
+        <!-- Hero-Sektion -->
+        <section id="hero" class="hero-section">
+            <canvas id="hero-canvas"></canvas>
+            <div class="container">
+                <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
+                <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
+                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
+            </div>
+        </section>
+        <!-- Problem-Abschnitt (neu aufgebaut) -->
+        <section id="problem" class="problem-section problem-section--simple" aria-labelledby="problem-heading">
+            <div class="container problem-lines" id="problem-heading">
+                <div class="problem-line">Fachkräfte? Kaum zu finden und schwer zu halten.</div>
+                <div class="problem-line">Wissen? Geht mit den letzten Mitarbeitern in Rente.</div>
+                <div class="problem-line">Bürokratie? Frisst jeden Tag mehr Zeit.</div>
+                <div class="problem-line">Wertschöpfung? Bleibt liegen.</div>
+                <div class="problem-line highlight">Wer so weitermacht, verliert den Anschluss.</div>
+                <div class="problem-line">Der Markt trennt bald klar zwischen denen, die mithalten und denen, die aussortiert werden.</div>
+                <div class="problem-line accent">Neuratex AI durchbricht diesen Kreislauf.</div>
+                <div class="problem-line small"><strong>Prozesse verschlanken.</strong></div>
+                <div class="problem-line small"><strong>Wissen sichern. Zeit zurückgewinnen.</strong></div>
+                <div class="problem-line">Mit intelligenten und DSGVO konformen Automatisierungen.</div>
+            </div>
+        </section>
+        <!-- Ende Problem-Abschnitt -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2>Ihre Abkürzung zu funktionierenden KI-Lösungen</h2>
+                <div class="services-grid">
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
+                            <h3>Vorträge & Keynotes</h3>
+                            <p>Wir trennen Hype von Realität und zeigen verständlich die konkreten Chancen von KI für Ihre Branche und Ihr Unternehmen auf.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                            <h3>Praxis-Workshops</h3>
+                            <p>Wir befähigen Ihre Führungskräfte und Teams, KI-Potenziale selbst zu erkennen und neue Werkzeuge gewinnbringend zu nutzen.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-route"></i></div>
+                            <h3>KI-Strategieentwicklung</h3>
+                            <p>Sie erhalten von uns einen maßgeschneiderten und wasserdichten Fahrplan für die erfolgreiche KI-Integration in Ihr Geschäft.</p>
+                        </div>
+                    </a>
+                    <a href="leistungen.html" class="service-card-link">
+                        <div class="service-card">
+                            <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
+                            <h3>Prozessautomatisierung</h3>
+                            <p>Wir konzipieren und implementieren intelligente KI-Agenten, die Ihre Prozesse beschleunigen und wertvolle Ressourcen freisetzen.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <!-- Tech/Infra Section: inserted above KI-Anwendungen -->
+        <section class="tech-section" aria-labelledby="tech-heading">
+            <div class="container">
+                <h2 id="tech-heading">Ihre Infrastruktur, unsere Expertise. Maximale Flexibilität für Ihren Erfolg.</h2>
+                <p>Wir wissen, dass jedes Unternehmen eine einzigartige technologische Ausgangslage hat. Deshalb zwingen wir Sie in kein starres Korsett. Unsere Philosophie ist die der Technologieoffenheit: Die beste Lösung ist die, die perfekt zu Ihnen, Ihren Prozessen und Ihrer bestehenden IT-Landschaft passt.</p>
+                <div class="tech-logos" aria-label="Unterstützte Cloud-Plattformen">
+                    <img src="images/aws.png" alt="Amazon Web Services (AWS)">
+                    <img src="images/azure.png" alt="Microsoft Azure">
+                    <img src="images/google.png" alt="Google Cloud Platform">
+                </div>
+                <p>Egal, ob Sie Ihre ersten Schritte in die Cloud planen oder bereits fest in der Welt von Amazon Web Services (AWS), Microsoft Azure oder der Google Cloud Platform verankert sind – wir stellen uns auf Sie ein. Wir konzipieren und implementieren KI-Lösungen, die sich nahtlos in Ihre Systeme integrieren.</p>
+            </div>
+        </section>
+        <!-- KI Anwendungen Abschnitt -->
+        <section id="ki-anwendungen" class="ki-apps-section" aria-labelledby="ki-anwendungen-heading">
+            <div class="container">
+                <h2 id="ki-anwendungen-heading" class="ki-apps__title">Diese KI-Anwendungen steigern schon heute die Effizienz von Unternehmen</h2>
+                <p class="ki-apps__intro">Moderne KI-Lösungen sind längst praxiserprobt und lassen sich nahtlos in bestehende Abläufe integrieren. Richtig eingesetzt, sorgen sie für messbare Zeitersparnis, höhere Qualität und mehr Handlungsspielraum im Tagesgeschäft.</p>
+                <div class="ki-apps__grid" role="list">
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/agenten.png" alt="KI‑Agenten automatisieren Prozesse" loading="lazy" decoding="async">
+                        </div>
+                        <h3>1. KI Agenten zur Prozessautomatisierung</h3>
+                        <p>KI automatisiert wiederkehrende und zeitintensive Aufgaben wie den Abgleich von Kundendaten oder die Erstellung von Angeboten. Der Einstieg gelingt am besten mit kleinen, klar definierten Prozessen, die sich Schritt für Schritt erweitern lassen. So entsteht eine skalierbare Lösung, die sich an Ihre Arbeitsweise anpasst.</p>
+                    </article>
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/chatbot.png" alt="Chatbot für Wissensmanagement und Support" loading="lazy" decoding="async">
+                        </div>
+                        <h3>2. Chatbots für Wissensmanagement und Support</h3>
+                        <p>Chatbots beantworten interne Fragen zu Prozessen, Richtlinien oder Produkten genauso wie Kundenanfragen. Sie arbeiten konsistent, mit aktuellem Wissen und sind jederzeit verfügbar. Eingebettet in Tools wie Microsoft Teams, Slack oder direkt auf Ihrer Website liefern sie schnelle Antworten ohne lange Wartezeiten.</p>
+                    </article>
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/voicebot.png" alt="Voicebot für Terminplanung und FAQs" loading="lazy" decoding="async">
+                        </div>
+                        <h3>3. Voicebots für Terminplanung und FAQs</h3>
+                        <p>Voicebots nehmen Termine direkt im Kalender auf, beantworten häufig gestellte Fragen und entlasten das Team auch außerhalb der Geschäftszeiten. Sie eignen sich besonders für Unternehmen mit hohem Telefonaufkommen wie Arztpraxen, Werkstätten oder Beratungsfirmen.</p>
+                    </article>
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/dokumentenanalyse.png" alt="Dokumenten‑ und Vertragsanalyse mit KI" loading="lazy" decoding="async">
+                        </div>
+                        <h3>4. Dokumenten und Vertragsanalyse</h3>
+                        <p>Die KI liest Verträge, Angebote oder Handbücher, erkennt wichtige Passagen und erstellt prägnante Zusammenfassungen. So sinkt der manuelle Prüfaufwand von Stunden auf Minuten und das Risiko, entscheidende Details zu übersehen, wird deutlich reduziert.</p>
+                    </article>
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/reports.png" alt="Automatisierte Reports, Protokolle und Prognosen" loading="lazy" decoding="async">
+                        </div>
+                        <h3>5. Automatisierte Reports, Protokolle und Prognosen</h3>
+                        <p>Die KI erstellt aus vorhandenen Daten Projektberichte, Meetingprotokolle oder wöchentliche Auswertungen. Mit einer soliden Datenbasis lassen sich zusätzlich Bedarfsprognosen, Trendanalysen und fundierte Handlungsempfehlungen ableiten. So sparen Sie Zeit, erhalten einheitliche Formate und können Informationen sofort nutzen.</p>
+                    </article>
+                    <article class="ki-apps__card" role="listitem" tabindex="0">
+                        <div class="ki-apps__media" aria-hidden="true">
+                            <img class="ki-apps__img" src="images/anwendungen/datenanalyse.png" alt="Datenanalyse mit konkreten Handlungsempfehlungen" loading="lazy" decoding="async">
+                        </div>
+                        <h3>6. Datenanalyse mit konkreten Handlungsempfehlungen</h3>
+                        <p>Die KI wertet Verkaufszahlen, Kundenfeedback oder Produktionsdaten aus, erkennt Muster und liefert klare Vorschläge für Verbesserungen. Entscheidungen basieren so auf nachvollziehbaren Fakten statt auf Bauchgefühl.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section id="principles" class="timeline-section">
+            <div class="container">
+                <h2>Das Neuratex Prinzip: Ihr klarer Weg zur KI-Lösung</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>1. Analyse & Potenzial</h3>
+                        <ul>
+                            <li><strong>Kick-off & Kennenlernen:</strong> Wir verstehen Ihre Ziele und Herausforderungen.</li>
+                            <li><strong>Use-Case-Identifikation:</strong> Gemeinsam finden wir die Anwendungsfälle mit dem größten ROI.</li>
+                            <li><strong>Ergebnis & Ausblick:</strong> Sie erhalten einen priorisierten Maßnahmenkatalog als Entscheidungsgrundlage.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>2. Konzeption & Planung</h3>
+                        <ul>
+                            <li><strong>Tiefenanalyse & Daten-Check:</strong> Wir prüfen Prozesse und die Qualität Ihrer Daten.</li>
+                            <li><strong>Lösungsdesign & Business Case:</strong> Wir entwerfen die Architektur und erstellen eine Wirtschaftlichkeitsrechnung.</li>
+                            <li><strong>Ergebnis & Fahrplan:</strong> Sie erhalten eine detaillierte KI-Roadmap mit Zeitplan und Meilensteinen.</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>3. Umsetzung & Befähigung</h3>
+                        <ul>
+                            <li><strong>Agile Entwicklung & Prototyping:</strong> Wir entwickeln einen ersten Prototypen (MVP) in kurzen Zyklen.</li>
+                            <li><strong>Integration & Testing:</strong> Die Lösung wird nahtlos in Ihre bestehende Systemlandschaft integriert.</li>
+                            <li><strong>Ergebnis & Übergabe:</strong> Wir schulen Ihr Team und übergeben ein System, das von Ihren Mitarbeitern getragen wird.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about" class="about-section">
+            <div class="container about-flex">
+                <div class="about-image"><img src="images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI"></div>
+                <div class="about-text">
+                    <h2>Die Expertise hinter Neuratex AI</h2>
+                    <p><strong>Neuratex AI ist entstanden, weil wir überzeugt sind: Künstliche Intelligenz kann Unternehmen nicht nur effizienter machen, sondern Geschäftsmodelle verändern.</strong></p>
+                    <p>Unser Ziel ist es, diese Möglichkeiten greifbar zu machen. Klar, pragmatisch und mit Lösungen, die sich im Alltag wirklich auszahlen. Für unseren Gründer Philipp Koch war schnell klar: Wer heute nicht versteht, wie KI sinnvoll eingesetzt wird, verliert morgen den Anschluss.</p>
+                    <p>Philipp kommt aus der Wirtschaft, hat Business Management studiert und war in Unternehmensberatungen tätig. Als die ersten großen Sprachmodelle erschienen, begann er zu experimentieren. Um diese Leidenschaft beruflich einzusetzen, wechselte er ins Business Development eines Versicherungskonzerns und übernahm dort den Bereich KI.</p>
+                    <p>Er entwickelte interne Chatbots, setzte RAG-gestützte Assistenten um und hielt Workshops bis in den Vorstand hinein. Dort lernte er, wie man KI-Projekte unter strengsten Vorgaben für Datenschutz und Compliance plant – und auch, wie viele gute Ideen genau daran scheitern.</p>
+                    <p>Diese Erfahrung hat ihn geprägt. Deshalb hat er Neuratex AI gegründet: Um kleinen und mittelständischen Dienstleistungsunternehmen zu helfen, aus Ideen funktionierende KI-Lösungen zu machen. Wir glauben nicht an Hype. Wir glauben daran, dass KI sinnvoll eingesetzt werden muss. Damit Ihre Zeit für das bleibt, was Ihr Unternehmen wirklich ausmacht.</p>
+                </div>
+            </div>
+        </section>
+        <section id="demo" class="demo-section">
+            <div class="container">
+                <h2>Ein Anruf. Eine KI. Ein gebuchter Termin.</h2>
+                <p>Sehen Sie in diesem 1-minütigen Video, wie unser KI-Voicebot einen Anruf entgegennimmt, Termine abgleicht und eine Buchung vornimmt. Das ganze mit einer Gesprächsqualität, die auf dem neuesten Stand der Voice-AI-Technologie (einer Technologie, die wöchentlich neue Maßstäbe setzt) basiert. Genau solche Lösungen entlasten Ihr Team von zeitraubenden Routineaufgaben.</p>
+                <div class="video-placeholder">[Video Platzhalter]</div>
+            </div>
+        </section>
+        <!-- KI-Reifegrad-Check -->
+        <section id="reifegrad-check" class="reifegrad-section">
+            <div class="container">
+                <h2>Wo stehen Sie auf Ihrer KI-Reise?</h2>
+                <p class="reifegrad-intro">Machen Sie den 5‑Minuten‑Reifegrad‑Check und erhalten Sie eine sofortige Einschätzung.</p>
+                <form id="quizForm" class="reifegrad-form">
+                    <div class="quiz-progress"><span id="quiz-counter" aria-live="polite">Frage 1 von 17</span></div>
+
+                    <!-- Dimension 1: Grundlagen -->
+                    <div class="question-block quiz-step" data-step="1" data-type="likert" data-module="Grundlagen">
+                        <div class="module-divider"><span>Dimension 1: Grundlegendes & Technisches Verständnis</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie schätzt du dein grundsätzliches Verständnis von KI-Begriffen (z.B. "Machine Learning", "Neuronales Netz", "LLM") ein?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q1" value="A" required> A) Sehr gering</label>
+                            <label><input type="radio" name="q1" value="B"> B) Eher gering</label>
+                            <label><input type="radio" name="q1" value="C"> C) Mittelmäßig</label>
+                            <label><input type="radio" name="q1" value="D"> D) Eher hoch</label>
+                            <label><input type="radio" name="q1" value="E"> E) Sehr hoch</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="2" data-type="single_choice" data-module="Grundlagen" style="display:none">
+                        <p class="question-title">Was ist die primäre Aufgabe eines "Large Language Model" (LLM) wie GPT-4?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q2" value="A" required disabled> A) Bilder und Videos zu erstellen.</label>
+                            <label><input type="radio" name="q2" value="B" disabled> B) Komplexe mathematische Gleichungen zu lösen.</label>
+                            <label><input type="radio" name="q2" value="C" disabled> C) Menschliche Sprache zu verstehen und statistisch wahrscheinliche Wortfolgen zu generieren.</label>
+                            <label><input type="radio" name="q2" value="D" disabled> D) Physische Roboter zu steuern.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="3" data-type="scenario" data-module="Grundlagen" style="display:none">
+                        <p class="question-title">Eine Kollegin behauptet: "KI-Systeme lernen wie Menschen und verstehen den Inhalt, den sie produzieren." Welche Aussage ist am präzisesten?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q3" value="A" required disabled> A) Das ist korrekt. KI-Systeme entwickeln ein echtes Bewusstsein und Verständnis.</label>
+                            <label><input type="radio" name="q3" value="B" disabled> B) Das ist nicht ganz richtig. KI-Systeme erkennen Muster in riesigen Datenmengen und treffen darauf basierend Vorhersagen, ohne ein echtes "Verständnis" zu haben.</label>
+                            <label><input type="radio" name="q3" value="C" disabled> C) Das ist falsch. KI-Systeme sind nur einfache Wenn-Dann-Abfolgen und können nicht lernen.</label>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 2: Anwendung -->
+                    <div class="question-block quiz-step" data-step="4" data-type="likert" data-module="Anwendung" style="display:none">
+                        <div class="module-divider"><span>Dimension 2: Praktische Anwendung & Interaktion</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie oft nutzt du KI-gestützte Werkzeuge (z.B. ChatGPT, Copilot, Midjourney, Grammarly, intelligente Suchen) bewusst bei deiner Arbeit?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q4" value="A" required disabled> A) Nie</label>
+                            <label><input type="radio" name="q4" value="B" disabled> B) Selten</label>
+                            <label><input type="radio" name="q4" value="C" disabled> C) Gelegentlich</label>
+                            <label><input type="radio" name="q4" value="D" disabled> D) Regelmäßig</label>
+                            <label><input type="radio" name="q4" value="E" disabled> E) Täglich</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="5" data-type="scenario" data-module="Anwendung" style="display:none">
+                        <p class="question-title">Du möchtest mit einer Bild-KI ein Foto von "einem Astronauten auf einem Pferd" erstellen. Das erste Ergebnis wirkt wie ein Cartoon, du möchtest es aber fotorealistisch. Welcher Prompt wäre die beste Verbesserung?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q5" value="A" required disabled> A) "Mach ein besseres Bild."</label>
+                            <label><input type="radio" name="q5" value="B" disabled> B) "Astronaut auf einem Pferd, fotorealistisch, detailliert, 8k, studiolicht."</label>
+                            <label><input type="radio" name="q5" value="C" disabled> C) "Kein Cartoon, sondern ein Foto von einem Astronauten."</label>
+                            <label><input type="radio" name="q5" value="D" disabled> D) "Ich brauche ein Bild von einem Astronauten und einem Pferd."</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="6" data-type="scenario" data-module="Anwendung" style="display:none">
+                        <p class="question-title">Du lässt eine KI einen langen Bericht für dich zusammenfassen. Was ist der wichtigste nächste Schritt, bevor du die Zusammenfassung verwendest?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q6" value="A" required disabled> A) Auf Rechtschreibfehler prüfen.</label>
+                            <label><input type="radio" name="q6" value="B" disabled> B) Mit dem Original auf sachliche Korrektheit/ Auslassungen abgleichen.</label>
+                            <label><input type="radio" name="q6" value="C" disabled> C) In ein anderes Format (z.B. PDF) umwandeln.</label>
+                            <label><input type="radio" name="q6" value="D" disabled> D) Nichts, die KI macht das schon richtig.</label>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 3: Bewertung -->
+                    <div class="question-block quiz-step" data-step="7" data-type="likert" data-module="Bewertung" style="display:none">
+                        <div class="module-divider"><span>Dimension 3: Kritische Bewertung & Urteilsvermögen</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie sicher fühlst du dich, die Qualität und Vertrauenswürdigkeit von KI-generierten Inhalten (Texte, Bilder) zu bewerten?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q7" value="A" required disabled> A) Sehr unsicher</label>
+                            <label><input type="radio" name="q7" value="B" disabled> B) Eher unsicher</label>
+                            <label><input type="radio" name="q7" value="C" disabled> C) Neutral</label>
+                            <label><input type="radio" name="q7" value="D" disabled> D) Eher sicher</label>
+                            <label><input type="radio" name="q7" value="E" disabled> E) Sehr sicher</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="8" data-type="single_choice" data-module="Bewertung" style="display:none">
+                        <p class="question-title">Der Begriff "KI-Halluzination" beschreibt am besten...</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q8" value="A" required disabled> A) ...kreatives Denken der KI.</label>
+                            <label><input type="radio" name="q8" value="B" disabled> B) ...eine Cybersicherheits-Attacke.</label>
+                            <label><input type="radio" name="q8" value="C" disabled> C) ...wenn eine KI überzeugend klingende, aber falsche Informationen ausgibt.</label>
+                            <label><input type="radio" name="q8" value="D" disabled> D) ...visuelle Effekte einer Bild-KI.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="9" data-type="scenario" data-module="Bewertung" style="display:none">
+                        <p class="question-title">Marktrecherche liefert überwiegend positive Daten zu einem Produkt und ignoriert negative Studien. Was ist die wahrscheinlichste Ursache?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q9" value="A" required disabled> A) Die KI hat eine eigene Meinung.</label>
+                            <label><input type="radio" name="q9" value="B" disabled> B) Unausgewogener Datensatz (Bias) oder zu enger Prompt.</label>
+                            <label><input type="radio" name="q9" value="C" disabled> C) Die KI ist defekt.</label>
+                            <label><input type="radio" name="q9" value="D" disabled> D) Negative Studien sind schwerer zu verstehen.</label>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 4: Ethik & Recht -->
+                    <div class="question-block quiz-step" data-step="10" data-type="likert" data-module="Ethik_Recht" style="display:none">
+                        <div class="module-divider"><span>Dimension 4: Ethisches & Rechtliches Bewusstsein</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Wie vertraut bist du mit den ethischen und datenschutzrechtlichen (DSGVO) Herausforderungen beim Einsatz von KI?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q10" value="A" required disabled> A) Gar nicht vertraut</label>
+                            <label><input type="radio" name="q10" value="B" disabled> B) Wenig vertraut</label>
+                            <label><input type="radio" name="q10" value="C" disabled> C) Etwas vertraut</label>
+                            <label><input type="radio" name="q10" value="D" disabled> D) Ziemlich vertraut</label>
+                            <label><input type="radio" name="q10" value="E" disabled> E) Sehr vertraut</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="11" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Ein Kollege will Kundendaten in ein externes KI-Tool kopieren, um Ideen zu erhalten. Was ist die größte rechtliche Gefahr?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q11" value="A" required disabled> A) Das KI-Tool könnte falsche Ideen generieren.</label>
+                            <label><input type="radio" name="q11" value="B" disabled> B) Verstoß gegen DSGVO: personenbezogene Daten an Dritte.</label>
+                            <label><input type="radio" name="q11" value="C" disabled> C) Ergebnis könnte urheberrechtlich geschützt sein.</label>
+                            <label><input type="radio" name="q11" value="D" disabled> D) Server steht in einem anderen Land.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="12" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Screening-Tool benachteiligt systematisch Bewerber aus bestimmten PLZ. Worauf deutet das hin?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q12" value="A" required disabled> A) Technischer Fehler im Algorithmus.</label>
+                            <label><input type="radio" name="q12" value="B" disabled> B) Bias in den Trainingsdaten → diskriminierende Ergebnisse.</label>
+                            <label><input type="radio" name="q12" value="C" disabled> C) Bewerber sind objektiv ungeeigneter.</label>
+                            <label><input type="radio" name="q12" value="D" disabled> D) Bewusste Entscheidung der Programmierer.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="13" data-type="scenario" data-module="Ethik_Recht" style="display:none">
+                        <p class="question-title">Wer trägt in der Regel die Verantwortung für Ergebnisse, die du mit einem KI-Tool erzeugst und veröffentlichst?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q13" value="A" required disabled> A) Der Entwickler des KI-Tools.</label>
+                            <label><input type="radio" name="q13" value="B" disabled> B) Niemand, da von Maschine erzeugt.</label>
+                            <label><input type="radio" name="q13" value="C" disabled> C) Ich als Anwender, der freigibt.</label>
+                            <label><input type="radio" name="q13" value="D" disabled> D) Das Unternehmen.</label>
+                        </div>
+                    </div>
+
+                    <!-- Dimension 5: Strategie -->
+                    <div class="question-block quiz-step" data-step="14" data-type="likert" data-module="Strategie" style="display:none">
+                        <div class="module-divider"><span>Dimension 5: Strategische & Gesellschaftliche Perspektive</span></div>
+                        <p class="question-title">(Selbsteinschätzung) Inwieweit fühlst du dich in der Lage, Chancen und Risiken von KI für dein Arbeitsumfeld und das Unternehmen einzuschätzen?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q14" value="A" required disabled> A) Gar nicht</label>
+                            <label><input type="radio" name="q14" value="B" disabled> B) Kaum</label>
+                            <label><input type="radio" name="q14" value="C" disabled> C) Teils / teils</label>
+                            <label><input type="radio" name="q14" value="D" disabled> D) Größtenteils</label>
+                            <label><input type="radio" name="q14" value="E" disabled> E) Voll und ganz</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="15" data-type="scenario" data-module="Strategie" style="display:none">
+                        <p class="question-title">Wenn wir über den Einsatz von KI zur Automatisierung von Routineaufgaben sprechen – welches Beispiel ist am treffendsten?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q15" value="A" required disabled> A) KI brainstormt eine neue Produktlinie.</label>
+                            <label><input type="radio" name="q15" value="B" disabled> B) KI kategorisiert E-Mails automatisch und leitet sie weiter.</label>
+                            <label><input type="radio" name="q15" value="C" disabled> C) KI führt ein komplexes Mitarbeitergespräch.</label>
+                            <label><input type="radio" name="q15" value="D" disabled> D) KI trifft die finale Unternehmensstrategie.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="16" data-type="scenario" data-module="Strategie" style="display:none">
+                        <p class="question-title">Welche Aussage beschreibt die größte Chance von KI für Unternehmen am besten?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q16" value="A" required disabled> A) Vollständige Abschaffung menschlicher Arbeit.</label>
+                            <label><input type="radio" name="q16" value="B" disabled> B) Effizienzsteigerung durch Automatisierung + Unterstützung bei komplexen Entscheidungen.</label>
+                            <label><input type="radio" name="q16" value="C" disabled> C) Erstellung lustiger Katzenbilder.</label>
+                            <label><input type="radio" name="q16" value="D" disabled> D) Reduzierung der Serverkosten.</label>
+                        </div>
+                    </div>
+                    <div class="question-block quiz-step" data-step="17" data-type="mood" data-module="Strategie" style="display:none">
+                        <p class="question-title">Welche Emotion beschreibt deine Haltung zur Zukunft mit KI am ehesten?</p>
+                        <div class="answers">
+                            <label><input type="radio" name="q17" value="A" required disabled> A) Besorgnis / Angst</label>
+                            <label><input type="radio" name="q17" value="B" disabled> B) Skepsis / Unsicherheit</label>
+                            <label><input type="radio" name="q17" value="C" disabled> C) Neutrale Erwartung</label>
+                            <label><input type="radio" name="q17" value="D" disabled> D) Neugier / Interesse</label>
+                            <label><input type="radio" name="q17" value="E" disabled> E) Optimismus / Begeisterung</label>
+                        </div>
+                    </div>
+
+                    <button id="quizSubmit" type="submit" class="reifegrad-btn" style="display:none">Jetzt auswerten</button>
+                </form>
+                <div id="resultsContainer" class="reifegrad-results" aria-live="polite">
+                    <div id="result-1" class="result-card" hidden>
+                        <h3>Ihr Ergebnis: Sie sind ein KI‑Entdecker!</h3>
+                        <p>Sie erkennen das Potenzial von KI, haben aber noch keine konkreten Schritte unternommen. Die Nutzung ist sporadisch und nicht strategisch verankert. Das ist der perfekte Ausgangspunkt, um die Weichen richtig zu stellen.</p>
+                        <div class="next-step">
+                            <h4>Ihr nächster Schritt mit Neuratex:</h4>
+                            <p>Der <strong>„Potenzial‑Workshop“</strong> ist ideal für Sie. Gemeinsam identifizieren wir die Anwendungsfälle mit dem größten Hebel und schaffen die Basis für Ihre ersten erfolgreichen KI‑Projekte.</p>
+                            <a href="#contact" class="reifegrad-btn">Mehr zum Potenzial‑Workshop</a>
+                        </div>
+                    </div>
+                    <div id="result-2" class="result-card" hidden>
+                        <h3>Ihr Ergebnis: Sie sind ein KI‑Experimentator!</h3>
+                        <p>Sie führen erste, isolierte Pilotprojekte durch und sammeln wertvolle Erfahrungen. Jetzt geht es darum, von einzelnen Leuchtturmprojekten zu einer strukturierten und skalierbaren Strategie zu kommen.</p>
+                        <div class="next-step">
+                            <h4>Ihr nächster Schritt mit Neuratex:</h4>
+                            <p>Der <strong>„Strategie‑ & Roadmap‑Workshop“</strong> bündelt Ihre Erfahrungen und führt zu einem klaren Fahrplan, um KI vom Experiment zum festen Bestandteil Ihrer Wertschöpfung zu machen.</p>
+                            <a href="#contact" class="reifegrad-btn">Mehr zum Strategie‑Workshop</a>
+                        </div>
+                    </div>
+                    <div id="result-3" class="result-card" hidden>
+                        <h3>Ihr Ergebnis: Sie sind auf dem Weg zum KI‑Strategen!</h3>
+                        <p>KI ist in Teilen Ihres Unternehmens bereits etabliert. Der nächste Schritt ist die Skalierung und die Verankerung einer unternehmensweiten Vision, um das volle Potenzial auszuschöpfen.</p>
+                        <div class="next-step">
+                            <h4>Ihr nächster Schritt mit Neuratex:</h4>
+                            <p>Vereinbaren Sie ein <strong>individuelles Strategiegespräch</strong>. Wir skalieren Ihre KI‑Initiativen und erschließen neue Geschäftsmodelle.</p>
+                            <a href="#contact" class="reifegrad-btn">Strategiegespräch vereinbaren</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h2>Starten Sie mit dem ersten, richtigen Schritt.</h2>
+                <p>In einer kostenlosen und unverbindlichen Potenzial-Analyse identifizieren wir gemeinsam den größten Hebel für den KI-Einsatz in Ihrem Unternehmen. Buchen Sie Ihren Termin direkt online.</p>
+                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Termin für Potenzial-Analyse buchen</a>
+            </div>
+        </section>
+    </main>
+        <!-- Lernplattform Hinweis-Banner (global) -->
+        <div class="site-note-banner" role="status" aria-live="polite">
+            <div class="site-note-inner container">
+                <div class="site-note-icon" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs><linearGradient id="sn-grad-1" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
+                        <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-1)"/>
+                        <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
+                    </svg>
+                </div>
+                <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
+            </div>
+        </div>
+
+        <footer class="main-footer">
+                <div class="container">
+                        <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+                        <ul>
+                                <li><a href="impressum.html">Impressum</a></li>
+                                <li><a href="datenschutz.html">Datenschutz</a></li>
+                        </ul>
+                </div>
+        </footer>
+
+    <!-- Scroll Progress Element -->
+    <div id="scroll-progress" class="scroll-progress"></div>
+
+    <!-- JS für Animation -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const lines = document.querySelectorAll(".problem-line");
+        if('IntersectionObserver' in window){
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        const idx = [...lines].indexOf(entry.target);
+                        const baseDelay = 140; // ms
+                        const jitter = Math.random()*120; // subtle randomness
+                        setTimeout(()=> entry.target.classList.add('show'), baseDelay*idx + jitter);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.25 });
+            lines.forEach(l => observer.observe(l));
+        } else {
+            lines.forEach(l => l.classList.add('show'));
+        }
+
+        // Unified heading watch (exclude small contextual card headings)
+        const watched = Array.from(document.querySelectorAll('h1, h2, h3'))
+            .filter(h => !h.closest('.service-card, .principle-card, .lead-gen-form-container, .contact-card'));
+        watched.forEach(h => h.classList.add('heading-watch','hover-flash'));
+        if('IntersectionObserver' in window){
+            const hObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting){
+                        entry.target.classList.add('heading-in-view');
+                        // remove after animation ends so it can trigger again if desired
+                        entry.target.addEventListener('animationend', () => {
+                            entry.target.classList.remove('heading-in-view');
+                        }, { once: true });
+                    }
+                });
+            }, { threshold: 0.4 });
+            watched.forEach(h => hObserver.observe(h));
+        }
+    });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Entfernt: Windmill/Pin Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
+    <script src="js/hero-canvas.js" defer></script>
+    <script src="js/sections/ki-anwendungen.js" defer></script>
+    <script>
+        // Mobile Navigation
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        navToggle.addEventListener('click', () => {
+            const isVisible = nav.getAttribute('data-visible');
+            if (isVisible === "false") {
+                nav.setAttribute('data-visible', true);
+                navToggle.setAttribute('aria-expanded', true);
+            } else {
+                nav.setAttribute('data-visible', false);
+                navToggle.setAttribute('aria-expanded', false);
+            }
+        });
+
+        // Service Cards Reveal
+        const serviceCards = document.querySelectorAll('.services-grid .service-card');
+        if ('IntersectionObserver' in window) {
+            const scObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                        scObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+            serviceCards.forEach(c => scObserver.observe(c));
+        } else {
+            serviceCards.forEach(c => c.classList.add('in-view'));
+        }
+        // Fallback: falls irgendetwas klemmt -> nach 2s sichtbar machen
+        setTimeout(() => serviceCards.forEach(c => c.classList.add('in-view')), 2000);
+
+        // Scroll Progress
+        const scrollBar = document.getElementById('scroll-progress');
+        const problemEl = document.getElementById('problem');
+        let progressActive = false;
+    function updateScrollBar(){
+            if(!progressActive) return;
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+            scrollBar.style.transform = `scaleY(${progress})`;
+            scrollBar.classList.add('active');
+        }
+        function checkActivateBar(){
+            const rect = problemEl.getBoundingClientRect();
+            if(rect.top <= window.innerHeight * 0.9){
+                progressActive = true;
+        scrollBar.style.display = 'block';
+                updateScrollBar();
+                window.removeEventListener('scroll', checkActivateBar);
+            }
+        }
+        window.addEventListener('scroll', updateScrollBar, { passive: true });
+        window.addEventListener('scroll', checkActivateBar, { passive: true });
+    </script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            CookieConsent.run({
+                guiOptions: {
+                    consentModal: { layout: 'box', position: 'bottom right', equalWeightButtons: true, flipButtons: false },
+                    preferencesModal: { layout: 'box', position: 'right', equalWeightButtons: true, flipButtons: false }
+                },
+                categories: {
+                    necessary: { readOnly: true }
+                },
+                language: {
+                    default: 'de',
+                    translations: {
+                        de: {
+                            consentModal: {
+                                title: 'Wir verwenden Cookies',
+                                description: 'Um Ihre Erfahrung auf unserer Seite zu verbessern, nutzen wir Cookies. Einige sind technisch notwendig, andere helfen uns, die Seite zu optimieren.',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                showPreferencesBtn: 'Einstellungen',
+                                closeIconLabel: 'Schließen'
+                            },
+                            preferencesModal: {
+                                title: 'Cookie-Einstellungen',
+                                acceptAllBtn: 'Alle akzeptieren',
+                                acceptNecessaryBtn: 'Nur notwendige',
+                                savePreferencesBtn: 'Auswahl speichern',
+                                closeIconLabel: 'Schließen',
+                                sections: [
+                                    {
+                                        title: 'Cookie-Nutzung',
+                                        description: 'Sie können hier auswählen, welche Cookies Sie zulassen möchten.'
+                                    },
+                                    {
+                                        title: 'Notwendige Cookies',
+                                        description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
+                                        linkedCategory: 'necessary'
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        // Quiz evaluation (17-step with modules, feedback, and subscores)
+        (function(){
+            const form = document.getElementById('quizForm');
+            if(!form) return;
+            const steps = Array.from(form.querySelectorAll('.quiz-step'));
+            const submitBtn = document.getElementById('quizSubmit');
+            const counter = document.getElementById('quiz-counter');
+
+            const totalSteps = steps.length;
+            const updateCounter = (idx) => {
+                if(counter) counter.textContent = `Frage ${Math.min(idx+1,totalSteps)} von ${totalSteps}`;
+            };
+            updateCounter(0);
+
+            // Scoring map per type
+            const likertMap = { A:1, B:2, C:3, D:4, E:5 };
+            // Correct answers and feedback per non-likert
+            const correctMap = {
+                q2:'C', q3:'B', q5:'B', q6:'B', q8:'C', q9:'B', q11:'B', q12:'B', q13:'C', q15:'B', q16:'B'
+            };
+            const feedbackMap = {
+                q2:{C:'Richtig: LLMs modellieren Sprache und generieren wahrscheinliche Wortfolgen.', default:'Hinweis: LLMs generieren Sprache; Bilder/Videos erstellt eine Bild-/Video-KI.'},
+                q3:{B:'Richtig: Muster und Statistik, kein „Verständnis“ im menschlichen Sinn.', default:'KI erkennt Muster und Vorhersagen, aber kein echtes Bewusstsein.'},
+                q5:{B:'Richtig: Klare Parameter + Stilhinweise führen zu fotorealistischen Ergebnissen.', default:'Besser: klare Stil-/Qualitätsangaben (fotorealistisch, Licht, Auflösung).'},
+                q6:{B:'Richtig: Immer Abgleich mit der Quelle auf Vollständigkeit/Korrektheit.', default:'Wichtig: Inhalte kritisch prüfen und mit Original abgleichen.'},
+                q8:{C:'Richtig: „Halluzination“ = überzeugend, aber falsch.', default:'Achte auf plausible, aber falsche Aussagen – das nennt man Halluzination.'},
+                q9:{B:'Richtig: Bias/Prompting kann zu einseitigen Ergebnissen führen.', default:'Vermutlich Bias im Datensatz oder zu enger Prompt.'},
+                q11:{B:'Richtig: DSGVO-Risiko bei personenbezogenen Daten an Dritte.', default:'Achtung: Personenbezogene Daten nicht in externe Tools kopieren.'},
+                q12:{B:'Richtig: Trainingsbias → diskriminierende Resultate.', default:'Hinweis: Verzerrte Trainingsdaten können diskriminieren.'},
+                q13:{C:'Richtig: Verantwortung liegt in der Regel beim freigebenden Anwender/Unternehmen.', default:'Üblicherweise trägt der freigebende Anwender bzw. das Unternehmen Verantwortung.'},
+                q15:{B:'Richtig: E-Mails klassifizieren/weiterleiten = typischer Automatisierungsfall.', default:'Automatisierung zielt auf wiederkehrende Routineaufgaben.'},
+                q16:{B:'Richtig: Effizienz + Assistenz bei Entscheidungen sind Hauptchancen.', default:'Größte Chance: Effizienz plus bessere Entscheidungen.'}
+            };
+
+            // Sequential reveal + inline feedback
+            steps.forEach((step, idx) => {
+                step.addEventListener('change', () => {
+                    const input = step.querySelector('input[type="radio"]:checked');
+                    if(!input) return;
+                    const qName = input.name;
+                    const type = step.dataset.type;
+
+                    // feedback node
+                    let fb = step.querySelector('.answer-feedback');
+                    if(!fb){
+                        fb = document.createElement('div');
+                        fb.className = 'answer-feedback';
+                        step.appendChild(fb);
+                    }
+                    if(type === 'likert' || type === 'mood'){
+                        fb.textContent = 'Antwort gespeichert.';
+                        fb.className = 'answer-feedback saved';
+                    } else {
+                        const correct = correctMap[qName];
+                        const isCorrect = correct && input.value === correct;
+                        const fbt = feedbackMap[qName];
+                        const text = (fbt && (isCorrect ? fbt[correct] : fbt.default)) || (isCorrect ? 'Richtig.' : 'Nicht ganz.');
+                        fb.textContent = text;
+                        fb.className = 'answer-feedback ' + (isCorrect ? 'correct' : 'incorrect');
+                    }
+
+                    const next = steps[idx+1];
+                    if(next){
+                        next.style.display = '';
+                        next.querySelectorAll('input[type="radio"]').forEach(inp => inp.disabled = false);
+                        updateCounter(idx+1);
+                    } else {
+                        submitBtn.style.display = '';
+                        updateCounter(idx);
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function(e){
+                e.preventDefault();
+                const stepsLocal = steps;
+                // Dimension buckets
+                const dims = ['Grundlagen','Anwendung','Bewertung','Ethik_Recht','Strategie'];
+                const scores = { Grundlagen:0, Anwendung:0, Bewertung:0, Ethik_Recht:0, Strategie:0 };
+                const maxes  = { Grundlagen:0, Anwendung:0, Bewertung:0, Ethik_Recht:0, Strategie:0 };
+
+                stepsLocal.forEach(step => {
+                    const type = step.dataset.type;
+                    const mod = step.dataset.module;
+                    const selected = step.querySelector('input[type="radio"]:checked');
+                    if(!selected) return;
+
+                    if(type === 'likert'){
+                        scores[mod] += likertMap[selected.value] || 0;
+                        maxes[mod]  += 5;
+                    } else if(type === 'single_choice' || type === 'scenario'){
+                        const qName = selected.name;
+                        const isCorrect = selected.value === (correctMap[qName] || '');
+                        scores[mod] += isCorrect ? 1 : 0;
+                        maxes[mod]  += 1;
+                    } else if(type === 'mood'){
+                        // Neutral contribution (captures Haltung, nicht „richtig/falsch“)
+                        const moodMap = { A:1, B:2, C:3, D:4, E:5 };
+                        scores[mod] += moodMap[selected.value] || 0;
+                        maxes[mod]  += 5;
+                    }
+                });
+
+                // Normalize to 0..1 per dimension and compute overall avg
+                let totalPct = 0; let count = 0;
+                const percent = {};
+                Object.keys(scores).forEach(k => {
+                    const p = maxes[k] ? (scores[k] / maxes[k]) : 0;
+                    percent[k] = p;
+                    if(maxes[k] > 0){ totalPct += p; count++; }
+                });
+                const avgPct = count ? totalPct / count : 0;
+
+                // Map overall to 3 levels
+                let level = 1;
+                if(avgPct >= 0.45) level = 2;
+                if(avgPct >= 0.7) level = 3;
+
+                // Render results
+                form.style.display = 'none';
+                const container = document.getElementById('resultsContainer');
+                container.style.display = 'block';
+                const card = document.getElementById('result-' + level);
+                if(card){
+                    card.hidden = false;
+                    // Inject subscores list
+                    let subs = card.querySelector('.subscores');
+                    if(!subs){
+                        subs = document.createElement('div');
+                        subs.className = 'subscores';
+                        const h = document.createElement('h4');
+                        h.textContent = 'Teilbereiche (Subscores)';
+                        const ul = document.createElement('ul');
+                        Object.entries(percent).forEach(([k,v]) => {
+                            const li = document.createElement('li');
+                            li.textContent = `${k}: ${Math.round(v*100)}%`;
+                            ul.appendChild(li);
+                        });
+                        subs.appendChild(h);
+                        subs.appendChild(ul);
+                        card.appendChild(subs);
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

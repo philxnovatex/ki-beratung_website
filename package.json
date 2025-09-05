@@ -1,0 +1,15 @@
+{
+  "name": "ki-beratung-website",
+  "version": "1.0.0",
+  "description": "Local dev helpers for Neuratex website",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  "express": "^4.18.2",
+  "nodemailer": "^6.9.4"
+  }
+}

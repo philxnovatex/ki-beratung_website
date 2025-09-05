@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Production domain -->
+  <url>
+    <loc>https://neuratex.de/</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/leistungen.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/kontakt.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/lernplattform.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/impressum.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/datenschutz.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+  <loc>https://neuratex.de/danke.html</loc>
+    <lastmod>2025-08-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+</urlset>

@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+node_modules/
+.env*
+dist/
+build/
+.idea/
+.vscode/
+npm-debug.log*
+.DS_Store
+Thumbs.db
+# Backup folder created by scripts
+backups/
