@@ -19,6 +19,13 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v3
 
+      - name: Debug — list workspace
+        run: |
+          echo "PWD: $(pwd)"
+          echo "Listing root:"; ls -la
+          echo "Listing public/:"; ls -la public || true
+          echo "Disk usage for public:"; du -sh public || true
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v1
         with:
