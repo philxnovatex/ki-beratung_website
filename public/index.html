@@ -16,7 +16,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
     <link rel="stylesheet" href="css/sections/ki-anwendungen.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
@@ -440,15 +441,29 @@
             </div>
         </section>
     </main>
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
-            <ul>
-                <li><a href="impressum.html">Impressum</a></li>
-                <li><a href="datenschutz.html">Datenschutz</a></li>
-            </ul>
+        <!-- Lernplattform Hinweis-Banner (global) -->
+        <div class="site-note-banner" role="status" aria-live="polite">
+            <div class="site-note-inner container">
+                <div class="site-note-icon" aria-hidden="true">
+                    <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs><linearGradient id="sn-grad-1" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
+                        <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-1)"/>
+                        <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
+                    </svg>
+                </div>
+                <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
+            </div>
         </div>
-    </footer>
+
+        <footer class="main-footer">
+                <div class="container">
+                        <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+                        <ul>
+                                <li><a href="impressum.html">Impressum</a></li>
+                                <li><a href="datenschutz.html">Datenschutz</a></li>
+                        </ul>
+                </div>
+        </footer>
 
     <!-- Scroll Progress Element -->
     <div id="scroll-progress" class="scroll-progress"></div>
