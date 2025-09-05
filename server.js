@@ -17,11 +17,22 @@ app.get('/', (req, res) => {
 const DATA_DIR = path.join(__dirname, 'data');
 const NEWS_PATH = path.join(DATA_DIR, 'newsletter.json');
 const TOKENS_PATH = path.join(DATA_DIR, 'tokens.json');
+const CONSENT_PATH = path.join(DATA_DIR, 'consent.json');
 
 async function readJsonSafe(p) {
   try { const raw = await fs.readFile(p, 'utf8'); return JSON.parse(raw || '[]'); } catch(e){ return []; }
 }
 async function writeJsonSafe(p, data){ await fs.mkdir(DATA_DIR, { recursive: true }); await fs.writeFile(p, JSON.stringify(data, null, 2), 'utf8'); }
+
+async function appendConsent(entry){
+  try{
+    await fs.mkdir(DATA_DIR, { recursive: true });
+    let list = [];
+    try{ const raw = await fs.readFile(CONSENT_PATH, 'utf8'); list = JSON.parse(raw||'[]'); }catch(e){ list = []; }
+    list.push(entry);
+    await fs.writeFile(CONSENT_PATH, JSON.stringify(list, null, 2), 'utf8');
+  }catch(e){ console.error('consent write error', e); }
+}
 
 // Create a nodemailer transport if SMTP env vars set; otherwise we'll not send but return token URL.
 let mailTransport = null;
@@ -46,7 +57,7 @@ app.post('/api/newsletter', async (req, res) => {
     const token = crypto.randomBytes(18).toString('hex');
     const tokenEntry = { token, email: normalized, created: new Date().toISOString() };
 
-    const tokens = await readJsonSafe(TOKENS_PATH);
+  const tokens = await readJsonSafe(TOKENS_PATH);
     tokens.push(tokenEntry);
     await writeJsonSafe(TOKENS_PATH, tokens);
 
@@ -65,7 +76,9 @@ app.post('/api/newsletter', async (req, res) => {
     }
 
     // dev fallback: return confirmation URL in response
-    return res.status(201).json({ ok: true, method: 'dev', confirmUrl });
+  // log consent request (timestamp and ip)
+  try{ await appendConsent({ email: normalized, action: 'requested', ts: new Date().toISOString(), ip: req.ip }); }catch(e){}
+  return res.status(201).json({ ok: true, method: 'dev', confirmUrl });
   } catch (err) {
     console.error('newsletter token error', err);
     return res.status(500).json({ error: 'server_error' });
@@ -92,6 +105,7 @@ app.get('/api/newsletter/confirm', async (req, res) => {
       list.push({ email: entry.email, confirmed: new Date().toISOString() });
       await writeJsonSafe(NEWS_PATH, list);
     }
+    try{ await appendConsent({ email: entry.email, action: 'confirmed', ts: new Date().toISOString(), ip: req.ip }); }catch(e){}
 
     // show a simple confirmation page
     return res.send(`<html><body><h1>Danke!</h1><p>Ihre E‑Mail ${entry.email} wurde bestätigt.</p><p><a href="/lernplattform.html">Zurück zur Lernplattform</a></p></body></html>`);
@@ -122,12 +136,33 @@ async function ensureAdminToken(){
   console.log('Admin token (keep secret):', token);
 }
 
-app.get('/admin/export.csv', async (req, res) => {
-  try{
-    const token = req.query.token || req.get('x-admin-token') || '';
-    if(!(ADMIN_TOKEN && token && token === ADMIN_TOKEN)){
+// Admin auth middleware: prefer BASIC auth (ADMIN_USER/ADMIN_PASS), else fall back to token
+function parseBasicAuth(authHeader){
+  if(!authHeader) return null;
+  const parts = authHeader.split(' ');
+  if(parts.length!==2 || parts[0] !== 'Basic') return null;
+  try{ const decoded = Buffer.from(parts[1], 'base64').toString('utf8'); const idx = decoded.indexOf(':'); if(idx===-1) return null; return { user: decoded.slice(0,idx), pass: decoded.slice(idx+1) }; }catch(e){ return null; }
+}
+
+function adminAuthMiddleware(req, res, next){
+  // if basic auth env set, require it
+  if(process.env.ADMIN_USER && process.env.ADMIN_PASS){
+    const creds = parseBasicAuth(req.get('authorization'));
+    if(!creds || creds.user !== process.env.ADMIN_USER || creds.pass !== process.env.ADMIN_PASS){
+      res.set('WWW-Authenticate','Basic realm="Admin"');
       return res.status(401).send('unauthorized');
     }
+    return next();
+  }
+
+  // otherwise fall back to token check
+  const token = req.query.token || req.get('x-admin-token') || '';
+  if(!(ADMIN_TOKEN && token && token === ADMIN_TOKEN)) return res.status(401).send('unauthorized');
+  return next();
+}
+
+app.get('/admin/export.csv', adminAuthMiddleware, async (req, res) => {
+  try{
     const list = await readJsonSafe(NEWS_PATH);
     const rows = ['email,confirmed'].concat((list||[]).map(it => `${it.email},${it.confirmed||''}`));
     res.setHeader('Content-Type','text/csv');
