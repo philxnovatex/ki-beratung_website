@@ -218,27 +218,117 @@
                 <p>Hören Sie in dieser 1-minütigen Demo, wie unser KI-Voicebot einen Anruf entgegennimmt, Termine abgleicht und eine Buchung vornimmt. Das ganze mit einer Gesprächsqualität, die auf dem neuesten Stand der Voice-AI-Technologie basiert. Genau solche Lösungen entlasten Ihr Team von zeitraubenden Routineaufgaben.</p>
                 
                 <div class="audio-player-container">
-                    <div class="player-card">
-                        <div class="artwork">
-                            <img src="images/neuratex-logo.jpg" alt="Neuratex Logo">
+                    <div class="player-card-premium">
+                        <!-- Background Animation -->
+                        <div class="player-bg-animation">
+                            <div class="pulse-circle pulse-1"></div>
+                            <div class="pulse-circle pulse-2"></div>
+                            <div class="pulse-circle pulse-3"></div>
                         </div>
-                        <div class="track-info">
-                            <h3>KI-Kompass für Entscheider</h3>
-                            <p>Voicebot-Demo: Terminbuchung</p>
-                        </div>
-                        <div class="controls">
-                            <button id="play-pause-btn" class="play"></button>
-                            <div class="progress-container">
-                                <div class="progress-bar" id="progress-bar">
-                                    <div class="progress" id="progress"></div>
+                        
+                        <!-- Glassmorphism Header -->
+                        <div class="player-header">
+                            <div class="ai-logo">
+                                <div class="ai-icon">
+                                    <svg viewBox="0 0 40 40" width="40" height="40">
+                                        <defs>
+                                            <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                <stop offset="0%" style="stop-color:#4F46E5"/>
+                                                <stop offset="100%" style="stop-color:#7C3AED"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <circle cx="20" cy="20" r="18" fill="url(#aiGradient)" opacity="0.9"/>
+                                        <path d="M15 16h10M15 20h10M15 24h7" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
                                 </div>
-                                <div class="time-display">
-                                    <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                            </div>
+                            <div class="track-meta">
+                                <h3>KI-Voicebot Demo</h3>
+                                <p>Intelligente Terminbuchung</p>
+                                <div class="ai-badge">
+                                    <span class="ai-indicator"></span>
+                                    <span>AI-Powered</span>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Waveform Visualizer -->
+                        <div class="waveform-container">
+                            <div class="waveform-bars">
+                                <div class="bar" style="height: 20%"></div>
+                                <div class="bar" style="height: 40%"></div>
+                                <div class="bar" style="height: 60%"></div>
+                                <div class="bar" style="height: 30%"></div>
+                                <div class="bar" style="height: 80%"></div>
+                                <div class="bar" style="height: 50%"></div>
+                                <div class="bar" style="height: 90%"></div>
+                                <div class="bar" style="height: 70%"></div>
+                                <div class="bar" style="height: 45%"></div>
+                                <div class="bar" style="height: 85%"></div>
+                                <div class="bar" style="height: 35%"></div>
+                                <div class="bar" style="height: 75%"></div>
+                                <div class="bar" style="height: 55%"></div>
+                                <div class="bar" style="height: 95%"></div>
+                                <div class="bar" style="height: 25%"></div>
+                                <div class="bar" style="height: 65%"></div>
+                                <div class="bar" style="height: 45%"></div>
+                                <div class="bar" style="height: 85%"></div>
+                                <div class="bar" style="height: 35%"></div>
+                                <div class="bar" style="height: 75%"></div>
+                            </div>
+                            <div class="waveform-progress" id="waveform-progress"></div>
+                        </div>
+
+                        <!-- Premium Controls -->
+                        <div class="premium-controls">
+                            <button id="play-pause-btn" class="premium-play-btn">
+                                <div class="btn-icon play-icon">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path d="M8 5v14l11-7z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="btn-icon pause-icon" style="display: none;">
+                                    <svg viewBox="0 0 24 24" width="24" height="24">
+                                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/>
+                                    </svg>
+                                </div>
+                                <div class="btn-ripple"></div>
+                            </button>
+                            
+                            <div class="time-info">
+                                <span id="current-time">0:00</span>
+                                <span class="time-separator">/</span>
+                                <span id="duration">0:00</span>
+                            </div>
+                            
+                            <div class="volume-control">
+                                <svg viewBox="0 0 24 24" width="20" height="20">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Premium Progress Bar -->
+                        <div class="premium-progress-container">
+                            <div class="premium-progress-track" id="progress-track">
+                                <div class="premium-progress-fill" id="progress-fill"></div>
+                                <div class="premium-progress-thumb" id="progress-thumb"></div>
+                            </div>
+                        </div>
+
+                        <!-- Call-to-Action -->
+                        <div class="demo-cta">
+                            <p class="cta-text">Beeindruckt? Lassen Sie uns Ihre KI-Lösung entwickeln.</p>
+                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="premium-cta-button">
+                                <span>Kostenlose Beratung buchen</span>
+                                <svg viewBox="0 0 24 24" width="16" height="16">
+                                    <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    <audio id="audio" src="audio/KI-Kompass_für_Entscheider__Grundlagen,_Risiken_&_Strategien_der_Künstlichen_Intelligenz_verstehen.m4a"></audio>
+                    
+                    <audio id="audio" src="demo_media/demo_audio.mp4" preload="metadata"></audio>
                 </div>
             </div>
         </section>
