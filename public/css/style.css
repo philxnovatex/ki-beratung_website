@@ -1208,15 +1208,15 @@ h2 { text-align: center; margin-bottom: 55px; }
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
-    color: white;
+    background: linear-gradient(135deg, #FFC947, #FFB020);
+    color: #0f2344;
     text-decoration: none;
     padding: 12px 24px;
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.9rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+    box-shadow: 0 8px 16px rgba(255, 201, 71, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -1238,7 +1238,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 .premium-cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(245, 158, 11, 0.4);
+    box-shadow: 0 12px 24px rgba(255, 201, 71, 0.4);
 }
 
 /* Mobile Responsive */
