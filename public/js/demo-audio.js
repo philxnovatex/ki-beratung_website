@@ -1,46 +1,61 @@
-// Simple player UI for demo audio
-const audio = document.getElementById('demo-audio');
-const playBtn = document.getElementById('playBtn');
-const progress = document.getElementById('progress');
-const progressBar = document.getElementById('progressBar');
-const currentEl = document.getElementById('current');
-const durationEl = document.getElementById('duration');
-const downloadBtn = document.getElementById('downloadBtn');
+// Audio player for the integrated demo on the homepage
+document.addEventListener('DOMContentLoaded', () => {
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const progressBar = document.getElementById('progress-bar');
+    const progress = document.getElementById('progress');
+    const currentTimeEl = document.getElementById('current-time');
+    const durationEl = document.getElementById('duration');
 
-function formatTime(sec){
-  if(!isFinite(sec)) return '—:—';
-  const m = Math.floor(sec/60); const s = Math.floor(sec%60); return `${m}:${s.toString().padStart(2,'0')}`;
-}
-
-audio.addEventListener('loadedmetadata', ()=>{
-  durationEl.textContent = formatTime(audio.duration);
-});
-
-audio.addEventListener('timeupdate', ()=>{
-  const pct = (audio.currentTime / audio.duration) * 100 || 0;
-  progressBar.style.width = pct + '%';
-  currentEl.textContent = formatTime(audio.currentTime);
-});
-
-playBtn.addEventListener('click', ()=>{
-  if(audio.paused){ audio.play(); playBtn.textContent = 'Pause'; }
-  else { audio.pause(); playBtn.textContent = 'Play'; }
-});
-
-// click to seek
-progress.addEventListener('click', (e)=>{
-  const rect = progress.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  audio.currentTime = Math.max(0, Math.min(1, pct)) * audio.duration;
-});
-
-// update download link timestamp to bust cache
-(async function(){
-  try{
-    const resp = await fetch(downloadBtn.href, { method: 'HEAD' });
-    if(resp && resp.headers){
-      const size = resp.headers.get('content-length');
-      if(size) downloadBtn.textContent = `Download (${Math.round(Number(size)/1024)} KB)`;
+    // Exit if the player elements are not on the current page
+    if (!audio || !playPauseBtn || !progressBar) {
+        return;
     }
-  }catch(e){}
-})();
+
+    // Play & Pause
+    playPauseBtn.addEventListener('click', () => {
+        const isPlaying = !audio.paused;
+        if (isPlaying) {
+            audio.pause();
+            playPauseBtn.classList.remove('pause');
+            playPauseBtn.classList.add('play');
+        } else {
+            audio.play();
+            playPauseBtn.classList.remove('play');
+            playPauseBtn.classList.add('pause');
+        }
+    });
+
+    // Update progress bar
+    audio.addEventListener('timeupdate', () => {
+        const progressPercent = (audio.currentTime / audio.duration) * 100;
+        progress.style.width = `${progressPercent}%`;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    // Set duration on load
+    audio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(audio.duration);
+    });
+
+    // Seek on progress bar click
+    progressBar.addEventListener('click', (e) => {
+        const width = progressBar.clientWidth;
+        const clickX = e.offsetX;
+        audio.currentTime = (clickX / width) * audio.duration;
+    });
+
+    // Reset when audio ends
+    audio.addEventListener('ended', () => {
+        playPauseBtn.classList.remove('pause');
+        playPauseBtn.classList.add('play');
+        audio.currentTime = 0;
+    });
+
+    function formatTime(seconds) {
+        if (!isFinite(seconds)) return '0:00';
+        const minutes = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+});

@@ -215,8 +215,31 @@
         <section id="demo" class="demo-section">
             <div class="container">
                 <h2>Ein Anruf. Eine KI. Ein gebuchter Termin.</h2>
-                <p>Sehen Sie in diesem 1-minütigen Video, wie unser KI-Voicebot einen Anruf entgegennimmt, Termine abgleicht und eine Buchung vornimmt. Das ganze mit einer Gesprächsqualität, die auf dem neuesten Stand der Voice-AI-Technologie (einer Technologie, die wöchentlich neue Maßstäbe setzt) basiert. Genau solche Lösungen entlasten Ihr Team von zeitraubenden Routineaufgaben.</p>
-                <div class="video-placeholder">[Video Platzhalter]</div>
+                <p>Hören Sie in dieser 1-minütigen Demo, wie unser KI-Voicebot einen Anruf entgegennimmt, Termine abgleicht und eine Buchung vornimmt. Das ganze mit einer Gesprächsqualität, die auf dem neuesten Stand der Voice-AI-Technologie basiert. Genau solche Lösungen entlasten Ihr Team von zeitraubenden Routineaufgaben.</p>
+                
+                <div class="audio-player-container">
+                    <div class="player-card">
+                        <div class="artwork">
+                            <img src="images/neuratex-logo.jpg" alt="Neuratex Logo">
+                        </div>
+                        <div class="track-info">
+                            <h3>KI-Kompass für Entscheider</h3>
+                            <p>Voicebot-Demo: Terminbuchung</p>
+                        </div>
+                        <div class="controls">
+                            <button id="play-pause-btn" class="play"></button>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progress-bar">
+                                    <div class="progress" id="progress"></div>
+                                </div>
+                                <div class="time-display">
+                                    <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <audio id="audio" src="audio/KI-Kompass_für_Entscheider__Grundlagen,_Risiken_&_Strategien_der_Künstlichen_Intelligenz_verstehen.m4a"></audio>
+                </div>
             </div>
         </section>
         <!-- KI-Reifegrad-Check -->
@@ -765,5 +788,6 @@
             });
         })();
     </script>
+    <script src="js/demo-audio.js"></script>
 </body>
 </html>
