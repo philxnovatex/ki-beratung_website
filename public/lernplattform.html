@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="utf-8">
@@ -6,89 +6,35 @@
   <title>Whitepaper: In 3 Schritten den Kundenservice automatisieren</title>
   <meta name="description" content="Lernplattform zu KI: Grundlagen, Anwendungsbeispiele und Praxis-Tipps für Entscheider. Podcast, Whitepaper und kompakte Lerninhalte von Neuratex AI.">
   <link rel="canonical" href="https://www.neuratex.example/lernplattform.html">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <!-- Critical CSS (inlined for faster first render) -->
   <style>
-    /* Minimal critical rules for hero and basic layout */
-    :root{--accent-color:#FFC947;--primary-color:#0A1931}
-    html,body{height:100%}
-    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#0A1931;color:#cbd5e1}
-    .container{max-width:1200px;margin:0 auto;padding:0 20px}
-    .hero-fullwidth{padding:64px 0;text-align:center}
-    .hero-fullwidth h1{color:#fff;font-size:2.4rem;margin:0 0 8px}
-    .hero-fullwidth .subtitle{color:#cbd5e1;font-size:1.05rem;max-width:900px;margin:0 auto}
-    @media (max-width:720px){.hero-fullwidth h1{font-size:1.8rem}.hero-fullwidth .subtitle{font-size:.98rem}}
+    :root { --accent-color: #FFC947; --primary-color: #0A1931; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: #0A1931;
+      color: #cbd5e1;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .hero-fullwidth { padding: 64px 0; text-align: center; }
+    .hero-fullwidth h1 { color: #fff; font-size: 2.4rem; margin: 0 0 8px; }
+    .hero-fullwidth .subtitle { color: #cbd5e1; font-size: 1.05rem; max-width: 900px; margin: 0 auto; }
+    @media (max-width: 720px) {
+      .hero-fullwidth h1 { font-size: 1.8rem; }
+      .hero-fullwidth .subtitle { font-size: 0.98rem; }
+    }
   </style>
-
-  <!-- Load main stylesheet non-blocking -->
   <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="css/style.css"></noscript>
-
-  <!-- Organization structured data (JSON-LD) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Neuratex AI",
-    "url": "https://www.neuratex.example",
-    "logo": "https://www.neuratex.example/images/neuratex-logo.jpg",
-    "sameAs": [
-      </section>
-
-      <script type="module">
-        // Whitepaper download form + Newsletter storage & export (combined, robust)
-        // Whitepaper form: validates and triggers download then redirects to danke.html
-        const whitepaperForm = document.getElementById('whitepaper-form');
-        if(whitepaperForm){
-          whitepaperForm.addEventListener('submit', function(evt){
-            evt.preventDefault();
-            const name = whitepaperForm.querySelector('#name');
-            const email = whitepaperForm.querySelector('#email');
-            const privacy = whitepaperForm.querySelector('#privacy');
-            if(!name || !email || !privacy || !name.value.trim() || !email.value.trim() || !privacy.checked){
-              alert('Bitte f\u00fcllen Sie Name, E\u2011Mail aus und best\u00e4tigen Sie die Datenschutzerkl\u00e4rung.');
-              return;
-            }
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if(!re.test(email.value.trim())){ alert('Bitte geben Sie eine g\u00fcltige E\u2011Mail-Adresse ein.'); return; }
-            // TODO: insert analytics / server-side tracking here if desired
-            window.location.href = 'downloads/neuratex-whitepaper.pdf';
-            setTimeout(()=> { window.location.href = 'danke.html'; }, 800);
-          });
-        }
-
-        // Newsletter: localStorage collector + export
-        const newsletterForm = document.getElementById('newsletter-form');
-        const newsletterInput = document.getElementById('newsletter-email');
-        const exportBtn = document.getElementById('export-newsletter-btn');
-
-        function getNewsletterList(){
-          try{ return JSON.parse(localStorage.getItem('newsletterList')||'[]') }catch(e){ return []; }
-        }
-        function setNewsletterList(list){ localStorage.setItem('newsletterList', JSON.stringify(list)); }
-        function updateExportState(){ if(exportBtn) exportBtn.disabled = !(getNewsletterList().length>0); }
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Whitepaper: In 3 Schritten den Kundenservice automatisieren</title>
-  <!-- Critical CSS (inlined for faster first render) -->
-  <style>
-    :root{--accent-color:#FFC947;--primary-color:#0A1931}
-    html,body{height:100%}
-    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:#0A1931;color:#cbd5e1}
-    .container{max-width:1200px;margin:0 auto;padding:0 20px}
-    .hero-fullwidth{padding:64px 0;text-align:center}
-    .hero-fullwidth h1{color:#fff;font-size:2.4rem;margin:0 0 8px}
-    .hero-fullwidth .subtitle{color:#cbd5e1;font-size:1.05rem;max-width:900px;margin:0 auto}
-    @media (max-width:720px){.hero-fullwidth h1{font-size:1.8rem}.hero-fullwidth .subtitle{font-size:.98rem}}
-  </style>
-
-  <!-- Load main stylesheet non-blocking -->
-  <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="css/style.css"></noscript>
-
-  <!-- Organization structured data (JSON-LD) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -107,7 +53,7 @@
   <header class="main-header">
     <div class="container">
       <a href="index.html" class="logo"><img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
-      <nav class="main-nav" data-visible="false">
+      <nav id="primary-navigation" class="main-nav" data-visible="false">
         <ul>
           <li><a href="leistungen.html">Leistungen</a></li>
           <li><a href="index.html#about">Über Neuratex AI</a></li>
@@ -127,7 +73,7 @@
     <section class="page-hero hero-fullwidth" style="padding:80px 0; background:linear-gradient(180deg,#07142a,#0b2540);">
       <div class="container" style="max-width:1200px; text-align:center;">
         <h1 style="color:#fff; font-size:2.6rem; margin-bottom:8px;">Ihre KI Lernplattform</h1>
-        <p class="subtitle" style="color:#cbd5e1; font-size:1.1rem; max-width:900px; margin:0 auto">Lernen Sie die Grundlagen, Konzepte und Praxistricks rund um Künstliche Intelligenz – kompakt, verständlich und einsatzbereit.</p>
+        <p class="subtitle" style="color:#cbd5e1; font-size:1.1rem; max-width:900px; margin:0 auto;">Lernen Sie die Grundlagen, Konzepte und Praxistricks rund um Künstliche Intelligenz – kompakt, verständlich und einsatzbereit.</p>
       </div>
     </section>
 
@@ -136,7 +82,7 @@
       <div class="container">
         <div class="podcast-banner" role="region" aria-labelledby="podcast-heading">
           <h2 id="podcast-heading">KI Grundlagen, erklärt von KI</h2>
-          <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfährst du die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
+          <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfahren Sie die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
         </div>
 
         <div class="podcast-player" style="text-align:center; margin-top:18px;">
@@ -144,7 +90,7 @@
             <source src="audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
             <source src="audio/ki-podcast.m4a" type="audio/mp4">
             <source src="audio/ki-podcast.mp3" type="audio/mpeg">
-            Ihr Browser unterstützt das Audio‑Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
+            Ihr Browser unterstützt das Audio-Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
           </audio>
         </div>
       </div>
@@ -153,9 +99,9 @@
     <!-- Modern 'under construction' banner -->
     <section class="site-note-spotlight" aria-hidden="false" style="padding:20px 0;">
       <div class="container">
-        <div class="site-note-modern" role="status" aria-live="polite" style="display:flex; gap:16px; align-items:center; justify-content:space-between; background:linear-gradient(90deg,#0f2344, #112240); color:#e6f0ff; padding:18px; border-radius:12px; box-shadow:0 12px 30px rgba(4,8,20,0.5);">
+        <div class="site-note-modern" role="status" aria-live="polite" style="display:flex; gap:16px; align-items:center; justify-content:space-between; background:linear-gradient(90deg,#0f2344,#112240); color:#e6f0ff; padding:18px; border-radius:12px; box-shadow:0 12px 30px rgba(4,8,20,0.5);">
           <div style="display:flex; gap:14px; align-items:center;">
-            <div style="width:52px; height:52px; background:linear-gradient(135deg,var(--accent-color), #ff8a4b); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+            <div style="width:52px; height:52px; background:linear-gradient(135deg,var(--accent-color),#ff8a4b); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.35);">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 12h18" stroke="#07142a" stroke-width="1.6" stroke-linecap="round"/><path d="M7 8h10v8H7z" fill="#07142a" opacity="0.06"/></svg>
             </div>
             <div>
@@ -165,37 +111,37 @@
           </div>
           <div style="display:flex; gap:12px; align-items:center;">
             <form id="newsletter-form" style="display:flex; gap:8px; align-items:center;">
-              <label for="newsletter-email" style="display:none">E‑Mail</label>
+              <label for="newsletter-email" style="display:none;">E‑Mail</label>
               <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
-                <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Für Newsletter eintragen und up to date bleiben</button>
+              <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Für Newsletter eintragen und up to date bleiben</button>
             </form>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Now the Neuratex principle and form -->
+    <!-- The Neuratex principle and form -->
     <section class="principles-overview" aria-labelledby="principles-heading">
       <div class="container">
-        <h2 style="text-align:center; margin-bottom:0.6rem;">Der Neuratex‑Ansatz</h2>
+        <h2 style="text-align:center; margin-bottom:0.6rem;">Der Neuratex-Ansatz</h2>
       </div>
       <div class="container">
-        <h2 id="principles-heading" style="text-align:center; margin-bottom:1rem">Die drei Phasen</h2>
+        <h2 id="principles-heading" style="text-align:center; margin-bottom:1rem;">Die drei Phasen</h2>
         <div class="principles-grid" style="display:flex; gap:24px; justify-content:space-between;">
           <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
             <span style="font-size:1.75rem; color:var(--accent-color); display:block;">01</span>
-            <h3 style="margin-top:8px;">Strategische<br>Klarheit</h3>
-            <p>Wir definieren gemeinsam klare Ziele, Erfolgskriterien und priorisieren Use‑Cases, die schnellen Impact und Skalierbarkeit versprechen.</p>
+            <h3 style="margin-top:8px;">Strategische<br> Klarheit</h3>
+            <p>Wir definieren gemeinsam klare Ziele, Erfolgskriterien und priorisieren Use-Cases, die schnellen Impact und Skalierbarkeit versprechen.</p>
           </div>
           <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
             <span style="font-size:1.75rem; color:var(--accent-color); display:block;">02</span>
-            <h3 style="margin-top:8px;">Technologische<br>Exzellenz</h3>
-            <p>Wir wählen Technologie‑Stacks und Integrationspfade, die Sicherheit, Wartbarkeit und Performance sicherstellen — von Prototyp bis Produktion.</p>
+            <h3 style="margin-top:8px;">Technologische<br> Exzellenz</h3>
+            <p>Wir wählen Technologie-Stacks und Integrationspfade, die Sicherheit, Wartbarkeit und Performance sicherstellen – von Prototyp bis Produktion.</p>
           </div>
           <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
             <span style="font-size:1.75rem; color:var(--accent-color); display:block;">03</span>
-            <h3 style="margin-top:8px;">Nachhaltige<br>Wertschöpfung</h3>
-            <p>Wir implementieren KPI‑basierte Rollouts und begleiten die organisatorische Verankerung, damit KI‑Lösungen langfristig Wert liefern.</p>
+            <h3 style="margin-top:8px;">Nachhaltige<br> Wertschöpfung</h3>
+            <p>Wir implementieren KPI-basierte Rollouts und begleiten die organisatorische Verankerung, damit KI-Lösungen langfristig Wert liefern.</p>
           </div>
         </div>
       </div>
@@ -205,20 +151,20 @@
       <div class="container lead-gen-flex" style="display:flex; gap:40px; align-items:flex-start;">
         <div class="lead-gen-text" style="flex:1;">
           <h2>Unser Verfahren</h2>
-          <p>Das Neuratex‑Prinzip ist darauf ausgelegt, KI nicht als Selbstzweck, sondern als gezieltes Werkzeug für nachhaltigen Geschäftsnutzen einzusetzen. Wir passen die Vorgehensweise individuell an Ihre Ausgangslage, Ziele und Unternehmenskultur an, damit Lösungen nicht im Experimentierstadium steckenbleiben.</p>
+          <p>Das Neuratex-Prinzip ist darauf ausgelegt, KI nicht als Selbstzweck, sondern als gezieltes Werkzeug für nachhaltigen Geschäftsnutzen einzusetzen. Wir passen die Vorgehensweise individuell an Ihre Ausgangslage, Ziele und Unternehmenskultur an, damit Lösungen nicht im Experimentierstadium steckenbleiben.</p>
 
-          <h3 style="margin-top:1rem">Warum das funktioniert</h3>
+          <h3 style="margin-top:1rem;">Warum das funktioniert</h3>
           <ul>
-            <li>Praxisorientierte Priorisierung statt Technologie‑Buzz</li>
-            <li>End‑to‑end Denkweise: Strategie → Technik → Organisation</li>
-            <li>Kurzfristige Experimente mit klaren Exit‑ und Skalierungsentscheidungen</li>
+            <li>Praxisorientierte Priorisierung statt Technologie-Buzz</li>
+            <li>End-to-end Denkweise: Strategie → Technik → Organisation</li>
+            <li>Kurzfristige Experimente mit klaren Exit- und Skalierungsentscheidungen</li>
           </ul>
 
-          <p style="margin-top:1rem">Fordern Sie das vollständige Dokument „Neuratex‑Prinzip“ an. Es enthält Checklisten, Ablaufpläne und konkrete Beispiele für die schrittweise Umsetzung.</p>
+          <p style="margin-top:1rem;">Fordern Sie das vollständige Dokument „Neuratex-Prinzip“ an. Es enthält Checklisten, Ablaufpläne und konkrete Beispiele für die schrittweise Umsetzung.</p>
         </div>
 
         <div class="lead-gen-form-container" style="flex-basis:380px;">
-          <h3 id="whitepaper">Neuratex‑Prinzip anfordern</h3>
+          <h3 id="whitepaper">Neuratex-Prinzip anfordern</h3>
           <form id="whitepaper-form" action="danke.html" method="get" novalidate>
             <div class="form-group">
               <label for="name">Ihr Name</label>
@@ -236,124 +182,186 @@
               <input id="privacy" type="checkbox" required>
               <label for="privacy" style="margin:0;">Ich habe die <a href="datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
             </div>
-            <button type="submit" class="cta-button">Neuratex‑Prinzip anfordern</button>
+            <button type="submit" class="cta-button">Neuratex-Prinzip anfordern</button>
             <p class="form-privacy">Sie erhalten das Dokument per Download; anschließend werden Sie zur Dankeseite weitergeleitet.</p>
-            <p style="font-size:.9rem; color:#9fb3d9; margin-top:10px">Vertraulich & praxisorientiert — keine unnötigen Marketing‑Mails.</p>
+            <p style="font-size:0.9rem; color:#9fb3d9; margin-top:10px;">Vertraulich & praxisorientiert — keine unnötigen Marketing-Mails.</p>
           </form>
         </div>
       </div>
     </section>
+  </main>
 
-    <script type="module">
-      // Whitepaper download form + Newsletter storage & export (combined, robust)
-      const whitepaperForm = document.getElementById('whitepaper-form');
-      if(whitepaperForm){
-        whitepaperForm.addEventListener('submit', function(evt){
-          evt.preventDefault();
-          const name = whitepaperForm.querySelector('#name');
-          const email = whitepaperForm.querySelector('#email');
-          const privacy = whitepaperForm.querySelector('#privacy');
-          if(!name || !email || !privacy || !name.value.trim() || !email.value.trim() || !privacy.checked){
-            alert('Bitte füllen Sie Name, E‑Mail aus und bestätigen Sie die Datenschutzerklärung.');
-            return;
-          }
-          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if(!re.test(email.value.trim())){ alert('Bitte geben Sie eine gültige E‑Mail-Adresse ein.'); return; }
-          window.location.href = 'downloads/neuratex-whitepaper.pdf';
-          setTimeout(()=> { window.location.href = 'danke.html'; }, 800);
-        });
-      }
-
-      // Newsletter
-      const newsletterForm = document.getElementById('newsletter-form');
-      const newsletterInput = document.getElementById('newsletter-email');
-      const exportBtn = document.getElementById('export-newsletter-btn');
-
-      function getNewsletterList(){ try{ return JSON.parse(localStorage.getItem('newsletterList')||'[]') }catch(e){ return [] } }
-      function setNewsletterList(list){ localStorage.setItem('newsletterList', JSON.stringify(list)) }
-      function updateExportState(){ if(exportBtn) exportBtn.disabled = !(getNewsletterList().length>0) }
-
-      if(newsletterForm){
-        newsletterForm.addEventListener('submit', async function(e){
-          e.preventDefault();
-          const email = newsletterInput && newsletterInput.value && newsletterInput.value.trim();
-          if(!email){ alert('Bitte E‑Mail angeben.'); return; }
-          const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if(!re.test(email)){ alert('Bitte eine gültige E‑Mail-Adresse eingeben.'); return; }
-
-          try{
-            const resp = await fetch('/api/newsletter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
-            if(resp.ok){
-              const data = await resp.json();
-              // server sent back confirmUrl for dev mode
-              if(data && data.method === 'dev' && data.confirmUrl){
-                // show user the confirmation link so they can click in dev
-                const ok = confirm('Ein Bestätigungslink wurde generiert (Entwicklungsmodus). Möchten Sie den Link jetzt öffnen, um die E‑Mail zu bestätigen?');
-                if(ok) window.open(data.confirmUrl, '_blank');
-                alert('Bitte bestätigen Sie die Anmeldung in der E‑Mail, um die Eintragung abzuschließen.');
-                // store pending locally too
-                const list = getNewsletterList(); if(!list.includes(email)){ list.push(email); setNewsletterList(list); }
-                newsletterInput.value = '';
-                updateExportState();
-                return;
-              }
-              // normal flow: email sent
-              if(data && data.ok){ alert('Bestätigungs‑E‑Mail wurde verschickt. Bitte prüfen Sie Ihren Posteingang.'); newsletterInput.value = ''; return; }
-            }
-          }catch(err){ console.warn('newsletter submit error', err); }
-
-          // fallback: localStorage only (offline)
-          const list = getNewsletterList();
-          if(list.includes(email)){ alert('Diese E‑Mail ist bereits eingetragen (lokal).'); return; }
-          list.push(email);
-          setNewsletterList(list);
-          if(newsletterInput) newsletterInput.value = '';
-          alert('Danke — Sie sind eingetragen (lokal).');
-          updateExportState();
-        });
-      }
-
-      if(exportBtn){
-        updateExportState();
-        exportBtn.addEventListener('click', async function(){
-          const list = getNewsletterList();
-          if(!list.length){ alert('Keine E‑Mails gespeichert.'); return; }
-          const csv = 'email\n' + list.join('\n');
-          const blob = new Blob([csv], { type: 'text/csv' });
-          const a = document.createElement('a');
-          a.href = URL.createObjectURL(blob);
-          a.download = 'newsletter_emails.csv';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          try{ await navigator.clipboard.writeText(list.join('\n')); exportBtn.textContent = 'Kopiert'; setTimeout(()=> exportBtn.textContent = 'Export E‑Mails', 1800); }catch(e){}
-        });
-      }
-    </script>
-
-    <!-- Lernplattform Hinweis-Banner (vor dem Footer) -->
-    <div class="site-note-banner" role="status" aria-live="polite">
-      <div class="site-note-inner container">
-        <div class="site-note-icon" aria-hidden="true">
-          <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs><linearGradient id="sn-grad-2" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
-            <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-2)"/>
-            <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
-          </svg>
-        </div>
-        <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
+  <!-- Lernplattform Hinweis-Banner (global) -->
+  <div class="site-note-banner" role="status" aria-live="polite">
+    <div class="site-note-inner container">
+      <div class="site-note-icon" aria-hidden="true">
+        <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="sn-grad-2" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
+          <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-2)"/>
+          <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
+        </svg>
       </div>
+      <p class="site-note-text">Wir bauen gerade etwas Neues für Sie: eine Lernplattform mit klaren Erklärungen zu KI-Agenten, spannenden Einblicken in aktuelle Modelle und vielen Tipps für den direkten Einsatz.</p>
     </div>
+  </div>
 
-  <!-- (duplicate footer banner removed) -->
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+      <ul>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+  </footer>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-      <div class="container">
-        <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
-        <ul><li><a href="impressum.html">Impressum</a></li><li><a href="datenschutz.html">Datenschutz</a></li></ul>
-      </div>
-    </footer>
+  <script>
+    (function(){
+      const nav = document.querySelector('.main-nav');
+      const navToggle = document.querySelector('.mobile-nav-toggle');
+      if(!nav || !navToggle) return;
+      navToggle.addEventListener('click', () => {
+        const isVisible = nav.getAttribute('data-visible');
+        if (isVisible === 'false') {
+          nav.setAttribute('data-visible', 'true');
+          navToggle.setAttribute('aria-expanded', 'true');
+        } else {
+          nav.setAttribute('data-visible', 'false');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    })();
+  </script>
+  <script type="module">
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    const whitepaperForm = document.getElementById('whitepaper-form');
+    if (whitepaperForm) {
+      whitepaperForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name = whitepaperForm.querySelector('#name');
+        const email = whitepaperForm.querySelector('#email');
+        const privacy = whitepaperForm.querySelector('#privacy');
+
+        if (!name || !email || !privacy || !name.value.trim() || !email.value.trim() || !privacy.checked) {
+          alert('Bitte füllen Sie Name, E‑Mail aus und bestätigen Sie die Datenschutzerklärung.');
+          return;
+        }
+        if (!emailPattern.test(email.value.trim())) {
+          alert('Bitte geben Sie eine gültige E‑Mail-Adresse ein.');
+          return;
+        }
+
+        window.location.href = 'downloads/neuratex-whitepaper.pdf';
+        setTimeout(() => { window.location.href = 'danke.html'; }, 800);
+      });
+    }
+
+    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterInput = document.getElementById('newsletter-email');
+    const exportBtn = document.getElementById('export-newsletter-btn');
+
+    const getNewsletterList = () => {
+      try {
+        return JSON.parse(localStorage.getItem('newsletterList') || '[]');
+      } catch (error) {
+        console.warn('newsletter storage parse error', error);
+        return [];
+      }
+    };
+    const setNewsletterList = (list) => {
+      localStorage.setItem('newsletterList', JSON.stringify(list));
+    };
+    const updateExportState = () => {
+      if (exportBtn) {
+        exportBtn.disabled = getNewsletterList().length === 0;
+      }
+    };
+
+    if (newsletterForm && newsletterInput) {
+      newsletterForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = newsletterInput.value.trim();
+        if (!email) {
+          alert('Bitte E‑Mail angeben.');
+          return;
+        }
+        if (!emailPattern.test(email)) {
+          alert('Bitte eine gültige E‑Mail-Adresse eingeben.');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.method === 'dev' && data.confirmUrl) {
+              const shouldOpen = confirm('Ein Bestätigungslink wurde generiert (Entwicklungsmodus). Möchten Sie den Link jetzt öffnen, um die E‑Mail zu bestätigen?');
+              if (shouldOpen) window.open(data.confirmUrl, '_blank');
+              alert('Bitte bestätigen Sie die Anmeldung in der E‑Mail, um die Eintragung abzuschließen.');
+              const list = getNewsletterList();
+              if (!list.includes(email)) {
+                list.push(email);
+                setNewsletterList(list);
+              }
+              newsletterInput.value = '';
+              updateExportState();
+              return;
+            }
+            if (data && data.ok) {
+              alert('Bestätigungs-E‑Mail wurde verschickt. Bitte prüfen Sie Ihren Posteingang.');
+              newsletterInput.value = '';
+              updateExportState();
+              return;
+            }
+          }
+        } catch (error) {
+          console.warn('newsletter submit error', error);
+        }
+
+        const list = getNewsletterList();
+        if (list.includes(email)) {
+          alert('Diese E‑Mail ist bereits eingetragen (lokal).');
+          return;
+        }
+        list.push(email);
+        setNewsletterList(list);
+        newsletterInput.value = '';
+        alert('Danke — Sie sind eingetragen (lokal).');
+        updateExportState();
+      });
+    }
+
+    if (exportBtn) {
+      updateExportState();
+      exportBtn.addEventListener('click', async () => {
+        const list = getNewsletterList();
+        if (!list.length) {
+          alert('Keine E‑Mails gespeichert.');
+          return;
+        }
+        const csv = 'email\n' + list.join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'newsletter_emails.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        try {
+          await navigator.clipboard.writeText(list.join('\n'));
+          exportBtn.textContent = 'Kopiert';
+          setTimeout(() => { exportBtn.textContent = 'Export E‑Mails'; }, 1800);
+        } catch (error) {
+          console.warn('clipboard write failed', error);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
