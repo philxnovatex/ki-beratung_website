@@ -797,8 +797,8 @@ h2 { text-align: center; margin-bottom: 55px; }
         transform: scale(1.05);
     }
     .main-nav ul li a.nav-highlight {
-        background: linear-gradient(135deg, var(--accent-color), #ffd740);
-        color: var(--navy);
+        background: linear-gradient(135deg, var(--accent-color), #ffd740) !important;
+        color: #0a1931 !important;
         font-weight: 800;
         border-color: var(--accent-color);
     }
