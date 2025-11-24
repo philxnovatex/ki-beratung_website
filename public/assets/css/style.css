@@ -800,6 +800,7 @@ h2 { text-align: center; margin-bottom: 55px; }
         background: linear-gradient(135deg, var(--accent-color), #ffd740);
         color: var(--navy);
         font-weight: 800;
+        border-color: var(--accent-color);
     }
     .mobile-nav-toggle {
         display: block;
