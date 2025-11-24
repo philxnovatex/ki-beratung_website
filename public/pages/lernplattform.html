@@ -1,0 +1,1314 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Whitepaper: In 3 Schritten den Kundenservice automatisieren</title>
+  <meta name="description" content="Lernplattform zu KI: Grundlagen, Anwendungsbeispiele und Praxis-Tipps für Entscheider. Podcast, Whitepaper und kompakte Lerninhalte von Neuratex AI.">
+  <link rel="canonical" href="https://www.neuratex.example/lernplattform.html">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="../assets/icons/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Critical CSS (inlined for faster first render) -->
+  <style>
+    :root { --accent-color: #FFC947; --primary-color: #0A1931; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, Arial, sans-serif;
+      background: #0A1931;
+      color: #cbd5e1;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .hero-fullwidth { padding: 64px 0; text-align: center; }
+    .hero-fullwidth h1 { color: #fff; font-size: 2.4rem; margin: 0 0 8px; }
+    .hero-fullwidth .subtitle { color: #cbd5e1; font-size: 1.05rem; max-width: 900px; margin: 0 auto; }
+    @media (max-width: 720px) {
+      .hero-fullwidth h1 { font-size: 1.8rem; }
+      .hero-fullwidth .subtitle { font-size: 0.98rem; }
+    }
+  </style>
+  <link rel="preload" href="../assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="../assets/css/style.css"></noscript>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Neuratex AI",
+    "url": "https://www.neuratex.example",
+    "logo": "https://www.neuratex.example/images/neuratex-logo.jpg",
+    "sameAs": [
+      "https://www.linkedin.com/",
+      "https://twitter.com/"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <a href="../index.html" class="logo"><img src="../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
+      <nav id="primary-navigation" class="main-nav" data-visible="false">
+        <ul>
+          <li><a href="leistungen.html">Leistungen</a></li>
+          <li><a href="index.html#about">Über Neuratex AI</a></li>
+          <li><a href="index.html#demo">Demo</a></li>
+          <li><a href="kontakt.html">Kontakt</a></li>
+          <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+        <span class="sr-only">Menü</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Full-width hero for the Lernplattform -->
+    <section class="page-hero hero-fullwidth" style="padding:80px 0; background:linear-gradient(180deg,#07142a,#0b2540);">
+      <div class="container" style="max-width:1200px; text-align:center;">
+        <h1 style="color:#fff; font-size:2.6rem; margin-bottom:8px;">Ihre KI Lernplattform</h1>
+        <p class="subtitle" style="color:#cbd5e1; font-size:1.1rem; max-width:900px; margin:0 auto;">Lernen Sie die Grundlagen, Konzepte und Praxistricks rund um Künstliche Intelligenz – kompakt, verständlich und einsatzbereit.</p>
+      </div>
+    </section>
+
+    <!-- Podcast directly under hero -->
+    <section class="podcast-section" aria-labelledby="podcast-heading">
+      <div class="container">
+        <div class="podcast-banner" role="region" aria-labelledby="podcast-heading">
+          <h2 id="podcast-heading">KI Grundlagen, erklärt von KI</h2>
+          <p class="podcast-intro">Warum KI von Menschen erklären lassen, wenn sie es auch selbst kann? In unserem KI‑generierten Podcast erfahren Sie die Grundlagen aus dem KI‑Kompass für Entscheider – verständlich, praxisnah und direkt von der Technologie, um die es geht.</p>
+        </div>
+
+        <div class="podcast-player" style="text-align:center; margin-top:18px;">
+          <audio id="ki-podcast-audio" controls preload="none" controlsList="nodownload">
+            <source src="../assets/audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
+            <source src="../assets/audio/ki-podcast.m4a" type="audio/mp4">
+            <source src="../assets/audio/ki-podcast.mp3" type="audio/mpeg">
+            Ihr Browser unterstützt das Audio-Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- KI-Begriffe FAQ - Interaktive Sektion -->
+    <section class="ki-begriffe-section" style="padding: 80px 0; background: linear-gradient(135deg, #0A1931 0%, #07142a 100%);">
+      <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+          <h2 class="glow-text" style="color: #fff; font-size: 2.5rem; margin-bottom: 20px; cursor: default;">
+            KI-Begriffe Kompakt
+          </h2>
+          <p style="color: #cbd5e1; font-size: 1.1rem; max-width: 700px; margin: 0 auto;">
+            45 wichtige Konzepte der Künstlichen Intelligenz – verständlich erklärt für alle, die mitreden wollen.
+          </p>
+        </div>
+        
+        <!-- Kategorie: Grundlagen -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">🤖 Grundlagen der KI</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Die fundamentalen Konzepte und Technologien</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 1 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px);">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🤖 Künstliche Intelligenz (KI)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Der große Überbegriff für eine wissenschaftliche Disziplin, die schon seit 1936, mit den theoretischen Grundlagen von Alan Turing, daran arbeitet, Maschinen menschenähnliche Denkprozesse beizubringen. Turing bewies, dass Maschinen kognitive Abläufe ausführen können, wenn diese in einzelne Algorithmen zerlegt werden können. Seit den 1950er Jahren entwickelt sich KI stetig weiter – von einfachen lernenden Computern bis hin zu komplexen Sprach- und Bildmodellen. KI ist also kein neuer Trend, sondern ein langjähriges Forschungsfeld mit einem vielfältigen Werkzeugkasten, mit dem Computer eigenständig lernen, Probleme lösen und Entscheidungen treffen.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.05s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🧠 Maschinelles Lernen (ML)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Der Weg, wie Computer schlau werden. Statt starre Regeln einzuprogrammieren („Wenn A, dann B"), gibt man ihnen viele Beispiele (Daten) und lässt sie selbstständig Muster und Zusammenhänge entdecken. Denk an ein Kind, das aus Erfahrung lernt, anstatt ein Handbuch auswendig zu lernen.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.1s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🕸️ Neuronales Netz
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Eine Software-Struktur, die vom Gehirn inspiriert ist. Viele kleine Knoten (Neuronen) sind miteinander vernetzt und feuern Signale ab. Je öfter bestimmte Neuronen zusammen feuern, desto stärker wird ihre Verbindung – so "merkt" sich das Netz Zusammenhänge.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.15s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🏗️ Deep Learning
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Königsklasse des maschinellen Lernens für extrem komplexe Aufgaben. Hier arbeiten viele Schichten von künstlichen Neuronen zusammen, um selbstständig Muster in riesigen Datenbergen zu finden – das ist das Gehirn hinter fast allen modernen KI-Wundern.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.2s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎯 Verstärkendes Lernen
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Lernen durch Belohnung und Bestrafung. Die KI probiert in einer interaktiven Umgebung verschiedene Aktionen aus und erhält Feedback (positive Belohnung oder negative Bestrafung). So lernt sie Schritt für Schritt, welche Handlungen zum Erfolg führen – wie ein Hund, den man mit Leckerlis belohnt, wenn er etwas richtig macht.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.25s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  💬 Natural Language Processing (NLP)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Alles, was mit Sprache zu tun hat – Computer lernen Lesen, Schreiben, Zuhören und Sprechen. Dank NLP versteht Siri sogar deinen Dialekt und Google Übersetzer bestellt dir mühelos ein Bier auf Spanisch.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 7 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.3s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  👁️ Computer Vision
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Augen der KI. Sie verwandelt Pixelhaufen (Bilder/Videos) in Bedeutung (z. B. erkennt „Achtung, ein Stoppschild!"). Unverzichtbar für selbstfahrende Autos oder die Gesichtserkennung in deinem Handy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 8 - Grundlagen -->
+          <div class="faq-item slide-in" data-category="grundlagen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.35s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎭 Multimodale KI
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein wahrer Alleskönner, der nicht nur Text versteht, sondern gleichzeitig auch Bilder sehen und Töne hören kann. Wie ein Mensch, der einen Film schaut und Bild, Ton und Untertitel gleichzeitig verarbeitet, um die Handlung zu kapieren.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Moderne Architekturen -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">📚 Moderne Architekturen</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Fortgeschrittene Modelle und Systemarchitekturen</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 9 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.4s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📚 Large Language Model (LLM)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein Text-Gigant, trainiert mit Unmengen an Daten (fast das gesamte Internet, z. B. GPT-4). Er kann Aufsätze schreiben, dichten und programmieren, indem er einfach immer das wahrscheinlichste nächste Wort vorhersagt – quasi Autocomplete auf Steroiden.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 10 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.45s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎯 Attention-Mechanismus
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die KI lernt, wichtige Informationen zu priorisieren, während unwichtige Details ignoriert werden – wie bei dir, wenn du im Supermarkt bei der Nudel-Auswahl alles andere ausblendstest. Das ist der Grund, warum moderne KI so gut bei komplexen Aufgaben ist.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 11 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🧬 Transformer
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die revolutionäre Architektur, die durch "Attention" jedes Wort gleichzeitig verarbeitet statt nacheinander. Dadurch ist die KI viel schneller und versteht Zusammenhänge besser. Fast alle modernen LLMs basieren auf dieser Technologie.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 12 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎛️ Parameter
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Alle einstellbaren Gewichte und Verbindungen in einem neuronalen Netz. Mehr Parameter = potenziell schlauer, aber auch hungriger nach Rechenpower. GPT-3 hatte 175 Milliarden Parameter – das sind mehr Stellschrauben als Menschen auf der Erde!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 13 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🏛️ Foundation Model
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein KI-Grundmodell, mit enormen Datenmengen vortrainiert und vielseitig einsetzbar. Wie ein Schweizer Taschenmesser – ein Tool für viele Aufgaben, statt spezialisierte Einzelwerkzeuge für jede Aufgabe zu bauen.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 14 - Moderne Architekturen -->
+          <div class="faq-item slide-in" data-category="modelle" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🌐 Generative Adversarial Network (GAN)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Zwei KI-Modelle konkurrieren gegeneinander: eins erstellt Fälschungen (Generator), das andere entlarvt sie (Diskriminator). Durch diese ständige Konkurrenz werden beide immer besser. So entstehen täuschend echte Bilder von Menschen, die es gar nicht gibt.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Training und Optimierung -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">⚙️ Training und Optimierung</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Verfahren zur Verbesserung von KI-Systemen</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 15 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📖 Überwachtes Lernen
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Lernen mit einem Lehrer. Du gibst der KI Beispiele mit den richtigen Antworten (z. B. Foto + „Das ist ein Hund"), und sie lernt daraus Muster. Wie Vokabeln pauken mit Karteikarten.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 16 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🔍 Unüberwachtes Lernen
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Lernen ohne Antwortschlüssel. Die KI bekommt nur Daten ohne Erklärung und muss selbst Muster und Strukturen finden. Wie ein Detektiv, der in einem Tatort nach Hinweisen sucht, ohne zu wissen, was passiert ist.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 17 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📐 Gradient Descent
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Methode, wie ein KI-Modell systematisch besser wird. Stell dir vor, du stehst im Nebel auf einem Berg und willst ins Tal. Du tastest in alle Richtungen und gehst immer den steilsten Abhang runter – so findet die KI den optimalen Punkt für minimale Fehler.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 18 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📋 Backpropagation
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Wenn die KI einen Fehler macht, läuft sie das neuronale Netz rückwärts durch und justiert alle Verbindungen, die zum Fehler beigetragen haben. Wie nach einem missglückten Kuchenrezept jeden Schritt rückverfolgen, um herauszufinden, wo es schiefging.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 19 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🔄 Transfer Learning
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Wiederverwertung von Wissen: Ein bereits trainiertes Modell wird für eine ähnliche Aufgabe angepasst. Wie wenn du als Klavierspieler schneller Orgel lernen kannst – das Grundwissen ist schon da.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 20 - Training -->
+          <div class="faq-item slide-in" data-category="training" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎯 Fine-Tuning
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein bereits trainiertes Modell wird mit spezifischen Daten nochmals trainiert, um es auf eine konkrete Aufgabe zu spezialisieren. Wie ein Arzt, der nach dem Studium eine Facharztausbildung macht.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Datenverarbeitung -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">📊 Datenverarbeitung</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Von Rohdaten zu verstehbaren Informationen</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 21 - Daten -->
+          <div class="faq-item slide-in" data-category="daten" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🪙 Token
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Währung der KI: Ein Token ist kein ganzes Wort, sondern eher eine Silbe (ca. 4 Zeichen). Wenn du für KI bezahlst, bezahlst du pro Token – wie beim Telegramm früher.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 22 - Daten -->
+          <div class="faq-item slide-in" data-category="daten" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎯 Embedding (Vektor)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Bedeutung als Zahlenreihe: Die KI übersetzt Wörter in Koordinaten in einem riesigen Raum. „König" und „Königin" liegen dort nah beieinander – so kapiert der Computer, dass die Worte verwandt sind.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 23 - Daten -->
+          <div class="faq-item slide-in" data-category="daten" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  💾 Vektordatenbank
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Das Langzeitgedächtnis für KIs. Hier werden Bedeutungen (Vektoren) gespeichert, damit die KI blitzschnell passende Informationen finden kann, auch wenn die Wörter nicht exakt übereinstimmen.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 24 - Daten -->
+          <div class="faq-item slide-in" data-category="daten" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  💬 Kontextfenster (Context Window)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Das Kurzzeitgedächtnis: Wie viel Text die KI auf einmal im Kopf behalten kann. Früher nur ein paar Seiten, heute ganze Bücher – sobald das Fenster voll ist, vergisst sie den Anfang.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 25 - Daten -->
+          <div class="faq-item slide-in" data-category="daten" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎛️ Parameter
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Stellschrauben im Gehirn der KI. Mehr Parameter heißen meistens: Das Modell ist schlauer, nuancierter, aber auch teurer im Betrieb.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Interaktion & Steuerung -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">💬 Interaktion & Steuerung</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Wie Menschen mit KI kommunizieren</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 26 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📝 Prompt
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Das, was du eintippst. Dein Befehl an die Maschine.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 27 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  ⚡ Prompt Engineering
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Kunst, so mit der KI zu reden, dass sie genau das tut, was du willst. Ein bisschen wie „Sesam öffne dich", nur dass man manchmal „Bitte verhalte dich wie ein Senior Java Entwickler" sagen muss.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 28 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🧠 Chain of Thought (CoT)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Der Befehl „Denke Schritt für Schritt". Zwingt die KI, ihren Rechenweg offenzulegen, was Flüchtigkeitsfehler massiv reduziert – besonders bei Mathe oder Logikrätseln.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 29 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🔍 Zero-Shot / Few-Shot Learning
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Fähigkeit der KI, Aufgaben ohne Übung (Zero) oder mit nur 2-3 Beispielen (Few) zu lösen. Zeig ihr drei französische Sätze und sie kapiert: „Ah, ich soll übersetzen."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 30 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🌡️ Temperature
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Der Kreativitäts-Regler (0 bis 1). Niedrig (0,1) heißt: Sei faktisch, langweilig und präzise. Hoch (0,8) heißt: Spinn ruhig mal rum und sei kreativ.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 31 - Interaktion -->
+          <div class="faq-item slide-in" data-category="interaktion" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎨 Vibe Coding
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein neuer Trend, bei dem man der KI nicht technisch erklärt, wie der Code sein soll, sondern das „Gefühl" oder den Stil beschreibt. Die KI übersetzt den „Vibe" dann in funktionierende Software.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Anwendungen & Systeme -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">🚀 Anwendungen & Systeme</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">KI in der realen Welt</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 32 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 1.85s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🤖 Chatbot
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein Plauder-Programm. Früher dumm wie Brot, heute dank LLMs oft kaum von Menschen zu unterscheiden.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 33 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  ✈️ Copilot
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Ein Assistent, der dir über die Schulter schaut (z. B. in Word oder beim Programmieren) und mitarbeitet. Er steuert nicht das Flugzeug, aber er reicht dir die Karten.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 34 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 1.95s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🦾 KI-Agenten / Agentic AI
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  KIs, die nicht nur labern, sondern machen. Du sagst „Plan eine Reise", und der Agent sucht Flüge, bucht Hotels und trägt Termine in den Kalender ein – völlig autonom.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 35 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📚 RAG (Retrieval-Augmented Generation)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Spickzettel für die KI: Bevor sie antwortet, darf sie in deinen Firmen-Dokumenten nachschlagen. Das verhindert Lügen und sorgt dafür, dass sie Firmeninterna kennt.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 36 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 2.05s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🕸️ GraphRAG
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  RAG für Profis: Statt nur nach Stichworten zu suchen, versteht die KI Beziehungen zwischen Daten (Wer kennt wen? Was gehört wozu?). Wie ein Detektiv, der rote Fäden auf einer Pinnwand zieht.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 37 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  📱 Edge AI
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  KI, die direkt auf deinem Gerät läuft (Handy, Auto), statt in der Cloud. Schneller, privater und funktioniert auch im Funkloch.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 38 - Anwendungen -->
+          <div class="faq-item slide-in" data-category="anwendungen" style="opacity: 0; transform: translateY(30px); transition-delay: 2.15s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🤖 Physical AI / Embodied AI
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Wenn die KI einen Körper bekommt (Roboter). Sie lernt, sich in der echten, chaotischen Welt zu bewegen, statt nur Text auf einem Bildschirm zu verarbeiten.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kategorie: Risiken & Ethik -->
+        <div class="category-header" style="grid-column: 1 / -1; margin: 40px 0 20px 0; text-align: center;">
+          <h3 style="color: #FFC947; font-size: 1.8rem; margin: 0; font-weight: 600;">⚠️ Risiken & Ethik</h3>
+          <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 1rem;">Die Schattenseiten der KI-Revolution</p>
+        </div>
+
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;">
+          <!-- FAQ Item 39 - Risiken -->
+          <div class="faq-item slide-in" data-category="risiken" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎭 Halluzination
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Wenn die KI selbstbewusst kompletten Unsinn erzählt. Sie lügt nicht mit Absicht, sie „träumt" nur eine Antwort, die statistisch gut klingt, aber faktisch falsch ist.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 40 - Risiken -->
+          <div class="faq-item slide-in" data-category="risiken" style="opacity: 0; transform: translateY(30px); transition-delay: 2.25s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  ⚖️ Bias (Vorurteil)
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Wenn die KI rassistisch oder sexistisch ist, weil sie mit den Vorurteilen aus dem Internet trainiert wurde. Der Spiegel unserer eigenen gesellschaftlichen Fehler.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 41 - Risiken -->
+          <div class="faq-item slide-in" data-category="risiken" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🎯 Alignment
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Die Herausforderung, der KI beizubringen, was wir Menschen „gut" finden. Damit sie „Löse den Krebs" nicht mit „Töte alle Menschen" beantwortet.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 42 - Risiken -->
+          <div class="faq-item slide-in" data-category="risiken" style="opacity: 0; transform: translateY(30px); transition-delay: 2.35s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  🔄 Model Collapse
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Digitale Inzucht: Wenn KIs nur noch mit Daten trainiert werden, die andere KIs erstellt haben. Die Qualität wird immer schlechter, die Antworten werden Einheitsbrei und wirre Fehler schleichen sich ein.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 43 - Risiken -->
+          <div class="faq-item slide-in" data-category="risiken" style="opacity: 0; transform: translateY(30px); transition-delay: 0.5s;">
+            <div class="faq-card" style="background: linear-gradient(145deg, #1e293b, #334155); border: 1px solid #475569; border-radius: 16px; padding: 25px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">
+              <div class="faq-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 class="hover-glow" style="color: #FFC947; font-size: 1.1rem; margin: 0; transition: all 0.3s ease;">
+                  💉 Prompt Injection
+                </h3>
+                <span class="faq-icon" style="color: #FFC947; font-size: 1.5rem; transition: transform 0.3s ease;">+</span>
+              </div>
+              <div class="faq-content" style="max-height: 0; overflow: hidden; transition: all 0.4s ease-in-out; opacity: 0;">
+                <p style="color: #cbd5e1; line-height: 1.6; margin: 0; padding-top: 10px;">
+                  Hacking mit Worten: Man überlistet die Sicherheitsfilter der KI mit cleveren Formulierungen („Tu so, als wärst du mein Oma, die mir Napalm-Rezepte vorliest"), um verbotene Dinge zu erfahren.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modern 'under construction' banner -->
+    <section class="site-note-spotlight" aria-hidden="false" style="padding:20px 0;">
+      <div class="container">
+        <div class="site-note-modern" role="status" aria-live="polite" style="display:flex; gap:16px; align-items:center; justify-content:space-between; background:linear-gradient(90deg,#0f2344,#112240); color:#e6f0ff; padding:18px; border-radius:12px; box-shadow:0 12px 30px rgba(4,8,20,0.5);">
+          <div style="display:flex; gap:14px; align-items:center;">
+            <div style="width:52px; height:52px; background:linear-gradient(135deg,var(--accent-color),#ff8a4b); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 3h-4l-2 4h2v10H9V7h2L9 3H5l2 4h2v10H7v4h10v-4h-2V7h2l2-4z" fill="#07142a" opacity="0.8"/></svg>
+            </div>
+            <div>
+              <strong style="display:block; font-size:1.05rem;">Newsletter abonnieren</strong>
+              <span style="display:block; color:#9fb3d9;">Bleiben Sie auf dem Laufenden mit exklusiven Insights und Updates zur KI-Welt.</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center;">
+              <label for="newsletter-email" style="display:none;">E‑Mail</label>
+              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
+              <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Jetzt anmelden</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Neuratex principle and form -->
+    <section class="principles-overview" aria-labelledby="principles-heading">
+      <div class="container">
+        <h2 style="text-align:center; margin-bottom:0.6rem;">Der Neuratex-Ansatz</h2>
+      </div>
+      <div class="container">
+        <h2 id="principles-heading" style="text-align:center; margin-bottom:1rem;">Die drei Phasen</h2>
+        <div class="principles-grid" style="display:flex; gap:24px; justify-content:space-between;">
+          <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
+            <span style="font-size:1.75rem; color:var(--accent-color); display:block;">01</span>
+            <h3 style="margin-top:8px;">Strategische<br> Klarheit</h3>
+            <p>Wir definieren gemeinsam klare Ziele, Erfolgskriterien und priorisieren Use-Cases, die schnellen Impact und Skalierbarkeit versprechen.</p>
+          </div>
+          <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
+            <span style="font-size:1.75rem; color:var(--accent-color); display:block;">02</span>
+            <h3 style="margin-top:8px;">Technologische<br> Exzellenz</h3>
+            <p>Wir wählen Technologie-Stacks und Integrationspfade, die Sicherheit, Wartbarkeit und Performance sicherstellen – von Prototyp bis Produktion.</p>
+          </div>
+          <div class="principle-card" style="flex:1; text-align:center; padding:22px; background:var(--card-bg); border-radius:12px; border:1px solid #1e293b;">
+            <span style="font-size:1.75rem; color:var(--accent-color); display:block;">03</span>
+            <h3 style="margin-top:8px;">Nachhaltige<br> Wertschöpfung</h3>
+            <p>Wir implementieren KPI-basierte Rollouts und begleiten die organisatorische Verankerung, damit KI-Lösungen langfristig Wert liefern.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="lead-gen-section">
+      <div class="container lead-gen-flex" style="display:flex; gap:40px; align-items:flex-start;">
+        <div class="lead-gen-text" style="flex:1;">
+          <h2>Unser Verfahren</h2>
+          <p>Das Neuratex-Prinzip ist darauf ausgelegt, KI nicht als Selbstzweck, sondern als gezieltes Werkzeug für nachhaltigen Geschäftsnutzen einzusetzen. Wir passen die Vorgehensweise individuell an Ihre Ausgangslage, Ziele und Unternehmenskultur an, damit Lösungen nicht im Experimentierstadium steckenbleiben.</p>
+
+          <h3 style="margin-top:1rem;">Warum das funktioniert</h3>
+          <ul>
+            <li>Praxisorientierte Priorisierung statt Technologie-Buzz</li>
+            <li>End-to-end Denkweise: Strategie → Technik → Organisation</li>
+            <li>Kurzfristige Experimente mit klaren Exit- und Skalierungsentscheidungen</li>
+          </ul>
+
+          <p style="margin-top:1rem;">Fordern Sie das vollständige Dokument „Neuratex-Prinzip" an. Es enthält Checklisten, Ablaufpläne und konkrete Beispiele für die schrittweise Umsetzung.</p>
+        </div>
+
+        <div class="lead-gen-form-container" style="flex-basis:380px;">
+          <h3 id="whitepaper">Neuratex-Prinzip anfordern</h3>
+          <form id="whitepaper-form" action="danke.html" method="get" novalidate>
+            <div class="form-group">
+              <label for="name">Ihr Name</label>
+              <input id="name" name="name" type="text" required>
+            </div>
+            <div class="form-group">
+              <label for="email">E‑Mail</label>
+              <input id="email" name="email" type="email" required>
+            </div>
+            <div class="form-group">
+              <label for="company">Unternehmen</label>
+              <input id="company" name="company" type="text">
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
+              <input id="privacy" type="checkbox" required>
+              <label for="privacy" style="margin:0;">Ich habe die <a href="legal/datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
+            </div>
+            <button type="submit" class="cta-button">Neuratex-Prinzip anfordern</button>
+            <p class="form-privacy">Sie erhalten das Dokument per Download; anschließend werden Sie zur Dankeseite weitergeleitet.</p>
+            <p style="font-size:0.9rem; color:#9fb3d9; margin-top:10px;">Vertraulich & praxisorientiert — keine unnötigen Marketing-Mails.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="main-footer">
+    <div class="container">
+      <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+      <div class="footer-links">
+        <a href="legal/impressum.html">Impressum</a>
+        <a href="legal/datenschutz.html">Datenschutz</a>
+      </div>
+      <button id="export-newsletter-btn" class="newsletter-export" disabled>Export E‑Mails</button>
+    </div>
+  </footer>
+
+  <script type="module">
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const whitepaperForm = document.getElementById('whitepaper-form');
+    if (whitepaperForm) {
+      whitepaperForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name = whitepaperForm.querySelector('#name');
+        const email = whitepaperForm.querySelector('#email');
+        const privacy = whitepaperForm.querySelector('#privacy');
+
+        if (!name || !email || !privacy || !name.value.trim() || !email.value.trim() || !privacy.checked) {
+          alert('Bitte füllen Sie Name, E‑Mail aus und bestätigen Sie die Datenschutzerklärung.');
+          return;
+        }
+        if (!emailPattern.test(email.value.trim())) {
+          alert('Bitte geben Sie eine gültige E‑Mail-Adresse ein.');
+          return;
+        }
+
+        window.location.href = 'downloads/neuratex-whitepaper.pdf';
+        setTimeout(() => { window.location.href = 'danke.html'; }, 800);
+      });
+    }
+
+    const newsletterForm = document.getElementById('newsletter-form');
+    const newsletterInput = document.getElementById('newsletter-email');
+    const exportBtn = document.getElementById('export-newsletter-btn');
+
+    const getNewsletterList = () => {
+      try {
+        return JSON.parse(localStorage.getItem('newsletterList') || '[]');
+      } catch (error) {
+        console.warn('newsletter storage parse error', error);
+        return [];
+      }
+    };
+    const setNewsletterList = (list) => {
+      localStorage.setItem('newsletterList', JSON.stringify(list));
+    };
+    const updateExportState = () => {
+      if (exportBtn) {
+        exportBtn.disabled = getNewsletterList().length === 0;
+      }
+    };
+
+    if (newsletterForm && newsletterInput) {
+      newsletterForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const email = newsletterInput.value.trim();
+        if (!email) {
+          alert('Bitte E‑Mail angeben.');
+          return;
+        }
+        if (!emailPattern.test(email)) {
+          alert('Bitte eine gültige E‑Mail-Adresse eingeben.');
+          return;
+        }
+
+        try {
+          const response = await fetch('/api/newsletter', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data && data.method === 'dev' && data.confirmUrl) {
+              const shouldOpen = confirm('Ein Bestätigungslink wurde generiert (Entwicklungsmodus). Möchten Sie den Link jetzt öffnen, um die E‑Mail zu bestätigen?');
+              if (shouldOpen) window.open(data.confirmUrl, '_blank');
+              alert('Bitte bestätigen Sie die Anmeldung in der E‑Mail, um die Eintragung abzuschließen.');
+              const list = getNewsletterList();
+              if (!list.includes(email)) {
+                list.push(email);
+                setNewsletterList(list);
+              }
+              newsletterInput.value = '';
+              updateExportState();
+              return;
+            }
+            if (data && data.ok) {
+              alert('Bestätigungs-E‑Mail wurde verschickt. Bitte prüfen Sie Ihren Posteingang.');
+              newsletterInput.value = '';
+              updateExportState();
+              return;
+            }
+          }
+        } catch (error) {
+          console.warn('newsletter submit error', error);
+        }
+
+        const list = getNewsletterList();
+        if (list.includes(email)) {
+          alert('Diese E‑Mail ist bereits eingetragen (lokal).');
+          return;
+        }
+        list.push(email);
+        setNewsletterList(list);
+        newsletterInput.value = '';
+        alert('Danke — Sie sind eingetragen (lokal).');
+        updateExportState();
+      });
+    }
+
+    if (exportBtn) {
+      updateExportState();
+      exportBtn.addEventListener('click', async () => {
+        const list = getNewsletterList();
+        if (!list.length) {
+          alert('Keine E‑Mails gespeichert.');
+          return;
+        }
+        const csv = 'email\n' + list.join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'newsletter_emails.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        try {
+          await navigator.clipboard.writeText(list.join('\n'));
+          exportBtn.textContent = 'Kopiert';
+          setTimeout(() => { exportBtn.textContent = 'Export E‑Mails'; }, 1800);
+        } catch (error) {
+          console.warn('clipboard write failed', error);
+        }
+      });
+    }
+  </script>
+
+  <!-- Custom CSS für FAQ Animationen -->
+  <style>
+    /* Glow-Effekt für Überschriften */
+    .glow-text {
+      transition: all 0.3s ease;
+    }
+    .glow-text:hover {
+      text-shadow: 0 0 20px #FFC947, 0 0 40px #FFC947, 0 0 60px #FFC947;
+      transform: scale(1.02);
+    }
+    
+    /* Hover-Glow für FAQ-Titel */
+    .hover-glow:hover {
+      color: #fff !important;
+      text-shadow: 0 0 15px #FFC947, 0 0 25px #FFC947;
+    }
+    
+    /* FAQ Card Hover-Effekte */
+    .faq-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 201, 71, 0.3);
+      border-color: #FFC947;
+    }
+    
+    .faq-card:hover::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(255, 201, 71, 0.1), transparent);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+    
+    /* Aktive FAQ-Card */
+    .faq-card.active {
+      border-color: #FFC947;
+      box-shadow: 0 0 20px rgba(255, 201, 71, 0.4);
+    }
+    
+    /* Animation für slide-in Effekte */
+    .slide-in {
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .slide-in.visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    
+    /* Responsive Grid für mobile */
+    @media (max-width: 768px) {
+      .faq-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .faq-card {
+        padding: 20px;
+      }
+      
+      .glow-text {
+        font-size: 2rem !important;
+      }
+    }
+  </style>
+
+  <!-- JavaScript für FAQ Interaktivität -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Slide-in Animation bei Scroll
+      function animateOnScroll() {
+        const items = document.querySelectorAll('.slide-in');
+        const windowHeight = window.innerHeight;
+        
+        items.forEach(item => {
+          const elementTop = item.getBoundingClientRect().top;
+          const elementVisible = 150;
+          
+          if (elementTop < windowHeight - elementVisible) {
+            item.classList.add('visible');
+          }
+        });
+      }
+      
+      // FAQ Toggle Funktionalität
+      function setupFAQToggle() {
+        const faqItems = document.querySelectorAll('.faq-card');
+        
+        faqItems.forEach(card => {
+          const header = card.querySelector('.faq-header');
+          const content = card.querySelector('.faq-content');
+          const icon = card.querySelector('.faq-icon');
+          
+          header.addEventListener('click', () => {
+            const isOpen = card.classList.contains('active');
+            
+            // Schließe alle anderen FAQ-Items
+            faqItems.forEach(otherCard => {
+              if (otherCard !== card) {
+                otherCard.classList.remove('active');
+                const otherContent = otherCard.querySelector('.faq-content');
+                const otherIcon = otherCard.querySelector('.faq-icon');
+                otherContent.style.maxHeight = '0';
+                otherContent.style.opacity = '0';
+                otherIcon.style.transform = 'rotate(0deg)';
+                otherIcon.textContent = '+';
+              }
+            });
+            
+            if (isOpen) {
+              // Schließen
+              card.classList.remove('active');
+              content.style.maxHeight = '0';
+              content.style.opacity = '0';
+              icon.style.transform = 'rotate(0deg)';
+              icon.textContent = '+';
+            } else {
+              // Öffnen
+              card.classList.add('active');
+              content.style.maxHeight = content.scrollHeight + 'px';
+              content.style.opacity = '1';
+              icon.style.transform = 'rotate(45deg)';
+              icon.textContent = '×';
+              
+              // Smooth scroll zum geöffneten Element
+              setTimeout(() => {
+                card.scrollIntoView({ 
+                  behavior: 'smooth', 
+                  block: 'center' 
+                });
+              }, 200);
+            }
+          });
+        });
+      }
+      
+      // Parallax-Effekt für Glow-Text
+      function setupParallaxGlow() {
+        const glowText = document.querySelector('.glow-text');
+        
+        window.addEventListener('mousemove', (e) => {
+          if (!glowText) return;
+          
+          const rect = glowText.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          
+          const distance = Math.sqrt(x * x + y * y);
+          const maxDistance = 300;
+          
+          if (distance < maxDistance) {
+            const intensity = (maxDistance - distance) / maxDistance;
+            const glowStrength = intensity * 60;
+            glowText.style.textShadow = `0 0 ${glowStrength}px #FFC947, 0 0 ${glowStrength * 1.5}px #FFC947, 0 0 ${glowStrength * 2}px #FFC947`;
+          } else {
+            glowText.style.textShadow = '';
+          }
+        });
+      }
+      
+      // Initialisiere alle Funktionen
+      setupFAQToggle();
+      setupParallaxGlow();
+      animateOnScroll();
+      
+      // Event Listener für Scroll-Animation
+      window.addEventListener('scroll', animateOnScroll);
+      
+      // Trigger initial animation
+      setTimeout(animateOnScroll, 100);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .interface-bg { fill: #f7f7f8; }
+      .sidebar { fill: #ffffff; }
+      .chat-area { fill: #ffffff; }
+      .text-dark { fill: #2d333a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+      .text-gray { fill: #8e8ea0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+      .gpt-icon { fill: #19c37d; }
+      .user-icon { fill: #ab68ff; }
+      .border { stroke: #e5e5e5; stroke-width: 1; fill: none; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="600" height="400" class="interface-bg"/>
+  
+  <!-- Sidebar -->
+  <rect x="0" y="0" width="260" height="400" class="sidebar"/>
+  <rect x="260" y="0" width="1" height="400" class="border"/>
+  
+  <!-- Sidebar Header -->
+  <text x="20" y="30" class="text-dark" font-size="14" font-weight="600">Neue Chat</text>
+  <rect x="220" y="15" width="20" height="20" rx="3" fill="#f1f1f1"/>
+  <text x="227" y="28" class="text-gray" font-size="12">+</text>
+  
+  <!-- Menu Items -->
+  <text x="20" y="60" class="text-gray" font-size="12">GPTs erkunden</text>
+  <text x="20" y="85" class="text-gray" font-size="12">Verlauf</text>
+  <text x="20" y="110" class="text-gray" font-size="12">Bibliothek</text>
+  <text x="20" y="135" class="text-gray" font-size="12">Profil</text>
+  
+  <!-- GPT Section -->
+  <text x="20" y="170" class="text-dark" font-size="16" font-weight="600">GPTs</text>
+  <text x="20" y="190" class="text-gray" font-size="11">Entdecke und erstelle individuelle ChatGPT-Versionen, die Prozesse, Anwendungen und Konfigurationen sind integriert verwenden.</text>
+  
+  <!-- Search Box -->
+  <rect x="20" y="220" width="220" height="30" rx="15" fill="#f9f9f9" stroke="#e5e5e5"/>
+  <text x="35" y="240" class="text-gray" font-size="12">🔍 GPTs suchen...</text>
+  
+  <!-- Categories -->
+  <text x="20" y="275" class="text-gray" font-size="11">Highlights</text>
+  <text x="80" y="275" class="text-gray" font-size="11">DALL·E</text>
+  <text x="125" y="275" class="text-gray" font-size="11">Schreiben</text>
+  <text x="175" y="275" class="text-gray" font-size="11">Produktivität</text>
+  
+  <!-- Featured GPTs -->
+  <text x="20" y="300" class="text-dark" font-size="13" font-weight="600">Featured</text>
+  <text x="20" y="315" class="text-gray" font-size="10">Die beliebtesten GPTs dieser Woche</text>
+  
+  <!-- GPT Items -->
+  <circle cx="35" cy="340" r="12" fill="#e91e63"/>
+  <text x="55" y="340" class="text-dark" font-size="11" font-weight="500">Write For Me</text>
+  <text x="55" y="352" class="text-gray" font-size="9">Write tailored, engaging content</text>
+  
+  <circle cx="35" cy="375" r="12" fill="#2196f3"/>
+  <text x="55" y="375" class="text-dark" font-size="11" font-weight="500">Consensus</text>
+  <text x="55" y="387" class="text-gray" font-size="9">Get answers from 200M+ papers</text>
+  
+  <!-- Right side GPTs -->
+  <rect x="150" y="330" width="100" height="25" rx="12" fill="#673ab7"/>
+  <text x="190" y="345" fill="white" font-size="10" text-anchor="middle">Scholar GPT</text>
+  
+  <rect x="150" y="365" width="100" height="25" rx="12" fill="#f44336"/>
+  <text x="200" y="380" fill="white" font-size="10" text-anchor="middle">AI PDF</text>
+  
+  <!-- Main Chat Area -->
+  <rect x="260" y="0" width="340" height="400" class="chat-area"/>
+  
+  <!-- Chat Header -->
+  <text x="280" y="30" class="text-dark" font-size="18" font-weight="600">GPTs</text>
+  <text x="280" y="50" class="text-gray" font-size="12">Entdecke und erstelle individuelle ChatGPT-Versionen, die Prozesse, Anwendungen und</text>
+  <text x="280" y="65" class="text-gray" font-size="12">Konfigurationen sind integriert verwenden.</text>
+  
+  <!-- Chat Content Area -->
+  <rect x="280" y="90" width="300" height="250" fill="#fafafa" stroke="#e5e5e5" rx="8"/>
+  
+  <!-- Chat Messages Preview -->
+  <text x="300" y="120" class="text-dark" font-size="14" font-weight="500">Custom GPT Bibliothek</text>
+  <text x="300" y="140" class="text-gray" font-size="11">Spezialisierte Versionen für verschiedene Anwendungsfälle</text>
+  
+  <!-- Sample GPT Cards in chat area -->
+  <rect x="300" y="160" width="120" height="60" fill="white" stroke="#e5e5e5" rx="6"/>
+  <text x="310" y="180" class="text-dark" font-size="10" font-weight="500">📄 Compliance Bot</text>
+  <text x="310" y="195" class="text-gray" font-size="8">Richtlinien & Verfahren</text>
+  <text x="310" y="207" class="text-gray" font-size="8">DSGVO-konform</text>
+  
+  <rect x="440" y="160" width="120" height="60" fill="white" stroke="#e5e5e5" rx="6"/>
+  <text x="450" y="180" class="text-dark" font-size="10" font-weight="500">🔍 Document Analyzer</text>
+  <text x="450" y="195" class="text-gray" font-size="8">Dokumenten-Analyse</text>
+  <text x="450" y="207" class="text-gray" font-size="8">Interne Dateien</text>
+  
+  <rect x="300" y="240" width="120" height="60" fill="white" stroke="#e5e5e5" rx="6"/>
+  <text x="310" y="260" class="text-dark" font-size="10" font-weight="500">⚖️ Legal Assistant</text>
+  <text x="310" y="275" class="text-gray" font-size="8">Rechtliche Beratung</text>
+  <text x="310" y="287" class="text-gray" font-size="8">Compliance-Prüfung</text>
+  
+  <rect x="440" y="240" width="120" height="60" fill="white" stroke="#e5e5e5" rx="6"/>
+  <text x="450" y="260" class="text-dark" font-size="10" font-weight="500">📊 Data Privacy</text>
+  <text x="450" y="275" class="text-gray" font-size="8">Datenschutz-Check</text>
+  <text x="450" y="287" class="text-gray" font-size="8">DSGVO-Analyse</text>
+  
+  <!-- Input Area -->
+  <rect x="280" y="360" width="300" height="30" fill="white" stroke="#e5e5e5" rx="15"/>
+  <text x="300" y="380" class="text-gray" font-size="12">Nachricht an GPTs...</text>
+  <circle cx="570" cy="375" r="8" fill="#19c37d"/>
+  <text x="567" y="379" fill="white" font-size="10">→</text>
+</svg>

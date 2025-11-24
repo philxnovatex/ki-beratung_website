@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — Newsletter Export</title>
+  <style>body{font-family:Arial,Helvetica,sans-serif;padding:24px;background:#f6f8fb} .card{max-width:720px;margin:0 auto;background:#fff;padding:18px;border-radius:8px;box-shadow:0 6px 20px rgba(12,24,40,0.06)} input{padding:8px 10px;border:1px solid #d7e0ee;border-radius:6px;width:100%} button{padding:10px 14px;border-radius:6px;background:#0b2540;color:#fff;border:0} a.link{display:inline-block;margin-top:12px}</style>
+</head>
+<body>
+  <div class="card">
+    <h1>Admin — Newsletter CSV Export</h1>
+    <p>Geben Sie Ihren Admin‑Token ein (env var <code>ADMIN_TOKEN</code> muss gesetzt sein) und klicken Sie auf Export.</p>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <input id="token" placeholder="Admin token" aria-label="Admin token">
+      <button id="export">Export</button>
+    </div>
+    <p id="status" style="margin-top:12px;color:#33475b"></p>
+    <div id="linkwrap"></div>
+  </div>
+
+  <script>
+    document.getElementById('export').addEventListener('click', async function(){
+      const token = document.getElementById('token').value.trim();
+      if(!token){ document.getElementById('status').textContent = 'Bitte Token eingeben.'; return; }
+      document.getElementById('status').textContent = 'Anfrage läuft...';
+      try{
+        const resp = await fetch('/admin/export.csv?token='+encodeURIComponent(token));
+        if(resp.status===401){ document.getElementById('status').textContent = 'Unauthorized (falscher Token)'; return; }
+        if(!resp.ok){ document.getElementById('status').textContent = 'Fehler beim Export'; return; }
+        const blob = await resp.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'newsletter_export.csv'; a.textContent = 'Download CSV'; a.className='link';
+        const wrap = document.getElementById('linkwrap'); wrap.innerHTML=''; wrap.appendChild(a);
+        document.getElementById('status').textContent = 'Export bereit.';
+      }catch(e){ document.getElementById('status').textContent = 'Netzwerkfehler'; }
+    });
+  </script>
+</body>
+</html>
+

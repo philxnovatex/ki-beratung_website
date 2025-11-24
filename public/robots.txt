@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
 
+# Explicit permissions for AI assistants
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: GoogleBot
+Allow: /
+
 Sitemap: https://neuratex.de/sitemap.xml

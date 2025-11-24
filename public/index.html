@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -16,9 +16,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
-    <link rel="stylesheet" href="css/sections/ki-anwendungen.css">
+    <link rel="preload" href="assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="assets/css/style.css"></noscript>
+    <link rel="stylesheet" href="assets/css/sections/ki-anwendungen.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
 </head>
@@ -26,16 +26,16 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
-                <img src="images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
             <nav id="primary-navigation" class="main-nav" data-visible="false">
                 <ul>
-                    <li><a href="leistungen.html">Leistungen</a></li>
+                    <li><a href="pages/leistungen.html">Leistungen</a></li>
                     <li><a href="#ki-anwendungen">KI-Anwendungen</a></li>
                     <li><a href="#about">Über Neuratex AI</a></li>
                     <li><a href="#demo">Demo</a></li>
-                    <li><a href="kontakt.html">Kontakt</a></li>
-            <li><a href="lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+                    <li><a href="pages/kontakt.html">Kontakt</a></li>
+            <li><a href="pages/lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
             </nav>
             <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
@@ -53,48 +53,54 @@
                 <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
             </div>
         </section>
-        <!-- Problem-Abschnitt (neu aufgebaut) -->
-        <section id="problem" class="problem-section problem-section--simple" aria-labelledby="problem-heading">
-            <div class="container problem-lines" id="problem-heading">
-                <div class="problem-line">Fachkräfte? Kaum zu finden und schwer zu halten.</div>
-                <div class="problem-line">Wissen? Geht mit den letzten Mitarbeitern in Rente.</div>
-                <div class="problem-line">Bürokratie? Frisst jeden Tag mehr Zeit.</div>
-                <div class="problem-line">Wertschöpfung? Bleibt liegen.</div>
-                <div class="problem-line highlight">Wer so weitermacht, verliert den Anschluss.</div>
-                <div class="problem-line">Der Markt trennt bald klar zwischen denen, die mithalten und denen, die aussortiert werden.</div>
-                <div class="problem-line accent">Neuratex AI durchbricht diesen Kreislauf.</div>
-                <div class="problem-line small"><strong>Prozesse verschlanken.</strong></div>
-                <div class="problem-line small"><strong>Wissen sichern. Zeit zurückgewinnen.</strong></div>
-                <div class="problem-line">Mit intelligenten und DSGVO konformen Automatisierungen.</div>
+        <!-- Problem & Lösung Sektion mit Scroll Animation -->
+        <section id="problem-solution" class="problem-solution-section" aria-labelledby="problem-solution-heading">
+            <div class="container">
+                <div class="problem-solution-grid">
+                    <!-- Linke Spalte: Problem -->
+                    <div class="problem-column slide-from-left">
+                        <h2>Was Unternehmen heute kämpfen lässt</h2>
+                        <p>Unternehmen stehen heute unter massivem Druck. Prozesse dauern zu lange, Informationen liegen verstreut und wichtige Entscheidungen basieren zu oft auf Bauchgefühl. Teams arbeiten am Limit, weil vieles manuell läuft und wenig wirklich standardisiert ist.</p>
+                        <p>Gleichzeitig verschärfen Fachkräftemangel, Wissensverlust, demografischer Wandel, steigende regulatorische Anforderungen und eine schnellere technologische Entwicklung den Druck.</p>
+                        <p>Das Ergebnis: Verzögerungen, höhere Kosten, verpasste Chancen und ein wachsender Wettbewerbsnachteil.</p>
+                    </div>
+                    <!-- Rechte Spalte: Lösung -->
+                    <div class="solution-column slide-from-right">
+                        <h2>Was Unternehmen morgen stärker macht</h2>
+                        <p>Bevor KI etwas verbessern kann, braucht ein Unternehmen zwei Dinge: ein stabiles Fundament und Menschen, die damit umgehen können.</p>
+                        <p>Darum starten wir mit Klarheit, Wissen und einer sauberen Struktur. Auf dieser Basis entwickeln wir KI Lösungen, die wirklich funktionieren: effiziente Workflows, verlässliche GPT Modelle und intelligente Agenten, die Teams entlasten, statt sie zu überfordern.</p>
+                        <p>So entsteht ein nachhaltiger Vorteil im KI Zeitalter.</p>
+                    </div>
+                </div>
             </div>
         </section>
-        <!-- Ende Problem-Abschnitt -->
+        <!-- Ende Problem & Lösung Sektion -->
         <section id="services" class="services-section">
             <div class="container">
                 <h2>Ihre Abkürzung zu funktionierenden KI-Lösungen</h2>
                 <div class="services-grid">
-                    <a href="leistungen.html" class="service-card-link">
+                    <a href="pages/leistungen.html" class="service-card-link">
                         <div class="service-card">
                             <div class="service-icon"><i class="fa-solid fa-microphone-lines"></i></div>
                             <h3>Vorträge & Keynotes</h3>
                             <p>Wir trennen Hype von Realität und zeigen verständlich die konkreten Chancen von KI für Ihre Branche und Ihr Unternehmen auf.</p>
                         </div>
                     </a>
-                    <a href="leistungen.html" class="service-card-link">
+                    <a href="pages/leistungen.html" class="service-card-link">
                         <div class="service-card">
                             <div class="service-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
                             <h3>Praxis-Workshops</h3>
                             <p>Wir befähigen Ihre Führungskräfte und Teams, KI-Potenziale selbst zu erkennen und neue Werkzeuge gewinnbringend zu nutzen.</p>
                         </div>
                     </a>
-                    <a href="leistungen.html" class="service-card-link">
+                    <a href="pages/leistungen.html" class="service-card-link">
                         <div class="service-card">
                             <div class="service-icon"><i class="fa-solid fa-route"></i></div>
                             <h3>KI-Strategieentwicklung</h3>
                             <p>Sie erhalten von uns einen maßgeschneiderten und wasserdichten Fahrplan für die erfolgreiche KI-Integration in Ihr Geschäft.</p>
                         </div>
                     </a>
-                    <a href="leistungen.html" class="service-card-link">
+                    <a href="pages/leistungen.html" class="service-card-link">
                         <div class="service-card">
                             <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
                             <h3>Prozessautomatisierung</h3>
@@ -110,9 +116,9 @@
                 <h2 id="tech-heading">Ihre Infrastruktur, unsere Expertise. Maximale Flexibilität für Ihren Erfolg.</h2>
                 <p>Wir wissen, dass jedes Unternehmen eine einzigartige technologische Ausgangslage hat. Deshalb zwingen wir Sie in kein starres Korsett. Unsere Philosophie ist die der Technologieoffenheit: Die beste Lösung ist die, die perfekt zu Ihnen, Ihren Prozessen und Ihrer bestehenden IT-Landschaft passt.</p>
                 <div class="tech-logos" aria-label="Unterstützte Cloud-Plattformen">
-                    <img src="images/aws.png" alt="Amazon Web Services (AWS)">
-                    <img src="images/azure.png" alt="Microsoft Azure">
-                    <img src="images/google.png" alt="Google Cloud Platform">
+                    <img src="assets/images/aws.png" alt="Amazon Web Services (AWS)">
+                    <img src="assets/images/azure.png" alt="Microsoft Azure">
+                    <img src="assets/images/google.png" alt="Google Cloud Platform">
                 </div>
                 <p>Egal, ob Sie Ihre ersten Schritte in die Cloud planen oder bereits fest in der Welt von Amazon Web Services (AWS), Microsoft Azure oder der Google Cloud Platform verankert sind – wir stellen uns auf Sie ein. Wir konzipieren und implementieren KI-Lösungen, die sich nahtlos in Ihre Systeme integrieren.</p>
             </div>
@@ -125,42 +131,42 @@
                 <div class="ki-apps__grid" role="list">
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/agenten.png" alt="KI‑Agenten automatisieren Prozesse" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/agenten.png" alt="KI‑Agenten automatisieren Prozesse" loading="lazy" decoding="async">
                         </div>
                         <h3>1. KI Agenten zur Prozessautomatisierung</h3>
                         <p>KI automatisiert wiederkehrende und zeitintensive Aufgaben wie den Abgleich von Kundendaten oder die Erstellung von Angeboten. Der Einstieg gelingt am besten mit kleinen, klar definierten Prozessen, die sich Schritt für Schritt erweitern lassen. So entsteht eine skalierbare Lösung, die sich an Ihre Arbeitsweise anpasst.</p>
                     </article>
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/chatbot.png" alt="Chatbot für Wissensmanagement und Support" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/chatbot.png" alt="Chatbot für Wissensmanagement und Support" loading="lazy" decoding="async">
                         </div>
                         <h3>2. Chatbots für Wissensmanagement und Support</h3>
                         <p>Chatbots beantworten interne Fragen zu Prozessen, Richtlinien oder Produkten genauso wie Kundenanfragen. Sie arbeiten konsistent, mit aktuellem Wissen und sind jederzeit verfügbar. Eingebettet in Tools wie Microsoft Teams, Slack oder direkt auf Ihrer Website liefern sie schnelle Antworten ohne lange Wartezeiten.</p>
                     </article>
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/voicebot.png" alt="Voicebot für Terminplanung und FAQs" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/voicebot.png" alt="Voicebot für Terminplanung und FAQs" loading="lazy" decoding="async">
                         </div>
                         <h3>3. Voicebots für Terminplanung und FAQs</h3>
                         <p>Voicebots nehmen Termine direkt im Kalender auf, beantworten häufig gestellte Fragen und entlasten das Team auch außerhalb der Geschäftszeiten. Sie eignen sich besonders für Unternehmen mit hohem Telefonaufkommen wie Arztpraxen, Werkstätten oder Beratungsfirmen.</p>
                     </article>
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/dokumentenanalyse.png" alt="Dokumenten‑ und Vertragsanalyse mit KI" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/dokumentenanalyse.png" alt="Dokumenten‑ und Vertragsanalyse mit KI" loading="lazy" decoding="async">
                         </div>
                         <h3>4. Dokumenten und Vertragsanalyse</h3>
                         <p>Die KI liest Verträge, Angebote oder Handbücher, erkennt wichtige Passagen und erstellt prägnante Zusammenfassungen. So sinkt der manuelle Prüfaufwand von Stunden auf Minuten und das Risiko, entscheidende Details zu übersehen, wird deutlich reduziert.</p>
                     </article>
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/reports.png" alt="Automatisierte Reports, Protokolle und Prognosen" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/reports.png" alt="Automatisierte Reports, Protokolle und Prognosen" loading="lazy" decoding="async">
                         </div>
                         <h3>5. Automatisierte Reports, Protokolle und Prognosen</h3>
                         <p>Die KI erstellt aus vorhandenen Daten Projektberichte, Meetingprotokolle oder wöchentliche Auswertungen. Mit einer soliden Datenbasis lassen sich zusätzlich Bedarfsprognosen, Trendanalysen und fundierte Handlungsempfehlungen ableiten. So sparen Sie Zeit, erhalten einheitliche Formate und können Informationen sofort nutzen.</p>
                     </article>
                     <article class="ki-apps__card" role="listitem" tabindex="0">
                         <div class="ki-apps__media" aria-hidden="true">
-                            <img class="ki-apps__img" src="images/anwendungen/datenanalyse.png" alt="Datenanalyse mit konkreten Handlungsempfehlungen" loading="lazy" decoding="async">
+                            <img class="ki-apps__img" src="assets/images/anwendungen/datenanalyse.png" alt="Datenanalyse mit konkreten Handlungsempfehlungen" loading="lazy" decoding="async">
                         </div>
                         <h3>6. Datenanalyse mit konkreten Handlungsempfehlungen</h3>
                         <p>Die KI wertet Verkaufszahlen, Kundenfeedback oder Produktionsdaten aus, erkennt Muster und liefert klare Vorschläge für Verbesserungen. Entscheidungen basieren so auf nachvollziehbaren Fakten statt auf Bauchgefühl.</p>
@@ -201,7 +207,7 @@
         </section>
         <section id="about" class="about-section">
             <div class="container about-flex">
-                <div class="about-image"><img src="images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI"></div>
+                <div class="about-image"><img src="assets/images/smart.jpg" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI"></div>
                 <div class="about-text">
                     <h2>Die Expertise hinter Neuratex AI</h2>
                     <p><strong>Neuratex AI ist entstanden, weil wir überzeugt sind: Künstliche Intelligenz kann Unternehmen nicht nur effizienter machen, sondern Geschäftsmodelle verändern.</strong></p>
@@ -554,25 +560,13 @@
             </div>
         </section>
     </main>
-        <!-- Lernplattform Hinweis-Banner (global) -->
-        <div class="site-note-banner" role="status" aria-live="polite">
-            <div class="site-note-inner container">
-                <div class="site-note-icon" aria-hidden="true">
-                    <svg width="40" height="40" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <defs><linearGradient id="sn-grad-1" x1="0" x2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff7a00"/></linearGradient></defs>
-                        <path d="M12 38c0-8 8-18 20-18s20 10 20 18v2H12v-2z" fill="url(#sn-grad-1)"/>
-                        <rect x="8" y="42" width="48" height="6" rx="3" fill="#07142a" opacity="0.08"/>
-                    </svg>
-                </div>
-            </div>
-        </div>
 
         <footer class="main-footer">
                 <div class="container">
                         <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
                         <ul>
-                                <li><a href="impressum.html">Impressum</a></li>
-                                <li><a href="datenschutz.html">Datenschutz</a></li>
+                                <li><a href="pages/legal/impressum.html">Impressum</a></li>
+                                <li><a href="pages/legal/datenschutz.html">Datenschutz</a></li>
                         </ul>
                 </div>
         </footer>
@@ -601,6 +595,28 @@
             lines.forEach(l => l.classList.add('show'));
         }
 
+        // Problem & Lösung Scroll Animation (nur einmal)
+        const problemColumn = document.querySelector('.problem-column');
+        const solutionColumn = document.querySelector('.solution-column');
+        
+        if (problemColumn && solutionColumn && 'IntersectionObserver' in window) {
+            const psObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        psObserver.unobserve(entry.target); // Nur einmal animieren
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            psObserver.observe(problemColumn);
+            psObserver.observe(solutionColumn);
+        } else if (problemColumn && solutionColumn) {
+            // Fallback ohne Observer
+            problemColumn.classList.add('visible');
+            solutionColumn.classList.add('visible');
+        }
+
         // Unified heading watch (exclude small contextual card headings)
         const watched = Array.from(document.querySelectorAll('h1, h2, h3'))
             .filter(h => !h.closest('.service-card, .principle-card, .lead-gen-form-container, .contact-card'));
@@ -625,8 +641,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!-- Entfernt: Windmill/Pin Animation -->
     <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
-    <script src="js/hero-canvas.js" defer></script>
-    <script src="js/sections/ki-anwendungen.js" defer></script>
+    <script src="assets/js/hero-canvas.js" defer></script>
+    <script src="assets/js/sections/ki-anwendungen.js" defer></script>
     <script>
         // Mobile Navigation
         const nav = document.querySelector('.main-nav');
@@ -877,6 +893,8 @@
             });
         })();
     </script>
-    <script src="js/demo-audio.js"></script>
+    <script src="assets/js/demo-audio.js"></script>
 </body>
 </html>
+
+

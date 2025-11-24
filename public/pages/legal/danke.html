@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vielen Dank! – Neuratex AI</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" href="../assets/icons/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+    <link rel="manifest" href="../assets/icons/site.webmanifest">
+    <link rel="preload" href="../assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="../assets/css/style.css"></noscript>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .thank-you-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+        }
+        .thank-you-card {
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-radius: 12px;
+            border: 1px solid #1e293b;
+            max-width: 600px;
+        }
+        .thank-you-card h1 {
+            color: var(--accent-color);
+        }
+        .thank-you-card .subtitle {
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+        .thank-you-actions {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .checkmark-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 3;
+            stroke: var(--accent-color);
+            stroke-miterlimit: 10;
+            margin: 0 auto 30px auto;
+            box-shadow: inset 0px 0px 0px #FFC947;
+            animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+        }
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 3;
+            stroke-miterlimit: 10;
+            stroke: #FFC947;
+            fill: none;
+            animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
+        }
+        @keyframes stroke {
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes scale {
+            0%, 100% { transform: none; }
+            50% { transform: scale3d(1.1, 1.1, 1); }
+        }
+        @keyframes fill {
+            100% { box-shadow: inset 0px 0px 0px 40px #FFC947; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+            </a>
+            <nav class="main-nav" data-visible="false">
+                <ul>
+                    <li><a href="../leistungen.html">Leistungen</a></li>
+                    <li><a href="index.html#about">Über Neuratex AI</a></li>
+                    <li><a href="index.html#demo">Demo</a></li>
+                    <li><a href="../kontakt.html">Kontakt</a></li>
+                    <li><a href="../lernplattform.html" class="nav-highlight">Lernplattform</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+                <span class="sr-only">Menü</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="thank-you-section">
+            <div class="container">
+                <div class="thank-you-card">
+                    <svg class="checkmark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                        <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                        <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                    </svg>
+                    <h1>Vielen Dank!</h1>
+                    <p class="subtitle">Das Whitepaper ist auf dem Weg in Ihr Postfach. Bitte prüfen Sie auch Ihren Spam-Ordner.</p>
+                    <div class="thank-you-actions">
+                         <a href="../leistungen.html" class="cta-button-secondary">Unsere Leistungen ansehen</a>
+                         <a href="../index.html" class="cta-button">Zurück zur Startseite</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+            <ul>
+                <li><a href="legal/impressum.html">Impressum</a></li>
+                <li><a href="legal/datenschutz.html">Datenschutz</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.querySelector('.main-nav');
+        const navToggle = document.querySelector('.mobile-nav-toggle');
+        if (nav && navToggle) {
+            navToggle.addEventListener('click', () => {
+                const isVisible = nav.getAttribute('data-visible');
+                if (isVisible === "false") {
+                    nav.setAttribute('data-visible', true);
+                    navToggle.setAttribute('aria-expanded', true);
+                } else {
+                    nav.setAttribute('data-visible', false);
+                    navToggle.setAttribute('aria-expanded', false);
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
+
+
