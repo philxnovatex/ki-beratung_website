@@ -750,17 +750,27 @@ h2 { text-align: center; margin-bottom: 55px; }
         inset: 0 0 0 0;
         flex-direction: column;
         padding: min(15vh, 8rem) 2.5em 4rem;
-        background: linear-gradient(135deg, rgba(10,25,49,0.95), rgba(17,34,64,0.92));
-        backdrop-filter: blur(1.2rem);
+        background: linear-gradient(135deg, rgba(10,25,49,0.98), rgba(17,34,64,0.96));
+        backdrop-filter: blur(1.5rem);
         transform: translateX(100%);
         transition: transform 320ms ease-out;
+        z-index: 1000;
     }
     .main-nav[data-visible="true"] {
         transform: translateX(0%);
     }
     .main-nav ul {
         flex-direction: column;
-        gap: 3rem;
+        gap: 2.5rem;
+    }
+    .main-nav ul li a {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #ffffff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .main-nav ul li a:hover {
+        color: var(--accent-color);
     }
     .mobile-nav-toggle {
         display: block;
@@ -808,6 +818,81 @@ h2 { text-align: center; margin-bottom: 55px; }
     }
     .contact-options {
         grid-template-columns: 1fr;
+    }
+    
+    /* Leistungen Seite Mobile Optimierungen */
+    .quick-nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .quick-nav-button {
+        width: 100%;
+        font-size: 0.95rem;
+        padding: 12px 16px;
+    }
+    
+    /* Service Cards auf Leistungen Seite */
+    .service-card {
+        padding: 20px !important;
+    }
+    
+    /* Section mit Grid-Layout (Vorträge, Automatisierung) */
+    section div[style*="grid-template-columns: repeat(3, 1fr)"],
+    section div[style*="grid-template-columns: repeat(4, 1fr)"] {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Workshop Section 2-Spalten Layout */
+    section div[style*="grid-template-columns: 28% 72%"] {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    section div[style*="display: grid; grid-template-columns: repeat(2, 1fr)"] {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* Strategie Section 70/30 Layout */
+    section div[style*="grid-template-columns: 70% 30%"] {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+    
+    /* Sticky Sidebar auf Mobile nicht sticky */
+    div[style*="position: sticky"] {
+        position: relative !important;
+        top: auto !important;
+    }
+    
+    /* Phase Karten kleineres Padding auf Mobile */
+    .service-card[style*="grid-template-columns: 80px 1fr"] {
+        grid-template-columns: 60px 1fr !important;
+        gap: 15px !important;
+        padding: 20px !important;
+    }
+    
+    /* Badge in Phase-Karten kleiner */
+    .service-card div[style*="width: 60px; height: 60px"] {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* Überschriften in centered header sections */
+    div[style*="max-width: 800px"] h2,
+    div[style*="max-width: 900px"] h2 {
+        font-size: 1.8rem !important;
+    }
+    
+    div[style*="max-width: 800px"] h3,
+    div[style*="max-width: 900px"] h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Service Image responsive */
+    .service-image {
+        margin-bottom: 15px !important;
     }
 }
 
