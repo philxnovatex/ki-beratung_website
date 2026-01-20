@@ -19,6 +19,8 @@
     <link rel="preload" href="assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="assets/css/style.css"></noscript>
     <link rel="stylesheet" href="assets/css/sections/ki-anwendungen.css">
+    <!-- Hero Enhancements: Entfernen oder auskommentieren um zu deaktivieren -->
+    <link rel="stylesheet" href="assets/css/hero-enhancements.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css">
     <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js"></script>
 </head>
@@ -45,10 +47,12 @@
     </header>
     <main>
         <!-- Hero-Sektion -->
-        <section id="hero" class="hero-section">
+        <!-- Klasse 'hero-enhanced' aktiviert modernisierte Styles (hero-enhancements.css) -->
+        <!-- Optionen: 'no-aurora' = ohne Gradient, 'no-fade' = ohne Animation, 'no-canvas' = Canvas ausblenden -->
+        <section id="hero" class="hero-section hero-enhanced">
             <canvas id="hero-canvas"></canvas>
             <div class="container">
-                <h1>Planbarer KI Erfolg statt teurer Experimente</h1>
+                <h1>Planbarer <span class="text-cyan">KI Erfolg</span> statt teurer Experimente</h1>
                 <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
                 <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
             </div>

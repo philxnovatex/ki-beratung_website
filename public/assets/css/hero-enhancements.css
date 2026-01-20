@@ -1,0 +1,468 @@
+/* ================================================================
+   HERO ENHANCEMENTS - Neuratex AI Futuristic 3D Sphere
+   ================================================================
+   
+   Futuristischer Hero mit:
+   - 3D Wireframe Sphere (Three.js Canvas)
+   - Morphing Blob-Effekt
+   - Gold Orbit-Ringe
+   - Premium Gold Text-Highlight
+   - GPU-optimiert mit reduced-motion Fallback
+   
+   ================================================================ */
+
+/* --------------------------
+   CSS Custom Properties
+   -------------------------- */
+:root {
+    /* Futuristic Colors */
+    --hero-dark: #050a15;
+    --hero-base: #0a1628;
+    --grid-color: rgba(24, 90, 219, 0.25);
+    --grid-glow: rgba(24, 90, 219, 0.6);
+    --orb-blue: rgba(24, 90, 219, 0.35);
+    --orb-cyan: rgba(0, 212, 255, 0.25);
+    
+    /* Gold Palette */
+    --gold-primary: #FFC947;
+    --gold-light: #FFE082;
+    --gold-glow: rgba(255, 201, 71, 0.5);
+}
+
+/* ================================================================
+   1. KEYFRAME ANIMATIONS
+   ================================================================ */
+
+/* Floating Orbs */
+@keyframes floatOrb1 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: translate(30px, -20px) scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+@keyframes floatOrb2 {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-25px, 15px) scale(1.15);
+        opacity: 0.5;
+    }
+}
+
+@keyframes floatOrb3 {
+    0%, 100% {
+        transform: translate(0, 0) scale(0.9);
+        opacity: 0.25;
+    }
+    50% {
+        transform: translate(15px, 25px) scale(1);
+        opacity: 0.45;
+    }
+}
+
+/* Gold Shimmer */
+@keyframes goldShimmer {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Fade In */
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Subtle glow pulse for canvas area */
+@keyframes canvasGlow {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ================================================================
+   2. HERO BASE STYLING
+   ================================================================ */
+
+section.hero-section.hero-enhanced {
+    position: relative !important;
+    background: linear-gradient(180deg, 
+        var(--hero-dark) 0%, 
+        var(--hero-base) 40%, 
+        #0d1f3c 70%,
+        var(--hero-base) 100%
+    ) !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    min-height: 100vh !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+section.hero-section.hero-enhanced .container {
+    position: relative !important;
+    z-index: 10 !important;
+    max-width: 1000px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    /* Transparent - kein Kasten */
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+    padding: 0 24px !important;
+}
+
+/* ================================================================
+   3. CANVAS
+   ================================================================ */
+
+section.hero-section.hero-enhanced #hero-canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 2 !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    opacity: 0.7 !important;
+}
+
+/* ================================================================
+   4. FLOATING GLOW ORBS
+   ================================================================ */
+
+/* Orb 1 - Links oben (blau) */
+section.hero-section.hero-enhanced .container::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    left: -150px;
+    top: -80px;
+    background: radial-gradient(circle, var(--orb-blue) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(50px);
+    z-index: -1;
+    animation: floatOrb1 10s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Orb 2 - Rechts mitte (cyan) */
+section.hero-section.hero-enhanced .container::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    right: -100px;
+    top: 20%;
+    background: radial-gradient(circle, var(--orb-cyan) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    z-index: -1;
+    animation: floatOrb2 12s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Orb 3 - Gold glow unter Headline */
+section.hero-section.hero-enhanced h1::after {
+    content: "";
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    left: 50%;
+    bottom: -120px;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(255, 201, 71, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: -1;
+    animation: floatOrb3 8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* ================================================================
+   6. HEADLINE TYPOGRAPHY
+   ================================================================ */
+
+section.hero-section.hero-enhanced h1 {
+    position: relative;
+    font-size: clamp(2.4rem, 6vw, 4.2rem) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 0 40px 0 !important;
+    padding: 0 !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    width: auto !important;
+    display: block !important;
+    
+    text-shadow: 
+        0 2px 10px rgba(0, 0, 0, 0.5),
+        0 4px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Auf Tablet/Mobile: Umbruch erlauben */
+@media (max-width: 1100px) {
+    section.hero-section.hero-enhanced h1 {
+        white-space: normal !important;
+        font-size: clamp(1.8rem, 6vw, 2.8rem) !important;
+    }
+}
+
+/* ================================================================
+   7. GOLD TEXT HIGHLIGHT "KI Erfolg"
+   ================================================================ */
+
+section.hero-section.hero-enhanced .text-cyan {
+    color: var(--gold-primary) !important;
+    position: relative;
+    display: inline-block;
+    
+    /* Animierter Gold Shimmer Gradient */
+    background: linear-gradient(
+        90deg,
+        var(--gold-primary) 0%,
+        var(--gold-light) 25%,
+        var(--gold-primary) 50%,
+        var(--gold-light) 75%,
+        var(--gold-primary) 100%
+    ) !important;
+    background-size: 200% 100% !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    
+    animation: goldShimmer 4s ease-in-out infinite !important;
+    
+    /* Glow Effect */
+    filter: drop-shadow(0 0 10px var(--gold-glow)) 
+            drop-shadow(0 0 25px rgba(255, 201, 71, 0.3)) !important;
+}
+
+/* ================================================================
+   8. SUBTITLE
+   ================================================================ */
+
+section.hero-section.hero-enhanced .subtitle {
+    font-size: clamp(1.2rem, 2.8vw, 1.6rem) !important;
+    line-height: 1.7 !important;
+    max-width: 850px !important;
+    margin: 0 auto 60px auto !important;
+    padding: 0 !important;
+    color: rgba(203, 213, 225, 0.9) !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ================================================================
+   9. CTA BUTTON
+   ================================================================ */
+
+section.hero-section.hero-enhanced .cta-button {
+    position: relative !important;
+    z-index: 1 !important;
+    display: inline-block !important;
+    padding: 22px 52px !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    border-radius: 10px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+section.hero-section.hero-enhanced .cta-button:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 40px rgba(255, 201, 71, 0.7) !important;
+}
+
+section.hero-section.hero-enhanced .cta-button:active {
+    transform: translateY(-1px) !important;
+}
+
+/* ================================================================
+   10. FADE-IN ANIMATION
+   ================================================================ */
+
+section.hero-section.hero-enhanced .container > h1,
+section.hero-section.hero-enhanced .container > .subtitle,
+section.hero-section.hero-enhanced .container > .cta-button {
+    opacity: 0;
+    animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+section.hero-section.hero-enhanced h1 {
+    animation-delay: 0.1s !important;
+}
+
+section.hero-section.hero-enhanced .subtitle {
+    animation-delay: 0.25s !important;
+}
+
+section.hero-section.hero-enhanced .cta-button {
+    animation-delay: 0.4s !important;
+}
+
+/* ================================================================
+   11. REDUCED MOTION (Accessibility)
+   ================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    section.hero-section.hero-enhanced::before {
+        animation: none !important;
+    }
+    
+    section.hero-section.hero-enhanced .container::before,
+    section.hero-section.hero-enhanced .container::after,
+    section.hero-section.hero-enhanced h1::after {
+        animation: none !important;
+    }
+    
+    section.hero-section.hero-enhanced .text-cyan {
+        animation: none !important;
+        background: var(--gold-primary) !important;
+        -webkit-text-fill-color: var(--gold-primary) !important;
+    }
+    
+    section.hero-section.hero-enhanced .container > h1,
+    section.hero-section.hero-enhanced .container > .subtitle,
+    section.hero-section.hero-enhanced .container > .cta-button {
+        animation: none !important;
+        opacity: 1 !important;
+    }
+    
+    /* Canvas mit reduzierter Opazität */
+    section.hero-section.hero-enhanced #hero-canvas {
+        opacity: 0.25 !important;
+    }
+}
+
+/* ================================================================
+   12. RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 900px) {
+    section.hero-section.hero-enhanced {
+        padding: 60px 0 80px !important;
+        min-height: 75vh !important;
+    }
+    
+    section.hero-section.hero-enhanced #hero-canvas {
+        opacity: 0.35 !important;
+    }
+    
+    section.hero-section.hero-enhanced h1 {
+        font-size: clamp(1.8rem, 5vw, 2.4rem) !important;
+    }
+    
+    section.hero-section.hero-enhanced .subtitle {
+        font-size: 1rem !important;
+        margin-bottom: 36px !important;
+    }
+    
+    /* Orbs kleiner */
+    section.hero-section.hero-enhanced .container::before {
+        width: 180px;
+        height: 180px;
+        left: -40px;
+        top: -40px;
+    }
+    
+    section.hero-section.hero-enhanced .container::after {
+        width: 150px;
+        height: 150px;
+        right: -40px;
+    }
+}
+
+@media (max-width: 480px) {
+    section.hero-section.hero-enhanced {
+        padding: 50px 0 70px !important;
+        min-height: 65vh !important;
+    }
+    
+    section.hero-section.hero-enhanced #hero-canvas {
+        opacity: 0.3 !important;
+    }
+    
+    section.hero-section.hero-enhanced h1 {
+        font-size: 1.6rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    section.hero-section.hero-enhanced .subtitle {
+        font-size: 0.95rem !important;
+        margin-bottom: 28px !important;
+        line-height: 1.6 !important;
+    }
+    
+    section.hero-section.hero-enhanced .cta-button {
+        padding: 14px 28px !important;
+        width: 100% !important;
+        display: block !important;
+    }
+    
+    /* Orbs noch kleiner */
+    section.hero-section.hero-enhanced .container::before,
+    section.hero-section.hero-enhanced .container::after {
+        width: 100px;
+        height: 100px;
+        filter: blur(30px);
+    }
+}
+
+/* ================================================================
+   13. FEATURE TOGGLES
+   ================================================================ */
+
+/* Ohne 3D Canvas */
+section.hero-section.hero-enhanced.no-canvas #hero-canvas {
+    display: none !important;
+}
+
+section.hero-section.hero-enhanced.no-canvas::before {
+    display: none !important;
+}
+
+/* Ohne Floating Orbs */
+section.hero-section.hero-enhanced.no-orbs .container::before,
+section.hero-section.hero-enhanced.no-orbs .container::after,
+section.hero-section.hero-enhanced.no-orbs h1::after {
+    display: none !important;
+}
+
+/* Ohne Fade-In */
+section.hero-section.hero-enhanced.no-fade .container > h1,
+section.hero-section.hero-enhanced.no-fade .container > .subtitle,
+section.hero-section.hero-enhanced.no-fade .container > .cta-button {
+    animation: none !important;
+    opacity: 1 !important;
+}
