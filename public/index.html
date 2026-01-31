@@ -41,7 +41,7 @@
             <li><a href="pages/lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
             </nav>
-            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Navigation öffnen">
                 <span class="sr-only">Menü</span>
             </button>
         </div>
@@ -55,7 +55,7 @@
             <div class="container">
                 <h1>Planbarer <span class="text-cyan">KI Erfolg</span> statt teurer Experimente</h1>
                 <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
-                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
+                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">Jetzt kostenlose Potenzial-Analyse buchen</a>
             </div>
         </section>
         <!-- Problem & Lösung Sektion mit Scroll Animation -->
@@ -330,7 +330,7 @@
                         <!-- Call-to-Action -->
                         <div class="demo-cta">
                             <p class="cta-text">Beeindruckt? Lassen Sie uns Ihre KI-Lösung entwickeln.</p>
-                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="premium-cta-button">
+                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="premium-cta-button">
                                 <span>Kostenlose Beratung buchen</span>
                                 <svg viewBox="0 0 24 24" width="16" height="16">
                                     <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -561,14 +561,14 @@
             <div class="container">
                 <h2>Starten Sie mit dem ersten, richtigen Schritt.</h2>
                 <p>In einer kostenlosen und unverbindlichen Potenzial-Analyse identifizieren wir gemeinsam den größten Hebel für den KI-Einsatz in Ihrem Unternehmen. Buchen Sie Ihren Termin direkt online.</p>
-                <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" class="cta-button">Termin für Potenzial-Analyse buchen</a>
+<a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">Termin für Potenzial-Analyse buchen</a>
             </div>
         </section>
     </main>
 
         <footer class="main-footer">
                 <div class="container">
-                        <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+                        <p>&copy; <span id="copyright-year">2026</span> Neuratex AI by Philipp Koch</p>
                         <ul>
                                 <li><a href="pages/legal/impressum.html">Impressum</a></li>
                                 <li><a href="pages/legal/datenschutz.html">Datenschutz</a></li>
@@ -642,10 +642,9 @@
         }
     });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <!-- Entfernt: Windmill/Pin Animation -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16ber3FPP+FUFElD/HC0GUzlKEdNC4CdY2asyXF4ExJ6IaOWqnW9fmlHBZQrr9BqR6UPpnhvgcO1e4k/SU5bvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Three.js entfernt - wird nicht verwendet, spart ~500KB -->
     <script src="assets/js/hero-canvas.js" defer></script>
     <script src="assets/js/sections/ki-anwendungen.js" defer></script>
     <script>

@@ -215,14 +215,15 @@ section.hero-section.hero-enhanced h1::after {
 
 section.hero-section.hero-enhanced h1 {
     position: relative;
-    font-size: clamp(2.4rem, 6vw, 4.2rem) !important;
-    line-height: 1.15 !important;
+    font-size: clamp(2rem, 5vw, 3.5rem) !important;
+    line-height: 1.2 !important;
     letter-spacing: -0.02em !important;
     margin: 0 0 40px 0 !important;
     padding: 0 !important;
     font-weight: 800 !important;
-    white-space: nowrap !important;
+    white-space: normal !important;
     width: auto !important;
+    max-width: 100% !important;
     display: block !important;
     
     text-shadow: 
@@ -230,11 +231,10 @@ section.hero-section.hero-enhanced h1 {
         0 4px 30px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Auf Tablet/Mobile: Umbruch erlauben */
+/* Auf Tablet/Mobile: kleinere Schriftgröße */
 @media (max-width: 1100px) {
     section.hero-section.hero-enhanced h1 {
-        white-space: normal !important;
-        font-size: clamp(1.8rem, 6vw, 2.8rem) !important;
+        font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
     }
 }
 

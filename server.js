@@ -6,6 +6,43 @@ const nodemailer = require('nodemailer');
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Helper: Escape HTML to prevent XSS
+const escapeHtml = (str) => String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+// Security Headers Middleware
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+    next();
+});
+
+// Simple Rate Limiting (in-memory, for production use redis)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const RATE_LIMIT_MAX = 5;
+
+function rateLimiter(req, res, next) {
+    const ip = req.ip || req.connection.remoteAddress;
+    const now = Date.now();
+    const record = rateLimitMap.get(ip);
+    
+    if (!record || now - record.start > RATE_LIMIT_WINDOW) {
+        rateLimitMap.set(ip, { start: now, count: 1 });
+        return next();
+    }
+    
+    if (record.count >= RATE_LIMIT_MAX) {
+        return res.status(429).json({ error: 'too_many_requests', retry_after: Math.ceil((RATE_LIMIT_WINDOW - (now - record.start)) / 1000) });
+    }
+    
+    record.count++;
+    next();
+}
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -46,7 +83,7 @@ if(process.env.SMTP_HOST && process.env.SMTP_USER){
 }
 
 // POST /api/newsletter -> create pending token and send confirmation email (double opt-in)
-app.post('/api/newsletter', async (req, res) => {
+app.post('/api/newsletter', rateLimiter, async (req, res) => {
   try {
     const { email } = req.body || {};
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -107,8 +144,8 @@ app.get('/api/newsletter/confirm', async (req, res) => {
     }
     try{ await appendConsent({ email: entry.email, action: 'confirmed', ts: new Date().toISOString(), ip: req.ip }); }catch(e){}
 
-    // show a simple confirmation page
-    return res.send(`<html><body><h1>Danke!</h1><p>Ihre E‑Mail ${entry.email} wurde bestätigt.</p><p><a href="/lernplattform.html">Zurück zur Lernplattform</a></p></body></html>`);
+    // show a simple confirmation page (escaped to prevent XSS)
+    return res.send(`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Bestätigung erfolgreich</title><style>body{font-family:system-ui,sans-serif;background:#0A1931;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}div{text-align:center;padding:2rem}a{color:#FFC947}</style></head><body><div><h1>Danke!</h1><p>Ihre E‑Mail <strong>${escapeHtml(entry.email)}</strong> wurde bestätigt.</p><p><a href="/pages/lernplattform.html">Zurück zur Lernplattform</a></p></div></body></html>`);
   } catch(err){ console.error('confirm error', err); return res.status(500).send('server error'); }
 });
 

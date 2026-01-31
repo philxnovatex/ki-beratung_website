@@ -38,6 +38,9 @@ window.addEventListener('DOMContentLoaded', () => {
     let magnetActive = false;
     let magnetX = 0, magnetY = 0;
     let magnetStrength = 0;
+    
+    // Animation frame ID for cleanup (prevent memory leak)
+    let animationId = null;
 
     // Node class
     class Node {
@@ -227,7 +230,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Animation Loop
     function animate() {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
         time += config.pulseSpeed;
 
         // Magnet-Effekt abklingen lassen
@@ -246,6 +249,22 @@ window.addEventListener('DOMContentLoaded', () => {
         drawConnections();
         nodes.forEach(node => node.draw());
     }
+    
+    // Cleanup on visibility change (prevent memory leak)
+    function handleVisibilityChange() {
+        if (document.hidden) {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        } else {
+            if (!animationId) {
+                animate();
+            }
+        }
+    }
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Event Listeners
     window.addEventListener('resize', resize);
