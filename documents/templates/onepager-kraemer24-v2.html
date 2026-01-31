@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>One Pager – Internes Wissens- und Dokumentensystem | Kraemer24</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: #1a1a1a;
+            background: white;
+        }
+        
+        .page {
+            width: 210mm;
+            height: 297mm;
+            padding: 15mm 20mm 20mm 20mm;
+            margin: 0 auto;
+            background: white;
+            position: relative;
+            page-break-after: always;
+            overflow: hidden;
+        }
+        
+        .page:last-child {
+            page-break-after: avoid;
+        }
+        
+        .page-content {
+            height: 250mm;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            display: table;
+            width: 100%;
+            border-bottom: 3px solid #FFC947;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+        }
+        
+        .header-left {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        .header-right {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: right;
+        }
+        
+        .logo {
+            height: 50px;
+        }
+        
+        .doc-type {
+            font-size: 9pt;
+            color: #b88800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        .doc-date {
+            font-size: 9pt;
+            color: #333;
+            margin-top: 2px;
+        }
+        
+        /* Title */
+        h1 {
+            font-size: 18pt;
+            color: #0A1931;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            font-size: 12pt;
+            color: #185ADB;
+            margin-bottom: 18px;
+        }
+        
+        /* Sections */
+        h2 {
+            font-size: 11pt;
+            color: #185ADB;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 3px;
+            margin-bottom: 8px;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        
+        h2:first-child {
+            margin-top: 0;
+        }
+        
+        p {
+            margin-bottom: 8px;
+            font-size: 10pt;
+        }
+        
+        strong {
+            color: #0A1931;
+        }
+        
+        /* Highlight Box */
+        .highlight {
+            background: #f5f8ff;
+            border-left: 4px solid #FFC947;
+            padding: 12px 14px;
+            margin: 14px 0;
+        }
+        
+        .highlight h3 {
+            font-size: 11pt;
+            color: #0A1931;
+            margin-bottom: 6px;
+        }
+        
+        .highlight p {
+            margin: 0;
+        }
+        
+        /* Lists */
+        ul {
+            padding-left: 20px;
+            margin: 8px 0;
+        }
+        
+        li {
+            margin-bottom: 4px;
+            font-size: 10pt;
+        }
+        
+        /* Hebel Cards */
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #FFC947;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+        
+        .card h3 {
+            font-size: 11pt;
+            color: #0A1931;
+            margin-bottom: 6px;
+        }
+        
+        .card-num {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: #185ADB;
+            color: white;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 50%;
+            font-size: 10pt;
+            margin-right: 8px;
+        }
+        
+        .card-content {
+            font-size: 10pt;
+            margin-bottom: 8px;
+        }
+        
+        .nutzen {
+            background: #e8f5e9;
+            padding: 8px 10px;
+            border-radius: 3px;
+            font-size: 9pt;
+        }
+        
+        .nutzen-title {
+            font-size: 8pt;
+            color: #16a34a;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        
+        .nutzen ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+        
+        .nutzen li {
+            margin-bottom: 2px;
+            font-size: 9pt;
+        }
+        
+        .nutzen.wichtig {
+            background: #fff8e1;
+        }
+        
+        .nutzen.wichtig .nutzen-title {
+            color: #b45309;
+        }
+        
+        /* Question Grid */
+        .questions {
+            display: table;
+            width: 100%;
+            margin-top: 8px;
+            border-collapse: separate;
+            border-spacing: 4px;
+        }
+        
+        .questions-row {
+            display: table-row;
+        }
+        
+        .question {
+            display: table-cell;
+            width: 50%;
+            vertical-align: top;
+        }
+        
+        .question-inner {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            padding: 6px 8px;
+            font-size: 8.5pt;
+        }
+        
+        .q-mark {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: #185ADB;
+            color: white;
+            text-align: center;
+            line-height: 18px;
+            border-radius: 50%;
+            font-size: 9pt;
+            margin-right: 6px;
+        }
+        
+        /* CTA */
+        .cta {
+            background: #f5f8ff;
+            border: 2px solid #FFC947;
+            padding: 10px 12px;
+            text-align: center;
+            margin-top: 12px;
+        }
+        
+        .cta h3 {
+            font-size: 11pt;
+            color: #185ADB;
+            margin-bottom: 5px;
+        }
+        
+        .cta p {
+            font-size: 9pt;
+            margin: 0;
+        }
+        
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+            font-size: 9pt;
+            color: #666;
+            display: table;
+            width: calc(100% - 40mm);
+        }
+        
+        .footer-left {
+            display: table-cell;
+        }
+        
+        .footer-right {
+            display: table-cell;
+            text-align: right;
+            color: #185ADB;
+            font-weight: bold;
+        }
+        
+        /* Print */
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+            
+            body {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .page {
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+                margin: 0;
+            }
+            
+            .page:last-child {
+                page-break-after: avoid;
+            }
+        }
+        
+        /* Bildschirm-Vorschau mit Abstand */
+        @media screen {
+            body {
+                background: #e0e0e0;
+                padding: 20px;
+            }
+            
+            .page {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- SEITE 1 -->
+<div class="page">
+    <div class="page-content">
+        <div class="header">
+            <div class="header-left">
+                <img src="../../public/assets/images/neuratex-logo.jpg" alt="Neuratex" class="logo">
+            </div>
+            <div class="header-right">
+                <div class="doc-type">One Pager</div>
+                <div class="doc-date">Januar 2025</div>
+            </div>
+        </div>
+        
+        <h1>Internes Wissens- und Dokumentensystem</h1>
+        <p class="subtitle">KI-gestützte Lösung für Kraemer24</p>
+        
+        <h2>Ausgangslage</h2>
+        <p>
+            <strong>Kraemer24</strong> verfügt über einen umfangreichen Bestand an internen Dokumenten, technischen Anleitungen und Schulungsmaterialien. Aktuell ist der Zugriff auf dieses Wissen oft zeitaufwendig – Informationen müssen manuell gesucht oder bei Kollegen erfragt werden.
+        </p>
+        <p>
+            Die Folge: Wertvolle Arbeitszeit geht verloren, und neues Personal benötigt länger, um produktiv zu werden.
+        </p>
+        
+        <div class="highlight">
+            <h3>📌 Kernidee</h3>
+            <p>
+                Ein <strong>KI-basiertes Wissens- und Dokumentensystem</strong>, das alle internen Ressourcen durchsuchbar macht – mit natürlicher Sprachverarbeitung, intuitiver Oberfläche und präzisen Antworten in Sekunden.
+            </p>
+        </div>
+        
+        <h2>Zentrale Hebel</h2>
+        
+        <div class="card">
+            <h3><span class="card-num">1</span> Intelligente Dokumentensuche</h3>
+            <p class="card-content">
+                Mitarbeiter stellen Fragen in natürlicher Sprache – das System durchsucht PDFs, Word-Dokumente, Wikis und Datenbanken und liefert präzise, kontextbezogene Antworten.
+            </p>
+            <div class="nutzen">
+                <div class="nutzen-title">Nutzen</div>
+                <ul>
+                    <li>Schnellerer Zugriff auf relevante Informationen</li>
+                    <li>Weniger Rückfragen an Kollegen</li>
+                    <li>Einheitliche Wissensbasis für alle Abteilungen</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3><span class="card-num">2</span> Automatische Inhaltsverknüpfung</h3>
+            <p class="card-content">
+                Das System erkennt Zusammenhänge zwischen Dokumenten und schlägt verwandte Inhalte vor – auch abteilungsübergreifend.
+            </p>
+            <div class="nutzen">
+                <div class="nutzen-title">Nutzen</div>
+                <ul>
+                    <li>Ganzheitliches Verständnis komplexer Themen</li>
+                    <li>Weniger doppelte Dokumentation</li>
+                    <li>Förderung von Wissensaustausch</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3><span class="card-num">3</span> Onboarding-Beschleunigung</h3>
+            <p class="card-content">
+                Neue Mitarbeiter erhalten einen persönlichen KI-Assistenten, der sie durch interne Prozesse führt und häufige Fragen sofort beantwortet.
+            </p>
+            <div class="nutzen">
+                <div class="nutzen-title">Nutzen</div>
+                <ul>
+                    <li>Kürzere Einarbeitungszeit</li>
+                    <li>Entlastung von Mentoren</li>
+                    <li>Konsistente Wissensvermittlung</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-left">philippkoch@neuratex.de</div>
+        <div class="footer-right">Seite 1 von 2</div>
+    </div>
+</div>
+
+<!-- SEITE 2 -->
+<div class="page">
+    <div class="page-content">
+        <div class="header">
+            <div class="header-left">
+                <img src="../../public/assets/images/neuratex-logo.jpg" alt="Neuratex" class="logo">
+            </div>
+            <div class="header-right">
+                <div class="doc-type">One Pager</div>
+                <div class="doc-date">Januar 2025</div>
+            </div>
+        </div>
+        
+        <h2>Zentrale Hebel (Fortsetzung)</h2>
+        
+        <div class="card">
+            <h3><span class="card-num">4</span> Versionierung und Aktualität</h3>
+            <p class="card-content">
+                Das System erkennt veraltete Dokumente, schlägt Aktualisierungen vor und hält die Wissensbasis automatisch aktuell.
+            </p>
+            <div class="nutzen wichtig">
+                <div class="nutzen-title">Wichtig</div>
+                <ul>
+                    <li>Keine veralteten Informationen mehr im Umlauf</li>
+                    <li>Automatische Hinweise bei Änderungsbedarf</li>
+                    <li>Revisionssichere Dokumentation</li>
+                </ul>
+            </div>
+        </div>
+        
+        <h2>Mögliche Pilotfragen an das System</h2>
+        
+        <div class="questions">
+            <div class="questions-row">
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Wie ist der Prozess für Retouren bei Großkunden?
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Welche Sicherheitsvorschriften gelten im Lager?
+                    </div>
+                </div>
+            </div>
+            <div class="questions-row">
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Wo finde ich die aktuelle Preisliste für Händler?
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Was sind die Schritte zur Reklamationsbearbeitung?
+                    </div>
+                </div>
+            </div>
+            <div class="questions-row">
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Wie beantrage ich Urlaub im System?
+                    </div>
+                </div>
+                <div class="question">
+                    <div class="question-inner">
+                        <span class="q-mark">?</span>
+                        Welche Schulungen sind für neue Mitarbeiter Pflicht?
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Technische Umsetzung</h2>
+        <p>
+            Das System basiert auf modernster <strong>KI-Technologie</strong> (Large Language Models) und wird vollständig datenschutzkonform in Deutschland gehostet. Die Integration erfolgt nahtlos in bestehende IT-Infrastruktur.
+        </p>
+        <ul>
+            <li>Anbindung an vorhandene Dokumentenquellen (SharePoint, Netzlaufwerke, Wikis)</li>
+            <li>Rollenbasierte Zugriffsrechte</li>
+            <li>DSGVO-konforme Datenverarbeitung</li>
+            <li>Skalierbar von Pilotprojekt bis Unternehmenslösung</li>
+        </ul>
+        
+        <div class="cta">
+            <h3>Nächster Schritt</h3>
+            <p>
+                Gerne präsentiere ich Ihnen in einem <strong>persönlichen Gespräch</strong>, wie das System konkret für Kraemer24 aussehen kann – inklusive Live-Demo mit Ihren eigenen Dokumenten.
+            </p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-left">philippkoch@neuratex.de</div>
+        <div class="footer-right">Seite 2 von 2</div>
+    </div>
+</div>
+
+</body>
+</html>

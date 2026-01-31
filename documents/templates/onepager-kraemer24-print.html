@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Pager – Internes Wissens- und Dokumentensystem | Kraemer24</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           NEURATEX CI - Weißer Hintergrund, Farbige Akzente
+           ============================================ */
+
+        :root {
+            --primary-color: #0A1931;
+            --secondary-color: #185ADB;
+            --accent-color: #FFC947;
+            --text-color: #1a1a2e;
+            --text-light: #4a5568;
+            --border-color: #e2e8f0;
+            --card-bg: #f8fafc;
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 11pt;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background: white;
+            color: var(--text-color);
+        }
+
+        .document {
+            width: 210mm;
+            margin: 0 auto;
+            background: white;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 18mm 22mm;
+            background: white;
+            position: relative;
+            page-break-after: always;
+            page-break-inside: avoid;
+        }
+
+        .page:last-child {
+            page-break-after: auto;
+        }
+
+        /* --- Header --- */
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
+        .doc-header .logo img {
+            height: 45px;
+            width: auto;
+        }
+
+        .doc-meta {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .doc-meta .doc-date {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .doc-meta .doc-type {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- Document Title --- */
+        .doc-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .doc-subtitle {
+            font-size: 1.05rem;
+            color: var(--secondary-color);
+            margin-bottom: 22px;
+            font-weight: 500;
+        }
+
+        /* --- Sections --- */
+        .section {
+            margin-bottom: 22px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-content {
+            color: var(--text-color);
+            font-size: 0.92rem;
+        }
+
+        .section-content p {
+            margin-bottom: 8px;
+        }
+
+        .section-content strong {
+            color: var(--primary-color);
+        }
+
+        /* --- Highlight Box --- */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(24, 90, 219, 0.08) 0%, rgba(255, 201, 71, 0.08) 100%);
+            border-left: 4px solid var(--accent-color);
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            margin: 16px 0;
+            page-break-inside: avoid;
+        }
+
+        .highlight-box h4 {
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+        }
+
+        .highlight-box p, .highlight-box ul {
+            font-size: 0.88rem;
+            color: var(--text-color);
+        }
+
+        /* --- Lists --- */
+        ul, ol {
+            padding-left: 18px;
+            margin: 8px 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+
+        .check-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .check-list li {
+            position: relative;
+            padding-left: 22px;
+        }
+
+        .check-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        .doc-footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 22mm;
+            right: 22mm;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: var(--text-light);
+        }
+
+        .footer-contact {
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .page-number {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* --- Hebel Cards --- */
+        .hebel-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+        
+        .hebel-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            padding: 14px 16px;
+            page-break-inside: avoid;
+        }
+        
+        .hebel-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .hebel-card h4 .hebel-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .hebel-card .description {
+            font-size: 0.85rem;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+        
+        .hebel-card .nutzen {
+            background: rgba(34, 197, 94, 0.08);
+            border-radius: 4px;
+            padding: 8px 10px;
+        }
+        
+        .hebel-card .nutzen-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #16a34a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        
+        .hebel-card .nutzen ul {
+            margin: 0;
+            padding-left: 14px;
+            font-size: 0.8rem;
+        }
+        
+        .hebel-card .nutzen li {
+            margin-bottom: 2px;
+            color: var(--text-color);
+        }
+
+        .hebel-card .nutzen.wichtig {
+            background: rgba(255, 201, 71, 0.15);
+        }
+
+        .hebel-card .nutzen.wichtig .nutzen-title {
+            color: #b45309;
+        }
+
+        /* --- Question Grid --- */
+        .question-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .question-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            color: var(--text-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .question-item::before {
+            content: '?';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            background: var(--secondary-color);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* --- CTA Box --- */
+        .cta-box {
+            background: linear-gradient(135deg, rgba(24, 90, 219, 0.1) 0%, rgba(255, 201, 71, 0.1) 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 16px 18px;
+            text-align: center;
+            margin-top: 18px;
+        }
+        
+        .cta-box h4 {
+            font-size: 1rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+        
+        .cta-box p {
+            font-size: 0.88rem;
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* --- Ausgangslage List --- */
+        .ausgangslage-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .ausgangslage-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+        }
+        
+        .ausgangslage-list li::before {
+            content: '•';
+            position: absolute;
+            left: 6px;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* --- Zielbild Grid --- */
+        .zielbild-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 12px 0;
+        }
+        
+        .zielbild-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .zielbild-item .icon {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        
+        .zielbild-item p {
+            font-size: 0.78rem;
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* --- Vorgehensmodell Box --- */
+        .vorgehensmodell-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 14px 16px;
+        }
+        
+        .vorgehensmodell-box h4 {
+            font-size: 0.82rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .vorgehensmodell-box h4 .badge {
+            background: rgba(34, 197, 94, 0.15);
+            color: #16a34a;
+            border: 1px solid #22c55e;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+        }
+        
+        .step-list {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .step-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .step-item .num {
+            width: 20px;
+            height: 20px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .result-note {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+            font-style: italic;
+        }
+
+        /* Print specific */
+        @media print {
+            body {
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+
+        /* Screen preview */
+        @media screen {
+            body {
+                padding: 30px 20px;
+                background: #e8e8e8;
+            }
+            .page {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        
+        <!-- ==================== SEITE 1 ==================== -->
+        <div class="page">
+            <header class="doc-header">
+                <div class="logo">
+                    <img src="../../public/assets/images/neuratex-logo.jpg" alt="Neuratex Logo">
+                </div>
+                <div class="doc-meta">
+                    <div class="doc-type">One Pager</div>
+                    <div class="doc-date">Januar 2026</div>
+                </div>
+            </header>
+
+            <h1 class="doc-title">Internes Wissens- und Dokumentensystem</h1>
+            <p class="doc-subtitle">Kraemer24</p>
+
+            <section class="section">
+                <h3 class="section-title">Ausgangslage</h3>
+                <div class="section-content">
+                    <p>Im Ersatzteilgeschäft von Kraemer24 liegen relevante Informationen verteilt in unterschiedlichen Systemen und Formaten:</p>
+                    
+                    <ul class="ausgangslage-list">
+                        <li>PDFs, gescannte Kataloge, Excel-Listen, CDs und DVDs</li>
+                        <li>Herstellerunterlagen mit sehr unterschiedlicher Struktur und Qualität</li>
+                        <li>Erfahrungswissen einzelner Mitarbeiter zu Fabrikaten, Baujahren und Sonderfällen</li>
+                    </ul>
+                    
+                    <p>Die Identifikation von Maschinen und passenden Ersatzteilen erfordert häufig manuelle Recherche und persönliche Erfahrung. Dies führt zu <strong>erhöhtem Zeitaufwand im Kundenservice</strong> und macht die Trefferquote stark abhängig von einzelnen Schlüsselpersonen.</p>
+                    
+                    <p style="margin-top: 8px;">Bestehende Werkzeuge wie Microsoft Teams und SharePoint ermöglichen zwar Austausch, ersetzen jedoch kein strukturiertes Wissenssystem und keine standardisierte Fallnachverfolgung.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">Zielbild</h3>
+                <div class="section-content">
+                    <p>Ziel ist kein weiteres Ablagesystem, sondern ein internes Werkzeug, das:</p>
+                    
+                    <div class="zielbild-grid">
+                        <div class="zielbild-item">
+                            <div class="icon">🔍</div>
+                            <p>Informationen schnell auffindbar macht</p>
+                        </div>
+                        <div class="zielbild-item">
+                            <div class="icon">🧠</div>
+                            <p>Erfahrungswissen sichert</p>
+                        </div>
+                        <div class="zielbild-item">
+                            <div class="icon">🚀</div>
+                            <p>Neue Mitarbeiter schneller handlungsfähig macht</p>
+                        </div>
+                        <div class="zielbild-item">
+                            <div class="icon">⚡</div>
+                            <p>Den Ersatzteil­service spürbar entlastet</p>
+                        </div>
+                    </div>
+                    
+                    <p style="font-style: italic; font-size: 0.85rem;">Das System soll intern genutzt werden, den Arbeitsalltag vereinfachen und schrittweise eingeführt werden, um Akzeptanz im Team zu gewährleisten.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">Drei Hebel zur Verbesserung</h3>
+                
+                <div class="hebel-grid">
+                    <div class="hebel-card">
+                        <h4><span class="hebel-num">1</span> Altunterlagen nutzbar machen</h4>
+                        <p class="description">Historische Dokumente wie Kataloge, Scans und Tabellen werden so aufbereitet, dass Inhalte zuverlässig durchsuchbar und strukturiert nutzbar sind.</p>
+                        <div class="nutzen">
+                            <div class="nutzen-title">Nutzen</div>
+                            <ul>
+                                <li>Schnellere Recherche bei Altmaschinen und Sonderfällen</li>
+                                <li>Weniger Abhängigkeit von Papier und Einzelwissen</li>
+                                <li>Basis für weitere Automatisierung</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="hebel-card">
+                        <h4><span class="hebel-num">2</span> Erfahrungswissen im Team sichern</h4>
+                        <p class="description">Reale Lösungsfälle aus dem Alltag werden in kompakter Form dokumentiert und für alle Mitarbeiter zugänglich gemacht.</p>
+                        <div class="nutzen">
+                            <div class="nutzen-title">Nutzen</div>
+                            <ul>
+                                <li>Gleichbleibende Antwortqualität</li>
+                                <li>Schnellere Einarbeitung neuer Kollegen</li>
+                                <li>Wissen bleibt im Unternehmen, auch bei Personalwechsel</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="doc-footer">
+                <span class="footer-contact">neuratex.de | philippkoch@neuratex.de</span>
+                <span class="page-number">Seite 1 / 2</span>
+            </footer>
+        </div>
+
+        <!-- ==================== SEITE 2 ==================== -->
+        <div class="page">
+            <header class="doc-header">
+                <div class="logo">
+                    <img src="../../public/assets/images/neuratex-logo.jpg" alt="Neuratex Logo">
+                </div>
+                <div class="doc-meta">
+                    <div class="doc-type">One Pager</div>
+                </div>
+            </header>
+
+            <section class="section">
+                <div class="hebel-grid">
+                    <div class="hebel-card">
+                        <h4><span class="hebel-num">3</span> Schneller Zugriff über internes Assistenzsystem</h4>
+                        <p class="description">Ein internes Assistenzsystem ermöglicht es, Fragen auf Basis der vorhandenen Dokumente und Wissensfälle zu beantworten.</p>
+                        <div class="nutzen wichtig" style="margin-bottom: 8px;">
+                            <div class="nutzen-title">⚠️ Wichtig</div>
+                            <ul>
+                                <li>Antworten basieren ausschließlich auf internen Quellen</li>
+                                <li>Jede Antwort ist nachvollziehbar und referenziert</li>
+                                <li>Kein Einsatz im Endkundensupport</li>
+                            </ul>
+                        </div>
+                        <div class="nutzen">
+                            <div class="nutzen-title">Nutzen</div>
+                            <ul>
+                                <li>Deutlich reduzierte Suchzeiten</li>
+                                <li>Weniger interne Rückfragen</li>
+                                <li>Entlastung erfahrener Mitarbeiter</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">Vorgehensmodell</h3>
+                <div class="highlight-box" style="margin-top: 0;">
+                    <h4 style="margin: 0 0 6px 0;">Kein Großprojekt. Kein Systemwechsel.</h4>
+                    <p style="margin-bottom: 0;">Vorgeschlagen wird ein klar abgegrenzter Machbarkeitstest:</p>
+                </div>
+                
+                <div class="vorgehensmodell-box" style="margin-top: 12px;">
+                    <h4>Vorgehen <span class="badge">Schritt für Schritt</span></h4>
+                    <div class="step-list">
+                        <div class="step-item">
+                            <span class="num">1</span>
+                            <span>Nutzung realer, komplexer Unterlagen</span>
+                        </div>
+                        <div class="step-item">
+                            <span class="num">2</span>
+                            <span>Test an typischen Spezialfällen aus dem Alltag</span>
+                        </div>
+                        <div class="step-item">
+                            <span class="num">3</span>
+                            <span>Bewertung von Nutzen, Qualität und Akzeptanz</span>
+                        </div>
+                    </div>
+                    <p class="result-note">Ergebnis ist eine belastbare Entscheidungsgrundlage, ob und in welchem Umfang eine Weiterentwicklung sinnvoll ist.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h3 class="section-title">Entscheidungsfragen für die Fachbereiche</h3>
+                <div class="question-grid">
+                    <div class="question-item">Wo entstehen heute die größten Zeitverluste bei der Ersatzteilsuche?</div>
+                    <div class="question-item">Welche Unterlagen oder Fabrikate sind besonders problematisch?</div>
+                    <div class="question-item">Wie hoch ist die Abhängigkeit von einzelnen Mitarbeitern?</div>
+                    <div class="question-item">Welche Lösung würde den Alltag messbar erleichtern?</div>
+                </div>
+            </section>
+
+            <div class="cta-box">
+                <h4>→ Nächster Schritt</h4>
+                <p>Sammlung von 1–2 konkreten Anwendungsfällen und Beispielunterlagen aus Produktmanagement und Vertrieb, um die technische und organisatorische Machbarkeit gezielt zu prüfen.</p>
+            </div>
+
+            <footer class="doc-footer">
+                <span class="footer-contact">neuratex.de | philippkoch@neuratex.de</span>
+                <span class="page-number">Seite 2 / 2</span>
+            </footer>
+        </div>
+
+    </div>
+</body>
+</html>

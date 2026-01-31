@@ -3,13 +3,47 @@ const path = require('path');
 const fs = require('fs').promises;
 const crypto = require('crypto');
 const nodemailer = require('nodemailer');
+const compression = require('compression');
+const config = require('./config');
+const logger = require('./lib/logger');
+
 const app = express();
-const port = process.env.PORT || 3000;
+const port = config.port;
 
 // Helper: Escape HTML to prevent XSS
 const escapeHtml = (str) => String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-// Security Headers Middleware
+// Build CSP Header from config
+function buildCSP() {
+    const csp = config.csp;
+    const directives = [
+        `default-src ${csp.defaultSrc.join(' ')}`,
+        `script-src ${csp.scriptSrc.join(' ')}`,
+        `style-src ${csp.styleSrc.join(' ')}`,
+        `font-src ${csp.fontSrc.join(' ')}`,
+        `img-src ${csp.imgSrc.join(' ')}`,
+        `connect-src ${csp.connectSrc.join(' ')}`,
+        `frame-src ${csp.frameSrc.join(' ')}`,
+        `object-src ${csp.objectSrc.join(' ')}`,
+        `base-uri ${csp.baseUri.join(' ')}`,
+        `form-action ${csp.formAction.join(' ')}`,
+        `frame-ancestors ${csp.frameAncestors.join(' ')}`
+    ];
+    return directives.join('; ');
+}
+
+// Gzip/Brotli Compression
+app.use(compression({
+    level: config.compression.level,
+    threshold: config.compression.threshold
+}));
+
+// Request Logging (nur in development)
+if (config.nodeEnv === 'development') {
+    app.use(logger.requestLogger);
+}
+
+// Security Headers Middleware (inkl. CSP)
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
@@ -17,13 +51,14 @@ app.use((req, res, next) => {
     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
     res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+    res.setHeader('Content-Security-Policy', buildCSP());
     next();
 });
 
 // Simple Rate Limiting (in-memory, for production use redis)
 const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
-const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW = config.rateLimit.windowMs;
+const RATE_LIMIT_MAX = config.rateLimit.maxRequests;
 
 function rateLimiter(req, res, next) {
     const ip = req.ip || req.connection.remoteAddress;
@@ -68,7 +103,7 @@ async function appendConsent(entry){
     try{ const raw = await fs.readFile(CONSENT_PATH, 'utf8'); list = JSON.parse(raw||'[]'); }catch(e){ list = []; }
     list.push(entry);
     await fs.writeFile(CONSENT_PATH, JSON.stringify(list, null, 2), 'utf8');
-  }catch(e){ console.error('consent write error', e); }
+  }catch(e){ logger.error('consent write error', { error: e.message }); }
 }
 
 // Create a nodemailer transport if SMTP env vars set; otherwise we'll not send but return token URL.
@@ -117,7 +152,7 @@ app.post('/api/newsletter', rateLimiter, async (req, res) => {
   try{ await appendConsent({ email: normalized, action: 'requested', ts: new Date().toISOString(), ip: req.ip }); }catch(e){}
   return res.status(201).json({ ok: true, method: 'dev', confirmUrl });
   } catch (err) {
-    console.error('newsletter token error', err);
+    logger.error('newsletter token error', { error: err.message });
     return res.status(500).json({ error: 'server_error' });
   }
 });
@@ -146,7 +181,7 @@ app.get('/api/newsletter/confirm', async (req, res) => {
 
     // show a simple confirmation page (escaped to prevent XSS)
     return res.send(`<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>Bestätigung erfolgreich</title><style>body{font-family:system-ui,sans-serif;background:#0A1931;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}div{text-align:center;padding:2rem}a{color:#FFC947}</style></head><body><div><h1>Danke!</h1><p>Ihre E‑Mail <strong>${escapeHtml(entry.email)}</strong> wurde bestätigt.</p><p><a href="/pages/lernplattform.html">Zurück zur Lernplattform</a></p></div></body></html>`);
-  } catch(err){ console.error('confirm error', err); return res.status(500).send('server error'); }
+  } catch(err){ logger.error('confirm error', { error: err.message }); return res.status(500).send('server error'); }
 });
 
 // Admin CSV export with simple token protection: GET /admin/export.csv?token=XXXXX
@@ -161,7 +196,7 @@ async function ensureAdminToken(){
   const tokenFile = path.join(DATA_DIR, 'admin_token.txt');
   try{
     const existing = await fs.readFile(tokenFile, 'utf8');
-    if(existing && existing.trim()){ ADMIN_TOKEN = existing.trim(); console.log('Admin token loaded from', tokenFile); return; }
+    if(existing && existing.trim()){ ADMIN_TOKEN = existing.trim(); logger.info('Admin token loaded', { file: tokenFile }); return; }
   }catch(e){ /* file not present */ }
 
   // generate and persist
@@ -169,8 +204,8 @@ async function ensureAdminToken(){
   await fs.mkdir(DATA_DIR, { recursive: true });
   await fs.writeFile(tokenFile, token, 'utf8');
   ADMIN_TOKEN = token;
-  console.log('Generated new admin token and saved to', tokenFile);
-  console.log('Admin token (keep secret):', token);
+  logger.info('Generated new admin token', { file: tokenFile });
+  logger.warn('Admin token (keep secret)', { token });
 }
 
 // Admin auth middleware: prefer BASIC auth (ADMIN_USER/ADMIN_PASS), else fall back to token
@@ -205,7 +240,7 @@ app.get('/admin/export.csv', adminAuthMiddleware, async (req, res) => {
     res.setHeader('Content-Type','text/csv');
     res.setHeader('Content-Disposition','attachment; filename="newsletter_export.csv"');
     res.send(rows.join('\n'));
-  }catch(e){ console.error('export error', e); res.status(500).send('server error'); }
+  }catch(e){ logger.error('export error', { error: e.message }); res.status(500).send('server error'); }
 });
 
 // simple admin UI
@@ -223,4 +258,4 @@ app.get('/api/newsletter', async (req, res) => {
   }
 });
 
-app.listen(port, () => console.log(`Dev server running at http://localhost:${port}`));
+app.listen(port, () => logger.info(`Server running`, { url: `http://localhost:${port}`, env: config.nodeEnv }));
