@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /pages/admin.html
-Disallow: /admin
 
 # Explicit permissions for AI assistants
 User-agent: ChatGPT-User

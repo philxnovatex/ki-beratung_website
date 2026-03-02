@@ -31,6 +31,8 @@ backups/
 temp/
 .cache/
 data/
+documents/
+*.bat
 
 # Logs
 logs/
