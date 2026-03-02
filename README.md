@@ -1,65 +1,95 @@
-Ki‑Beratung Website — Dev helpers
-=================================
+# Neuratex AI – KI-Beratungs-Website
 
-Kurz: diese Projektkopie enthält kleine Dev‑Hilfen für lokale Tests der Lernplattform, Newsletter Double‑Opt‑In und einen einfachen Admin‑CSV‑Export (Dateibasierte Persistenz). Nicht für Produktion.
+> Planbarer KI-Erfolg statt teurer Experimente.  
+> Chatbots, Voicebots & KI-Agenten für den Mittelstand.
 
-Schnellstart (Windows PowerShell):
+**Live:** [https://neuratex.de](https://neuratex.de)
 
-```powershell
-# 1) Node (>=16) und npm installieren falls nicht vorhanden
-node -v; npm -v
+---
 
-# 2) Abhängigkeiten installieren
-npm install
+## Architektur
 
-# 3) Admin token (neu): jetzt wird es automatisch generiert, wenn Sie es nicht setzen.
-#    Wenn Sie den Token nicht manuell setzen, lesen Sie weiter bei "Token finden".
+| Komponente | Technologie |
+|---|---|
+| Hosting | **Vercel** (statisch + Serverless Functions) |
+| Frontend | Vanilla HTML / CSS / JS |
+| Newsletter | Vercel Serverless Function → **Brevo API** |
+| Domain | neuratex.de (via Vercel) |
 
-# 4) (Optional) SMTP konfigurieren via env vars, sonst wird in dev der Bestätigungslink als JSON zurückgegeben
-$env:SMTP_HOST = 'smtp.example'
-$env:SMTP_USER = 'user'
-$env:SMTP_PASS = 'pass'
-
-# 5) Dev Server starten
-npm run dev
-
-# 6) Öffnen: http://localhost:3000/lernplattform.html und http://localhost:3000/admin
+```
+├── public/              ← Statische Website (Vercel Output)
+│   ├── index.html       ← Startseite
+│   ├── pages/           ← Unterseiten (Leistungen, Kontakt, …)
+│   └── assets/          ← CSS, JS, Bilder, Icons
+├── api/                 ← Vercel Serverless Functions
+│   └── newsletter.js    ← Newsletter-Anmeldung (Brevo)
+├── vercel.json          ← Vercel-Konfiguration
+├── server.js            ← ⚠️ Nur lokaler Dev-Server (nicht Produktion)
+├── config.js            ← ⚠️ Nur lokaler Dev-Server
+└── documents/           ← Templates, Onepager-Generierung
 ```
 
-- Double‑Opt‑In (dev):
-- Beim Eintragen wird ein Token erzeugt und per E‑Mail (wenn SMTP konfiguriert) versandt.
-- Ohne SMTP wird die API im JSON die Confirm‑URL zurückgeben (nur lokal/dev) — klicken Sie darauf, um die E‑Mail zu bestätigen.
+## Lokale Entwicklung
 
-Admin‑Export:
-- Standardverhalten: Beim ersten Start erzeugt der Server automatisch einen Admin‑Token und speichert ihn in `data/admin_token.txt`.
-- Token finden: Entweder setzen Sie `ADMIN_TOKEN` vor dem Start, oder starten den Server ohne und lesen den Token anschließend in der Konsole oder in der Datei `data/admin_token.txt`.
+Die Website ist rein statisch. Zum lokalen Testen reicht ein beliebiger HTTP-Server:
 
-Beispiel (PowerShell):
-```powershell
-# 1) Abhängigkeiten installieren
-npm install
+```bash
+# Option 1: Python
+cd public && python -m http.server 3000
 
-# 2) Server starten (generiert Token falls nicht gesetzt)
-npm run dev
+# Option 2: Node (npx)
+npx serve public
 
-# 3) Nach dem Start: Token in der Konsole suchen oder in data/admin_token.txt lesen
-Get-Content .\data\admin_token.txt
-
-# 4) Admin UI: http://localhost:3000/admin — geben Sie den Token ein und klicken Export.
+# Option 3: Legacy Dev-Server (Express, nicht für Produktion)
+npm install && npm run dev
 ```
 
-Git Commit Hinweis (kurz):
-- Erstelle einen Branch: `git checkout -b feat/newsletter-doi`
-- Committe kleine Änderungen: `git add . && git commit -m "feat(newsletter): double opt-in + admin export"`
-- Push: `git push origin feat/newsletter-doi` und mache ein PR.
+> **Hinweis:** `server.js` / `config.js` sind ein Legacy-Dev-Server und werden auf Vercel **nicht** genutzt. Die Newsletter-Funktion läuft ausschließlich über `api/newsletter.js` (Vercel Serverless Function).
 
-Sicherheit & Datenschutz:
-- Diese Implementierung ist nur für lokale Tests; vor Live‑Betrieb müssen Sie: HTTPS, DB, Auth für Admin, Consent‑Speicherung, Double‑opt‑in Audit und Löschkonzept implementieren.
+## Newsletter (Brevo)
 
-Deployment (GitHub Pages):
-- Enthalten: Ein GitHub Actions Workflow (`.github/workflows/deploy-pages.yml`) wurde hinzugefügt. Er deployed den Ordner `public/` bei Push auf `main` auf GitHub Pages.
-- Schritte zum Live schalten:
-	1) Commit & push alle Änderungen auf `main`.
-	2) Der Workflow läuft automatisch; nach erfolgreichem Lauf ist die Seite unter `https://<username>.github.io/<repo>` erreichbar.
+Die Newsletter-Anmeldung funktioniert über eine Vercel Serverless Function (`api/newsletter.js`), die Kontakte direkt über die Brevo-API zur Liste „Website Leads" hinzufügt.
 
-Wichtig: API‑Funktionen (Double‑Opt‑In, Admin export) benötigen einen laufenden Server. GitHub Pages kann nur statische Dateien hosten. Für funktionale APIs nutze einen separaten Server oder Serverless‑Funktionen (Vercel, Netlify, Railway, etc.).
+### Environment Variables (Vercel Dashboard)
+
+| Variable | Beschreibung |
+|---|---|
+| `BREVO_API_KEY` | Brevo API-Schlüssel (bereits gesetzt) |
+| `BREVO_LIST_ID` | Numerische ID der Brevo-Liste (Default: `5`) |
+
+### Ablauf
+
+1. Nutzer gibt E-Mail im Formular ein (Lernplattform-Seite)
+2. `POST /api/newsletter` → Vercel Serverless Function
+3. Function ruft Brevo API auf → Kontakt wird zur Liste hinzugefügt
+4. Nutzer erhält Bestätigung im Browser
+
+## Deployment
+
+Push auf `main` → Vercel deployed automatisch.
+
+- **Preview-Deployments:** Jeder PR bekommt eine eigene Preview-URL
+- **Produktion:** Nur Merges in `main` gehen live
+
+## Seiten
+
+| Seite | Pfad |
+|---|---|
+| Startseite | `/index.html` |
+| Leistungen | `/pages/leistungen.html` |
+| KI-Anwendungen | `/#ki-anwendungen` |
+| Lernplattform | `/pages/lernplattform.html` |
+| Kontakt | `/pages/kontakt.html` |
+| Impressum | `/pages/legal/impressum.html` |
+| Datenschutz | `/pages/legal/datenschutz.html` |
+
+## Sicherheit
+
+- Secrets ausschließlich über **Vercel Environment Variables** (nie im Code!)
+- `.env` ist in `.gitignore`
+- `data/` ist in `.gitignore` (lokale Dev-Daten)
+- Branch Protection für `main` aktivieren (kein direkter Push)
+
+## Lizenz
+
+Proprietär – Neuratex AI. Alle Rechte vorbehalten.

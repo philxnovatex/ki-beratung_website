@@ -3,6 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('audio');
     const playPauseBtn = document.getElementById('play-pause-btn');
     const progressTrack = document.getElementById('progress-track');
+
+    // Exit early if required elements don't exist
+    if (!audio || !playPauseBtn || !progressTrack) {
+        return;
+    }
+
     const progressFill = document.getElementById('progress-fill');
     const progressThumb = document.getElementById('progress-thumb');
     const waveformProgress = document.getElementById('waveform-progress');
@@ -11,11 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const playIcon = playPauseBtn.querySelector('.play-icon');
     const pauseIcon = playPauseBtn.querySelector('.pause-icon');
     const waveformBars = document.querySelectorAll('.bar');
-
-    // Exit if elements don't exist
-    if (!audio || !playPauseBtn || !progressTrack) {
-        return;
-    }
 
     let isPlaying = false;
     let isDragging = false;

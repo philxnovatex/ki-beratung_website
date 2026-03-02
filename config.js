@@ -1,7 +1,9 @@
 /**
- * Server Configuration
- * Zentrale Konfiguration für Express-Server
- * Werte können durch Umgebungsvariablen überschrieben werden
+ * ⚠️  DEPRECATED – Nur für lokalen Dev-Server (server.js)
+ *
+ * Produktion: Vercel statisch, kein Express.
+ * Zentrale Konfiguration für den lokalen Express-Server.
+ * Werte können durch Umgebungsvariablen überschrieben werden.
  */
 module.exports = {
     // Server

@@ -30,6 +30,7 @@ out/
 backups/
 temp/
 .cache/
+data/
 
 # Logs
 logs/

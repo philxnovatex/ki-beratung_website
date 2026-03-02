@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intelligente Automatisierung: Chatbots & KI, die Ihr Team entlasten</title>
     <meta name="description" content="Endlose Routineanfragen binden Ihre besten Mitarbeiter? Neuratex AI entwickelt Chat- & Voicebots, die 80% des Supports automatisieren. Mehr Zeit fürs Wesentliche.">
+    <link rel="canonical" href="https://neuratex.de/">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neuratex.de/">
+    <meta property="og:title" content="Neuratex AI – Planbarer KI Erfolg statt teurer Experimente">
+    <meta property="og:description" content="Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit. Chatbots, Voicebots & KI-Agenten für Ihr Unternehmen.">
+    <meta property="og:image" content="https://neuratex.de/assets/images/neuratex-logo.jpg">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:site_name" content="Neuratex AI">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Neuratex AI – Planbarer KI Erfolg statt teurer Experimente">
+    <meta name="twitter:description" content="Chat- & Voicebots, die 80% des Supports automatisieren. KI-Beratung für den Mittelstand.">
+    <meta name="twitter:image" content="https://neuratex.de/assets/images/neuratex-logo.jpg">
     <!-- Favicons (relative paths so they work when /public is deploy root) -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -16,8 +30,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="preload" href="assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="assets/css/style.css"></noscript>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <noscript><style>.featured-section,.services-grid .service-card,.problem-column,.solution-column{opacity:1!important;transform:none!important;}</style></noscript>
     <link rel="stylesheet" href="assets/css/sections/ki-anwendungen.css">
     <!-- Hero Enhancements: Entfernen oder auskommentieren um zu deaktivieren -->
     <link rel="stylesheet" href="assets/css/hero-enhancements.css">
@@ -26,6 +40,7 @@
     <script id="vtag-ai-js" async src="https://r2.leadsy.ai/tag.js" data-pid="S4KAX14a3TXfaOvV" data-version="062024"></script>
 </head>
 <body>
+    <a href="#hero" class="sr-only skip-link">Zum Inhalt springen</a>
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
@@ -51,7 +66,7 @@
         <!-- Klasse 'hero-enhanced' aktiviert modernisierte Styles (hero-enhancements.css) -->
         <!-- Optionen: 'no-aurora' = ohne Gradient, 'no-fade' = ohne Animation, 'no-canvas' = Canvas ausblenden -->
         <section id="hero" class="hero-section hero-enhanced">
-            <canvas id="hero-canvas"></canvas>
+            <canvas id="hero-canvas" aria-hidden="true"></canvas>
             <div class="container">
                 <h1>Planbarer <span class="text-cyan">KI Erfolg</span> statt teurer Experimente</h1>
                 <p class="subtitle">Wir konzipieren KI Projekte mit strategischer Weitsicht, technischer Machbarkeit und rechtlicher Sicherheit, damit aus Ideen Investitionen werden, die sich lohnen.</p>
@@ -64,7 +79,7 @@
                 <div class="problem-solution-grid">
                     <!-- Linke Spalte: Problem -->
                     <div class="problem-column slide-from-left">
-                        <h2>Was Unternehmen heute kämpfen lässt</h2>
+                        <h2 id="problem-solution-heading">Was Unternehmen heute kämpfen lässt</h2>
                         <p>Unternehmen stehen heute unter massivem Druck. Prozesse dauern zu lange, Informationen liegen verstreut und wichtige Entscheidungen basieren zu oft auf Bauchgefühl. Teams arbeiten am Limit, weil vieles manuell läuft und wenig wirklich standardisiert ist.</p>
                         <p>Gleichzeitig verschärfen Fachkräftemangel, Wissensverlust, demografischer Wandel, steigende regulatorische Anforderungen und eine schnellere technologische Entwicklung den Druck.</p>
                         <p>Das Ergebnis: Verzögerungen, höhere Kosten, verpasste Chancen und ein wachsender Wettbewerbsnachteil.</p>
@@ -354,7 +369,7 @@
                     <!-- Dimension 1: Grundlagen -->
                     <div class="question-block quiz-step" data-step="1" data-type="likert" data-module="Grundlagen">
                         <div class="module-divider"><span>Dimension 1: Grundlegendes & Technisches Verständnis</span></div>
-                        <p class="question-title">(Selbsteinschätzung) Wie schätzt du dein grundsätzliches Verständnis von KI-Begriffen (z.B. "Machine Learning", "Neuronales Netz", "LLM") ein?</p>
+                        <p class="question-title">(Selbsteinschätzung) Wie schätzen Sie Ihr grundsätzliches Verständnis von KI-Begriffen (z.B. "Machine Learning", "Neuronales Netz", "LLM") ein?</p>
                         <div class="answers">
                             <label><input type="radio" name="q1" value="A" required> A) Sehr gering</label>
                             <label><input type="radio" name="q1" value="B"> B) Eher gering</label>
@@ -384,7 +399,7 @@
                     <!-- Dimension 2: Anwendung -->
                     <div class="question-block quiz-step" data-step="4" data-type="likert" data-module="Anwendung" style="display:none">
                         <div class="module-divider"><span>Dimension 2: Praktische Anwendung & Interaktion</span></div>
-                        <p class="question-title">(Selbsteinschätzung) Wie oft nutzt du KI-gestützte Werkzeuge (z.B. ChatGPT, Copilot, Midjourney, Grammarly, intelligente Suchen) bewusst bei deiner Arbeit?</p>
+                        <p class="question-title">(Selbsteinschätzung) Wie oft nutzen Sie KI-gestützte Werkzeuge (z.B. ChatGPT, Copilot, Midjourney, Grammarly, intelligente Suchen) bewusst bei Ihrer Arbeit?</p>
                         <div class="answers">
                             <label><input type="radio" name="q4" value="A" required disabled> A) Nie</label>
                             <label><input type="radio" name="q4" value="B" disabled> B) Selten</label>
@@ -394,7 +409,7 @@
                         </div>
                     </div>
                     <div class="question-block quiz-step" data-step="5" data-type="scenario" data-module="Anwendung" style="display:none">
-                        <p class="question-title">Du möchtest mit einer Bild-KI ein Foto von "einem Astronauten auf einem Pferd" erstellen. Das erste Ergebnis wirkt wie ein Cartoon, du möchtest es aber fotorealistisch. Welcher Prompt wäre die beste Verbesserung?</p>
+                        <p class="question-title">Sie möchten mit einer Bild-KI ein Foto von "einem Astronauten auf einem Pferd" erstellen. Das erste Ergebnis wirkt wie ein Cartoon, Sie möchten es aber fotorealistisch. Welcher Prompt wäre die beste Verbesserung?</p>
                         <div class="answers">
                             <label><input type="radio" name="q5" value="A" required disabled> A) "Mach ein besseres Bild."</label>
                             <label><input type="radio" name="q5" value="B" disabled> B) "Astronaut auf einem Pferd, fotorealistisch, detailliert, 8k, studiolicht."</label>
@@ -403,7 +418,7 @@
                         </div>
                     </div>
                     <div class="question-block quiz-step" data-step="6" data-type="scenario" data-module="Anwendung" style="display:none">
-                        <p class="question-title">Du lässt eine KI einen langen Bericht für dich zusammenfassen. Was ist der wichtigste nächste Schritt, bevor du die Zusammenfassung verwendest?</p>
+                        <p class="question-title">Sie lassen eine KI einen langen Bericht für Sie zusammenfassen. Was ist der wichtigste nächste Schritt, bevor Sie die Zusammenfassung verwenden?</p>
                         <div class="answers">
                             <label><input type="radio" name="q6" value="A" required disabled> A) Auf Rechtschreibfehler prüfen.</label>
                             <label><input type="radio" name="q6" value="B" disabled> B) Mit dem Original auf sachliche Korrektheit/ Auslassungen abgleichen.</label>
@@ -415,7 +430,7 @@
                     <!-- Dimension 3: Bewertung -->
                     <div class="question-block quiz-step" data-step="7" data-type="likert" data-module="Bewertung" style="display:none">
                         <div class="module-divider"><span>Dimension 3: Kritische Bewertung & Urteilsvermögen</span></div>
-                        <p class="question-title">(Selbsteinschätzung) Wie sicher fühlst du dich, die Qualität und Vertrauenswürdigkeit von KI-generierten Inhalten (Texte, Bilder) zu bewerten?</p>
+                        <p class="question-title">(Selbsteinschätzung) Wie sicher fühlen Sie sich, die Qualität und Vertrauenswürdigkeit von KI-generierten Inhalten (Texte, Bilder) zu bewerten?</p>
                         <div class="answers">
                             <label><input type="radio" name="q7" value="A" required disabled> A) Sehr unsicher</label>
                             <label><input type="radio" name="q7" value="B" disabled> B) Eher unsicher</label>
@@ -446,7 +461,7 @@
                     <!-- Dimension 4: Ethik & Recht -->
                     <div class="question-block quiz-step" data-step="10" data-type="likert" data-module="Ethik_Recht" style="display:none">
                         <div class="module-divider"><span>Dimension 4: Ethisches & Rechtliches Bewusstsein</span></div>
-                        <p class="question-title">(Selbsteinschätzung) Wie vertraut bist du mit den ethischen und datenschutzrechtlichen (DSGVO) Herausforderungen beim Einsatz von KI?</p>
+                        <p class="question-title">(Selbsteinschätzung) Wie vertraut sind Sie mit den ethischen und datenschutzrechtlichen (DSGVO) Herausforderungen beim Einsatz von KI?</p>
                         <div class="answers">
                             <label><input type="radio" name="q10" value="A" required disabled> A) Gar nicht vertraut</label>
                             <label><input type="radio" name="q10" value="B" disabled> B) Wenig vertraut</label>
@@ -474,7 +489,7 @@
                         </div>
                     </div>
                     <div class="question-block quiz-step" data-step="13" data-type="scenario" data-module="Ethik_Recht" style="display:none">
-                        <p class="question-title">Wer trägt in der Regel die Verantwortung für Ergebnisse, die du mit einem KI-Tool erzeugst und veröffentlichst?</p>
+                        <p class="question-title">Wer trägt in der Regel die Verantwortung für Ergebnisse, die Sie mit einem KI-Tool erzeugen und veröffentlichen?</p>
                         <div class="answers">
                             <label><input type="radio" name="q13" value="A" required disabled> A) Der Entwickler des KI-Tools.</label>
                             <label><input type="radio" name="q13" value="B" disabled> B) Niemand, da von Maschine erzeugt.</label>
@@ -486,7 +501,7 @@
                     <!-- Dimension 5: Strategie -->
                     <div class="question-block quiz-step" data-step="14" data-type="likert" data-module="Strategie" style="display:none">
                         <div class="module-divider"><span>Dimension 5: Strategische & Gesellschaftliche Perspektive</span></div>
-                        <p class="question-title">(Selbsteinschätzung) Inwieweit fühlst du dich in der Lage, Chancen und Risiken von KI für dein Arbeitsumfeld und das Unternehmen einzuschätzen?</p>
+                        <p class="question-title">(Selbsteinschätzung) Inwieweit fühlen Sie sich in der Lage, Chancen und Risiken von KI für Ihr Arbeitsumfeld und das Unternehmen einzuschätzen?</p>
                         <div class="answers">
                             <label><input type="radio" name="q14" value="A" required disabled> A) Gar nicht</label>
                             <label><input type="radio" name="q14" value="B" disabled> B) Kaum</label>
@@ -514,7 +529,7 @@
                         </div>
                     </div>
                     <div class="question-block quiz-step" data-step="17" data-type="mood" data-module="Strategie" style="display:none">
-                        <p class="question-title">Welche Emotion beschreibt deine Haltung zur Zukunft mit KI am ehesten?</p>
+                        <p class="question-title">Welche Emotion beschreibt Ihre Haltung zur Zukunft mit KI am ehesten?</p>
                         <div class="answers">
                             <label><input type="radio" name="q17" value="A" required disabled> A) Besorgnis / Angst</label>
                             <label><input type="radio" name="q17" value="B" disabled> B) Skepsis / Unsicherheit</label>
@@ -579,71 +594,8 @@
     <!-- Scroll Progress Element -->
     <div id="scroll-progress" class="scroll-progress"></div>
 
-    <!-- JS für Animation -->
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const lines = document.querySelectorAll(".problem-line");
-        if('IntersectionObserver' in window){
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting){
-                        const idx = [...lines].indexOf(entry.target);
-                        const baseDelay = 140; // ms
-                        const jitter = Math.random()*120; // subtle randomness
-                        setTimeout(()=> entry.target.classList.add('show'), baseDelay*idx + jitter);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.25 });
-            lines.forEach(l => observer.observe(l));
-        } else {
-            lines.forEach(l => l.classList.add('show'));
-        }
-
-        // Problem & Lösung Scroll Animation (nur einmal)
-        const problemColumn = document.querySelector('.problem-column');
-        const solutionColumn = document.querySelector('.solution-column');
-        
-        if (problemColumn && solutionColumn && 'IntersectionObserver' in window) {
-            const psObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        psObserver.unobserve(entry.target); // Nur einmal animieren
-                    }
-                });
-            }, { threshold: 0.2 });
-            
-            psObserver.observe(problemColumn);
-            psObserver.observe(solutionColumn);
-        } else if (problemColumn && solutionColumn) {
-            // Fallback ohne Observer
-            problemColumn.classList.add('visible');
-            solutionColumn.classList.add('visible');
-        }
-
-        // Unified heading watch (exclude small contextual card headings)
-        const watched = Array.from(document.querySelectorAll('h1, h2, h3'))
-            .filter(h => !h.closest('.service-card, .principle-card, .lead-gen-form-container, .contact-card'));
-        watched.forEach(h => h.classList.add('heading-watch','hover-flash'));
-        if('IntersectionObserver' in window){
-            const hObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting){
-                        entry.target.classList.add('heading-in-view');
-                        // remove after animation ends so it can trigger again if desired
-                        entry.target.addEventListener('animationend', () => {
-                            entry.target.classList.remove('heading-in-view');
-                        }, { once: true });
-                    }
-                });
-            }, { threshold: 0.4 });
-            watched.forEach(h => hObserver.observe(h));
-        }
-    });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-16ber3FPP+FUFElD/HC0GUzlKEdNC4CdY2asyXF4ExJ6IaOWqnW9fmlHBZQrr9BqR6UPpnhvgcO1e4k/SU5bvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Animations werden von main.js gesteuert -->
+    <!-- GSAP entfernt: wurde nicht verwendet (~45KB gespart) -->
     <!-- Core Scripts (ausgelagert für besseres Caching und CSP) -->
     <script src="assets/js/hero-canvas.js" defer></script>
     <script src="assets/js/sections/ki-anwendungen.js" defer></script>
@@ -651,6 +603,34 @@
     <script src="assets/js/cookie-consent.js" defer></script>
     <script src="assets/js/quiz.js" defer></script>
     <script src="assets/js/demo-audio.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Neuratex AI",
+      "url": "https://neuratex.de",
+      "logo": "https://neuratex.de/assets/images/neuratex-logo.jpg",
+      "description": "KI-Beratung für den Mittelstand: Chatbots, Voicebots, KI-Agenten und Strategieentwicklung.",
+      "founder": {
+        "@type": "Person",
+        "name": "Philipp Koch"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Pionierstraße 43",
+        "addressLocality": "Düsseldorf",
+        "postalCode": "40215",
+        "addressCountry": "DE"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "philippkoch@neuratex.de",
+        "telephone": "+49-176-47338240",
+        "contactType": "sales"
+      },
+      "sameAs": []
+    }
+    </script>
 </body>
 </html>
 

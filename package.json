@@ -1,7 +1,7 @@
 {
   "name": "ki-beratung-website",
   "version": "1.0.0",
-  "description": "Local dev helpers for Neuratex website",
+  "description": "Neuratex KI-Beratungs-Website – Vercel static hosting + Serverless Functions",
   "main": "server.js",
   "scripts": {
     "dev": "node server.js"
