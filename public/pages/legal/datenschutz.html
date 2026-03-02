@@ -9,8 +9,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
     <link rel="manifest" href="../../assets/icons/site.webmanifest">
-    <link rel="preload" href="../../assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="../../assets/css/style.css"></noscript>
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -31,7 +30,7 @@
             <a href="../../index.html" class="logo">
                 <img src="../../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo">
             </a>
-            <nav class="main-nav" data-visible="false">
+            <nav id="primary-navigation" class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="../leistungen.html">Leistungen</a></li>
                     <li><a href="../../index.html#about">Über Neuratex AI</a></li>
@@ -40,7 +39,7 @@
                     <li><a href="../lernplattform.html" class="nav-highlight">Lernplattform</a></li>
                 </ul>
             </nav>
-            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+            <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Navigation öffnen">
                 <span class="sr-only">Menü</span>
             </button>
         </div>
@@ -202,13 +201,18 @@
                 <p><strong>Datenübermittlung in Drittländer:</strong> Soweit Daten in die USA übermittelt werden, erfolgt dies auf Basis der Standardvertragsklauseln (Art. 46 DSGVO). Soweit eine DPF-Zertifizierung des Anbieters besteht, stützt sich die Übermittlung zusätzlich hierauf.</p>
                 <p><strong>Auftragsverarbeitung:</strong> Mit Google wurde ein AVV gemäß Art. 28 DSGVO geschlossen (Google-Datenverarbeitungsbedingungen).</p>
                 <p>Quelle: <a href="https://www.e-recht24.de" target="_blank" rel="noopener">https://www.e-recht24.de</a></p>
+
+                <h3>Leadsy.ai – Lead-Tracking</h3>
+                <p><strong>Zweck der Verarbeitung:</strong> Wir setzen auf unserer Website ein Tracking-Skript des Anbieters Leadsy.ai ein, um anonymisierte Nutzungsdaten und potenzielle Firmenkontakte (B2B-Leads) zu erfassen. Dabei können u.&nbsp;a. IP-Adresse, Seitenaufrufe und technische Gerätedaten verarbeitet werden.</p>
+                <p><strong>Anbieter:</strong> Leadsy.ai (genaue Firmenangaben entnehmen Sie der Website des Anbieters unter <a href="https://leadsy.ai" target="_blank" rel="noopener">https://leadsy.ai</a>).</p>
+                <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Analyse des Nutzungsverhaltens zur Vertriebsoptimierung). Sofern eine Einwilligung über unser Cookie-Banner abgefragt wird, erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO i.&nbsp;V.&nbsp;m. § 25 Abs. 1 TDDDG; die Einwilligung ist jederzeit widerrufbar.</p>
             </section>
         </div>
     </main>
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 Neuratex AI by Philipp Koch</p>
+            <p>&copy; <span id="copyright-year">2025</span> Neuratex AI by Philipp Koch</p>
             <ul>
                 <li><a href="impressum.html">Impressum</a></li>
                 <li><a href="datenschutz.html">Datenschutz</a></li>
@@ -217,6 +221,10 @@
     </footer>
 
     <script>
+        // Copyright year
+        const cy = document.getElementById('copyright-year');
+        if (cy) cy.textContent = new Date().getFullYear();
+
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
         navToggle.addEventListener('click', () => {

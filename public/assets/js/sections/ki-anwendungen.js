@@ -19,9 +19,8 @@
         }
         if(cards.includes(entry.target)){
           const idx = cards.indexOf(entry.target);
-          const delay = Math.min(120, 80 + idx * 40); // slight stagger
           if(!root.classList.contains('prefers-reduced-motion')){
-            entry.target.style.transitionDelay = (idx * 120) + 'ms';
+            entry.target.style.transitionDelay = Math.min(120, 80 + idx * 40) + 'ms';
           }
           entry.target.classList.add('in-view');
           io.unobserve(entry.target);

@@ -1,6 +1,18 @@
 // Scroll-Animationen und Icon-Animationen für Leistungen
 
 document.addEventListener("DOMContentLoaded", () => {
+    // prefers-reduced-motion: skip animations entirely
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('.featured-section, .service-card').forEach(el => el.classList.add('in-view'));
+        return;
+    }
+
+    // IntersectionObserver Fallback
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('.featured-section, .service-card').forEach(el => el.classList.add('in-view'));
+        return;
+    }
+
     const sections = document.querySelectorAll(".featured-section");
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

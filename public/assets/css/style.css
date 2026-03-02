@@ -204,6 +204,37 @@
 .problem-section--simple .problem-lines { max-width: 1050px; margin: 0 auto; padding-left: 85px; text-align:left; }
 .problem-section--simple .problem-line { margin-bottom: 30px; font-size:1.5rem; }
 .problem-section--simple .problem-line.small { font-size:1.5rem; }
+/* Accessibility: sr-only (global, nicht nur mobile) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip-Navigation Link */
+.skip-link:focus {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 10000;
+    width: auto;
+    height: auto;
+    clip: auto;
+    padding: 12px 20px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */
@@ -408,10 +439,16 @@ h2 { text-align: center; margin-bottom: 55px; }
 /* Responsive: stack principles timeline items vertically on small screens */
 @media (max-width: 720px) {
     .timeline { display:block; }
-    .timeline::before { top: 8px; left: 6px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, #0f2344, var(--accent-color)); }
-    .timeline-item { max-width: none; margin: 18px 0; padding-left: 28px; }
-    .timeline-item::before { left: 8px; transform: none; top: 8px; }
+    .timeline::before { top: 8px; left: 14px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, #0f2344, var(--accent-color)); }
+    .timeline-item { max-width: none; margin: 20px 0; padding-left: 52px; }
+    .timeline-item::before { left: 18px; transform: none; top: 10px; }
     .timeline-item h3 { margin-top: 0.4rem; }
+
+    /* Tech-Section mobil */
+    .tech-section { padding: 1.2rem; margin: 2rem auto; }
+
+    /* Problem-Section mobile padding */
+    .problem-section--simple .problem-lines { padding-left: 16px; }
 }
 
 /* Scroll Progress Bar */
@@ -473,7 +510,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 .principle-card h3 { margin-bottom: 10px; }
 
 .about-flex { display: flex; align-items: center; gap: 60px; }
-.about-image img { max-width: 350px; border-radius: 50%; box-shadow: 0 0 40px rgba(24, 90, 219, 0.5); border: 2px solid var(--secondary-color); }
+.about-image img { width: 100%; max-width: 350px; border-radius: 50%; box-shadow: 0 0 40px rgba(24, 90, 219, 0.5); border: 2px solid var(--secondary-color); }
 .about-text { flex: 1; }
 .about-text h2 { text-align: left; margin-bottom: 20px; }
 
@@ -675,7 +712,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     border: 1px solid #1e293b;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 2000;
-    display: flex;
+    /* display:flex wird erst durch .show aktiviert */
     justify-content: space-between;
     align-items: center;
     gap: 20px;
@@ -845,17 +882,6 @@ h2 { text-align: center; margin-bottom: 55px; }
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2810, 25, 49, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");
         border-color: var(--accent-color);
     }
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-    }
     .logo img { height: 50px; }
     .services-grid { grid-template-columns: 1fr; }
     .about-flex { flex-direction: column; text-align: center; }
@@ -960,15 +986,10 @@ h2 { text-align: center; margin-bottom: 55px; }
 .site-note-text { margin:0; color:#0f2344; font-weight:600; padding:0 12px; flex:1; }
 .site-note-close { background:transparent; border:0; font-size:18px; color:#0f2344; cursor:pointer; padding:6px 10px; }
 
-/* --- Mobile adjustments + größerer Abstand zwischen Timeline‑Marker und Text --- */
+/* --- Mobile adjustments --- */
 @media (max-width: 720px) {
   .site-note-inner { padding:8px 6px; }
   .site-note-text { font-size:0.95rem; }
-
-  .timeline { display:block; }
-  .timeline::before { top: 8px; left: 14px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, #0f2344, var(--accent-color)); }
-  .timeline-item { max-width: none; margin: 20px 0; padding-left: 72px; }
-  .timeline-item::before { left: 18px; transform: none; top: 10px; }
 }
 
 /* --- Podcast Section --- */

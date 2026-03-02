@@ -6,6 +6,12 @@
     'use strict';
     
     // ========================================
+    // Copyright Year
+    // ========================================
+    const cy = document.getElementById('copyright-year');
+    if (cy) cy.textContent = new Date().getFullYear();
+
+    // ========================================
     // Mobile Navigation
     // ========================================
     function initMobileNav() {

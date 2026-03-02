@@ -33,8 +33,7 @@
       .hero-fullwidth .subtitle { font-size: 0.98rem; }
     }
   </style>
-  <link rel="preload" href="../assets/css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="../assets/css/style.css"></noscript>
+  <link rel="stylesheet" href="../assets/css/style.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -1030,24 +1029,6 @@
 
     const newsletterForm = document.getElementById('newsletter-form');
     const newsletterInput = document.getElementById('newsletter-email');
-    const exportBtn = document.getElementById('export-newsletter-btn');
-
-    const getNewsletterList = () => {
-      try {
-        return JSON.parse(localStorage.getItem('newsletterList') || '[]');
-      } catch (error) {
-        console.warn('newsletter storage parse error', error);
-        return [];
-      }
-    };
-    const setNewsletterList = (list) => {
-      localStorage.setItem('newsletterList', JSON.stringify(list));
-    };
-    const updateExportState = () => {
-      if (exportBtn) {
-        exportBtn.disabled = getNewsletterList().length === 0;
-      }
-    };
 
     if (newsletterForm && newsletterInput) {
       newsletterForm.addEventListener('submit', async (event) => {
@@ -1062,6 +1043,10 @@
           return;
         }
 
+        // Disable button during request
+        const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+
         try {
           const response = await fetch('/api/newsletter', {
             method: 'POST',
@@ -1069,47 +1054,24 @@
             body: JSON.stringify({ email })
           });
 
-          if (response.ok) {
-            const data = await response.json();
-            if (data && data.method === 'dev' && data.confirmUrl) {
-              const shouldOpen = confirm('Ein Bestätigungslink wurde generiert (Entwicklungsmodus). Möchten Sie den Link jetzt öffnen, um die E‑Mail zu bestätigen?');
-              if (shouldOpen) window.open(data.confirmUrl, '_blank');
-              alert('Bitte bestätigen Sie die Anmeldung in der E‑Mail, um die Eintragung abzuschließen.');
-              const list = getNewsletterList();
-              if (!list.includes(email)) {
-                list.push(email);
-                setNewsletterList(list);
-              }
-              newsletterInput.value = '';
-              updateExportState();
-              return;
-            }
-            if (data && data.ok) {
-              alert('Bestätigungs-E‑Mail wurde verschickt. Bitte prüfen Sie Ihren Posteingang.');
-              newsletterInput.value = '';
-              updateExportState();
-              return;
-            }
+          const data = await response.json().catch(() => ({}));
+
+          if (response.ok && data.ok) {
+            alert(data.message || 'Erfolgreich eingetragen! Vielen Dank.');
+            newsletterInput.value = '';
+          } else {
+            alert(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.');
           }
         } catch (error) {
           console.warn('newsletter submit error', error);
+          alert('Netzwerkfehler. Bitte versuchen Sie es später.');
+        } finally {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Jetzt anmelden'; }
         }
-
-        const list = getNewsletterList();
-        if (list.includes(email)) {
-          alert('Diese E‑Mail ist bereits eingetragen (lokal).');
-          return;
-        }
-        list.push(email);
-        setNewsletterList(list);
-        newsletterInput.value = '';
-        alert('Danke — Sie sind eingetragen (lokal).');
-        updateExportState();
       });
     }
 
-    if (exportBtn) {
-      updateExportState();
+    if (false) { // Admin-Export deaktiviert (Brevo Dashboard nutzen)
       exportBtn.addEventListener('click', async () => {
         const list = getNewsletterList();
         if (!list.length) {
@@ -1206,6 +1168,9 @@
 
   <!-- JavaScript für FAQ Interaktivität -->
   <script>
+    // Copyright year
+    (function(){ var cy = document.getElementById('copyright-year'); if (cy) cy.textContent = new Date().getFullYear(); })();
+
     document.addEventListener('DOMContentLoaded', function() {
       // Slide-in Animation bei Scroll
       function animateOnScroll() {
