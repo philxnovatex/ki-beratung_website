@@ -911,10 +911,11 @@
             </div>
           </div>
           <div style="display:flex; gap:12px; align-items:center;">
-            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center;">
+            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <label for="newsletter-email" style="display:none;">E‑Mail</label>
-              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
+              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required autocomplete="email" style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
               <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Jetzt anmelden</button>
+              <span id="newsletter-status" style="font-size:0.85rem; width:100%;" aria-live="polite"></span>
             </form>
           </div>
         </div>
@@ -969,15 +970,15 @@
           <form id="whitepaper-form" method="post" action="#" novalidate>
             <div class="form-group">
               <label for="wp-name">Ihr Name</label>
-              <input id="wp-name" name="name" type="text" required>
+              <input id="wp-name" name="name" type="text" required autocomplete="name">
             </div>
             <div class="form-group">
               <label for="wp-email">E‑Mail</label>
-              <input id="wp-email" name="email" type="email" required>
+              <input id="wp-email" name="email" type="email" required autocomplete="email">
             </div>
             <div class="form-group">
               <label for="wp-company">Unternehmen</label>
-              <input id="wp-company" name="company" type="text">
+              <input id="wp-company" name="company" type="text" autocomplete="organization">
             </div>
             <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
               <input id="wp-privacy" type="checkbox" required>
@@ -1071,21 +1072,26 @@
     const newsletterInput = document.getElementById('newsletter-email');
 
     if (newsletterForm && newsletterInput) {
+      const nlStatus = document.getElementById('newsletter-status');
+      function setNlStatus(msg, color) {
+        if (nlStatus) { nlStatus.textContent = msg; nlStatus.style.color = color; }
+      }
       newsletterForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = newsletterInput.value.trim();
         if (!email) {
-          alert('Bitte E‑Mail angeben.');
+          setNlStatus('Bitte E‑Mail angeben.', '#ff6b6b');
           return;
         }
         if (!emailPattern.test(email)) {
-          alert('Bitte eine gültige E‑Mail-Adresse eingeben.');
+          setNlStatus('Bitte eine gültige E‑Mail-Adresse eingeben.', '#ff6b6b');
           return;
         }
 
         // Disable button during request
         const submitBtn = newsletterForm.querySelector('button[type="submit"]');
         if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+        setNlStatus('', '');
 
         try {
           const response = await fetch('/api/newsletter', {
@@ -1097,14 +1103,13 @@
           const data = await response.json().catch(() => ({}));
 
           if (response.ok && data.ok) {
-            alert(data.message || 'Erfolgreich eingetragen! Vielen Dank.');
+            setNlStatus(data.message || 'Erfolgreich eingetragen! Vielen Dank.', '#4caf50');
             newsletterInput.value = '';
           } else {
-            alert(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.');
+            setNlStatus(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
           }
         } catch (error) {
-          console.warn('newsletter submit error', error);
-          alert('Netzwerkfehler. Bitte versuchen Sie es später.');
+          setNlStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
         } finally {
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Jetzt anmelden'; }
         }
