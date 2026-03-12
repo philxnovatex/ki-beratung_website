@@ -46,8 +46,11 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
 </head>
 <body>
+  <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
   <header class="main-header">
     <div class="container">
       <a href="../index.html" class="logo"><img src="../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
@@ -67,7 +70,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Full-width hero for the Lernplattform -->
     <section class="page-hero hero-fullwidth" style="padding:80px 0; background:linear-gradient(180deg,#07142a,#0b2540);">
       <div class="container" style="max-width:1200px; text-align:center;">
@@ -1312,6 +1315,7 @@
       setTimeout(animateOnScroll, 100);
     });
   </script>
+  <script src="../assets/js/cookie-consent.js" defer></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

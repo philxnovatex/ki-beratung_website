@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kostenlose Analyse: Wo lohnt sich Automatisierung für Sie am meisten?</title>
     <meta name="description" content="Reservieren Sie Ihre kostenlose 30-Minuten-Potenzialanalyse. Wir zeigen Ihnen unverbindlich, an welcher Stelle Sie mit KI am schnellsten Kosten sparen können.">
+    <link rel="canonical" href="https://neuratex.de/pages/kontakt.html">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
     <link rel="icon" href="../assets/icons/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
@@ -14,8 +15,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
 
     <header class="main-header">
         <div class="container">
@@ -36,7 +40,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <section class="page-hero">
             <div class="container">
                 <h1>Nehmen Sie Kontakt auf</h1>
@@ -69,24 +73,8 @@
     </footer>
 
 
-    <script>
-        // Copyright year
-        const cy = document.getElementById('copyright-year');
-        if (cy) cy.textContent = new Date().getFullYear();
-
-        const nav = document.querySelector('.main-nav');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") {
-                nav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-            } else {
-                nav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-            }
-        });
-    </script>
+    <script src="../assets/js/page-common.js" defer></script>
+    <script src="../assets/js/cookie-consent.js" defer></script>
     <script defer src="/_vercel/insights/script.js"></script>
 
 </body>

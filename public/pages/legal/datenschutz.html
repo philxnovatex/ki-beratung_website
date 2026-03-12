@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Datenschutz – Neuratex AI</title>
+    <meta name="description" content="Datenschutzerklärung der Neuratex AI Website. Informationen zur Datenverarbeitung gemäß DSGVO.">
+    <link rel="canonical" href="https://neuratex.de/pages/legal/datenschutz.html">
     <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
     <link rel="icon" href="../../assets/icons/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
@@ -22,8 +24,11 @@
         .content-page ul { padding-left: 20px; }
         .content-page a { color: var(--accent-color); }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
 
     <header class="main-header">
         <div class="container">
@@ -45,7 +50,7 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <div class="container">
             <section class="content-page">
                 <h1>Datenschutzerklärung</h1>
@@ -220,24 +225,8 @@
         </div>
     </footer>
 
-    <script>
-        // Copyright year
-        const cy = document.getElementById('copyright-year');
-        if (cy) cy.textContent = new Date().getFullYear();
-
-        const nav = document.querySelector('.main-nav');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") {
-                nav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-            } else {
-                nav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-            }
-        });
-    </script>
+    <script src="../../assets/js/page-common.js" defer></script>
+    <script src="../../assets/js/cookie-consent.js" defer></script>
     <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
