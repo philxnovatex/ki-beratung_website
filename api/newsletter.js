@@ -7,7 +7,11 @@
  *
  * Endpoint: POST /api/newsletter
  * Body:     { "email": "user@example.com" }
+ *
+ * Security: Origin validation, rate limiting, input sanitization
  */
+
+const { validateOrigin, checkRateLimit, getClientIP, isValidEmail, isBodyTooLarge } = require('./_shared/security');
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
 
@@ -23,11 +27,34 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // ── Security checks ────────────────────────────────────────────
+  // Body size check
+  if (isBodyTooLarge(req)) {
+    res.status(413).json({ error: 'payload_too_large', message: 'Anfrage zu groß.' });
+    return;
+  }
+
+  // Origin validation
+  if (!validateOrigin(req)) {
+    res.status(403).json({ error: 'forbidden', message: 'Zugriff verweigert.' });
+    return;
+  }
+
+  // Rate limiting (5 requests per minute per IP)
+  const clientIP = getClientIP(req);
+  const rateCheck = checkRateLimit(clientIP, 5, 60_000);
+  res.setHeader('X-RateLimit-Remaining', rateCheck.remaining);
+
+  if (!rateCheck.allowed) {
+    res.setHeader('Retry-After', Math.ceil(rateCheck.retryAfterMs / 1000));
+    res.status(429).json({ error: 'rate_limited', message: 'Zu viele Anfragen. Bitte versuchen Sie es später.' });
+    return;
+  }
+
   // ── Validate input ──────────────────────────────────────────────
   const { email } = req.body || {};
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!email || !emailRegex.test(String(email).trim())) {
+  if (!isValidEmail(email)) {
     res.status(400).json({ error: 'invalid_email', message: 'Bitte eine gültige E-Mail-Adresse angeben.' });
     return;
   }

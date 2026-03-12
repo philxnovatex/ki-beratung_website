@@ -10,7 +10,11 @@
  *
  * Speichert den Kontakt in Brevo mit Attributen (VORNAME, FIRMA)
  * und dem Tag "whitepaper-download" für spätere Segmentierung.
+ *
+ * Security: Origin validation, rate limiting, input sanitization
  */
+
+const { validateOrigin, checkRateLimit, getClientIP, sanitizeString, isValidEmail, isBodyTooLarge } = require('./_shared/security');
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
 
@@ -26,18 +30,38 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // ── Security checks ────────────────────────────────────────────
+  if (isBodyTooLarge(req)) {
+    res.status(413).json({ error: 'payload_too_large', message: 'Anfrage zu groß.' });
+    return;
+  }
+
+  if (!validateOrigin(req)) {
+    res.status(403).json({ error: 'forbidden', message: 'Zugriff verweigert.' });
+    return;
+  }
+
+  const clientIP = getClientIP(req);
+  const rateCheck = checkRateLimit(clientIP, 5, 60_000);
+  res.setHeader('X-RateLimit-Remaining', rateCheck.remaining);
+
+  if (!rateCheck.allowed) {
+    res.setHeader('Retry-After', Math.ceil(rateCheck.retryAfterMs / 1000));
+    res.status(429).json({ error: 'rate_limited', message: 'Zu viele Anfragen. Bitte versuchen Sie es später.' });
+    return;
+  }
+
   // ── Validate input ──────────────────────────────────────────────
   const { email, name, company } = req.body || {};
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!email || !emailRegex.test(String(email).trim())) {
+  if (!isValidEmail(email)) {
     res.status(400).json({ error: 'invalid_email', message: 'Bitte eine gültige E-Mail-Adresse angeben.' });
     return;
   }
 
   const normalizedEmail = String(email).trim().toLowerCase();
-  const normalizedName = name ? String(name).trim().slice(0, 120) : '';
-  const normalizedCompany = company ? String(company).trim().slice(0, 140) : '';
+  const normalizedName = sanitizeString(name).slice(0, 120);
+  const normalizedCompany = sanitizeString(company).slice(0, 140);
 
   // ── Brevo API Key ───────────────────────────────────────────────
   const apiKey = process.env.BREVO_API_KEY;
