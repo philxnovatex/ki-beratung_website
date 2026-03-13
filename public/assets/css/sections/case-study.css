@@ -1,0 +1,385 @@
+/* =============================================
+   Case Study / Referenz Section
+   Design: Dark premium card with gold accents
+   ============================================= */
+
+.case-study-section {
+    background: var(--card-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle top-border glow */
+.case-study-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+    opacity: 0.4;
+}
+
+/* ---- Label / Eyebrow ---- */
+.cs-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: 16px;
+}
+.cs-eyebrow i {
+    font-size: 0.75rem;
+}
+
+.case-study-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.cs-subtitle {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 60px;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* ---- Main Case Study Card ---- */
+.cs-card {
+    background: linear-gradient(145deg, #0d1f3c 0%, #0a1931 50%, #0e2145 100%);
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Accent line top of card */
+.cs-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), #ffdf8e, var(--accent-color));
+}
+
+/* ---- Card Header / Context ---- */
+.cs-card-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.cs-context {
+    padding: 48px 40px;
+    border-right: 1px solid #1e293b;
+}
+
+.cs-solution {
+    padding: 48px 40px;
+    background: rgba(255, 201, 71, 0.02);
+}
+
+.cs-label {
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cs-label i {
+    color: var(--accent-color);
+    font-size: 0.7rem;
+}
+
+.cs-context h3,
+.cs-solution h3 {
+    font-size: 1.25rem;
+    color: var(--headline-color);
+    margin-bottom: 14px;
+    line-height: 1.4;
+}
+
+.cs-context p,
+.cs-solution p {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.cs-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.cs-tag {
+    display: inline-block;
+    font-family: var(--font-secondary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 5px 12px;
+    background: rgba(255, 201, 71, 0.08);
+    border: 1px solid rgba(255, 201, 71, 0.15);
+    border-radius: 20px;
+    color: var(--accent-color);
+    letter-spacing: 0.3px;
+}
+
+/* ---- KPI Metrics Row ---- */
+.cs-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid #1e293b;
+    border-bottom: 1px solid #1e293b;
+}
+
+.cs-metric {
+    padding: 36px 32px;
+    text-align: center;
+    position: relative;
+    transition: background 0.3s ease;
+}
+
+.cs-metric:not(:last-child) {
+    border-right: 1px solid #1e293b;
+}
+
+.cs-metric:hover {
+    background: rgba(255, 201, 71, 0.03);
+}
+
+.cs-metric-value {
+    font-family: var(--font-secondary);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    line-height: 1;
+    margin-bottom: 8px;
+    display: block;
+    /* Counter animation via JS */
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.cs-metric.in-view .cs-metric-value {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cs-metric:nth-child(2) .cs-metric-value {
+    transition-delay: 0.15s;
+}
+.cs-metric:nth-child(3) .cs-metric-value {
+    transition-delay: 0.3s;
+}
+
+.cs-metric-label {
+    font-size: 0.88rem;
+    color: var(--text-color);
+    line-height: 1.4;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* ---- Quote Block ---- */
+.cs-quote-block {
+    padding: 40px 48px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    position: relative;
+}
+
+.cs-quote-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 201, 71, 0.15), rgba(255, 201, 71, 0.05));
+    border-radius: 12px;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+}
+
+.cs-quote-content {
+    flex: 1;
+}
+
+.cs-quote-text {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--headline-color);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    position: relative;
+}
+
+.cs-quote-author {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.cs-quote-author strong {
+    color: var(--accent-color);
+}
+
+/* ---- Bottom CTA bar ---- */
+.cs-cta-bar {
+    padding: 28px 48px;
+    border-top: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 25, 49, 0.5);
+}
+
+.cs-cta-text {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.cs-cta-text strong {
+    color: var(--headline-color);
+}
+
+.cs-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-color);
+    color: var(--primary-color);
+    font-weight: 700;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border: 2px solid var(--accent-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+}
+
+.cs-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 201, 71, 0.4);
+}
+
+.cs-cta-button i {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.cs-cta-button:hover i {
+    transform: translateX(3px);
+}
+
+/* ---- Duration Badge ---- */
+.cs-duration {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 6px 14px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    border-radius: 6px;
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.cs-duration i {
+    font-size: 0.75rem;
+}
+
+/* =============================================
+   Responsive
+   ============================================= */
+@media (max-width: 900px) {
+    .cs-card-header {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-context {
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+        padding: 32px 24px;
+    }
+
+    .cs-solution {
+        padding: 32px 24px;
+    }
+
+    .cs-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    .cs-metric:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    .cs-metric {
+        padding: 28px 24px;
+    }
+
+    .cs-metric-value {
+        font-size: 2.2rem;
+    }
+
+    .cs-quote-block {
+        padding: 28px 24px;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .cs-cta-bar {
+        padding: 24px;
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .cs-cta-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .cs-metric-value {
+        font-size: 1.8rem;
+    }
+
+    .cs-quote-text {
+        font-size: 1rem;
+    }
+
+    .cs-context h3,
+    .cs-solution h3 {
+        font-size: 1.1rem;
+    }
+}

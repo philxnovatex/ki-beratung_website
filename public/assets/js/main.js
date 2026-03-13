@@ -157,6 +157,56 @@
     }
     
     // ========================================
+    // Case Study Metric Count-Up Animation
+    // ========================================
+    function initCaseStudyMetrics() {
+        const metrics = document.querySelectorAll('.cs-metric');
+        if (!metrics.length || !('IntersectionObserver' in window)) return;
+
+        function easeOutExpo(t) {
+            return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        }
+
+        function animateValue(el, target, prefix, suffix, decimals, duration) {
+            const start = performance.now();
+            function tick(now) {
+                const elapsed = now - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = easeOutExpo(progress);
+                const current = eased * target;
+                const formatted = decimals > 0
+                    ? current.toFixed(decimals).replace('.', ',')
+                    : Math.round(current).toLocaleString('de-DE');
+                el.textContent = prefix + formatted + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+        }
+
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const metric = entry.target;
+                metric.classList.add('in-view');
+                metricsObserver.unobserve(metric);
+
+                const valueEl = metric.querySelector('.cs-metric-value');
+                const target = parseFloat(metric.dataset.target);
+                const prefix = metric.dataset.prefix || '';
+                const suffix = metric.dataset.suffix || '';
+                const decimals = String(target).includes('.') ? 2 : 0;
+                const delay = parseFloat(getComputedStyle(valueEl).transitionDelay) * 1000 || 0;
+
+                setTimeout(() => {
+                    animateValue(valueEl, target, prefix, suffix, decimals, 1800);
+                }, delay);
+            });
+        }, { threshold: 0.3 });
+
+        metrics.forEach(m => metricsObserver.observe(m));
+    }
+
+    // ========================================
     // Problem Section Lines Animation
     // ========================================
     function initProblemLines() {
@@ -175,6 +225,7 @@
         initScrollProgress();
         initScrollAnimations();
         initHeadingAnimations();
+        initCaseStudyMetrics();
         initProblemLines();
     }
     
