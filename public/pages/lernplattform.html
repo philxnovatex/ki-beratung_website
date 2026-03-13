@@ -46,8 +46,11 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
 </head>
 <body>
+  <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
   <header class="main-header">
     <div class="container">
       <a href="../index.html" class="logo"><img src="../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
@@ -67,7 +70,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- Full-width hero for the Lernplattform -->
     <section class="page-hero hero-fullwidth" style="padding:80px 0; background:linear-gradient(180deg,#07142a,#0b2540);">
       <div class="container" style="max-width:1200px; text-align:center;">
@@ -87,8 +90,6 @@
         <div class="podcast-player" style="text-align:center; margin-top:18px;">
           <audio id="ki-podcast-audio" controls preload="none" controlsList="nodownload">
             <source src="../assets/audio/KI-Kompass_f%C3%BCr_Entscheider__Grundlagen,_Risiken_&_Strategien_der_K%C3%BCnstlichen_Intelligenz_verstehen.m4a" type="audio/mp4">
-            <source src="../assets/audio/ki-podcast.m4a" type="audio/mp4">
-            <source src="../assets/audio/ki-podcast.mp3" type="audio/mpeg">
             Ihr Browser unterstützt das Audio-Element nicht. Bitte laden Sie die Datei manuell herunter oder verwenden Sie einen modernen Browser.
           </audio>
         </div>
@@ -910,10 +911,11 @@
             </div>
           </div>
           <div style="display:flex; gap:12px; align-items:center;">
-            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center;">
+            <form id="newsletter-form" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
               <label for="newsletter-email" style="display:none;">E‑Mail</label>
-              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
+              <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required autocomplete="email" style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
               <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Jetzt anmelden</button>
+              <span id="newsletter-status" style="font-size:0.85rem; width:100%;" aria-live="polite"></span>
             </form>
           </div>
         </div>
@@ -965,26 +967,26 @@
 
         <div class="lead-gen-form-container" style="flex-basis:380px;">
           <h3 id="whitepaper">Neuratex-Prinzip anfordern</h3>
-          <form id="whitepaper-form" action="danke.html" method="get" novalidate>
+          <form id="whitepaper-form" method="post" action="#" novalidate>
             <div class="form-group">
-              <label for="name">Ihr Name</label>
-              <input id="name" name="name" type="text" required>
+              <label for="wp-name">Ihr Name</label>
+              <input id="wp-name" name="name" type="text" required autocomplete="name">
             </div>
             <div class="form-group">
-              <label for="email">E‑Mail</label>
-              <input id="email" name="email" type="email" required>
+              <label for="wp-email">E‑Mail</label>
+              <input id="wp-email" name="email" type="email" required autocomplete="email">
             </div>
             <div class="form-group">
-              <label for="company">Unternehmen</label>
-              <input id="company" name="company" type="text">
+              <label for="wp-company">Unternehmen</label>
+              <input id="wp-company" name="company" type="text" autocomplete="organization">
             </div>
             <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px;">
-              <input id="privacy" type="checkbox" required>
-              <label for="privacy" style="margin:0;">Ich habe die <a href="legal/datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
+              <input id="wp-privacy" type="checkbox" required>
+              <label for="wp-privacy" style="margin:0;">Ich habe die <a href="legal/datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
             </div>
             <button type="submit" class="cta-button">Neuratex-Prinzip anfordern</button>
-            <p class="form-privacy">Sie erhalten das Dokument per Download; anschließend werden Sie zur Dankeseite weitergeleitet.</p>
-            <p style="font-size:0.9rem; color:#9fb3d9; margin-top:10px;">Vertraulich & praxisorientiert — keine unnötigen Marketing-Mails.</p>
+            <p id="wp-status" style="font-size:0.9rem; margin-top:10px; min-height:1.2em;"></p>
+            <p class="form-privacy">Nach dem Absenden erhalten Sie das Dokument als Download.</p>
           </form>
         </div>
       </div>
@@ -1005,25 +1007,64 @@
   <script type="module">
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // ── Whitepaper-Formular: Daten an Brevo senden, dann PDF-Download ──
     const whitepaperForm = document.getElementById('whitepaper-form');
     if (whitepaperForm) {
-      whitepaperForm.addEventListener('submit', (event) => {
+      whitepaperForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-        const name = whitepaperForm.querySelector('#name');
-        const email = whitepaperForm.querySelector('#email');
-        const privacy = whitepaperForm.querySelector('#privacy');
 
-        if (!name || !email || !privacy || !name.value.trim() || !email.value.trim() || !privacy.checked) {
-          alert('Bitte füllen Sie Name, E‑Mail aus und bestätigen Sie die Datenschutzerklärung.');
+        const nameEl = document.getElementById('wp-name');
+        const emailEl = document.getElementById('wp-email');
+        const privacyEl = document.getElementById('wp-privacy');
+        const statusEl = document.getElementById('wp-status');
+        const submitBtn = whitepaperForm.querySelector('button[type="submit"]');
+
+        // Validierung
+        if (!nameEl.value.trim() || !emailEl.value.trim() || !privacyEl.checked) {
+          statusEl.textContent = 'Bitte Name, E‑Mail ausfüllen und Datenschutz bestätigen.';
+          statusEl.style.color = '#ff6b6b';
           return;
         }
-        if (!emailPattern.test(email.value.trim())) {
-          alert('Bitte geben Sie eine gültige E‑Mail-Adresse ein.');
+        if (!emailPattern.test(emailEl.value.trim())) {
+          statusEl.textContent = 'Bitte eine gültige E‑Mail-Adresse eingeben.';
+          statusEl.style.color = '#ff6b6b';
           return;
         }
 
-        window.location.href = 'downloads/neuratex-whitepaper.pdf';
-        setTimeout(() => { window.location.href = 'danke.html'; }, 800);
+        // UI-Feedback: Button deaktivieren
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+        statusEl.textContent = '';
+
+        try {
+          const response = await fetch('/api/whitepaper', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: emailEl.value.trim(),
+              name: nameEl.value.trim(),
+              company: document.getElementById('wp-company').value.trim()
+            })
+          });
+
+          const data = await response.json().catch(() => ({}));
+
+          if (response.ok && data.ok) {
+            statusEl.textContent = data.message || 'Vielen Dank! Download startet…';
+            statusEl.style.color = '#4caf50';
+            // PDF-Download starten
+            window.location.href = 'downloads/neuratex-whitepaper.pdf';
+            whitepaperForm.reset();
+          } else {
+            statusEl.textContent = data.message || 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.';
+            statusEl.style.color = '#ff6b6b';
+          }
+        } catch (error) {
+          console.warn('whitepaper submit error', error);
+          statusEl.textContent = 'Netzwerkfehler. Bitte versuchen Sie es später.';
+          statusEl.style.color = '#ff6b6b';
+        } finally {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Neuratex-Prinzip anfordern'; }
+        }
       });
     }
 
@@ -1031,21 +1072,26 @@
     const newsletterInput = document.getElementById('newsletter-email');
 
     if (newsletterForm && newsletterInput) {
+      const nlStatus = document.getElementById('newsletter-status');
+      function setNlStatus(msg, color) {
+        if (nlStatus) { nlStatus.textContent = msg; nlStatus.style.color = color; }
+      }
       newsletterForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const email = newsletterInput.value.trim();
         if (!email) {
-          alert('Bitte E‑Mail angeben.');
+          setNlStatus('Bitte E‑Mail angeben.', '#ff6b6b');
           return;
         }
         if (!emailPattern.test(email)) {
-          alert('Bitte eine gültige E‑Mail-Adresse eingeben.');
+          setNlStatus('Bitte eine gültige E‑Mail-Adresse eingeben.', '#ff6b6b');
           return;
         }
 
         // Disable button during request
         const submitBtn = newsletterForm.querySelector('button[type="submit"]');
         if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+        setNlStatus('', '');
 
         try {
           const response = await fetch('/api/newsletter', {
@@ -1057,14 +1103,13 @@
           const data = await response.json().catch(() => ({}));
 
           if (response.ok && data.ok) {
-            alert(data.message || 'Erfolgreich eingetragen! Vielen Dank.');
+            setNlStatus(data.message || 'Erfolgreich eingetragen! Vielen Dank.', '#4caf50');
             newsletterInput.value = '';
           } else {
-            alert(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.');
+            setNlStatus(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
           }
         } catch (error) {
-          console.warn('newsletter submit error', error);
-          alert('Netzwerkfehler. Bitte versuchen Sie es später.');
+          setNlStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
         } finally {
           if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Jetzt anmelden'; }
         }
@@ -1275,5 +1320,7 @@
       setTimeout(animateOnScroll, 100);
     });
   </script>
+  <script src="../assets/js/cookie-consent.js" defer></script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

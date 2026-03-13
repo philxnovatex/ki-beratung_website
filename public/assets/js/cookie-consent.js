@@ -36,7 +36,20 @@
                     }
                 },
                 categories: {
-                    necessary: { readOnly: true }
+                    necessary: { readOnly: true },
+                    analytics: {}
+                },
+                // Wird bei jedem Seitenaufruf aufgerufen wenn bereits Consent vorliegt
+                onConsent: function() {
+                    if (CookieConsent.acceptedCategory('analytics')) {
+                        loadLeadsyTracking();
+                    }
+                },
+                // Wird aufgerufen wenn der User seine Einstellungen ändert
+                onChange: function() {
+                    if (CookieConsent.acceptedCategory('analytics')) {
+                        loadLeadsyTracking();
+                    }
                 },
                 language: {
                     default: 'de',
@@ -65,6 +78,11 @@
                                         title: 'Notwendige Cookies',
                                         description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
                                         linkedCategory: 'necessary'
+                                    },
+                                    {
+                                        title: 'Analyse & Tracking',
+                                        description: 'Diese Cookies helfen uns zu verstehen, wie Besucher unsere Website nutzen. Die Daten werden anonymisiert erhoben.',
+                                        linkedCategory: 'analytics'
                                     }
                                 ]
                             }
@@ -75,5 +93,17 @@
         } catch (error) {
             console.error('[Cookie Consent] Initialisierungsfehler:', error);
         }
+    }
+
+    // Leadsy.ai Tracking erst laden wenn Analytics-Consent erteilt wurde
+    function loadLeadsyTracking() {
+        if (document.getElementById('vtag-ai-js')) return; // bereits geladen
+        var s = document.createElement('script');
+        s.id = 'vtag-ai-js';
+        s.async = true;
+        s.src = 'https://r2.leadsy.ai/tag.js';
+        s.setAttribute('data-pid', 'S4KAX14a3TXfaOvV');
+        s.setAttribute('data-version', '062024');
+        document.head.appendChild(s);
     }
 })();

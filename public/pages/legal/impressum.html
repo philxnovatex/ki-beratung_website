@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Impressum – Neuratex AI</title>
+    <meta name="description" content="Impressum der Neuratex AI Website. Angaben gemäß § 5 DDG.">
+    <link rel="canonical" href="https://neuratex.de/pages/legal/impressum.html">
     <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
     <link rel="icon" href="../../assets/icons/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
@@ -20,8 +22,11 @@
         .content-page a { color: var(--accent-color); text-decoration: none; }
         .content-page a:hover { text-decoration: underline; }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
 </head>
 <body>
+    <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
 
     <header class="main-header">
         <div class="container">
@@ -43,12 +48,12 @@
         </div>
     </header>
 
-    <main>
+    <main id="main-content">
         <div class="container">
             <section class="content-page">
                 <h1>Impressum</h1>
 
-                <h2>Angaben gemäß § 5 TMG</h2>
+                <h2>Angaben gemäß § 5 DDG</h2>
                 <p>
                     Philipp Koch - Neuratex AI<br>
                     Unternehmensberatung<br>
@@ -87,7 +92,7 @@
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; <span id="copyright-year">2025</span> Neuratex AI by Philipp Koch</p>
+            <p>&copy; <span id="copyright-year">2026</span> Neuratex AI by Philipp Koch</p>
             <ul>
                 <li><a href="impressum.html">Impressum</a></li>
                 <li><a href="datenschutz.html">Datenschutz</a></li>
@@ -95,24 +100,9 @@
         </div>
     </footer>
 
-    <script>
-        // Copyright year
-        const cy = document.getElementById('copyright-year');
-        if (cy) cy.textContent = new Date().getFullYear();
-
-        const nav = document.querySelector('.main-nav');
-        const navToggle = document.querySelector('.mobile-nav-toggle');
-        navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible');
-            if (isVisible === "false") {
-                nav.setAttribute('data-visible', true);
-                navToggle.setAttribute('aria-expanded', true);
-            } else {
-                nav.setAttribute('data-visible', false);
-                navToggle.setAttribute('aria-expanded', false);
-            }
-        });
-    </script>
+    <script src="../../assets/js/page-common.js" defer></script>
+    <script src="../../assets/js/cookie-consent.js" defer></script>
+    <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
 </html>
