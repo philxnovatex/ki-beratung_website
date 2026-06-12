@@ -39,18 +39,6 @@
                     necessary: { readOnly: true },
                     analytics: {}
                 },
-                // Wird bei jedem Seitenaufruf aufgerufen wenn bereits Consent vorliegt
-                onConsent: function() {
-                    if (CookieConsent.acceptedCategory('analytics')) {
-                        loadLeadsyTracking();
-                    }
-                },
-                // Wird aufgerufen wenn der User seine Einstellungen ändert
-                onChange: function() {
-                    if (CookieConsent.acceptedCategory('analytics')) {
-                        loadLeadsyTracking();
-                    }
-                },
                 language: {
                     default: 'de',
                     translations: {
@@ -61,7 +49,8 @@
                                 acceptAllBtn: 'Alle akzeptieren',
                                 acceptNecessaryBtn: 'Nur notwendige',
                                 showPreferencesBtn: 'Einstellungen',
-                                closeIconLabel: 'Schließen'
+                                closeIconLabel: 'Schließen',
+                                footer: '<a href="/pages/legal/datenschutz.html">Datenschutzerklärung</a> <a href="/pages/legal/impressum.html">Impressum</a>'
                             },
                             preferencesModal: {
                                 title: 'Cookie-Einstellungen',
@@ -81,7 +70,7 @@
                                     },
                                     {
                                         title: 'Analyse & Tracking',
-                                        description: 'Diese Cookies helfen uns zu verstehen, wie Besucher unsere Website nutzen. Die Daten werden anonymisiert erhoben.',
+                                        description: 'Aktuell setzen wir keine einwilligungspflichtigen Analyse-Cookies ein. Unsere Reichweitenmessung (Umami, Vercel Analytics) arbeitet ohne Cookies und ohne persönliche Profile – Details in der <a href="/pages/legal/datenschutz.html">Datenschutzerklärung</a>. Diese Kategorie greift erst, falls künftig einwilligungspflichtige Dienste hinzukommen.',
                                         linkedCategory: 'analytics'
                                     }
                                 ]
@@ -95,15 +84,4 @@
         }
     }
 
-    // Leadsy.ai Tracking erst laden wenn Analytics-Consent erteilt wurde
-    function loadLeadsyTracking() {
-        if (document.getElementById('vtag-ai-js')) return; // bereits geladen
-        var s = document.createElement('script');
-        s.id = 'vtag-ai-js';
-        s.async = true;
-        s.src = 'https://r2.leadsy.ai/tag.js';
-        s.setAttribute('data-pid', 'S4KAX14a3TXfaOvV');
-        s.setAttribute('data-version', '062024');
-        document.head.appendChild(s);
-    }
 })();

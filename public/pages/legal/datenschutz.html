@@ -12,9 +12,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
     <link rel="manifest" href="../../assets/icons/site.webmanifest">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .content-page { padding: 80px 0; max-width: 800px; margin: 0 auto; }
         .content-page h1 { margin-bottom: 30px; }
@@ -24,8 +21,8 @@
         .content-page ul { padding-left: 20px; }
         .content-page a { color: var(--accent-color); }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/vendor/cookieconsent/cookieconsent.css">
+    <script defer src="../../assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
 </head>
 <body>
     <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
@@ -148,11 +145,6 @@
                 <p>Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben, die Annahme von Cookies für bestimmte Fälle oder generell ausschließen sowie das automatische Löschen der Cookies beim Schließen des Browsers aktivieren. Bei der Deaktivierung von Cookies kann die Funktionalität dieser Website eingeschränkt sein.</p>
                 <p>Welche Cookies und Dienste auf dieser Website eingesetzt werden, können Sie dieser Datenschutzerklärung entnehmen.</p>
 
-                <h3>Kontaktformular</h3>
-                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-                <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.</p>
-                <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt (z. B. nach abgeschlossener Bearbeitung Ihrer Anfrage). Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
-
                 <h3>Anfrage per E-Mail, Telefon oder Telefax</h3>
                 <p>Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
                 <p>Die Verarbeitung dieser Daten erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO) sofern diese abgefragt wurde; die Einwilligung ist jederzeit widerrufbar.</p>
@@ -160,24 +152,22 @@
 
                 <h2>5. Newsletter</h2>
                 <h3>Newsletterdaten</h3>
-                <p>Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die Überprüfung gestatten, dass Sie der Inhaber der angegebenen E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden sind. Weitere Daten werden nicht bzw. nur auf freiwilliger Basis erhoben. Diese Daten verwenden wir ausschließlich für den Versand der angeforderten Informationen und geben diese nicht an Dritte weiter.</p>
+                <p>Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen lediglich eine E-Mail-Adresse. Weitere Daten werden nicht bzw. nur auf freiwilliger Basis erhoben. Diese Daten verwenden wir ausschließlich für den Versand der angeforderten Informationen. Für die Verwaltung der Empfängerliste und den Versand setzen wir den Dienstleister Brevo ein (siehe unten).</p>
                 <p>Die Verarbeitung der in das Newsletteranmeldeformular eingegebenen Daten erfolgt ausschließlich auf Grundlage Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Die erteilte Einwilligung zur Speicherung der Daten, der E-Mail-Adresse sowie deren Nutzung zum Versand des Newsletters können Sie jederzeit widerrufen, etwa über den „Austragen“-Link im Newsletter. Die Rechtmäßigkeit der bereits erfolgten Datenverarbeitungsvorgänge bleibt vom Widerruf unberührt.</p>
                 <p>Die von Ihnen zum Zwecke des Newsletter-Bezugs bei uns hinterlegten Daten werden von uns bis zu Ihrer Austragung aus dem Newsletter bei uns bzw. dem Newsletterdiensteanbieter gespeichert und nach der Abbestellung des Newsletters oder nach Zweckfortfall aus der Newsletterverteilerliste gelöscht. Wir behalten uns vor, E-Mail-Adressen aus unserem Newsletterverteiler nach eigenem Ermessen im Rahmen unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO zu löschen oder zu sperren.</p>
                 <p>Daten, die zu anderen Zwecken bei uns gespeichert wurden, bleiben hiervon unberührt.</p>
                 <p>Nach Ihrer Austragung aus der Newsletterverteilerliste wird Ihre E-Mail-Adresse bei uns bzw. dem Newsletterdiensteanbieter ggf. in einer Blacklist gespeichert, sofern dies zur Verhinderung künftiger Mailings erforderlich ist. Die Daten aus der Blacklist werden nur für diesen Zweck verwendet und nicht mit anderen Daten zusammengeführt. Dies dient sowohl Ihrem Interesse als auch unserem Interesse an der Einhaltung der gesetzlichen Vorgaben beim Versand von Newslettern (berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO). Die Speicherung in der Blacklist ist zeitlich nicht befristet. Sie können der Speicherung widersprechen, sofern Ihre Interessen unser berechtigtes Interesse überwiegen.</p>
 
-                <h2>6. Plugins und Tools</h2>
-                <h3>YouTube mit erweitertem Datenschutz</h3>
-                <p>Diese Website bindet Videos der Website YouTube ein. Betreiber der Website ist die Google Ireland Limited („Google”), Gordon House, Barrow Street, Dublin 4, Irland.</p>
-                <p>Wenn Sie eine dieser Website besuchen, auf denen YouTube eingebunden ist, wird eine Verbindung zu den Servern von YouTube hergestellt. Dabei wird dem YouTube-Server mitgeteilt, welche unserer Seiten Sie besucht haben. Wenn Sie in Ihrem YouTube-Account eingeloggt sind, ermöglichen Sie YouTube, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus Ihrem YouTube-Account ausloggen.</p>
-                <p>Wir nutzen YouTube im erweiterten Datenschutzmodus. Videos, die im erweiterten Datenschutzmodus abgespielt werden, werden nach Aussage von YouTube nicht zur Personalisierung des Surfens auf YouTube eingesetzt. Anzeigen, die im erweiterten Datenschutzmodus ausgespielt werden, sind ebenfalls nicht personalisiert. Im erweiterten Datenschutzmodus werden keine Cookies gesetzt. Stattdessen werden jedoch sogenannte Local Storage Elemente im Browser des Users gespeichert, die ähnlich wie Cookies personenbezogene Daten beinhalten und zur Wiedererkennung eingesetzt werden können. Details zum erweiterten Datenschutzmodus finden Sie hier: <a href="https://support.google.com/youtube/answer/171780" target="_blank" rel="noopener noreferrer">https://support.google.com/youtube/answer/171780</a>.</p>
-                <p>Gegebenenfalls können nach der Aktivierung eines YouTube-Videos weitere Datenverarbeitungsvorgänge ausgelöst werden, auf die wir keinen Einfluss haben.</p>
-                <p>Die Nutzung von YouTube erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar. Sofern eine entsprechende Einwilligung abgefragt wurde, erfolgt die Verarbeitung ausschließlich auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO und § 25 Abs. 1 TDDDG, soweit die Einwilligung die Speicherung von Cookies oder den Zugriff auf Informationen im Endgerät des Nutzers (z. B. Device-Fingerprinting) im Sinne des TDDDG umfasst. Die Einwilligung ist jederzeit widerrufbar.</p>
-                <p>Weitere Informationen über Datenschutz bei YouTube finden Sie in deren Datenschutzerklärung unter: <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">https://policies.google.com/privacy?hl=de</a>.</p>
-                <p>Das Unternehmen verfügt über eine Zertifizierung nach dem „EU-US Data Privacy Framework“ (DPF). Der DPF ist ein Übereinkommen zwischen der Europäischen Union und den USA, der die Einhaltung europäischer Datenschutzstandards bei Datenverarbeitungen in den USA gewährleisten soll. Jedes nach dem DPF zertifizierte Unternehmen verpflichtet sich, diese Datenschutzstandards einzuhalten. Weitere Informationen hierzu erhalten Sie vom Anbieter unter folgendem Link: <a href="https://www.dataprivacyframework.gov/participant/5780" target="_blank" rel="noopener noreferrer">https://www.dataprivacyframework.gov/participant/5780</a>.</p>
-                <p>Quelle: <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a></p>
+                <h3>Brevo – Newsletter- und Kontaktverwaltung</h3>
+                <p><strong>Zweck der Verarbeitung:</strong> Für die Verwaltung unserer Newsletter-Empfänger und der Kontaktanfragen aus dem Whitepaper-Download nutzen wir den Dienst Brevo. Die bei der Anmeldung bzw. Anforderung eingegebenen Daten (E-Mail-Adresse, beim Whitepaper zusätzlich Name und optional Unternehmen) werden auf den Servern von Brevo gespeichert und ausschließlich für den Versand bzw. die Bereitstellung der angeforderten Informationen verwendet.</p>
+                <p><strong>Anbieter:</strong> Brevo – Sendinblue GmbH, Köpenicker Straße 126, 10179 Berlin, Deutschland (Teil der Brevo SAS, 106 boulevard Haussmann, 75008 Paris, Frankreich).</p>
+                <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) für den Newsletter-Versand; Art. 6 Abs. 1 lit. b DSGVO für die Bereitstellung angeforderter Inhalte (Whitepaper). Die Einwilligung ist jederzeit widerrufbar, etwa über den Abmeldelink im Newsletter oder per E-Mail an uns.</p>
+                <p><strong>Auftragsverarbeitung:</strong> Mit Brevo besteht ein Vertrag über Auftragsverarbeitung (AVV) gemäß Art. 28 DSGVO.</p>
 
-                <h2>7. Weitere Dienste und Tools</h2>
+                <h3>Whitepaper-Download</h3>
+                <p>Wenn Sie über das Formular auf unserer Lernplattform ein Whitepaper bzw. Dokument anfordern, erheben wir Ihren Namen, Ihre E-Mail-Adresse und optional Ihr Unternehmen. Diese Daten verwenden wir zur Bereitstellung des angeforderten Dokuments und zur Kontaktaufnahme im Zusammenhang mit Ihrer Anfrage (Art. 6 Abs. 1 lit. b DSGVO). Die Speicherung erfolgt über unseren Dienstleister Brevo (siehe oben). Eine Verwendung für werbliche Newsletter erfolgt nur, wenn Sie hierin gesondert eingewilligt haben.</p>
+
+                <h2>6. Weitere Dienste und Tools</h2>
                 <h3>Calendly – Online-Terminbuchung</h3>
                 <p><strong>Zweck der Verarbeitung:</strong> Wir bieten die Möglichkeit zur Terminvereinbarung über einen externen Calendly-Link. Rufen Sie diesen Link auf, gelangen Sie auf die Seiten von Calendly, wo Sie die zur Terminbuchung erforderlichen Daten (z. B. Name, E-Mail-Adresse, gewünschter Termin) eingeben können. Die Angaben werden zum Zweck der Terminplanung, -durchführung und ggf. -nachbereitung verwendet.</p>
                 <p><strong>Anbieter:</strong> Calendly LLC, 271 17th St NW, 10th Floor, Atlanta, GA 30363, USA.</p>
@@ -207,12 +197,10 @@
                 <p><strong>Auftragsverarbeitung:</strong> Mit Google wurde ein AVV gemäß Art. 28 DSGVO geschlossen (Google-Datenverarbeitungsbedingungen).</p>
                 <p>Quelle: <a href="https://www.e-recht24.de" target="_blank" rel="noopener noreferrer">https://www.e-recht24.de</a></p>
 
-                <h3>Leadsy.ai – Lead-Tracking</h3>
-                <p><strong>Zweck der Verarbeitung:</strong> Wir setzen auf unserer Website ein Tracking-Skript des Anbieters Leadsy.ai ein, um anonymisierte Nutzungsdaten und potenzielle Firmenkontakte (B2B-Leads) zu erfassen. Dabei können u.&nbsp;a. IP-Adresse, Seitenaufrufe und technische Gerätedaten verarbeitet werden.</p>
-                <p><strong>Anbieter:</strong> Leadsy.ai (genaue Firmenangaben entnehmen Sie der Website des Anbieters unter <a href="https://leadsy.ai" target="_blank" rel="noopener noreferrer">https://leadsy.ai</a>).</p>
-                <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Analyse des Nutzungsverhaltens zur Vertriebsoptimierung). Sofern eine Einwilligung über unser Cookie-Banner abgefragt wird, erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO i.&nbsp;V.&nbsp;m. § 25 Abs. 1 TDDDG; die Einwilligung ist jederzeit widerrufbar.</p>
+                <h3>Schriftarten (lokal gehostet)</h3>
+                <p>Diese Website nutzt die Schriftarten „Inter“ und „Roboto Mono“. Die Schriftdateien sind lokal auf unserem Server gespeichert; eine Verbindung zu Servern von Google oder anderen Drittanbietern findet beim Laden der Schriften nicht statt.</p>
 
-                <h2>8. Webanalyse</h2>
+                <h2>7. Webanalyse</h2>
 
                 <h3>Umami Analytics</h3>
                 <p><strong>Zweck der Verarbeitung:</strong> Wir nutzen Umami Analytics zur statistischen Auswertung der Nutzung unserer Website (Seitenaufrufe, ungefähre geografische Herkunft auf Länderebene, Verweildauer, Geräte- und Browsertyp, Referrer). Auf dieser Grundlage optimieren wir unsere Inhalte und Angebote.</p>
@@ -240,13 +228,14 @@
             <ul>
                 <li><a href="impressum.html">Impressum</a></li>
                 <li><a href="datenschutz.html">Datenschutz</a></li>
+                <li><button type="button" data-cc="show-preferencesModal">Cookie-Einstellungen</button></li>
             </ul>
         </div>
     </footer>
 
     <script src="../../assets/js/page-common.js" defer></script>
     <script src="../../assets/js/cookie-consent.js" defer></script>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55" data-do-not-track="true"></script>
     <script defer src="/_vercel/insights/script.js"></script>
 
 </body>

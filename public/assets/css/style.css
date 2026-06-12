@@ -1,3 +1,40 @@
+/* Lokal gehostete Schriften (DSGVO: kein Google-Fonts-CDN) */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('../fonts/inter-v20-latin-800.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/roboto-mono-v31-latin-regular.woff2') format('woff2');
+}
+@font-face {
+    font-family: 'Roboto Mono';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/roboto-mono-v31-latin-700.woff2') format('woff2');
+}
+
 /* Leistungen: Scroll- und Hover-Animationen */
 .featured-section {
     opacity: 0;
@@ -53,13 +90,25 @@
     /* Mobile nav toggle visible and touch-friendly */
     .mobile-nav-toggle {
         display: block;
-        background: transparent;
-        border: none;
+        position: fixed;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 3rem;
+        height: 3rem;
+        background-color: rgba(10,25,49,0.8);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: center;
+        border: 2px solid rgba(255,255,255,0.2);
+        border-radius: 8px;
         color: var(--headline-color);
-        font-size: 1.1rem;
-        padding: 10px;
         cursor: pointer;
         z-index: 1800;
+    }
+    .mobile-nav-toggle[aria-expanded="true"] {
+        background-color: rgba(255,201,71,0.9);
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2810, 25, 49, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M6 6l18 18M24 6L6 24'/%3e%3c/svg%3e");
+        border-color: var(--accent-color);
     }
 
     /* Fullscreen mobile nav overlay when opened */
@@ -1518,4 +1567,18 @@ h2 { text-align: center; margin-bottom: 55px; }
     .solution-column.visible {
         transform: translateY(0);
     }
+}
+
+/* Footer-Button "Cookie-Einstellungen" wie einen Footer-Link darstellen */
+button[data-cc="show-preferencesModal"] {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+button[data-cc="show-preferencesModal"]:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }

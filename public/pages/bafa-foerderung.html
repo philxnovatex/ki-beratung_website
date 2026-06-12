@@ -19,13 +19,10 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
     <link rel="shortcut icon" href="../assets/icons/favicon.ico">
     <link rel="manifest" href="../assets/icons/site.webmanifest">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha384-/o6I2CkkWC//PSjvWC/eYN7l3xM3tJm8ZzVkCOfp//W05QcE3mlGskpoHB6XqI+B" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../assets/vendor/cookieconsent/cookieconsent.css">
+    <script defer src="../assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
     <style>
         /* BAFA page-specific styles */
         .bafa-hero {
@@ -629,6 +626,7 @@
             <ul>
                 <li><a href="legal/impressum.html">Impressum</a></li>
                 <li><a href="legal/datenschutz.html">Datenschutz</a></li>
+                <li><button type="button" data-cc="show-preferencesModal">Cookie-Einstellungen</button></li>
             </ul>
         </div>
     </footer>
@@ -676,7 +674,7 @@
         ]
     }
     </script>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55" data-do-not-track="true"></script>
     <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
