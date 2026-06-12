@@ -45,7 +45,7 @@ if (whitepaperForm) {
         statusEl.textContent = data.message || 'Vielen Dank! Download startet\u2026';
         statusEl.style.color = '#4caf50';
         // PDF-Download starten
-        window.location.href = 'downloads/neuratex-whitepaper.pdf';
+        window.location.href = '/assets/downloads/neuratex-whitepaper.pdf';
         whitepaperForm.reset();
       } else {
         statusEl.textContent = data.message || 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.';

@@ -5,15 +5,12 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Whitepaper: In 3 Schritten den Kundenservice automatisieren</title>
   <meta name="description" content="Lernplattform zu KI: Grundlagen, Anwendungsbeispiele und Praxis-Tipps für Entscheider. Podcast, Whitepaper und kompakte Lerninhalte von Neuratex AI.">
-  <link rel="canonical" href="https://neuratex.de/pages/lernplattform.html">
+  <link rel="canonical" href="https://www.neuratex.de/pages/lernplattform.html">
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/apple-touch-icon.png">
   <link rel="icon" type="image/x-icon" href="../assets/icons/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
   <link rel="manifest" href="../assets/icons/site.webmanifest">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <!-- Critical CSS (inlined for faster first render) -->
   <style>
     :root { --accent-color: #FFC947; --primary-color: #0A1931; }
@@ -39,21 +36,21 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Neuratex AI",
-    "url": "https://neuratex.de",
-    "logo": "https://neuratex.de/assets/images/neuratex-logo.jpg",
+    "url": "https://www.neuratex.de",
+    "logo": "https://www.neuratex.de/assets/images/neuratex-logo.jpg",
     "sameAs": [
       "https://www.linkedin.com/company/neuratex-ai"
     ]
   }
   </script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../assets/vendor/cookieconsent/cookieconsent.css">
+  <script defer src="../assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
 </head>
 <body>
   <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
   <header class="main-header">
     <div class="container">
-      <a href="../index.html" class="logo"><img src="../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo"></a>
+      <a href="../index.html" class="logo"><img src="../assets/images/neuratex-logo.webp" width="217" height="130" alt="Neuratex AI Logo"></a>
       <nav id="primary-navigation" class="main-nav" data-visible="false">
         <ul>
           <li><a href="leistungen.html">Leistungen</a></li>
@@ -912,10 +909,11 @@
           </div>
           <div style="display:flex; gap:12px; align-items:center;">
             <form id="newsletter-form" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-              <label for="newsletter-email" style="display:none;">E‑Mail</label>
+              <label for="newsletter-email" class="sr-only">E‑Mail</label>
               <input id="newsletter-email" name="newsletter-email" type="email" placeholder="Ihre E‑Mail" required autocomplete="email" style="padding:9px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#e6f0ff; min-width:220px;">
               <button type="submit" class="cta-button" style="background:var(--accent-color); color:var(--primary-color);">Jetzt anmelden</button>
               <span id="newsletter-status" style="font-size:0.85rem; width:100%;" aria-live="polite"></span>
+              <span style="font-size:0.78rem; color:#9fb3d9; width:100%;">Mit der Anmeldung willigen Sie ein, dass wir Ihnen unseren Newsletter per E‑Mail zusenden. Sie können die Einwilligung jederzeit über den Abmeldelink im Newsletter widerrufen. Details in der <a href="legal/datenschutz.html" style="color:#9fb3d9; text-decoration:underline;">Datenschutzerklärung</a>.</span>
             </form>
           </div>
         </div>
@@ -985,7 +983,7 @@
               <label for="wp-privacy" style="margin:0;">Ich habe die <a href="legal/datenschutz.html">Datenschutzbestimmungen</a> gelesen.</label>
             </div>
             <button type="submit" class="cta-button">Neuratex-Prinzip anfordern</button>
-            <p id="wp-status" style="font-size:0.9rem; margin-top:10px; min-height:1.2em;"></p>
+            <p id="wp-status" style="font-size:0.9rem; margin-top:10px; min-height:1.2em;" aria-live="polite"></p>
             <p class="form-privacy">Nach dem Absenden erhalten Sie das Dokument als Download.</p>
           </form>
         </div>
@@ -999,11 +997,12 @@
       <div class="footer-links">
         <a href="legal/impressum.html">Impressum</a>
         <a href="legal/datenschutz.html">Datenschutz</a>
+        <button type="button" data-cc="show-preferencesModal">Cookie-Einstellungen</button>
       </div>
-      <button id="export-newsletter-btn" class="newsletter-export" disabled>Export E‑Mails</button>
     </div>
   </footer>
 
+  <script src="../assets/js/page-common.js" defer></script>
   <script src="../assets/js/lernplattform-forms.js"></script>
 
   <!-- Custom CSS für FAQ Animationen -->
@@ -1077,7 +1076,7 @@
 
   <script src="../assets/js/lernplattform-init.js"></script>
   <script src="../assets/js/cookie-consent.js" defer></script>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55"></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55" data-do-not-track="true"></script>
   <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

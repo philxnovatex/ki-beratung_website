@@ -11,9 +11,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
     <link rel="manifest" href="../../assets/icons/site.webmanifest">
     <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .thank-you-section {
             display: flex;
@@ -80,8 +77,8 @@
             100% { box-shadow: inset 0px 0px 0px 40px #FFC947; }
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.css" integrity="sha384-9KcNFt4axT+TNOVPHpwGHOm4Kv0UcMjdVya1kl+EPBQG+Vmqtz28cnx0f5PZYcnF" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js" integrity="sha384-zM9A7bFtKjzCrGlAqAv3bj2Rkl6zz3vc62NMGZaEtfG4TKk8Ljrx6P7ixfoLzzIl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/vendor/cookieconsent/cookieconsent.css">
+    <script defer src="../../assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
 </head>
 <body>
     <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
@@ -89,7 +86,7 @@
     <header class="main-header">
         <div class="container">
             <a href="../../index.html" class="logo">
-                <img src="../../assets/images/neuratex-logo.jpg" alt="Neuratex AI Logo">
+                <img src="../../assets/images/neuratex-logo.webp" width="217" height="130" alt="Neuratex AI Logo">
             </a>
             <nav id="primary-navigation" class="main-nav" data-visible="false">
                 <ul>
@@ -131,13 +128,14 @@
             <ul>
                 <li><a href="impressum.html">Impressum</a></li>
                 <li><a href="datenschutz.html">Datenschutz</a></li>
+                <li><button type="button" data-cc="show-preferencesModal">Cookie-Einstellungen</button></li>
             </ul>
         </div>
     </footer>
 
     <script src="../../assets/js/page-common.js" defer></script>
     <script src="../../assets/js/cookie-consent.js" defer></script>
-    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55"></script>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="2416a4c9-5f0e-42c2-a475-610ccddece55" data-do-not-track="true"></script>
     <script defer src="/_vercel/insights/script.js"></script>
 
 </body>
