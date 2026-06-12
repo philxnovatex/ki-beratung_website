@@ -6,6 +6,12 @@
   ],
   "headers": [
     {
+      "source": "/assets/(images|fonts|icons|audio|vendor|downloads)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
       "source": "/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Origin", "value": "https://neuratex.de" },

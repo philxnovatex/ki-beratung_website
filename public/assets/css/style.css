@@ -80,7 +80,7 @@
     /* Hide heavy canvas on small screens and use a lightweight fallback background */
     #hero-canvas { display: none !important; }
     .hero-section {
-        background-image: url('../images/smart.jpg');
+        background-image: url('../images/smart-hero.webp');
         background-size: cover;
         background-position: center;
         min-height: 60vh;
