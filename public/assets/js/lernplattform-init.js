@@ -21,11 +21,19 @@ document.addEventListener('DOMContentLoaded', function() {
   function setupFAQToggle() {
     const faqItems = document.querySelectorAll('.faq-card');
 
-    faqItems.forEach(card => {
+    faqItems.forEach((card, index) => {
       const header = card.querySelector('.faq-header');
       const content = card.querySelector('.faq-content');
       const icon = card.querySelector('.faq-icon');
+      const toggle = card.querySelector('.faq-toggle');
 
+      if (toggle && content) {
+        content.id = content.id || 'faq-content-' + (index + 1);
+        toggle.setAttribute('aria-controls', content.id);
+      }
+
+      // Klick auf den Header (Maus) bzw. den Button darin (Tastatur: Enter/Leertaste
+      // lösen auf <button> ein click-Event aus, das hierher bubbelt)
       header.addEventListener('click', () => {
         const isOpen = card.classList.contains('active');
 
@@ -35,10 +43,12 @@ document.addEventListener('DOMContentLoaded', function() {
             otherCard.classList.remove('active');
             const otherContent = otherCard.querySelector('.faq-content');
             const otherIcon = otherCard.querySelector('.faq-icon');
+            const otherToggle = otherCard.querySelector('.faq-toggle');
             otherContent.style.maxHeight = '0';
             otherContent.style.opacity = '0';
             otherIcon.style.transform = 'rotate(0deg)';
             otherIcon.textContent = '+';
+            if (otherToggle) otherToggle.setAttribute('aria-expanded', 'false');
           }
         });
 
@@ -49,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
           content.style.opacity = '0';
           icon.style.transform = 'rotate(0deg)';
           icon.textContent = '+';
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
         } else {
           // Öffnen
           card.classList.add('active');
@@ -56,6 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
           content.style.opacity = '1';
           icon.style.transform = 'rotate(45deg)';
           icon.textContent = '×';
+          if (toggle) toggle.setAttribute('aria-expanded', 'true');
 
           // Smooth scroll zum geöffneten Element
           setTimeout(() => {

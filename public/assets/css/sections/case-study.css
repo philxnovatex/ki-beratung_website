@@ -97,7 +97,7 @@
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #64748b;
+    color: #8a99ad;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
@@ -239,7 +239,7 @@
 .cs-quote-author {
     font-family: var(--font-secondary);
     font-size: 0.85rem;
-    color: #64748b;
+    color: #8a99ad;
 }
 
 .cs-quote-author strong {
