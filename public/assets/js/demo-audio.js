@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = true;
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
+        playPauseBtn.setAttribute('aria-label', 'Pausieren');
         animateWaveform(true);
     }
 
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = false;
         playIcon.style.display = 'block';
         pauseIcon.style.display = 'none';
+        playPauseBtn.setAttribute('aria-label', 'Abspielen');
         animateWaveform(false);
     }
 
@@ -99,7 +101,28 @@ document.addEventListener('DOMContentLoaded', () => {
         progressFill.style.width = clampedPercentage + '%';
         waveformProgress.style.width = clampedPercentage + '%';
         progressThumb.style.left = clampedPercentage + '%';
+        progressTrack.setAttribute('aria-valuenow', Math.round(clampedPercentage));
+        if (isFinite(audio.duration)) {
+            const t = (clampedPercentage / 100) * audio.duration;
+            progressTrack.setAttribute('aria-valuetext', formatTime(t) + ' von ' + formatTime(audio.duration));
+        }
     }
+
+    // Tastatursteuerung für den Fortschrittsbalken (role="slider")
+    progressTrack.addEventListener('keydown', (e) => {
+        if (!isFinite(audio.duration)) return;
+        let newTime = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowUp') newTime = Math.min(audio.duration, audio.currentTime + 5);
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') newTime = Math.max(0, audio.currentTime - 5);
+        else if (e.key === 'Home') newTime = 0;
+        else if (e.key === 'End') newTime = audio.duration;
+        if (newTime !== null) {
+            e.preventDefault();
+            audio.currentTime = newTime;
+            updateProgress((newTime / audio.duration) * 100);
+            currentTimeEl.textContent = formatTime(newTime);
+        }
+    });
 
     // Set duration when loaded
     audio.addEventListener('loadedmetadata', () => {

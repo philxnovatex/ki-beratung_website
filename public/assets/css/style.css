@@ -1332,7 +1332,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 .time-separator {
-    color: #64748b;
+    color: #8a99ad;
 }
 
 .volume-control {
@@ -1567,6 +1567,22 @@ h2 { text-align: center; margin-bottom: 55px; }
     .solution-column.visible {
         transform: translateY(0);
     }
+}
+
+/* FAQ-Begriffskarten: Toggle-Button im Heading (Tastatur-Bedienbarkeit) */
+.faq-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.faq-toggle:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+    border-radius: 4px;
 }
 
 /* Footer-Button "Cookie-Einstellungen" wie einen Footer-Link darstellen */

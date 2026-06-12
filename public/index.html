@@ -37,7 +37,7 @@
     <script defer src="assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
 </head>
 <body>
-    <a href="#hero" class="sr-only skip-link">Zum Inhalt springen</a>
+    <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">
@@ -58,7 +58,7 @@
             </button>
         </div>
     </header>
-    <main>
+    <main id="main-content">
         <!-- Hero-Sektion -->
         <!-- Klasse 'hero-enhanced' aktiviert modernisierte Styles (hero-enhancements.css) -->
         <!-- Optionen: 'no-aurora' = ohne Gradient, 'no-fade' = ohne Animation, 'no-canvas' = Canvas ausblenden -->
@@ -291,7 +291,7 @@
 
                         <!-- Premium Controls -->
                         <div class="premium-controls">
-                            <button id="play-pause-btn" class="premium-play-btn">
+                            <button id="play-pause-btn" class="premium-play-btn" aria-label="Abspielen">
                                 <div class="btn-icon play-icon">
                                     <svg viewBox="0 0 24 24" width="24" height="24">
                                         <path d="M8 5v14l11-7z" fill="currentColor"/>
@@ -320,7 +320,7 @@
 
                         <!-- Premium Progress Bar -->
                         <div class="premium-progress-container">
-                            <div class="premium-progress-track" id="progress-track">
+                            <div class="premium-progress-track" id="progress-track" role="slider" tabindex="0" aria-label="Wiedergabeposition" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                                 <div class="premium-progress-fill" id="progress-fill"></div>
                                 <div class="premium-progress-thumb" id="progress-thumb"></div>
                             </div>
