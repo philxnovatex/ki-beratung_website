@@ -17,4 +17,4 @@ Allow: /
 User-agent: GoogleBot
 Allow: /
 
-Sitemap: https://neuratex.de/sitemap.xml
+Sitemap: https://www.neuratex.de/sitemap.xml
