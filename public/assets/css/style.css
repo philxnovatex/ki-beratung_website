@@ -353,13 +353,17 @@
     --font-primary: 'Inter', sans-serif;
     --font-secondary: 'Roboto Mono', monospace;
 
-    --text-xs:   0.8125rem;                          /* 13px, Labels */
-    --text-sm:   0.9375rem;                          /* 15px, Hilfstexte */
+    /* Eine Stufe kleiner als der erste Entwurf: Der wirkte auf großen Schirmen
+       plakativ statt souverän. Der Fließtext bleibt bei 16px, darunter leidet
+       die Lesbarkeit. Verkleinert wurden vor allem die oberen Stufen, die den
+       Größeneindruck der Seite bestimmen. */
+    --text-xs:   0.75rem;                            /* 12px, Labels */
+    --text-sm:   0.875rem;                           /* 14px, Hilfstexte */
     --text-base: 1rem;                               /* 16px, Fließtext */
-    --text-md:   1.125rem;                           /* 18px, Einleitungen */
-    --text-lg:   clamp(1.25rem, 0.6vw + 1.1rem, 1.5rem);    /* h3 */
-    --text-xl:   clamp(1.6rem, 1.4vw + 1.25rem, 2.25rem);   /* h2 */
-    --text-2xl:  clamp(2.25rem, 3.4vw + 1.25rem, 3.75rem);  /* h1 */
+    --text-md:   1.0625rem;                          /* 17px, Einleitungen */
+    --text-lg:   clamp(1.125rem, 0.5vw + 1rem, 1.3rem);     /* h3, max 21px */
+    --text-xl:   clamp(1.4rem, 1.1vw + 1.1rem, 1.85rem);    /* h2, max 30px */
+    --text-2xl:  clamp(1.9rem, 2.6vw + 1.1rem, 3rem);       /* h1, max 48px */
 
     --leading-tight: 1.15;   /* Überschriften */
     --leading-snug:  1.4;    /* kurze Absätze */
@@ -384,8 +388,9 @@
     --space-16: 4rem;     /* 64px */
     --space-24: 6rem;     /* 96px */
 
-    /* Sektionsabstände wachsen mit der Viewportbreite */
-    --space-section: clamp(4rem, 7vw, 7.5rem);
+    /* Sektionsabstände wachsen mit der Viewportbreite. Ebenfalls eine Stufe
+       zurückgenommen, damit die Seite kompakter wirkt. */
+    --space-section: clamp(3.25rem, 5.5vw, 5.5rem);
 
     /* ── Radien ───────────────────────────────────────────────────────────── */
     --radius-sm: 6px;
@@ -540,6 +545,13 @@ h3 {
 /* Fliesstext: Zeilenlaenge begrenzen. Ueber rund 75 Zeichen hinaus verliert das
    Auge beim Zeilenwechsel den Anschluss. */
 p { max-width: var(--measure); }
+
+/* Abstand zwischen aufeinanderfolgenden Absaetzen. Das globale "* { margin: 0 }"
+   im Reset setzt ihn auf null, wiederhergestellt wurde er nie. Mehrere Absaetze
+   klebten dadurch zu einem Block zusammen, etwa im Ueber-mich-Text.
+   Bewusst als p + p, damit einzelne Absaetze in Karten und Rastern keinen
+   ungewollten Abstand bekommen. */
+p + p { margin-top: var(--space-4); }
 /* In zentrierten Sektionen bleibt der Text mittig, aber begrenzt. */
 .hero-section p, .services-section > .container > p, .testimonials-section > .container > p,
 .reifegrad-intro, .ki-apps__intro, .cs-subtitle { margin-left: auto; margin-right: auto; }
@@ -852,13 +864,23 @@ p { max-width: var(--measure); }
 .principle-card span { font-family: var(--font-secondary); font-size: 2rem; font-weight: 700; color: var(--accent-color); display: block; margin-bottom: 10px; }
 .principle-card h3 { margin-bottom: 10px; }
 
-.about-flex { display: flex; align-items: center; gap: 60px; }
+/* Der Bildcontainer braucht eine eigene Breite. Ohne sie schrumpft er im
+   Flex-Layout auf null, sobald das Bild nicht mehr durch eine feste Höhe
+   aufgespannt wird. */
+.about-flex { display: flex; align-items: center; gap: var(--space-12); }
+.about-image { flex: 0 0 auto; width: 300px; max-width: 100%; }
 /* Portrait ohne Neonschein. Der blaue Leuchtring wirkte wie ein Avatar aus
    einer Produktvorlage. Ein Bildnis eines Beraters soll wie ein Foto aussehen,
    nicht wie ein Benutzerkonto. */
 .about-image img {
     width: 100%;
-    max-width: 350px;
+    max-width: 300px;
+    /* height: auto ist zwingend. Ohne das greift das HTML-Attribut height="700"
+       als Praesentationshinweis und das Bild wird auf 350x700 gestreckt,
+       also auf die doppelte Hoehe. */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
     border-radius: 50%;
     box-shadow: var(--shadow-md);
     border: 1px solid var(--border-subtle);
