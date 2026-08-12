@@ -17,28 +17,30 @@
     function initMobileNav() {
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-        
+
         if (!nav || !navToggle) return;
-        
+
+        // Identisch zu page-common.js auf den Unterseiten.
+        function setzeZustand(sichtbar) {
+            nav.setAttribute('data-visible', String(sichtbar));
+            navToggle.setAttribute('aria-expanded', String(sichtbar));
+            navToggle.setAttribute('aria-label', sichtbar ? 'Navigation schließen' : 'Navigation öffnen');
+        }
+
         navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible') === 'true';
-            nav.setAttribute('data-visible', !isVisible);
-            navToggle.setAttribute('aria-expanded', !isVisible);
+            setzeZustand(nav.getAttribute('data-visible') !== 'true');
         });
-        
-        // Schließen bei Klick auf Link
+
         nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', () => setzeZustand(false));
         });
-        
-        // Schließen bei Escape-Taste
+
+        // Escape schliesst und gibt den Fokus zurueck, damit Tastaturnutzer
+        // nicht im geschlossenen Menue stehen bleiben.
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && nav.getAttribute('data-visible') === 'true') {
-                nav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
+                setzeZustand(false);
+                navToggle.focus();
             }
         });
     }
@@ -99,53 +101,10 @@
     // ========================================
     // Scroll Reveal Animations (DRY-konsolidiert)
     // ========================================
-    function initScrollAnimations() {
-        // Fallback für Browser ohne IntersectionObserver
-        if (!('IntersectionObserver' in window)) {
-            document.querySelectorAll('.problem-column, .solution-column, .service-card, .featured-section')
-                .forEach(el => el.classList.add('visible', 'in-view'));
-            return;
-        }
-        
-        let revealCount = 0;
-
-        // Generische Observer-Factory
-        function createObserver(threshold = 0.2, once = true) {
-            return new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible', 'in-view');
-                        revealCount++;
-                        if (once) observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold });
-        }
-        
-        // Problem & Lösung Columns
-        const columnObserver = createObserver(0.2);
-        document.querySelectorAll('.problem-column, .solution-column')
-            .forEach(el => columnObserver.observe(el));
-        
-        // Service Cards
-        const cardObserver = createObserver(0.15);
-        document.querySelectorAll('.services-grid .service-card')
-            .forEach(el => cardObserver.observe(el));
-        
-        // Featured Sections (Leistungen)
-        const sectionObserver = createObserver(0.2);
-        document.querySelectorAll('.featured-section')
-            .forEach(el => sectionObserver.observe(el));
-        
-        // Sicherheitsnetz: Nur wenn der Observer nach 2s überhaupt nichts ausgelöst
-        // hat, gehen wir von einem Defekt aus und machen alles sichtbar. Vorher wurde
-        // hier pauschal alles eingeblendet, was die Scroll-Animation wirkungslos machte.
-        setTimeout(() => {
-            if (revealCount > 0) return;
-            document.querySelectorAll('.service-card, .problem-column, .solution-column, .featured-section')
-                .forEach(el => el.classList.add('visible', 'in-view'));
-        }, 2000);
-    }
+    // Das Einblenden beim Scrollen liegt seit Schritt 4 zentral in
+    // scroll-reveal.js und laeuft auf allen Seiten identisch. Die frueheren
+    // drei Implementierungen beobachteten teils dieselben Elemente mit
+    // unterschiedlichen Schwellwerten.
     
     // ========================================
     // Heading Animations
@@ -253,7 +212,6 @@
     function init() {
         initMobileNav();
         initScrollProgress();
-        initScrollAnimations();
         initHeadingAnimations();
         initCaseStudyMetrics();
         initProblemLines();

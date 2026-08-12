@@ -139,7 +139,7 @@ gegen Budget 0,1, FCP 348 ms, 479 KB übertragen. Die Messung erfolgte ohne
 Server-Komprimierung und ohne Netzwerkdrosselung, ist also kein Ersatz für eine
 Messung an der ausgelieferten Seite.
 
-### Schritt 4: Scroll-Choreografie
+### Schritt 4: Scroll-Choreografie (ERLEDIGT)
 
 **Was:** Einheitliches Reveal-System für alle Sektionen (aktuell existieren drei
 unterschiedliche, teils widersprüchliche Implementierungen in `main.js`,
@@ -148,6 +148,26 @@ optional scroll-gekoppelte Verläufe über `IntersectionObserver` und CSS.
 
 **Warum:** Aktuell sind die Animationen inkonsistent und teilweise wirkungslos. Ein
 System statt drei Insellösungen.
+
+**Umgesetzt:** Neues Modul `scroll-reveal.js`, eingebunden auf allen vier Inhaltsseiten.
+Es erfasst Elemente automatisch über eine Selektorliste und zusätzlich über die
+Attribute `data-reveal` und `data-reveal-group`. Elemente derselben Gruppe erscheinen
+gestaffelt mit 90 ms Abstand, gedeckelt bei fünf Positionen.
+
+`main.js`, `leistungen-anim.js` und `ki-anwendungen.js` enthalten keine eigene
+Reveal-Logik mehr. `leistungen-anim.js` ist von 40 auf 17 Zeilen geschrumpft und
+behandelt nur noch den Icon-Effekt.
+
+**Nebenbefund behoben:** `page-common.js` (Unterseiten) und `main.js` (Startseite)
+steuerten beide die Mobil-Navigation, aber unterschiedlich. Auf Unterseiten fehlten
+das Schließen per Escape und das Schließen beim Klick auf einen Link. Das Menü ließ
+sich dort nur über den Schalter wieder schließen. Beide verhalten sich jetzt gleich
+und setzen zusätzlich das `aria-label` passend zum Zustand.
+
+**Gemessen:** Sichtbarkeit in sechs Modi geprüft (Startseite und Leistungsseite, jeweils
+normal, mit `prefers-reduced-motion` und mit deaktiviertem JavaScript). In allen Modi
+sind alle Elemente sichtbar. Staffelung nachgewiesen mit 0, 90 und 180 ms.
+LCP 336 ms, CLS 0,003.
 
 **Risiko:** Gering bis mittel.
 

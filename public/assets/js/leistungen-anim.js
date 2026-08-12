@@ -1,49 +1,17 @@
-// Scroll-Animationen und Icon-Animationen für Leistungen
+/**
+ * leistungen-anim.js – Nur noch seitenspezifische Interaktionen
+ *
+ * Das Einblenden beim Scrollen lag hier früher doppelt vor: Diese Datei und
+ * main.js beobachteten dieselben .featured-section und .service-card, nur mit
+ * unterschiedlichen Schwellwerten (0.2/0.1 gegen 0.2/0.15). Beides ist nach
+ * scroll-reveal.js gewandert, das auf allen Seiten identisch arbeitet.
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    // Icon-Animation beim Überfahren. Bei reduzierter Bewegung unterbleibt sie.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-document.addEventListener("DOMContentLoaded", () => {
-    // prefers-reduced-motion: skip animations entirely
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.querySelectorAll('.featured-section, .service-card').forEach(el => el.classList.add('in-view'));
-        return;
-    }
-
-    // IntersectionObserver Fallback
-    if (!('IntersectionObserver' in window)) {
-        document.querySelectorAll('.featured-section, .service-card').forEach(el => el.classList.add('in-view'));
-        return;
-    }
-
-    const sections = document.querySelectorAll(".featured-section");
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("in-view");
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.2 });
-    sections.forEach(section => observer.observe(section));
-
-    // Service Cards Animation
-    const cards = document.querySelectorAll(".service-card");
-    const cardObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("in-view");
-                cardObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    cards.forEach(card => cardObserver.observe(card));
-
-    // Icon Animation (optional: z.B. wackeln beim Hover)
-    const icons = document.querySelectorAll('.leistung-icon');
-    icons.forEach(icon => {
-        icon.addEventListener('mouseenter', () => {
-            icon.classList.add('icon-animate');
-        });
-        icon.addEventListener('mouseleave', () => {
-            icon.classList.remove('icon-animate');
-        });
+    document.querySelectorAll('.leistung-icon').forEach(icon => {
+        icon.addEventListener('mouseenter', () => icon.classList.add('icon-animate'));
+        icon.addEventListener('mouseleave', () => icon.classList.remove('icon-animate'));
     });
 });

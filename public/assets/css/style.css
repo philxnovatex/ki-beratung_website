@@ -1940,3 +1940,43 @@ button[data-cc="show-preferencesModal"]:hover {
 .player-card-premium.is-playing .ai-icon { animation: float 3s ease-in-out infinite; }
 .player-card-premium.is-playing .bar { animation: wave 2s ease-in-out infinite; }
 .player-card-premium.is-playing .premium-progress-fill::after { animation: shimmer 2s ease-in-out infinite; }
+
+/* ── Einblenden beim Scrollen (Schritt 4) ─────────────────────────────────
+   Gesteuert von scroll-reveal.js, das die Klassen "visible" und "in-view"
+   setzt und innerhalb einer Gruppe gestaffelte Verzoegerungen vergibt.
+
+   Wichtig: Der Ausgangszustand mit Deckkraft 0 gilt nur fuer Elemente, die das
+   Skript auch wirklich erfasst. Faellt JavaScript aus, greift der noscript-Block
+   im HTML, faellt nur der Observer aus, das Sicherheitsnetz im Skript. */
+.stage-card,
+.timeline-item,
+.testimonial-card,
+.cs-card {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--duration-reveal) var(--ease-out),
+                transform var(--duration-reveal) var(--ease-out);
+}
+.stage-card.in-view,
+.timeline-item.in-view,
+.testimonial-card.in-view,
+.cs-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Die Stufenkarten heben sich beim Erscheinen leicht an, damit die Reihenfolge
+   01, 02, 03 auch in der Bewegung ablesbar wird. */
+.stage-card { transform: translateY(28px) scale(.985); }
+.stage-card.in-view { transform: translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+    .stage-card,
+    .timeline-item,
+    .testimonial-card,
+    .cs-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

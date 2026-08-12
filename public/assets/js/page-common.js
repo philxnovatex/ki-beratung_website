@@ -1,11 +1,10 @@
 /**
- * page-common.js – Shared functionality for all sub-pages
- * Replaces duplicate inline <script> blocks across:
- *   kontakt.html, leistungen.html, datenschutz.html, impressum.html, danke.html
+ * page-common.js – Gemeinsame Funktionen der Unterseiten
  *
- * Features:
- *   - Copyright year auto-update
- *   - Mobile nav toggle with null-safety
+ * Verhaelt sich jetzt identisch zur Startseite. Vorher fehlten hier das
+ * Schliessen per Escape-Taste und das Schliessen beim Klick auf einen Link,
+ * die main.js bereits hatte. Das Menue liess sich auf Unterseiten also nur
+ * ueber den Schalter wieder schliessen.
  */
 'use strict';
 
@@ -17,12 +16,28 @@
     // ── Mobile nav toggle (null-safe) ─────────────────────────────
     const nav = document.querySelector('.main-nav');
     const navToggle = document.querySelector('.mobile-nav-toggle');
+    if (!nav || !navToggle) return;
 
-    if (nav && navToggle) {
-        navToggle.addEventListener('click', function () {
-            const isVisible = nav.getAttribute('data-visible') === 'true';
-            nav.setAttribute('data-visible', !isVisible);
-            navToggle.setAttribute('aria-expanded', !isVisible);
-        });
+    function setzeZustand(sichtbar) {
+        nav.setAttribute('data-visible', String(sichtbar));
+        navToggle.setAttribute('aria-expanded', String(sichtbar));
+        navToggle.setAttribute('aria-label', sichtbar ? 'Navigation schließen' : 'Navigation öffnen');
     }
+
+    navToggle.addEventListener('click', () => {
+        setzeZustand(nav.getAttribute('data-visible') !== 'true');
+    });
+
+    // Schliessen beim Klick auf einen Link
+    nav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => setzeZustand(false));
+    });
+
+    // Schliessen per Escape, dann Fokus zurueck auf den Schalter
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.getAttribute('data-visible') === 'true') {
+            setzeZustand(false);
+            navToggle.focus();
+        }
+    });
 })();

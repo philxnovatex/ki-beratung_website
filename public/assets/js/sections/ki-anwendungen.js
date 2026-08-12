@@ -1,43 +1,28 @@
-// KI-Anwendungen Scroll Reveal & Accessibility
-(function(){
-  const root = document.documentElement;
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    root.classList.add('prefers-reduced-motion');
-  }
-  const section = document.getElementById('ki-anwendungen');
-  if(!section) return;
-  const cards = Array.from(section.querySelectorAll('.ki-apps__card'));
-  let revealed = false;
+// KI-Anwendungen: Nur noch der Titel-Effekt der Sektion.
+// Die Karten selbst blendet scroll-reveal.js ein, inklusive Staffelung.
+// Vorher lag hier eine dritte, eigene Reveal-Implementierung.
+(function () {
+    const section = document.getElementById('ki-anwendungen');
+    if (!section) return;
 
-  // Fallback zuerst: Die Prüfung stand frueher hinter dem Konstruktor und war
-  // damit unerreichbar. In einem Browser ohne IntersectionObserver waeren die
-  // Karten dauerhaft unsichtbar geblieben.
-  if(!('IntersectionObserver' in window)){
-    cards.forEach(c => c.classList.add('in-view'));
-    section.classList.add('revealed');
-    return;
-  }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.classList.add('prefers-reduced-motion');
+        section.classList.add('revealed');
+        return;
+    }
 
-  const opts = { threshold: 0.2 };
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        if(entry.target === section && !revealed){
-          section.classList.add('revealed');
-          revealed = true;
-        }
-        if(cards.includes(entry.target)){
-          const idx = cards.indexOf(entry.target);
-          if(!root.classList.contains('prefers-reduced-motion')){
-            entry.target.style.transitionDelay = Math.min(120, 80 + idx * 40) + 'ms';
-          }
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      }
-    });
-  }, opts);
+    if (!('IntersectionObserver' in window)) {
+        section.classList.add('revealed');
+        return;
+    }
 
-  io.observe(section); // observe section for title effect
-  cards.forEach(c => io.observe(c));
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            section.classList.add('revealed');
+            io.unobserve(entry.target);
+        });
+    }, { threshold: 0.2 });
+
+    io.observe(section);
 })();
