@@ -1980,3 +1980,69 @@ button[data-cc="show-preferencesModal"]:hover {
         transition: none;
     }
 }
+
+/* ── Glossar-Karten der Lernplattform ─────────────────────────────────────
+   Diese Regeln standen zuvor als Inline-Styles im Markup, 42 Karten mal sechs
+   Deklarationen, also 252 Wiederholungen derselben Werte. Die Klassen waren
+   bereits vorhanden und wurden nur nicht gestylt.
+   Das Aufklappen setzt max-height per JavaScript direkt am Element und
+   uebersteuert damit den Ausgangswert hier. */
+.faq-card {
+    background: linear-gradient(145deg, var(--border-subtle), #334155);
+    border: 1px solid #475569;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--duration-base) var(--ease-out),
+                transform var(--duration-base) var(--ease-out);
+}
+.faq-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    gap: var(--space-4);
+}
+.faq-header h3 {
+    color: var(--accent);
+    font-size: var(--text-md);
+    margin: 0;
+}
+/* Der Schalter traegt den Text und muss wie eine Ueberschrift aussehen,
+   damit die Karte optisch unveraendert bleibt. */
+.faq-toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.faq-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+.faq-icon {
+    color: var(--accent);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform var(--duration-base) var(--ease-out);
+}
+
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height .4s var(--ease-in-out), opacity .4s var(--ease-in-out);
+}
+.faq-content p {
+    color: var(--text-body);
+    line-height: 1.6;
+    margin: 0;
+    padding-top: var(--space-3);
+    max-width: none;
+}

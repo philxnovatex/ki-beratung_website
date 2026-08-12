@@ -179,12 +179,45 @@ KI-Anwendungen als kompakteres Raster, Über-mich mit größerem Portrait.
 
 **Risiko:** Gering, aber abhängig von Zulieferungen (siehe Abschnitt 5).
 
-### Schritt 6: Aufräumen und Härten
+### Schritt 6: Aufräumen und Härten (WEITGEHEND ERLEDIGT)
 
 **Was:** Inline-Styles in Klassen überführen, Font Awesome selbst hosten statt vom CDN
 (entfernt eine externe Abhängigkeit und beschleunigt den ersten Seitenaufbau),
 `prefers-reduced-motion` global, Kontrastprüfung nach WCAG AA, Tastaturbedienung,
 Test auf echten Geräten.
+
+**Font Awesome vollständig entfernt statt selbst gehostet.** Auf der ganzen Seite
+wurden nur zehn verschiedene Symbole verwendet, davon zwanzigmal dasselbe Häkchen.
+Dafür lud jede Seite eine komplette Icon-Schrift von cdnjs.cloudflare.com. Ersetzt
+durch `icons.css` mit SVG-Masken: Die Symbole erben weiterhin die Textfarbe über
+`currentColor` und skalieren über `font-size`, benötigen aber keinen Netzwerkzugriff.
+
+Folge: Die Content-Security-Policy kommt jetzt ohne `cdnjs.cloudflare.com` in
+`style-src` und `font-src` aus. Übertragene Datenmenge der Startseite von 484 auf
+315 KB gesunken.
+
+**Inline-Styles von 554 auf 210 reduziert:**
+
+| Seite | vorher | jetzt |
+|---|---|---|
+| lernplattform.html | 364 | 112 |
+| leistungen.html | 150 | 58 |
+| index.html | 40 | 40 |
+
+Der größte Block waren 42 Glossar-Karten mit je sechs gleichen Deklarationen, also
+252 Wiederholungen. Die Klassen (`faq-card`, `faq-header`, `faq-icon`, `faq-content`)
+waren bereits im Markup vorhanden und nur nie gestylt worden.
+
+**Kontrast:** 23 verschiedene Farb- und Größenkombinationen geprüft, alle erfüllen
+WCAG AA. Ein zunächst gemeldeter Verstoß war ein Messfehler: Der betroffene Schalter
+nutzt einen Farbverlauf statt einer Hintergrundfarbe, wodurch das Prüfskript den
+Seitenhintergrund statt des Verlaufs heranzog.
+
+**Tastatur:** Die ersten vierzehn Sprungziele haben einen sichtbaren Fokus. Das
+mobile Menü öffnet, schließt per Escape und gibt den Fokus an den Schalter zurück.
+
+**Noch offen:** Die verbleibenden 210 Inline-Styles sind Einzelfälle ohne
+Wiederholungsmuster. Test auf echten Geräten steht aus.
 
 ---
 
