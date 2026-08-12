@@ -1,224 +1,135 @@
 /**
- * HERO: Neural Network Pattern
- * Gleichmäßig verteiltes Netzwerk mit Klick-Magneteffekt
- * 
- * Features:
- * - Viele Nodes gleichmäßig über den gesamten Bereich verteilt
- * - Glow-Effekte auf aktiven Nodes
- * - Maus-Interaktion & Scroll-Parallax
- * - Klick: Magneteffekt - Nodes werden angezogen und verbinden sich
+ * HERO: Knotennetz auf Canvas
+ *
+ * Ersetzt die frühere Fassung. Wesentliche Unterschiede:
+ *
+ *  - prefers-reduced-motion hält die Animation jetzt wirklich an. Vorher lief
+ *    die requestAnimationFrame-Schleife weiter und nur die Knotenbewegung war
+ *    abgeschaltet, die Verbindungslinien pulsierten also weiter. Jetzt wird
+ *    genau ein Standbild gezeichnet und die Schleife nie gestartet.
+ *  - Die Schleife pausiert, sobald der Hero aus dem Sichtfeld gescrollt ist.
+ *    Vorher lief sie über die gesamte Seitenlänge weiter.
+ *  - Die Knotenzahl richtet sich nach der Fläche und der Geräteleistung,
+ *    statt fest bei 160 zu liegen.
+ *  - Die Zeichenfläche berücksichtigt devicePixelRatio, damit die Linien auf
+ *    hochauflösenden Displays nicht unscharf wirken.
  */
-window.addEventListener('DOMContentLoaded', () => {
-    const canvas = document.getElementById('hero-canvas');
-    if (!canvas) return;
+(function initHeroCanvas() {
+    'use strict';
 
-    const ctx = canvas.getContext('2d');
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const start = () => {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
 
-    // Config - MEHR NODES, GLEICHMÄSSIG VERTEILT
-    const config = {
-        nodeCount: prefersReduced ? 80 : 160,
-        connectionDistance: 160,
-        nodeRadius: 2.5,
-        lineWidth: 1,
-        baseColor: { r: 24, g: 90, b: 219 },      // #185adb
-        accentColor: { r: 0, g: 212, b: 255 },    // #00d4ff
-        goldColor: { r: 255, g: 201, b: 71 },     // #ffc947
-        mouseRadius: 180,
-        pulseSpeed: 0.003
-    };
+        const ctx = canvas.getContext('2d', { alpha: true });
+        if (!ctx) return;
 
-    let width, height;
-    let nodes = [];
-    let mouseX = -1000, mouseY = -1000;
-    let scrollProgress = 0;
-    let time = 0;
-    
-    // Klick-Magnet Effekt
-    let magnetActive = false;
-    let magnetX = 0, magnetY = 0;
-    let magnetStrength = 0;
-    
-    // Animation frame ID for cleanup (prevent memory leak)
-    let animationId = null;
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-    // Node class
-    class Node {
-        constructor() {
-            this.reset();
+        const config = {
+            connectionDistance: 165,
+            nodeRadius: 2.2,
+            baseColor:   { r: 24,  g: 90,  b: 219 },  // Interaktionsblau
+            accentColor: { r: 120, g: 190, b: 255 },  // helles Blau für Glanzpunkte
+            goldColor:   { r: 255, g: 201, b: 71  },  // Markenakzent
+            mouseRadius: 180,
+            pulseSpeed: 0.003,
+            maxNodes: 170,
+            minNodes: 40
+        };
+
+        let width = 0, height = 0, dpr = 1;
+        let nodes = [];
+        let mouseX = -9999, mouseY = -9999;
+        let time = 0;
+        let animationId = null;
+        let imSichtfeld = true;
+        let magnet = { aktiv: false, x: 0, y: 0, staerke: 0 };
+
+        /* Knotenzahl aus der Fläche ableiten. Ein 4K-Monitor bekommt sonst
+           dieselbe Dichte wie ein Telefon, ein Telefon dieselbe Last wie ein
+           Desktop. Bei wenigen CPU-Kernen wird zusätzlich reduziert. */
+        function knotenzahl() {
+            const flaeche = width * height;
+            const kerne = navigator.hardwareConcurrency || 4;
+            let n = Math.round(flaeche / 11000);
+            if (kerne <= 4) n = Math.round(n * 0.6);
+            return Math.max(config.minNodes, Math.min(config.maxNodes, n));
         }
 
-        reset() {
-            // Gleichmäßig über den gesamten Bereich verteilt
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.baseX = this.x;
-            this.baseY = this.y;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = config.nodeRadius + Math.random() * 2;
-            this.pulseOffset = Math.random() * Math.PI * 2;
-            // Zufällig einige aktive (gold) Nodes
-            this.isActive = Math.random() < 0.12;
-            this.glowIntensity = 0;
-            this.magnetInfluence = 0;
-        }
-
-        update() {
-            if (prefersReduced) return;
-
-            // Sanfte Eigenbewegung
-            this.x += this.vx;
-            this.y += this.vy;
-
-            // Bounds mit sanftem Zurückfedern
-            const margin = 50;
-            if (this.x < -margin) this.vx = Math.abs(this.vx);
-            if (this.x > width + margin) this.vx = -Math.abs(this.vx);
-            if (this.y < -margin) this.vy = Math.abs(this.vy);
-            if (this.y > height + margin) this.vy = -Math.abs(this.vy);
-
-            // Maus-Interaktion (abstoßend)
-            const dxMouse = this.x - mouseX;
-            const dyMouse = this.y - mouseY;
-            const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
-
-            if (distMouse < config.mouseRadius && distMouse > 0) {
-                const force = (config.mouseRadius - distMouse) / config.mouseRadius;
-                const angle = Math.atan2(dyMouse, dxMouse);
-                this.x += Math.cos(angle) * force * 3;
-                this.y += Math.sin(angle) * force * 3;
-                this.glowIntensity = Math.min(1, this.glowIntensity + 0.1);
-            } else {
-                this.glowIntensity *= 0.95;
+        class Node {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
+                this.radius = config.nodeRadius + Math.random() * 1.8;
+                this.pulseOffset = Math.random() * Math.PI * 2;
+                this.istGold = Math.random() < 0.12;
             }
 
-            // Magnet-Effekt (anziehend bei Klick)
-            if (magnetActive && magnetStrength > 0) {
-                const dxMag = magnetX - this.x;
-                const dyMag = magnetY - this.y;
-                const distMag = Math.sqrt(dxMag * dxMag + dyMag * dyMag);
-                
-                if (distMag < 300 && distMag > 20) {
-                    const pullForce = magnetStrength * (1 - distMag / 300) * 0.15;
-                    this.x += dxMag * pullForce;
-                    this.y += dyMag * pullForce;
-                    this.magnetInfluence = Math.min(1, this.magnetInfluence + 0.15);
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // An den Rändern abprallen statt herausfliegen
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+                this.x = Math.max(0, Math.min(width, this.x));
+                this.y = Math.max(0, Math.min(height, this.y));
+
+                // Sanfte Anziehung zum zuletzt angeklickten Punkt
+                if (magnet.aktiv) {
+                    const dx = magnet.x - this.x;
+                    const dy = magnet.y - this.y;
+                    const dist = Math.hypot(dx, dy) || 1;
+                    if (dist < 320) {
+                        this.x += (dx / dist) * magnet.staerke * 1.6;
+                        this.y += (dy / dist) * magnet.staerke * 1.6;
+                    }
                 }
-            } else {
-                this.magnetInfluence *= 0.92;
             }
 
-            // Scroll-Parallax
-            this.y = this.baseY + scrollProgress * 80 * (this.baseY / height - 0.5) * 0.5;
-        }
+            draw() {
+                const puls = Math.sin(time * 2 + this.pulseOffset) * 0.5 + 0.5;
+                const dMaus = Math.hypot(this.x - mouseX, this.y - mouseY);
+                const nah = dMaus < config.mouseRadius;
+                const farbe = this.istGold ? config.goldColor
+                            : nah ? config.accentColor
+                            : config.baseColor;
 
-        draw() {
-            const pulse = Math.sin(time * 4 + this.pulseOffset) * 0.3 + 0.8;
-            const radius = this.radius * pulse;
+                const alpha = 0.35 + puls * 0.35 + (nah ? 0.3 : 0);
+                const r = this.radius * (nah ? 1.5 : 1);
 
-            // Glow bei Maus-Nähe, Magnet-Einfluss oder aktiven Nodes
-            const glowAmount = Math.max(this.glowIntensity, this.magnetInfluence, this.isActive ? 0.6 : 0);
-            
-            if (this.magnetInfluence > 0.3) {
-                // Cyan bei Magnet-Einfluss
-                ctx.fillStyle = `rgba(${config.accentColor.r}, ${config.accentColor.g}, ${config.accentColor.b}, ${0.7 + this.magnetInfluence * 0.3})`;
-                ctx.shadowColor = `rgba(${config.accentColor.r}, ${config.accentColor.g}, ${config.accentColor.b}, ${0.6 + this.magnetInfluence * 0.4})`;
-                ctx.shadowBlur = 12 + this.magnetInfluence * 10;
-            } else if (this.isActive || this.glowIntensity > 0.1) {
-                const color = this.isActive ? config.goldColor : config.accentColor;
-                ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${0.7 + glowAmount * 0.3})`;
-                ctx.shadowColor = `rgba(${color.r}, ${color.g}, ${color.b}, ${0.6 + glowAmount * 0.4})`;
-                ctx.shadowBlur = 12 + glowAmount * 8;
-            } else {
-                ctx.fillStyle = `rgba(${config.baseColor.r}, ${config.baseColor.g}, ${config.baseColor.b}, 0.7)`;
-                ctx.shadowColor = `rgba(${config.baseColor.r}, ${config.baseColor.g}, ${config.baseColor.b}, 0.3)`;
-                ctx.shadowBlur = 4;
+                if (nah || this.istGold) {
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = `rgba(${farbe.r}, ${farbe.g}, ${farbe.b}, .8)`;
+                }
+                ctx.fillStyle = `rgba(${farbe.r}, ${farbe.g}, ${farbe.b}, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
             }
-
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, radius, 0, Math.PI * 2);
-            ctx.fill();
-            
-            ctx.shadowBlur = 0;
         }
-    }
 
-    // Initialisierung - Alle Nodes gleichmäßig verteilt
-    function init() {
-        resize();
-        nodes = [];
-        
-        for (let i = 0; i < config.nodeCount; i++) {
-            nodes.push(new Node());
-        }
-    }
+        function drawConnections() {
+            const maxDist = config.connectionDistance;
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist > maxDist) continue;
 
-    // Resize Handler
-    function resize() {
-        const rect = canvas.getBoundingClientRect();
-        width = rect.width || window.innerWidth;
-        height = rect.height || window.innerHeight;
-        
-        const dpr = Math.min(window.devicePixelRatio, 2);
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx.scale(dpr, dpr);
+                    const naehe = 1 - dist / maxDist;
+                    const mitte = { x: (nodes[i].x + nodes[j].x) / 2, y: (nodes[i].y + nodes[j].y) / 2 };
+                    const nahMaus = Math.hypot(mitte.x - mouseX, mitte.y - mouseY) < config.mouseRadius;
+                    const f = nahMaus ? config.accentColor : config.baseColor;
+                    const alpha = naehe * (nahMaus ? 0.45 : 0.22);
 
-        if (nodes.length > 0) {
-            nodes.forEach(node => {
-                node.baseX = Math.random() * width;
-                node.baseY = Math.random() * height;
-                node.x = node.baseX;
-                node.y = node.baseY;
-            });
-        }
-    }
-
-    // Verbindungen zeichnen
-    function drawConnections() {
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-                const dx = nodes[i].x - nodes[j].x;
-                const dy = nodes[i].y - nodes[j].y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                if (dist < config.connectionDistance) {
-                    // Opacity basierend auf Distanz
-                    let opacity = (1 - dist / config.connectionDistance) * 0.6;
-                    
-                    // Pulse-Effekt
-                    const pulseOpacity = opacity * (0.6 + Math.sin(time * 3 + i * 0.15) * 0.4);
-                    
-                    // Hellere Verbindungen bei Magnet-Einfluss
-                    const magnetBoost = Math.max(nodes[i].magnetInfluence, nodes[j].magnetInfluence);
-                    if (magnetBoost > 0.2) {
-                        opacity = pulseOpacity * (1 + magnetBoost);
-                    }
-                    
-                    // Verbindungen zwischen aktiven Nodes sind heller
-                    if (nodes[i].isActive || nodes[j].isActive) {
-                        opacity = pulseOpacity * 1.5;
-                    }
-                    
-                    // Farbe mit Cyan-Anteil
-                    const mixRatio = Math.sin(time * 1.5 + i * 0.08) * 0.5 + 0.5;
-                    let r = Math.round(config.baseColor.r * (1 - mixRatio * 0.5) + config.accentColor.r * mixRatio * 0.5);
-                    let g = Math.round(config.baseColor.g * (1 - mixRatio * 0.5) + config.accentColor.g * mixRatio * 0.5);
-                    let b = Math.round(config.baseColor.b * (1 - mixRatio * 0.5) + config.accentColor.b * mixRatio * 0.5);
-                    
-                    // Mehr Cyan bei Magnet
-                    if (magnetBoost > 0.3) {
-                        r = Math.round(r * (1 - magnetBoost * 0.5) + config.accentColor.r * magnetBoost * 0.5);
-                        g = Math.round(g * (1 - magnetBoost * 0.5) + config.accentColor.g * magnetBoost * 0.5);
-                        b = Math.round(b * (1 - magnetBoost * 0.5) + config.accentColor.b * magnetBoost * 0.5);
-                    }
-
-                    // Dickere Linien für nahe Verbindungen
-                    const lineWidth = config.lineWidth + (1 - dist / config.connectionDistance) * 0.5;
-
-                    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${pulseOpacity})`;
-                    ctx.lineWidth = lineWidth;
+                    ctx.strokeStyle = `rgba(${f.r}, ${f.g}, ${f.b}, ${alpha})`;
+                    ctx.lineWidth = nahMaus ? 1.2 : 0.8;
                     ctx.beginPath();
                     ctx.moveTo(nodes[i].x, nodes[i].y);
                     ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -226,97 +137,114 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-    }
 
-    // Animation Loop
-    function animate() {
-        animationId = requestAnimationFrame(animate);
-        time += config.pulseSpeed;
-
-        // Magnet-Effekt abklingen lassen
-        if (magnetActive) {
-            magnetStrength *= 0.97;
-            if (magnetStrength < 0.01) {
-                magnetActive = false;
-                magnetStrength = 0;
-            }
+        function render() {
+            ctx.clearRect(0, 0, width, height);
+            drawConnections();
+            for (const n of nodes) n.draw();
         }
 
-        ctx.clearRect(0, 0, width, height);
+        function frame() {
+            time += config.pulseSpeed;
 
-        // Nodes & Verbindungen
-        nodes.forEach(node => node.update());
-        drawConnections();
-        nodes.forEach(node => node.draw());
-    }
-    
-    // Cleanup on visibility change (prevent memory leak)
-    function handleVisibilityChange() {
-        if (document.hidden) {
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-                animationId = null;
+            if (magnet.aktiv) {
+                magnet.staerke *= 0.97;
+                if (magnet.staerke < 0.01) { magnet.aktiv = false; magnet.staerke = 0; }
             }
+
+            for (const n of nodes) n.update();
+            render();
+
+            animationId = requestAnimationFrame(frame);
+        }
+
+        function starteSchleife() {
+            // Bei reduzierter Bewegung bleibt es beim Standbild.
+            if (motionQuery.matches || animationId !== null) return;
+            animationId = requestAnimationFrame(frame);
+        }
+
+        function stoppeSchleife() {
+            if (animationId === null) return;
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
+        function resize() {
+            const rect = canvas.getBoundingClientRect();
+            width = rect.width || window.innerWidth;
+            height = rect.height || window.innerHeight;
+
+            // Auf 2 begrenzen: darüber steigt die Füllrate stark, der sichtbare
+            // Gewinn ist gering.
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.round(width * dpr);
+            canvas.height = Math.round(height * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            const soll = knotenzahl();
+            if (nodes.length !== soll) {
+                nodes = Array.from({ length: soll }, () => new Node());
+            }
+            render();
+        }
+
+        // ── Start ────────────────────────────────────────────────────────────
+        resize();
+
+        if (motionQuery.matches) {
+            render();            // genau ein Standbild, keine Schleife
         } else {
-            if (!animationId) {
-                animate();
-            }
+            starteSchleife();
         }
-    }
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
 
-    // Event Listeners
-    window.addEventListener('resize', resize);
+        // Umschalten der Systemeinstellung zur Laufzeit berücksichtigen
+        const onMotionChange = () => {
+            if (motionQuery.matches) { stoppeSchleife(); render(); }
+            else if (imSichtfeld) starteSchleife();
+        };
+        if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotionChange);
+        else if (motionQuery.addListener) motionQuery.addListener(onMotionChange);
 
-    canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        mouseX = e.clientX - rect.left;
-        mouseY = e.clientY - rect.top;
-    });
+        // Nur rechnen, solange der Hero sichtbar ist
+        const hero = document.getElementById('hero');
+        if (hero && 'IntersectionObserver' in window) {
+            new IntersectionObserver((entries) => {
+                imSichtfeld = entries[0].isIntersecting;
+                if (imSichtfeld) starteSchleife();
+                else stoppeSchleife();
+            }, { threshold: 0 }).observe(hero);
+        }
 
-    canvas.addEventListener('mouseleave', () => {
-        mouseX = -1000;
-        mouseY = -1000;
-    });
-
-    function updateScroll() {
-        const heroSection = document.getElementById('hero');
-        if (!heroSection) return;
-        
-        const rect = heroSection.getBoundingClientRect();
-        const heroHeight = heroSection.offsetHeight;
-        scrollProgress = Math.max(0, Math.min(1, -rect.top / heroHeight));
-    }
-    
-    window.addEventListener('scroll', updateScroll, { passive: true });
-
-    // Klick: Magnet-Effekt - Nodes werden angezogen
-    canvas.addEventListener('click', (e) => {
-        if (prefersReduced) return;
-        
-        const rect = canvas.getBoundingClientRect();
-        magnetX = e.clientX - rect.left;
-        magnetY = e.clientY - rect.top;
-        magnetActive = true;
-        magnetStrength = 1;
-        
-        // Nodes in der Nähe kurz aktivieren
-        nodes.forEach(node => {
-            const dx = node.x - magnetX;
-            const dy = node.y - magnetY;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            
-            if (dist < 250) {
-                node.isActive = true;
-                setTimeout(() => {
-                    node.isActive = Math.random() < 0.12;
-                }, 1500);
-            }
+        // Nicht im Hintergrund weiterrechnen
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stoppeSchleife();
+            else if (imSichtfeld) starteSchleife();
         });
-    });
 
-    // Start
-    init();
-    animate();
-});
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resize, 150);
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouseX = e.clientX - rect.left;
+            mouseY = e.clientY - rect.top;
+        });
+        canvas.addEventListener('mouseleave', () => { mouseX = -9999; mouseY = -9999; });
+
+        canvas.addEventListener('click', (e) => {
+            if (motionQuery.matches) return;
+            const rect = canvas.getBoundingClientRect();
+            magnet = { aktiv: true, x: e.clientX - rect.left, y: e.clientY - rect.top, staerke: 1.6 };
+        });
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', start);
+    } else {
+        start();
+    }
+})();

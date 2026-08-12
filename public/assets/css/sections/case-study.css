@@ -27,7 +27,7 @@
     align-items: center;
     gap: 8px;
     font-family: var(--font-secondary);
-    font-size: 0.85rem;
+    font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -35,7 +35,7 @@
     margin-bottom: 16px;
 }
 .cs-eyebrow i {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
 }
 
 .case-study-section h2 {
@@ -48,7 +48,7 @@
     max-width: 720px;
     margin: 0 auto 60px;
     color: var(--text-color);
-    font-size: 1.1rem;
+    font-size: var(--text-md);
     line-height: 1.7;
 }
 
@@ -93,7 +93,7 @@
 
 .cs-label {
     font-family: var(--font-secondary);
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -111,7 +111,7 @@
 
 .cs-context h3,
 .cs-solution h3 {
-    font-size: 1.25rem;
+    font-size: var(--text-md);
     color: var(--headline-color);
     margin-bottom: 14px;
     line-height: 1.4;
@@ -120,7 +120,7 @@
 .cs-context p,
 .cs-solution p {
     color: var(--text-color);
-    font-size: 0.95rem;
+    font-size: var(--text-sm);
     line-height: 1.7;
 }
 
@@ -228,7 +228,7 @@
 }
 
 .cs-quote-text {
-    font-size: 1.15rem;
+    font-size: var(--text-md);
     font-style: italic;
     color: var(--headline-color);
     line-height: 1.7;
@@ -238,7 +238,7 @@
 
 .cs-quote-author {
     font-family: var(--font-secondary);
-    font-size: 0.85rem;
+    font-size: var(--text-xs);
     color: var(--text-faint);
 }
 
@@ -257,7 +257,7 @@
 }
 
 .cs-cta-text {
-    font-size: 0.95rem;
+    font-size: var(--text-sm);
     color: var(--text-color);
 }
 
@@ -275,7 +275,7 @@
     padding: 12px 28px;
     border-radius: 8px;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: var(--text-sm);
     border: 2px solid var(--accent-color);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     white-space: nowrap;
@@ -287,7 +287,7 @@
 }
 
 .cs-cta-button i {
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     transition: transform 0.3s ease;
 }
 
@@ -306,13 +306,13 @@
     border: 1px solid rgba(34, 197, 94, 0.2);
     border-radius: 6px;
     font-family: var(--font-secondary);
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     font-weight: 600;
     color: #22c55e;
 }
 
 .cs-duration i {
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
 }
 
 /* =============================================
@@ -375,11 +375,11 @@
     }
 
     .cs-quote-text {
-        font-size: 1rem;
+        font-size: var(--text-base);
     }
 
     .cs-context h3,
     .cs-solution h3 {
-        font-size: 1.1rem;
+        font-size: var(--text-md);
     }
 }

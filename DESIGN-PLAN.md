@@ -51,11 +51,11 @@ Konkret heißt das:
 
 ## 3. Die Schritte
 
-### Schritt 1: Design-System als Fundament (AUSGEFÜHRT)
+### Schritt 1: Design-System als Fundament (ERLEDIGT)
 
 **Was:** Design-Tokens als CSS-Custom-Properties: Typo-Skala mit 7 Stufen, Spacing-Skala
-auf 4px-Basis, erweiterte Farbpalette mit benannten Rollen, Radien, Schatten,
-Motion-Tokens (Dauer und Easing), Layout-Breiten.
+auf 4px-Basis mit 9 Stufen plus `--space-section`, erweiterte Farbpalette mit benannten
+Rollen, Radien, Schatten, Motion-Tokens (Dauer und Easing), Layout-Breiten.
 
 **Warum zuerst:** Jeder weitere Schritt greift darauf zu. Ohne dieses Fundament wird
 jede neue Sektion wieder mit frei gewählten Pixelwerten gebaut und das Chaos wächst.
@@ -65,9 +65,17 @@ Design-Tokens braucht jede denkbare Design-Richtung.
 **Risiko:** Sehr gering. Die Tokens werden additiv eingeführt, bestehende Regeln bleiben
 zunächst unverändert und werden schrittweise umgestellt.
 
-**Prüfbar durch:** Regressionstest über alle Seiten, visueller Vergleich vorher/nachher.
+**Nachgewiesen durch:** Pixelvergleich der kompletten Startseite vor und nach der
+Änderung, 0 abweichende Pixel von 13.839.840. Regressionstest über alle sieben Seiten.
+Reproduzierbar über die Testskripte in Abschnitt 9.
 
-### Schritt 2: Typografie und Rhythmus
+**Nachträgliche Einschränkung (aus der Prüfung):** Die Änderung war nicht rein additiv.
+Neben den neuen Tokens wurden 73 Farbliterale migriert und eine globale
+`prefers-reduced-motion`-Regel ergänzt. Der Pixelvergleich deckt die visuelle
+Auswirkung ab, nicht jedoch das Verhalten bei aktivierter Bewegungsreduktion. Dieses
+wurde in Schritt 3 separat gemessen.
+
+### Schritt 2: Typografie und Rhythmus (ERLEDIGT)
 
 **Was:** Alle Überschriften, Fließtexte und Abstände auf die Skala umstellen. Fluid
 Typography über `clamp()`, damit Schriftgrößen zwischen Mobile und Desktop stufenlos
@@ -77,9 +85,20 @@ Vertikaler Rhythmus vereinheitlichen.
 **Warum:** Das ist der größte optische Hebel überhaupt und der Unterschied, den Laien
 als "hochwertig" wahrnehmen, ohne ihn benennen zu können.
 
-**Risiko:** Mittel. Umfangreiche CSS-Änderungen, jede Seite muss visuell geprüft werden.
+**Gefunden und behoben:**
+- `h1, h2, h3` teilten sich eine feste Größe (`--unified-heading-size: 2.4rem`). Eine
+  Kartenüberschrift war damit optisch so wichtig wie die Seitenüberschrift, die Seite
+  hatte keine Hierarchie. Jetzt drei getrennte Stufen.
+- Eine Media Query bei 768px setzte feste Größen, die die fluide Skala aushebelten.
+  Auf 390px war `h1` dadurch mit 25,6px kleiner als `h2` mit 35,2px, die Hierarchie war
+  also umgekehrt. Jetzt: 36px gegen 25,6px.
+- Die geschlossene Mobil-Navigation lag rechts neben dem Viewport und erzeugte
+  horizontales Scrollen. Zusätzlich waren ihre Links per Tabulator erreichbar, obwohl
+  unsichtbar. Behoben über `visibility` und `overflow-x: clip`.
+- Schriftgrößen-Literale von 39 auf 17 reduziert, 8 Sektionsabstände auf
+  `--space-section` vereinheitlicht.
 
-### Schritt 3: Hero
+### Schritt 3: Hero (ERLEDIGT)
 
 **Was:** Vollflächiger Hero mit mehrschichtigem Canvas-Hintergrund (der bestehende
 `hero-canvas.js` wird ersetzt, nicht ergänzt), Maus-Parallax, gestaffeltes Text-Reveal,
@@ -93,6 +112,32 @@ Gestaltung investiert, nicht verschwendet.
 Gegenmaßnahmen: Rendering pausiert außerhalb des Viewports, Partikelzahl abhängig von
 Bildschirmgröße, vollständige Abschaltung bei `prefers-reduced-motion`, statischer
 Verlauf als Fallback.
+
+**Umgesetzt:**
+- `hero-enhancements.css` neu geschrieben. Die frühere Fassung enthielt 107
+  `!important`-Regeln, die das Token-System aushebelten. Die neue Fassung kommt ohne
+  ein einziges aus.
+- `hero-canvas.js` neu geschrieben. Die alte Fassung ließ die
+  `requestAnimationFrame`-Schleife trotz `prefers-reduced-motion` weiterlaufen und
+  reduzierte lediglich die Knotenzahl. Die Verbindungslinien pulsierten also weiter.
+- Knotenzahl richtet sich nach Fläche und `hardwareConcurrency`, Zeichenfläche
+  berücksichtigt `devicePixelRatio` (auf 2 begrenzt).
+- Neu im Hero: Einordnungszeile, zweitrangiger Weg für noch nicht kaufbereite
+  Besucher, Scroll-Hinweis, gestaffelter Auftritt der Elemente.
+
+**Gemessen (Frames je 2 Sekunden):**
+
+| Zustand | Frames | Erwartet |
+|---|---|---|
+| Hero sichtbar | 46 | läuft |
+| Hero außerhalb des Sichtfelds | 0 | pausiert |
+| Zurück am Hero | 45 | läuft wieder |
+| `prefers-reduced-motion: reduce` | 0 | Standbild |
+
+**Performance-Budget (lokal, 1440px):** LCP 636 ms gegen Budget 2500 ms, CLS 0,0003
+gegen Budget 0,1, FCP 348 ms, 479 KB übertragen. Die Messung erfolgte ohne
+Server-Komprimierung und ohne Netzwerkdrosselung, ist also kein Ersatz für eine
+Messung an der ausgelieferten Seite.
 
 ### Schritt 4: Scroll-Choreografie
 
@@ -199,3 +244,37 @@ getrennt, weil sie Zuarbeit in Brevo und Umami erfordern.
 - Screenshots in drei Breiten (390, 768, 1440 Pixel)
 - Kontrastwerte nach WCAG AA
 - Verhalten bei deaktiviertem JavaScript und bei `prefers-reduced-motion`
+- Performance-Budget: LCP maximal 2500 ms, CLS maximal 0,1
+
+---
+
+## 9. Testverfahren zum Nachvollziehen
+
+Die Prüfungen laufen über Playwright gegen einen lokalen Server. Ablauf:
+
+```
+npx serve public -l 4173
+```
+
+Geprüft wird jeweils:
+
+1. **Regression:** Alle sieben Seiten aufrufen, HTTP-Status, Anzahl `h1`,
+   JavaScript-Fehler und Antworten mit Status 400 und höher erfassen.
+2. **Pixelvergleich:** Startseite als `fullPage` mit eingefrorenen Animationen und
+   ausgeblendetem Canvas aufnehmen, Zustand vor der Änderung über `git stash` erzeugen,
+   beide Aufnahmen mit `pixelmatch` vergleichen.
+3. **Typo-Hierarchie:** Errechnete `font-size` von `h1`, `h2`, `h3` und `body` bei 390,
+   768 und 1440 Pixeln auslesen und auf absteigende Reihenfolge prüfen.
+4. **Überlauf:** `window.scrollTo(300, 0)` ausführen und prüfen, ob `window.scrollX`
+   auf 0 bleibt. Die reine Prüfung auf `scrollWidth` genügt nicht, weil fixierte
+   Elemente die Breite melden, ohne scrollbar zu sein.
+5. **Bewegung:** `requestAnimationFrame` zählen, je 2 Sekunden, in den vier Zuständen
+   aus der Tabelle in Schritt 3. Wichtig: nach dem Scrollen mindestens 3 Sekunden warten,
+   sonst verfälschen die einmaligen Zähler-Animationen der Case Study das Ergebnis.
+6. **Performance:** `PerformanceObserver` für `largest-contentful-paint` und
+   `layout-shift`.
+
+Die Skripte liegen im Arbeitsverzeichnis der Sitzung und sind bewusst nicht Teil des
+Repositories, da das Projekt ohne Build-Schritt und ohne Testabhängigkeiten auskommt.
+Sollen sie dauerhaft verfügbar sein, wäre `tests/` mit einer eigenen `package.json` der
+richtige Ort. Das ist eine offene Entscheidung.
