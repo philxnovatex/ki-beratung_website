@@ -151,7 +151,7 @@
     // Heading Animations
     // ========================================
     function initHeadingAnimations() {
-        const excludeSelectors = '.service-card, .principle-card, .lead-gen-form-container, .contact-card';
+        const excludeSelectors = '.service-card, .stage-card, .testimonial-card, .principle-card, .lead-gen-form-container, .contact-card';
         const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
             .filter(h => !h.closest(excludeSelectors));
         
