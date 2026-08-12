@@ -35,11 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Container des Players. Die Zustandsklasse darauf steuert, ob die
+    // Wellenbalken, Pulskreise und Glanzeffekte laufen. Vorher liefen sie
+    // dauerhaft, auch wenn nichts abgespielt wurde: Das wirkte unruhig und
+    // suggerierte Wiedergabe, wo keine war.
+    const playerCard = document.querySelector('.player-card-premium');
+
     function playAudio() {
         isPlaying = true;
         playIcon.style.display = 'none';
         pauseIcon.style.display = 'block';
         playPauseBtn.setAttribute('aria-label', 'Pausieren');
+        if (playerCard) playerCard.classList.add('is-playing');
         animateWaveform(true);
     }
 
@@ -48,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         playIcon.style.display = 'block';
         pauseIcon.style.display = 'none';
         playPauseBtn.setAttribute('aria-label', 'Abspielen');
+        if (playerCard) playerCard.classList.remove('is-playing');
         animateWaveform(false);
     }
 

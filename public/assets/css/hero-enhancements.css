@@ -24,7 +24,10 @@ section.hero-section.hero-enhanced {
     align-items: center;
     justify-content: center;
     min-height: min(100svh, 900px);  /* svh: keine Sprünge durch die Mobil-Adressleiste */
-    padding: var(--space-24) 0 var(--space-16);
+    /* Unten mehr Luft, damit der Scroll-Hinweis nicht an den Fließtext stößt.
+       Auf niedrigen Fenstern (etwa 1280x720) blieben vorher nur 10 Pixel
+       Abstand, was optisch als Überlappung gelesen wurde. */
+    padding: var(--space-24) 0 calc(var(--space-24) + var(--space-8));
     overflow: hidden;
     text-align: center;
     background:
@@ -92,36 +95,31 @@ section.hero-section.hero-enhanced .container {
     max-width: 62rem;
 }
 
-/* Eyebrow: ordnet den Besucher ein, bevor er die Headline liest */
+/* Einordnungszeile über der Headline.
+   Bewusst kein Pillen-Abzeichen mit pulsierendem Punkt: Diese Kombination ist
+   das Erkennungszeichen jeder KI-Produktseite und liest sich sofort als
+   Vorlage. Hier steht schlichter Satz zwischen zwei feinen Linien, der die
+   Zeile als Einordnung markiert, ohne wie ein Systemzustand auszusehen. */
 section.hero-section.hero-enhanced .hero-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-2);
+    gap: var(--space-4);
     margin-bottom: var(--space-6);
-    padding: var(--space-2) var(--space-4);
-    border: 1px solid rgba(255, 201, 71, .28);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 201, 71, .07);
     font-family: var(--font-secondary);
     font-size: var(--text-xs);
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--text-muted);
 }
-section.hero-section.hero-enhanced .hero-eyebrow::before {
+section.hero-section.hero-enhanced .hero-eyebrow::before,
+section.hero-section.hero-enhanced .hero-eyebrow::after {
     content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 0 rgba(255, 201, 71, .6);
-    animation: heroPulse 2.6s var(--ease-out) infinite;
+    width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-faint));
 }
-
-@keyframes heroPulse {
-    0%   { box-shadow: 0 0 0 0 rgba(255, 201, 71, .55); }
-    70%  { box-shadow: 0 0 0 9px rgba(255, 201, 71, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 201, 71, 0); }
+section.hero-section.hero-enhanced .hero-eyebrow::after {
+    background: linear-gradient(90deg, var(--text-faint), transparent);
 }
 
 section.hero-section.hero-enhanced h1 {
@@ -133,21 +131,13 @@ section.hero-section.hero-enhanced h1 {
     text-wrap: balance;
 }
 
-/* Der Akzentteil der Headline. Der Verlauf läuft langsam durch und markiert
-   die Pointe des Satzes, ohne dass ein zweiter Textblock nötig wäre. */
+/* Der Akzentteil der Headline, statisch.
+   Vorher lief hier ein endloser Farbverlauf ("heroShimmer", 9s, infinite).
+   Zusammen mit dem Aufblitzen der Überschriften wirkte die Seite unruhig, und
+   dauerhaft laufende Glanzeffekte auf Text sind ein Vorlagen-Merkmal.
+   Die Farbe allein trägt die Betonung. */
 section.hero-section.hero-enhanced .text-cyan {
-    background: linear-gradient(100deg,
-        var(--c-gold-500) 0%, #fff0c4 28%, var(--c-gold-500) 56%, var(--c-gold-400) 100%);
-    background-size: 220% 100%;
-    -webkit-background-clip: text;
-            background-clip: text;
-    color: transparent;
-    animation: heroShimmer 9s linear infinite;
-}
-
-@keyframes heroShimmer {
-    0%   { background-position: 0% 50%; }
-    100% { background-position: 220% 50%; }
+    color: var(--accent);
 }
 
 section.hero-section.hero-enhanced .subtitle {
@@ -308,14 +298,16 @@ section.hero-section.hero-enhanced.no-fade .hero-note {
         padding: var(--space-16) 0 var(--space-12);
     }
     section.hero-section.hero-enhanced::after { background-size: 48px 48px; }
-    /* Die Pille muss einzeilig bleiben: bei Umbruch löst sich der Signalpunkt
-       vom Text und die Zeile wirkt zerrissen. */
+    /* Einzeilig halten: bei Umbruch stehen die Zierlinien in einer eigenen
+       Zeile und die Einordnung wirkt zerrissen. */
     section.hero-section.hero-enhanced .hero-eyebrow {
-        font-size: 0.7rem;
-        letter-spacing: 0.08em;
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        gap: var(--space-2);
         white-space: nowrap;
-        padding: var(--space-2) var(--space-3);
     }
+    section.hero-section.hero-enhanced .hero-eyebrow::before,
+    section.hero-section.hero-enhanced .hero-eyebrow::after { width: 16px; }
     section.hero-section.hero-enhanced .hero-actions { flex-direction: column; gap: var(--space-4); }
     section.hero-section.hero-enhanced .cta-button { width: 100%; max-width: 22rem; }
     .hero-scroll-hint { display: none; }
@@ -326,11 +318,6 @@ section.hero-section.hero-enhanced.no-fade .hero-note {
    Der Canvas wird zusätzlich in hero-canvas.js angehalten. */
 @media (prefers-reduced-motion: reduce) {
     section.hero-section.hero-enhanced::before { animation: none; }
-    section.hero-section.hero-enhanced .text-cyan {
-        animation: none;
-        background-position: 0 50%;
-    }
-    section.hero-section.hero-enhanced .hero-eyebrow::before { animation: none; }
     section.hero-section.hero-enhanced .hero-eyebrow,
     section.hero-section.hero-enhanced h1,
     section.hero-section.hero-enhanced .subtitle,

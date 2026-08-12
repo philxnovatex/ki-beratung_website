@@ -165,53 +165,10 @@
                 </div>
             </div>
         </section>
-        <!-- ============================================================
-             KUNDENSTIMMEN
-
-             ANLEITUNG FÜR PHILIPP:
-             Drei Slots, aktuell mit Platzhaltern. Pro Statement ersetzen:
-               1. <p class="tm-quote">   → Wortlaut des Kunden, ungekürzt und unpoliert.
-                                            Holprige Originalsätze wirken echter als glatte.
-               2. <span class="tm-name"> → Vor- und Nachname, sobald die Freigabe vorliegt.
-               3. <span class="tm-role"> → Funktion und Unternehmen.
-               4. hidden vom <article> entfernen, damit der Slot erscheint.
-
-             Ohne schriftliche Freigabe KEINEN Namen und KEIN Logo einsetzen.
-             Eine formlose E-Mail des Kunden ("Sie dürfen mein Statement mit Namen
-             und Firma auf Ihrer Website verwenden") genügt und sollte archiviert werden.
-             ============================================================ -->
-        <!-- hidden am <section>: verhindert, dass eine leere Überschrift live geht,
-             solange kein Statement eingepflegt ist. Beim ersten Statement hier UND
-             am jeweiligen <article> das hidden entfernen. -->
-        <section id="stimmen" class="testimonials-section" aria-labelledby="tm-heading" hidden>
-            <div class="container">
-                <h2 id="tm-heading">Was Kunden sagen</h2>
-                <div class="testimonials-grid">
-                    <article class="testimonial-card" hidden>
-                        <p class="tm-quote">[Statement 1 im Wortlaut einsetzen]</p>
-                        <footer class="tm-author">
-                            <span class="tm-name">[Name]</span>
-                            <span class="tm-role">[Funktion, Unternehmen]</span>
-                        </footer>
-                    </article>
-                    <article class="testimonial-card" hidden>
-                        <p class="tm-quote">[Statement 2 im Wortlaut einsetzen]</p>
-                        <footer class="tm-author">
-                            <span class="tm-name">[Name]</span>
-                            <span class="tm-role">[Funktion, Unternehmen]</span>
-                        </footer>
-                    </article>
-                    <!-- Slot 3: vorgesehen für das Statement zu Schulungen -->
-                    <article class="testimonial-card" hidden>
-                        <p class="tm-quote">[Statement 3 im Wortlaut einsetzen]</p>
-                        <footer class="tm-author">
-                            <span class="tm-name">[Name]</span>
-                            <span class="tm-role">[Funktion, Organisation]</span>
-                        </footer>
-                    </article>
-                </div>
-            </div>
-        </section>
+        <!-- Kundenstimmen: Sektion folgt, sobald die Freigaben vorliegen.
+             Vorlage inklusive Styles liegt in DESIGN-PLAN.md, Abschnitt 5.
+             Bewusst nicht als versteckte Platzhalter im Markup, damit keine
+             Texte wie "[Name]" ins Deployment gelangen. -->
 
         <section id="services" class="services-section">
             <div class="container">
@@ -287,7 +244,8 @@
         <section id="demo" class="demo-section">
             <div class="container">
                 <h2>Ein Anruf. Eine KI. Ein gebuchter Termin.</h2>
-                <p>Hören Sie in dieser 1-minütigen Demo, wie unser KI-Voicebot einen Anruf entgegennimmt, Termine abgleicht und eine Buchung vornimmt. Das ganze mit einer Gesprächsqualität, die auf dem neuesten Stand der Voice-AI-Technologie basiert. Genau solche Lösungen entlasten Ihr Team von zeitraubenden Routineaufgaben.</p>
+                <!-- Laufzeit stimmt mit der Datei überein: 2:58, nicht "1-minütig". -->
+                <p>Drei Minuten Mitschnitt: Die KI nimmt den Anruf entgegen, gleicht Termine ab und bucht. Urteilen Sie selbst, ob Sie am Telefon merken würden, dass kein Mensch dransitzt.</p>
                 
                 <div class="audio-player-container">
                     <div class="player-card-premium">
@@ -305,8 +263,8 @@
                                     <svg viewBox="0 0 40 40" width="40" height="40">
                                         <defs>
                                             <linearGradient id="aiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                                <stop offset="0%" style="stop-color:#4F46E5"/>
-                                                <stop offset="100%" style="stop-color:#7C3AED"/>
+                                                <stop offset="0%" style="stop-color:#185ADB"/>
+                                                <stop offset="100%" style="stop-color:#3b7bf0"/>
                                             </linearGradient>
                                         </defs>
                                         <circle cx="20" cy="20" r="18" fill="url(#aiGradient)" opacity="0.9"/>
@@ -317,9 +275,10 @@
                             <div class="track-meta">
                                 <h3>KI-Voicebot Demo</h3>
                                 <p>Intelligente Terminbuchung</p>
+                                <!-- Statt eines "AI-Powered"-Abzeichens mit pulsierendem Punkt
+                                     eine Angabe, die dem Hörer tatsächlich etwas sagt. -->
                                 <div class="ai-badge">
-                                    <span class="ai-indicator"></span>
-                                    <span>AI-Powered</span>
+                                    <span>Echter Mitschnitt</span>
                                 </div>
                             </div>
                         </div>

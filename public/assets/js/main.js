@@ -151,26 +151,39 @@
     // Heading Animations
     // ========================================
     function initHeadingAnimations() {
-        const excludeSelectors = '.service-card, .stage-card, .testimonial-card, .principle-card, .lead-gen-form-container, .contact-card';
-        const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
-            .filter(h => !h.closest(excludeSelectors));
-        
-        headings.forEach(h => h.classList.add('heading-watch', 'hover-flash'));
-        
+        // Ohne IntersectionObserver bleiben die Ueberschriften unangetastet und
+        // damit sichtbar. Die Klasse darf dann gar nicht erst gesetzt werden,
+        // weil sie die Deckkraft auf 0 stellt.
         if (!('IntersectionObserver' in window)) return;
-        
-        const headingObserver = new IntersectionObserver((entries) => {
+
+        // Nur Sektionsueberschriften. Frueher lief der Effekt auf allen h1, h2
+        // und h3 der Seite, also auf ueber 30 Elementen. Beim Scrollen entstand
+        // daraus eine Dauerbewegung. h3 in Karten animiert ohnehin die Karte.
+        const excludeSelectors = '.service-card, .stage-card, .testimonial-card, .principle-card,'
+            + ' .lead-gen-form-container, .contact-card, .hero-section, .result-card';
+        const headings = Array.from(document.querySelectorAll('h2'))
+            .filter(h => !h.closest(excludeSelectors));
+
+        headings.forEach(h => h.classList.add('heading-watch'));
+
+        const headingObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('heading-in-view');
-                    entry.target.addEventListener('animationend', () => {
-                        entry.target.classList.remove('heading-in-view');
-                    }, { once: true });
-                }
+                if (!entry.isIntersecting) return;
+                // Klasse bleibt bestehen: Der Auftritt ist ein Fade-in, kein Blitz.
+                // Wuerde sie nach der Animation entfernt, faellt die Ueberschrift
+                // auf Deckkraft 0 zurueck und verschwindet.
+                entry.target.classList.add('heading-in-view');
+                observer.unobserve(entry.target);
             });
-        }, { threshold: 0.4 });
-        
+        }, { threshold: 0.25 });
+
         headings.forEach(h => headingObserver.observe(h));
+
+        // Sicherheitsnetz: Ueberschriften, die nach 2 Sekunden nie beobachtet
+        // wurden (etwa in anfangs ausgeblendeten Bereichen), werden sichtbar.
+        setTimeout(() => {
+            headings.forEach(h => h.classList.add('heading-in-view'));
+        }, 2000);
     }
     
     // ========================================
