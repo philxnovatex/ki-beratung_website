@@ -9,6 +9,15 @@
   const cards = Array.from(section.querySelectorAll('.ki-apps__card'));
   let revealed = false;
 
+  // Fallback zuerst: Die Prüfung stand frueher hinter dem Konstruktor und war
+  // damit unerreichbar. In einem Browser ohne IntersectionObserver waeren die
+  // Karten dauerhaft unsichtbar geblieben.
+  if(!('IntersectionObserver' in window)){
+    cards.forEach(c => c.classList.add('in-view'));
+    section.classList.add('revealed');
+    return;
+  }
+
   const opts = { threshold: 0.2 };
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -31,10 +40,4 @@
 
   io.observe(section); // observe section for title effect
   cards.forEach(c => io.observe(c));
-
-  // Fallback if IntersectionObserver unsupported
-  if(!('IntersectionObserver' in window)){
-    cards.forEach(c => c.classList.add('in-view'));
-    section.classList.add('revealed');
-  }
 })();

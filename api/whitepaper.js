@@ -14,7 +14,7 @@
  * Security: Origin validation, rate limiting, input sanitization
  */
 
-const { validateOrigin, checkRateLimit, getClientIP, sanitizeString, isValidEmail, isBodyTooLarge } = require('./_shared/security');
+const { validateOrigin, checkRateLimit, getClientIP, sanitizeString, isValidEmail, isBodyTooLarge, fetchWithTimeout } = require('./_shared/security');
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
 
@@ -87,7 +87,7 @@ module.exports = async function handler(req, res) {
 
   // ── Call Brevo API ──────────────────────────────────────────────
   try {
-    const brevoRes = await fetch(BREVO_API_URL, {
+    const brevoRes = await fetchWithTimeout(BREVO_API_URL, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -133,7 +133,7 @@ module.exports = async function handler(req, res) {
  */
 async function addExistingContactToList(email, listId, apiKey) {
   const url = `https://api.brevo.com/v3/contacts/lists/${listId}/contacts/add`;
-  const response = await fetch(url, {
+  const response = await fetchWithTimeout(url, {
     method: 'POST',
     headers: {
       'accept': 'application/json',

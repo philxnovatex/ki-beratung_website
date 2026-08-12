@@ -18,7 +18,7 @@
  * Security: Origin validation, rate limiting, input sanitization
  */
 
-const { validateOrigin, checkRateLimit, getClientIP, sanitizeString, isValidEmail, isBodyTooLarge } = require('./_shared/security');
+const { validateOrigin, checkRateLimit, getClientIP, sanitizeString, isValidEmail, isBodyTooLarge, fetchWithTimeout } = require('./_shared/security');
 
 const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
 
@@ -116,11 +116,9 @@ module.exports = async function handler(req, res) {
     }
 
     if (result.ok) {
-      // Subscores nur loggen, nicht speichern – sie sind für die Segmentierung
-      // in Brevo zu granular, aber im Log für die Nachbereitung nützlich.
-      if (subscores && typeof subscores === 'object') {
-        console.log('[quiz-lead] Subscores für', normalizedEmail, JSON.stringify(subscores).slice(0, 500));
-      }
+      // Bewusst ohne E-Mail-Adresse: Logs sind kein geeigneter Ort für
+      // personenbezogene Daten, und die Zuordnung passiert ohnehin in Brevo.
+      console.log('[quiz-lead] Lead erfasst, Level:', LEVEL_LABELS[safeLevel], 'Score:', safeScore);
       res.status(200).json({ ok: true, message: 'Ihre Auswertung ist unterwegs.' });
       return;
     }
@@ -138,7 +136,7 @@ module.exports = async function handler(req, res) {
  * @returns {Promise<{ok: boolean, status?: number, detail?: string, retryWithoutQuizAttributes?: boolean}>}
  */
 async function upsertContact(email, listId, attributes, apiKey) {
-  const response = await fetch(BREVO_API_URL, {
+  const response = await fetchWithTimeout(BREVO_API_URL, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -183,7 +181,7 @@ async function upsertContact(email, listId, attributes, apiKey) {
  */
 async function addExistingContactToList(email, listId, apiKey) {
   const url = `https://api.brevo.com/v3/contacts/lists/${listId}/contacts/add`;
-  const response = await fetch(url, {
+  const response = await fetchWithTimeout(url, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
