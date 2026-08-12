@@ -2,16 +2,16 @@
 :root {
   /* Override-able design tokens for this section */
   --ntx-bg: var(--bg-color, #0A1931);
-  --ntx-card: var(--card-bg, #112240);
-  --ntx-text: var(--text-color, #cbd5e1);
-  --ntx-accent: var(--accent-color, #FFC947);
+  --ntx-card: var(--card-bg, var(--surface-card));
+  --ntx-text: var(--text-color, var(--text-body));
+  --ntx-accent: var(--accent-color, var(--accent));
 }
 
 .ki-apps-section {
   background: var(--ntx-bg);
   padding: 100px 0;
-  border-top: 1px solid #1e293b;
-  border-bottom: 1px solid #1e293b;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .ki-apps__title {
   font-size: var(--unified-heading-size, 2.4rem);
@@ -43,7 +43,7 @@
 
 .ki-apps__card {
   background: var(--ntx-card);
-  border: 1px solid #1e293b;
+  border: 1px solid var(--border-subtle);
   padding: 1.5rem 1.5rem 1.75rem;
   border-radius: 14px;
   position: relative;

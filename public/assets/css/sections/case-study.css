@@ -55,7 +55,7 @@
 /* ---- Main Case Study Card ---- */
 .cs-card {
     background: linear-gradient(145deg, #0d1f3c 0%, #0a1931 50%, #0e2145 100%);
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-subtle);
     border-radius: 16px;
     padding: 0;
     overflow: hidden;
@@ -83,7 +83,7 @@
 
 .cs-context {
     padding: 48px 40px;
-    border-right: 1px solid #1e293b;
+    border-right: 1px solid var(--border-subtle);
 }
 
 .cs-solution {
@@ -97,7 +97,7 @@
     font-weight: 700;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #8a99ad;
+    color: var(--text-faint);
     margin-bottom: 12px;
     display: flex;
     align-items: center;
@@ -148,8 +148,8 @@
 .cs-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid #1e293b;
-    border-bottom: 1px solid #1e293b;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .cs-metric {
@@ -160,7 +160,7 @@
 }
 
 .cs-metric:not(:last-child) {
-    border-right: 1px solid #1e293b;
+    border-right: 1px solid var(--border-subtle);
 }
 
 .cs-metric:hover {
@@ -239,7 +239,7 @@
 .cs-quote-author {
     font-family: var(--font-secondary);
     font-size: 0.85rem;
-    color: #8a99ad;
+    color: var(--text-faint);
 }
 
 .cs-quote-author strong {
@@ -249,7 +249,7 @@
 /* ---- Bottom CTA bar ---- */
 .cs-cta-bar {
     padding: 28px 48px;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--border-subtle);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -325,7 +325,7 @@
 
     .cs-context {
         border-right: none;
-        border-bottom: 1px solid #1e293b;
+        border-bottom: 1px solid var(--border-subtle);
         padding: 32px 24px;
     }
 
@@ -339,7 +339,7 @@
 
     .cs-metric:not(:last-child) {
         border-right: none;
-        border-bottom: 1px solid #1e293b;
+        border-bottom: 1px solid var(--border-subtle);
     }
 
     .cs-metric {

@@ -24,7 +24,7 @@
     --orb-cyan: rgba(0, 212, 255, 0.25);
     
     /* Gold Palette */
-    --gold-primary: #FFC947;
+    --gold-primary: var(--accent);
     --gold-light: #FFE082;
     --gold-glow: rgba(255, 201, 71, 0.5);
 }
