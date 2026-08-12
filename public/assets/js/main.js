@@ -48,39 +48,50 @@
     // ========================================
     function initScrollProgress() {
         const scrollBar = document.getElementById('scroll-progress');
-        const problemEl = document.getElementById('problem');
-        
+        // Die Section heißt 'problem-solution'; die alte ID 'problem' existierte nicht,
+        // wodurch der Aktivierungs-Listener nie entfernt wurde und dauerhaft mitlief.
+        const triggerEl = document.getElementById('problem-solution');
+
         if (!scrollBar) return;
-        
+
         let progressActive = false;
-        
-        function updateScrollBar() {
-            if (!progressActive) return;
-            
+        let ticking = false;
+
+        function render() {
+            ticking = false;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = docHeight > 0 ? scrollTop / docHeight : 0;
-            
+
             scrollBar.style.transform = `scaleY(${progress})`;
-            scrollBar.classList.add('active');
         }
-        
+
+        function updateScrollBar() {
+            if (!progressActive || ticking) return;
+            ticking = true;
+            requestAnimationFrame(render);
+        }
+
+        function activate() {
+            progressActive = true;
+            scrollBar.style.display = 'block';
+            scrollBar.classList.add('active');
+            render();
+            window.removeEventListener('scroll', checkActivateBar);
+        }
+
         function checkActivateBar() {
-            if (!problemEl) {
-                progressActive = true;
-                scrollBar.style.display = 'block';
+            if (!triggerEl) {
+                activate();
                 return;
             }
-            
-            const rect = problemEl.getBoundingClientRect();
+
+            const rect = triggerEl.getBoundingClientRect();
             if (rect.top <= window.innerHeight * 0.9) {
-                progressActive = true;
-                scrollBar.style.display = 'block';
-                updateScrollBar();
-                window.removeEventListener('scroll', checkActivateBar);
+                activate();
             }
         }
-        
+
         window.addEventListener('scroll', updateScrollBar, { passive: true });
         window.addEventListener('scroll', checkActivateBar, { passive: true });
     }
@@ -96,12 +107,15 @@
             return;
         }
         
+        let revealCount = 0;
+
         // Generische Observer-Factory
         function createObserver(threshold = 0.2, once = true) {
             return new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible', 'in-view');
+                        revealCount++;
                         if (once) observer.unobserve(entry.target);
                     }
                 });
@@ -123,9 +137,12 @@
         document.querySelectorAll('.featured-section')
             .forEach(el => sectionObserver.observe(el));
         
-        // Fallback: Nach 2s alle sichtbar machen
+        // Sicherheitsnetz: Nur wenn der Observer nach 2s überhaupt nichts ausgelöst
+        // hat, gehen wir von einem Defekt aus und machen alles sichtbar. Vorher wurde
+        // hier pauschal alles eingeblendet, was die Scroll-Animation wirkungslos machte.
         setTimeout(() => {
-            document.querySelectorAll('.service-card, .problem-column, .solution-column')
+            if (revealCount > 0) return;
+            document.querySelectorAll('.service-card, .problem-column, .solution-column, .featured-section')
                 .forEach(el => el.classList.add('visible', 'in-view'));
         }, 2000);
     }

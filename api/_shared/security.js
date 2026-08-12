@@ -44,8 +44,10 @@ function validateOrigin(req) {
 // ── Rate Limiting (in-memory, per warm instance) ──────────────────
 const rateLimitStore = new Map();
 
-// Clean old entries every 5 minutes
-setInterval(() => {
+// Clean old entries every 5 minutes.
+// unref(): Ohne das hält der Timer den Event-Loop offen und verhindert, dass eine
+// Lambda-Instanz sauber einfriert bzw. ein Node-Prozess terminiert.
+const cleanupTimer = setInterval(() => {
   const now = Date.now();
   for (const [key, entry] of rateLimitStore) {
     if (now - entry.windowStart > 120_000) { // 2 min window
@@ -53,6 +55,8 @@ setInterval(() => {
     }
   }
 }, 300_000);
+
+if (typeof cleanupTimer.unref === 'function') cleanupTimer.unref();
 
 /**
  * Check rate limit for an IP address.

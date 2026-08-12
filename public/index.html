@@ -590,13 +590,42 @@
                     <button id="quizSubmit" type="submit" class="reifegrad-btn" style="display:none">Jetzt auswerten</button>
                 </form>
                 <div id="resultsContainer" class="reifegrad-results" aria-live="polite">
+                    <!-- Lead-Gate: Score wird sofort gezeigt, die ausführliche Auswertung
+                         gegen E-Mail. Ohne dieses Formular verlässt jeder Teilnehmer
+                         die Seite, ohne dass ein Kontakt entsteht. -->
+                    <div id="quiz-lead-gate" class="quiz-lead-gate" hidden>
+                        <h3>Ihre ausführliche Auswertung</h3>
+                        <p>Sie erhalten Ihr Ergebnis mit allen Teilbereichen, einer Einordnung im Vergleich zum Mittelstand und drei konkreten nächsten Schritten für Ihr Unternehmen.</p>
+                        <form id="quiz-lead-form" novalidate>
+                            <div class="quiz-lead-fields">
+                                <div class="quiz-lead-field">
+                                    <label for="quiz-name">Name</label>
+                                    <input id="quiz-name" name="name" type="text" autocomplete="name" required>
+                                </div>
+                                <div class="quiz-lead-field">
+                                    <label for="quiz-email">E-Mail</label>
+                                    <input id="quiz-email" name="email" type="email" autocomplete="email" required>
+                                </div>
+                                <div class="quiz-lead-field">
+                                    <label for="quiz-company">Unternehmen</label>
+                                    <input id="quiz-company" name="company" type="text" autocomplete="organization">
+                                </div>
+                            </div>
+                            <label class="quiz-lead-privacy">
+                                <input id="quiz-privacy" type="checkbox" required>
+                                <span>Ich möchte die Auswertung per E-Mail erhalten und bin damit einverstanden, dass Neuratex AI mich dazu kontaktiert. Details in der <a href="pages/legal/datenschutz.html">Datenschutzerklärung</a>.</span>
+                            </label>
+                            <button type="submit" class="reifegrad-btn">Auswertung anfordern</button>
+                            <p id="quiz-lead-status" class="quiz-lead-status" aria-live="polite"></p>
+                        </form>
+                    </div>
                     <div id="result-1" class="result-card" hidden>
                         <h3>Ihr Ergebnis: Sie sind ein KI‑Entdecker!</h3>
                         <p>Sie erkennen das Potenzial von KI, haben aber noch keine konkreten Schritte unternommen. Die Nutzung ist sporadisch und nicht strategisch verankert. Das ist der perfekte Ausgangspunkt, um die Weichen richtig zu stellen.</p>
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Der <strong>„Potenzial‑Workshop“</strong> ist ideal für Sie. Gemeinsam identifizieren wir die Anwendungsfälle mit dem größten Hebel und schaffen die Basis für Ihre ersten erfolgreichen KI‑Projekte.</p>
-                            <a href="#contact" class="reifegrad-btn">Mehr zum Potenzial‑Workshop</a>
+                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Potenzial‑Workshop besprechen</a>
                         </div>
                     </div>
                     <div id="result-2" class="result-card" hidden>
@@ -605,7 +634,7 @@
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Der <strong>„Strategie‑ & Roadmap‑Workshop“</strong> bündelt Ihre Erfahrungen und führt zu einem klaren Fahrplan, um KI vom Experiment zum festen Bestandteil Ihrer Wertschöpfung zu machen.</p>
-                            <a href="#contact" class="reifegrad-btn">Mehr zum Strategie‑Workshop</a>
+                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategie‑Workshop besprechen</a>
                         </div>
                     </div>
                     <div id="result-3" class="result-card" hidden>
@@ -614,7 +643,7 @@
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Vereinbaren Sie ein <strong>individuelles Strategiegespräch</strong>. Wir skalieren Ihre KI‑Initiativen und erschließen neue Geschäftsmodelle.</p>
-                            <a href="#contact" class="reifegrad-btn">Strategiegespräch vereinbaren</a>
+                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategiegespräch vereinbaren</a>
                         </div>
                     </div>
                 </div>
