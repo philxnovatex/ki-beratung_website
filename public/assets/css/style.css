@@ -552,8 +552,15 @@ p { max-width: var(--measure); }
    Bewusst als p + p, damit einzelne Absaetze in Karten und Rastern keinen
    ungewollten Abstand bekommen. */
 p + p { margin-top: var(--space-4); }
-/* In zentrierten Sektionen bleibt der Text mittig, aber begrenzt. */
-.hero-section p, .services-section > .container > p, .testimonials-section > .container > p,
+/* In zentrierten Sektionen bleibt der Text mittig, aber begrenzt.
+   Ohne margin auto sitzt der durch max-width verschmälerte Absatz am linken
+   Rand, obwohl text-align die Zeilen zentriert. Das sah in der Demo-Sektion
+   nach einem Ausrichtungsfehler aus. */
+.hero-section p,
+.services-section > .container > p,
+.testimonials-section > .container > p,
+.demo-section > .container > p,
+.contact-section > .container > p,
 .reifegrad-intro, .ki-apps__intro, .cs-subtitle { margin-left: auto; margin-right: auto; }
 /* Kurze Textbausteine in Karten und Listen brauchen keine Begrenzung. */
 .stage-card p, .service-card p, .testimonial-card p, .timeline-item p,
@@ -847,8 +854,18 @@ p + p { margin-top: var(--space-4); }
     gap: 1.5rem;
 }
 .testimonial-card[hidden] { display: none; }
-.tm-quote { font-size: var(--text-md); line-height: 1.75; color: var(--headline-color); }
-.tm-quote::before { content: "\201E"; color: var(--accent-color); font-size: 2rem; line-height: 0; vertical-align: -.35em; margin-right: .15em; }
+/* Das Anführungszeichen steht außerhalb des Textflusses. Inline gesetzt ragte
+   es in die zweite Zeile und überlagerte dort Buchstaben. */
+.tm-quote { position: relative; font-size: var(--text-md); line-height: 1.75; color: var(--text-strong); }
+.tm-quote::before {
+    content: "\201E";
+    position: absolute;
+    left: -0.75em;
+    top: -0.2em;
+    color: var(--accent);
+    font-size: 2.2rem;
+    line-height: 1;
+}
 .tm-author { display: flex; flex-direction: column; gap: .15rem; }
 .tm-name { font-weight: 700; color: var(--headline-color); }
 .tm-role { font-family: var(--font-secondary); font-size: var(--text-xs); color: var(--text-muted); }
@@ -2092,3 +2109,12 @@ button[data-cc="show-preferencesModal"]:hover {
     padding-top: var(--space-3);
     max-width: none;
 }
+
+/* Eine einzelne Kundenstimme soll nicht über die ganze Breite laufen und
+   nicht wie eine Lücke neben leeren Plätzen wirken. Sobald der zweite und
+   dritte Slot gefüllt sind, kann die Modifizierer-Klasse entfallen. */
+.testimonials-grid--single {
+    grid-template-columns: minmax(0, 46rem);
+    justify-content: center;
+}
+.testimonials-grid--single .tm-quote { font-size: var(--text-md); }
