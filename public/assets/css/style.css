@@ -1844,9 +1844,13 @@ p + p { margin-top: var(--space-4); }
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     background: linear-gradient(145deg, var(--border-subtle), #334155);
     border: 1px solid #475569;
-    border-radius: 16px;
-    padding: 35px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    /* Innenabstand zurückgenommen: Bei kürzerem Text entstand vorher viel
+       ungenutzte Fläche, besonders in der rechten Karte. */
+    padding: var(--space-8);
+    box-shadow: var(--shadow-sm);
+    /* Gleiche Höhe, damit die Karten nicht unterschiedlich weit herunterlaufen */
+    height: 100%;
 }
 
 .problem-column {
@@ -1870,20 +1874,64 @@ p + p { margin-top: var(--space-4); }
     transform: translateY(-4px);
 }
 
-.problem-column h2,
-.solution-column h2 {
-    font-size: 1.8rem;
-    color: var(--accent-color, var(--accent));
-    margin: 0 0 20px 0;
-    line-height: 1.3;
+/* Kartenüberschriften: eine Stufe unter der Sektionsüberschrift.
+   Vorher standen hier zwei gleichrangige h2 in Gold nebeneinander, ohne
+   gemeinsame Überschrift darüber. Zwei konkurrierende Hauptüberschriften auf
+   einer Höhe erzeugen keine Hierarchie, sondern heben sie auf. */
+.problem-column h3,
+.solution-column h3 {
+    font-size: var(--text-lg);
+    color: var(--text-strong);
+    margin: 0 0 var(--space-4) 0;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 201, 71, .25);
 }
 
 .problem-column p,
 .solution-column p {
     color: var(--text-body);
-    line-height: 1.7;
-    margin: 0 0 16px 0;
+    line-height: var(--leading-snug);
+    margin: 0 0 var(--space-4) 0;
+    font-size: var(--text-base);
+    max-width: none;
+}
+.problem-column p:last-child,
+.solution-column p:last-child { margin-bottom: 0; }
+
+/* Symptomliste: kurze Zeilen statt Fließtext, damit der Leser sich
+   wiedererkennt, statt einen Absatz zu lesen. */
+.ps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-3);
+}
+.ps-list li {
+    position: relative;
+    padding-left: var(--space-6);
+    color: var(--text-body);
+    line-height: var(--leading-snug);
+}
+.ps-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 10px;
+    height: 1px;
+    background: var(--accent);
+}
+
+/* Überleitung zur Stufen-Sektion. Macht aus der Diagnose die Begründung für
+   die Reihenfolge, die direkt darunter erklärt wird. */
+.ps-bridge {
+    margin: var(--space-12) auto 0;
+    text-align: center;
     font-size: var(--text-md);
+    color: var(--text-strong);
+    font-weight: var(--weight-bold);
+    max-width: none;
 }
 
 @media (max-width: 900px) {

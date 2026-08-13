@@ -87,25 +87,76 @@
         <!-- Problem & Lösung Sektion mit Scroll Animation -->
         <section id="problem-solution" class="problem-solution-section" aria-labelledby="problem-solution-heading">
             <div class="container">
+                <h2 id="problem-solution-heading">Warum KI-Projekte im Mittelstand scheitern</h2>
                 <div class="problem-solution-grid">
-                    <!-- Linke Spalte: Problem -->
+                    <!-- Linke Spalte: Symptome, die der Leser wiedererkennt -->
                     <div class="problem-column slide-from-left">
-                        <h2 id="problem-solution-heading">Was Unternehmen heute kämpfen lässt</h2>
-                        <p>Unternehmen stehen heute unter massivem Druck. Prozesse dauern zu lange, Informationen liegen verstreut und wichtige Entscheidungen basieren zu oft auf Bauchgefühl. Teams arbeiten am Limit, weil vieles manuell läuft und wenig wirklich standardisiert ist.</p>
-                        <p>Gleichzeitig verschärfen Fachkräftemangel, Wissensverlust, demografischer Wandel, steigende regulatorische Anforderungen und eine schnellere technologische Entwicklung den Druck.</p>
-                        <p>Das Ergebnis: Verzögerungen, höhere Kosten, verpasste Chancen und ein wachsender Wettbewerbsnachteil.</p>
+                        <h3>Das kennen Sie vermutlich</h3>
+                        <ul class="ps-list">
+                            <li>Prozesse laufen manuell und in jeder Abteilung ein bisschen anders.</li>
+                            <li>Wissen steckt in Köpfen und in Ordnern, die niemand mehr durchsucht.</li>
+                            <li>Entscheidungen dauern, weil die Zahlen erst zusammengesucht werden müssen.</li>
+                            <li>Das Team ist schon am Limit, bevor überhaupt ein KI-Projekt startet.</li>
+                        </ul>
                     </div>
-                    <!-- Rechte Spalte: Lösung -->
+                    <!-- Rechte Spalte: die Diagnose, nicht die Lösung.
+                         Die Lösung steht in der Stufen-Sektion direkt darunter. Beides hier
+                         zu erklären, hat die Aussage vorher doppelt und unschärfer gemacht. -->
                     <div class="solution-column slide-from-right">
-                        <h2>Was Unternehmen morgen stärker macht</h2>
-                        <p>Bevor KI etwas verbessern kann, braucht ein Unternehmen zwei Dinge: ein stabiles Fundament und Menschen, die damit umgehen können.</p>
-                        <p>Darum starten wir mit Klarheit, Wissen und einer sauberen Struktur. Auf dieser Basis entwickeln wir KI Lösungen, die wirklich funktionieren: effiziente Workflows, verlässliche GPT Modelle und intelligente Agenten, die Teams entlasten, statt sie zu überfordern.</p>
-                        <p>So entsteht ein nachhaltiger Vorteil im KI Zeitalter.</p>
+                        <h3>Woran es tatsächlich liegt</h3>
+                        <p>Fast nie an der Technik. Sondern daran, dass ein Werkzeug eingeführt wird, bevor geklärt ist, welches Problem es lösen soll und wer damit arbeiten wird.</p>
+                        <p>Wer in dieser Reihenfolge vorgeht, bekommt einen beeindruckenden Prototypen, den nach drei Monaten niemand mehr öffnet. Ich habe das oft genug gesehen.</p>
                     </div>
                 </div>
+                <p class="ps-bridge">Deshalb drehe ich die Reihenfolge um.</p>
             </div>
         </section>
         <!-- Ende Problem & Lösung Sektion -->
+        <!-- Kundenstimmen: Sektion folgt, sobald die Freigaben vorliegen.
+             Vorlage inklusive Styles liegt in DESIGN-PLAN.md, Abschnitt 5.
+             Bewusst nicht als versteckte Platzhalter im Markup, damit keine
+             Texte wie "[Name]" ins Deployment gelangen. -->
+
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2>Drei Stufen. In dieser Reihenfolge.</h2>
+                <p class="services-intro">Sie müssen nicht alle drei gehen. Aber Sie sollten keine überspringen. Wer direkt automatisiert, ohne zu wissen wofür und mit wem, baut teure Insellösungen, die nach einem halben Jahr niemand mehr benutzt.</p>
+                <div class="stage-grid">
+                    <a href="pages/leistungen.html#strategie" class="stage-card-link">
+                        <article class="stage-card">
+                            <div class="stage-number" aria-hidden="true">01</div>
+                            <div class="stage-label">Strategie</div>
+                            <h3>Wissen, wo KI sich rechnet</h3>
+                            <p>Wir prüfen Ihre Prozesse und Daten und sortieren die Anwendungsfälle nach Aufwand und Ertrag. Sie bekommen einen priorisierten Fahrplan mit Wirtschaftlichkeitsrechnung, kein Ideenpapier.</p>
+                            <p class="stage-result"><strong>Ergebnis:</strong> Eine Entscheidungsgrundlage, mit der Sie in die Geschäftsführung gehen können.</p>
+                        </article>
+                    </a>
+                    <a href="pages/leistungen.html#workshops" class="stage-card-link">
+                        <article class="stage-card">
+                            <div class="stage-number" aria-hidden="true">02</div>
+                            <div class="stage-label">Befähigung</div>
+                            <h3>Ein Team, das KI wirklich nutzt</h3>
+                            <p>Keynotes für den Einstieg, Praxis-Workshops für die Tiefe. Ihre Führungskräfte und Teams lernen an ihren eigenen Aufgaben, nicht an Beispielen aus dem Lehrbuch. Inklusive Rechtslage und dem, was im Unternehmen nichts zu suchen hat.</p>
+                            <p class="stage-result"><strong>Ergebnis:</strong> Mitarbeiter, die Potenziale selbst erkennen, statt auf Anweisung zu warten.</p>
+                        </article>
+                    </a>
+                    <a href="pages/leistungen.html#automatisierung" class="stage-card-link">
+                        <article class="stage-card">
+                            <div class="stage-number" aria-hidden="true">03</div>
+                            <div class="stage-label">Automatisierung</div>
+                            <h3>Systeme, die den Alltag tragen</h3>
+                            <p>KI-Agenten, Chatbots und Auswertungen, die in Ihre bestehende Systemlandschaft eingebettet werden. Entwickelt in kurzen Zyklen, übergeben mit Schulung, damit die Lösung Ihnen gehört und nicht Ihrem Dienstleister.</p>
+                            <p class="stage-result"><strong>Ergebnis:</strong> Ein laufendes System und die Zeit Ihres Teams zurück.</p>
+                        </article>
+                    </a>
+                </div>
+                <div class="tech-logos" aria-label="Unterstützte Cloud-Plattformen">
+                    <img src="assets/images/aws.png" alt="Amazon Web Services (AWS)" loading="lazy" width="120" height="60">
+                    <img src="assets/images/azure.png" alt="Microsoft Azure" loading="lazy" width="120" height="60">
+                    <img src="assets/images/google.png" alt="Google Cloud Platform" loading="lazy" width="120" height="60">
+                </div>
+            </div>
+        </section>
         <!-- Case Study / Referenz -->
         <section id="referenz" class="case-study-section" aria-labelledby="cs-heading">
             <div class="container">
@@ -162,51 +213,6 @@
                             Kostenlose Potenzial-Analyse <i class="icon icon-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- Kundenstimmen: Sektion folgt, sobald die Freigaben vorliegen.
-             Vorlage inklusive Styles liegt in DESIGN-PLAN.md, Abschnitt 5.
-             Bewusst nicht als versteckte Platzhalter im Markup, damit keine
-             Texte wie "[Name]" ins Deployment gelangen. -->
-
-        <section id="services" class="services-section">
-            <div class="container">
-                <h2>Drei Stufen. In dieser Reihenfolge.</h2>
-                <p class="services-intro">Sie müssen nicht alle drei gehen. Aber Sie sollten keine überspringen. Wer direkt automatisiert, ohne zu wissen wofür und mit wem, baut teure Insellösungen, die nach einem halben Jahr niemand mehr benutzt.</p>
-                <div class="stage-grid">
-                    <a href="pages/leistungen.html#strategie" class="stage-card-link">
-                        <article class="stage-card">
-                            <div class="stage-number" aria-hidden="true">01</div>
-                            <div class="stage-label">Strategie</div>
-                            <h3>Wissen, wo KI sich rechnet</h3>
-                            <p>Wir prüfen Ihre Prozesse und Daten und sortieren die Anwendungsfälle nach Aufwand und Ertrag. Sie bekommen einen priorisierten Fahrplan mit Wirtschaftlichkeitsrechnung, kein Ideenpapier.</p>
-                            <p class="stage-result"><strong>Ergebnis:</strong> Eine Entscheidungsgrundlage, mit der Sie in die Geschäftsführung gehen können.</p>
-                        </article>
-                    </a>
-                    <a href="pages/leistungen.html#workshops" class="stage-card-link">
-                        <article class="stage-card">
-                            <div class="stage-number" aria-hidden="true">02</div>
-                            <div class="stage-label">Befähigung</div>
-                            <h3>Ein Team, das KI wirklich nutzt</h3>
-                            <p>Keynotes für den Einstieg, Praxis-Workshops für die Tiefe. Ihre Führungskräfte und Teams lernen an ihren eigenen Aufgaben, nicht an Beispielen aus dem Lehrbuch. Inklusive Rechtslage und dem, was im Unternehmen nichts zu suchen hat.</p>
-                            <p class="stage-result"><strong>Ergebnis:</strong> Mitarbeiter, die Potenziale selbst erkennen, statt auf Anweisung zu warten.</p>
-                        </article>
-                    </a>
-                    <a href="pages/leistungen.html#automatisierung" class="stage-card-link">
-                        <article class="stage-card">
-                            <div class="stage-number" aria-hidden="true">03</div>
-                            <div class="stage-label">Automatisierung</div>
-                            <h3>Systeme, die den Alltag tragen</h3>
-                            <p>KI-Agenten, Chatbots und Auswertungen, die in Ihre bestehende Systemlandschaft eingebettet werden. Entwickelt in kurzen Zyklen, übergeben mit Schulung, damit die Lösung Ihnen gehört und nicht Ihrem Dienstleister.</p>
-                            <p class="stage-result"><strong>Ergebnis:</strong> Ein laufendes System und die Zeit Ihres Teams zurück.</p>
-                        </article>
-                    </a>
-                </div>
-                <div class="tech-logos" aria-label="Unterstützte Cloud-Plattformen">
-                    <img src="assets/images/aws.png" alt="Amazon Web Services (AWS)" loading="lazy" width="120" height="60">
-                    <img src="assets/images/azure.png" alt="Microsoft Azure" loading="lazy" width="120" height="60">
-                    <img src="assets/images/google.png" alt="Google Cloud Platform" loading="lazy" width="120" height="60">
                 </div>
             </div>
         </section>
