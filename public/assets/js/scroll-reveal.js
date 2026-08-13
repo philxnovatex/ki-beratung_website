@@ -88,7 +88,19 @@
             });
         });
 
-        let ausgeloest = 0;
+        // Elemente, die beim Laden bereits sichtbar oder schon vorbeigescrollt
+        // sind, sofort einblenden. Ein Einblendeffekt für etwas, das der Nutzer
+        // ohnehin schon sieht, bringt nichts. Vor allem aber schützt das gegen
+        // den Fall, dass der Beobachter für diese Elemente nie auslöst und sie
+        // dauerhaft unsichtbar bleiben.
+        const sofort = [];
+        elemente.forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.top < window.innerHeight * 0.9) sofort.push(el);
+        });
+        sofort.forEach(el => { sichtbarMachen(el); elemente.delete(el); });
+
+        let ausgeloest = sofort.length;
 
         const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
@@ -102,6 +114,9 @@
                 sichtbarMachen(el);
                 ausgeloest++;
                 obs.unobserve(el);
+                // Aus der Menge nehmen, damit die Nachtrag-Prüfung beim Scrollen
+                // und dieser Beobachter nicht auseinanderlaufen.
+                elemente.delete(el);
 
                 // Verzögerung wieder entfernen, damit sie spätere Übergänge
                 // wie Hover-Effekte nicht ausbremst.
@@ -109,13 +124,63 @@
                     setTimeout(() => { el.style.transitionDelay = ''; }, verzoegerung + 900);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+        // threshold 0 statt eines Anteils: Bei schnellem Scrollen kann eine
+        // anteilige Schwelle zwischen zwei Einzelbildern über- und wieder
+        // unterschritten werden, das Element bleibt dann dauerhaft unsichtbar.
+        // Genau das trat bei drei großen Abschnitten der Leistungsseite auf.
+        // Der negative rootMargin sorgt weiterhin dafür, dass der Auftritt erst
+        // beginnt, wenn das Element deutlich im Bild ist.
+        }, { threshold: 0, rootMargin: '0px 0px -80px 0px' });
 
         elemente.forEach(el => observer.observe(el));
 
-        // Sicherheitsnetz: Wenn nach 2,5 Sekunden nichts ausgelöst wurde, gehen
-        // wir von einem Defekt aus und zeigen alles. Greift bewusst nur dann,
-        // damit die Animation nicht pauschal übersprungen wird.
+        // Absicherung gegen sehr schnelles Scrollen.
+        // Der IntersectionObserver wertet nur an Einzelbildgrenzen aus. Wer mit
+        // der Ende-Taste springt oder auf dem Telefon schnell wischt, kann
+        // Abschnitte überspringen, die dann dauerhaft unsichtbar bleiben.
+        // Getestet auf der Leistungsseite: Bei 450 Pixel großen Sprüngen blieben
+        // drei Abschnitte zurück, bei ruhigem Scrollen keiner.
+        let geplant = false;
+        function nachtragen() {
+            geplant = false;
+            if (!elemente.size) {
+                window.removeEventListener('scroll', beiScroll);
+                return;
+            }
+            const unten = window.innerHeight - 80;
+            elemente.forEach(el => {
+                const r = el.getBoundingClientRect();
+                // Alles, was im Bild ist oder bereits daran vorbei ist
+                if (r.top < unten) {
+                    sichtbarMachen(el);
+                    observer.unobserve(el);
+                    elemente.delete(el);
+                }
+            });
+        }
+        function beiScroll() {
+            if (geplant) return;
+            geplant = true;
+            requestAnimationFrame(nachtragen);
+        }
+        window.addEventListener('scroll', beiScroll, { passive: true });
+
+        // Regelmäßige Nachkontrolle für die erste Zeit nach dem Laden.
+        // Notwendig, weil weder der Beobachter noch der Scroll-Handler greifen,
+        // wenn die Bildlaufposition per Skript gesetzt wird: Solche Sprünge
+        // lösen kein Scroll-Ereignis aus und finden zwischen zwei Einzelbildern
+        // statt. Das passiert etwa beim Aufruf einer Adresse mit Sprungmarke.
+        // Nach zehn Sekunden endet die Kontrolle, danach genügen Beobachter und
+        // Scroll-Handler.
+        const nachkontrolle = setInterval(() => {
+            nachtragen();
+            if (!elemente.size) clearInterval(nachkontrolle);
+        }, 400);
+        setTimeout(() => clearInterval(nachkontrolle), 10000);
+
+        // Letzte Absicherung: Falls der Beobachter gar nicht anspringt, wird
+        // nach 2,5 Sekunden pauschal alles gezeigt. Ein dauerhaft unsichtbarer
+        // Inhalt wäre schlimmer als eine ausgefallene Animation.
         setTimeout(() => {
             if (ausgeloest > 0) return;
             elemente.forEach(sichtbarMachen);

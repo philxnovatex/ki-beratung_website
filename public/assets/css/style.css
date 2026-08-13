@@ -1867,12 +1867,10 @@ p + p { margin-top: var(--space-4); }
     transform: translateX(0);
 }
 
-.problem-column:hover,
-.solution-column:hover {
-    box-shadow: 0 8px 32px rgba(255, 201, 71, 0.15);
-    border-color: var(--accent-color, var(--accent));
-    transform: translateY(-4px);
-}
+/* Kein Hover-Effekt auf diesen Karten.
+   Sie sind reine Textflächen ohne Verweis. Anheben und ein goldener Rand sind
+   Signale für Klickbarkeit und wecken eine Erwartung, die nichts einlöst.
+   Karten, die tatsächlich verlinken (etwa .stage-card), behalten ihren Effekt. */
 
 /* Kartenüberschriften: eine Stufe unter der Sektionsüberschrift.
    Vorher standen hier zwei gleichrangige h2 in Gold nebeneinander, ohne
