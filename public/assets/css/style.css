@@ -450,8 +450,15 @@
    clip statt hidden, damit kein Scroll-Container entsteht und das
    position: sticky des Kopfbereichs erhalten bleibt. */
 html {
-    scroll-behavior: smooth;
     overflow-x: clip;
+}
+
+/* Weiches Scrollen nur fuer Besucher, die keine reduzierte Bewegung wuenschen.
+   Vorher galt es fuer alle. Ein erzwungener Gleitvorgang ueber mehrere
+   Bildschirmhoehen ist genau die Art Bewegung, die bei vestibulaeren
+   Beschwerden Probleme macht. */
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
 }
 
 body {
@@ -741,7 +748,7 @@ p + p { margin-top: var(--space-4); }
 .quiz-lead-gate[hidden] { display:none; }
 .quiz-lead-gate h3 { margin:0 0 .5rem; font-size: var(--text-md); color: var(--headline-color); }
 .quiz-lead-gate > p { margin:0 0 1.25rem; color: var(--text-color); }
-.quiz-lead-fields { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:1rem; }
+.quiz-lead-fields { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:1rem; }
 .quiz-lead-field { display:flex; flex-direction:column; gap:.35rem; }
 .quiz-lead-field label { font-size: var(--text-sm); color:var(--text-muted); }
 .quiz-lead-field input { padding:.7rem .8rem; border-radius:8px; border:1px solid var(--border-subtle); background: var(--bg-color); color: var(--headline-color); font-family: var(--font-primary); font-size: var(--text-base); }
@@ -754,7 +761,7 @@ p + p { margin-top: var(--space-4); }
 .result-card .next-step a.reifegrad-btn { text-decoration: none; }
 .subscores { margin-top:1.75rem; padding-top:1.1rem; border-top:1px solid var(--border-subtle); }
 .subscores h4 { margin:0 0 .5rem; font-size: var(--text-base); color: var(--headline-color); }
-.subscores ul { list-style:none; padding:0; margin:0; display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:.5rem .75rem; }
+.subscores ul { list-style:none; padding:0; margin:0; display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap:.5rem .75rem; }
 .subscores li { font-family: var(--font-secondary); color:var(--text-muted); font-size: var(--text-sm); }
 
 /* Tech section */
@@ -944,7 +951,7 @@ p + p { margin-top: var(--space-4); }
     .stage-grid { grid-template-columns: 1fr; }
 }
 
-.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
+.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 40px; }
 .principle-card { text-align: center; }
 .principle-card span { font-family: var(--font-secondary); font-size: 2rem; font-weight: 700; color: var(--accent-color); display: block; margin-bottom: 10px; }
 .principle-card h3 { margin-bottom: 10px; }
@@ -1318,6 +1325,9 @@ p + p { margin-top: var(--space-4); }
         flex-direction: column;
         align-items: center;
     }
+    /* 40 px Innenabstand auf jeder Seite lassen auf einem 320 px breiten
+       Telefon zu wenig Platz, der Kasten ragte dadurch heraus. */
+    .lead-gen-form-container { padding: var(--space-6); }
     .lead-gen-text, .lead-gen-form-container {
         flex-basis: 100%;
         max-width: 600px;

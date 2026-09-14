@@ -308,7 +308,7 @@
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
     gap: var(--space-3);
 }
 .avr-source-list li {
@@ -354,7 +354,7 @@
     margin: 0 0 var(--space-8);
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     gap: var(--space-4);
 }
 .av-quotes li {
@@ -379,7 +379,7 @@
 /* Die Kernfrage der Seite, als Gegenueberstellung. */
 .av-pivot {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-6);
 }
 .av-pivot__item {
@@ -413,7 +413,7 @@
 /* ── Raster fuer Untersuchungsfelder und Ergebnisse ───────────────────── */
 .av-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
     gap: var(--space-6);
 }
 
@@ -433,7 +433,7 @@
 /* ── Was wir zusaetzlich analysieren ──────────────────────────────────── */
 .av-why {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
     gap: var(--space-12);
     align-items: start;
 }
@@ -562,7 +562,7 @@
 .av-honest .av-head { margin-bottom: var(--space-6); }
 .av-honest__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--space-6);
 }
 .av-honest__item p { max-width: none; color: var(--text-body); }

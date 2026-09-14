@@ -212,7 +212,13 @@ async function checkBrowser(browser, base) {
     assert.deepEqual(jsErrors, []);
     console.log('  OK    Kontaktformular, mobile Layouts, Calendly, Quiz und alle Formular-Events; keine Eingaben im Tracking');
   } finally { await context.close(); }
-  const noJs = await browser.newPage({ javaScriptEnabled: false });
+  // reducedMotion: Geprueft wird hier das Absenden ohne JavaScript, nicht das
+  // Scrollverhalten. Die Datenschutz-Checkbox liegt weit unten, Playwright
+  // scrollt automatisch hin, und das weiche Scrollen der Seite liess die
+  // Stabilitaetspruefung des Klicks in die Zeitueberschreitung laufen.
+  // Mit reduzierter Bewegung springt die Seite, das Formular verhaelt sich
+  // unveraendert.
+  const noJs = await browser.newPage({ javaScriptEnabled: false, reducedMotion: 'reduce' });
   try {
     await noJs.goto(base + '/pages/kontakt.html');
     let body;

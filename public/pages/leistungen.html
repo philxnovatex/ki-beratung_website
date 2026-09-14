@@ -84,7 +84,7 @@
             
             <!-- 6 Kacheln: 3×2 Grid -->
             <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 30px;">
                     
                     <!-- KARTE 1: Support & Erreichbarkeit -->
                     <div class="service-card">
@@ -214,7 +214,7 @@
         <section id="workshops" class="featured-section">
             <div class="container">
                 <!-- 2-Spalten-Layout: Links Text, Rechts 2x2 Grid -->
-                <div style="display: grid; grid-template-columns: 28% 72%; gap: 30px; align-items: start;">
+                <div style="display: grid; grid-template-columns: minmax(0, 28fr) minmax(0, 72fr); gap: 30px; align-items: start;">
                     
                     <!-- LINKE SPALTE: Text + Button -->
                     <div>
@@ -227,7 +227,7 @@
                     </div>
 
                     <!-- RECHTE SPALTE: 2x2 Grid mit Workshop-Karten -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: 20px;">
                         
                         <!-- KARTE 1: Prompting -->
                         <div class="service-card" style="padding: 20px;">
@@ -278,13 +278,13 @@
         <section id="strategie" class="featured-section">
             <div class="container">
                 <!-- 2-Spalten-Layout: Links 3 Phasen, Rechts Text -->
-                <div style="display: grid; grid-template-columns: 70% 30%; gap: 40px; align-items: start;">
+                <div style="display: grid; grid-template-columns: minmax(0, 70fr) minmax(0, 30fr); gap: 40px; align-items: start;">
                     
                     <!-- LINKE SPALTE: 3 Phasen-Kacheln -->
                     <div style="display: flex; flex-direction: column; gap: 20px;">
                         
                         <!-- PHASE 01 -->
-                        <div class="service-card" style="display: grid; grid-template-columns: 80px 1fr; gap: 25px; align-items: start; padding: 35px;">
+                        <div class="service-card" style="display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 25px; align-items: start; padding: 35px;">
                             <div style="display: flex; justify-content: center; padding-top: 5px;">
                                 <div style="background: var(--accent-color); color: var(--navy); font-weight: bold; font-size: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">01</div>
                             </div>
@@ -295,7 +295,7 @@
                         </div>
 
                         <!-- PHASE 02 -->
-                        <div class="service-card" style="display: grid; grid-template-columns: 80px 1fr; gap: 25px; align-items: start; padding: 35px;">
+                        <div class="service-card" style="display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 25px; align-items: start; padding: 35px;">
                             <div style="display: flex; justify-content: center; padding-top: 5px;">
                                 <div style="background: var(--accent-color); color: var(--navy); font-weight: bold; font-size: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">02</div>
                             </div>
@@ -306,7 +306,7 @@
                         </div>
 
                         <!-- PHASE 03 -->
-                        <div class="service-card" style="display: grid; grid-template-columns: 80px 1fr; gap: 25px; align-items: start; padding: 35px;">
+                        <div class="service-card" style="display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 25px; align-items: start; padding: 35px;">
                             <div style="display: flex; justify-content: center; padding-top: 5px;">
                                 <div style="background: var(--accent-color); color: var(--navy); font-weight: bold; font-size: 1.5rem; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">03</div>
                             </div>
@@ -343,7 +343,7 @@
             
             <!-- 4 Kacheln nebeneinander, volle Breite -->
             <div class="container">
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 30px;">
                     
                     <!-- KARTE 1: Strategie -->
                     <div class="service-card">
