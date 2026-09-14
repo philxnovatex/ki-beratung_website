@@ -1,6 +1,6 @@
 # Design-Umbau neuratex.de: Plan zur Prüfung
 
-Stand: 12.08.2026
+Stand: 14.09.2026
 Branch: `fix/audit-paket-4` (main unberührt, nichts deployed)
 Autor: Claude, im Auftrag von Philipp Koch
 
@@ -286,8 +286,12 @@ Schritt 5  Sektionen im Detail      ← braucht Zulieferungen aus Abschnitt 5
 Schritt 6  Aufräumen und Härten
 ```
 
-Conversion-Themen (Tracking, Kontaktformular, CTA-Stufen, Preise) laufen bewusst
-getrennt, weil sie Zuarbeit in Brevo und Umami erfordern.
+Conversion-Themen laufen getrennt vom Design-Umbau. Kontaktformular und
+Umami-Events sind inzwischen lokal umgesetzt: `POST /api/contact` übergibt
+Nachrichten als Transaktionsmail an Brevo, Calendly-Klicks, erfolgreiche Formulare
+und Quiz-Abschlüsse werden getrennt gemessen. Einrichtung, Event-Namen und
+Testgrenzen stehen in [CONVERSIONS.md](CONVERSIONS.md). Vor Freischaltung sind der
+Brevo-Absender und die echte Zustellung zu prüfen. Nichts wurde deployed.
 
 ---
 

@@ -60,6 +60,14 @@
     --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1M18.7 18.7l-2.1-2.1M7.4 7.4L5.3 5.3"/></svg>');
 }
 
+/* Verstreute Ablagen: zwei versetzte Ordner, einer angeschnitten.
+   Ergaenzt fuer die Symptomkacheln im Abschnitt "Erkennen Sie Ihr Unternehmen
+   wieder?". Die zehn vorhandenen Symbole trafen "Wissen steckt in Koepfen und
+   in Ordnern" nicht. */
+.icon-folders {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 18.5V7.5a1 1 0 011-1h4.6l1.8 2h6.6a1 1 0 011 1v9a1 1 0 01-1 1h-13a1 1 0 01-1-1z"/><path d="M7.5 6.5v-1a1 1 0 011-1h4.6l1.8 2h4.6a1 1 0 011 1v8"/></svg>');
+}
+
 .icon-warning {
     --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L1.7 20.5h20.6z"/><path d="M12 9.5v5M12 17.6v.1"/></svg>');
 }

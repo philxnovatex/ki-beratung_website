@@ -14,6 +14,7 @@ const BASIS = process.env.TEST_URL || 'http://127.0.0.1:4173';
 const SEITEN = [
   '/',
   '/pages/leistungen.html',
+  '/pages/ki-sichtbarkeit.html',
   '/pages/kontakt.html',
   '/pages/lernplattform.html',
   '/pages/legal/impressum.html',
@@ -85,11 +86,11 @@ async function pruefeSeiten(browser) {
 
 // ── 2. Sichtbarkeit in drei Modi ───────────────────────────────────────────
 const REVEAL_SELEKTOREN =
-  '.stage-card, .timeline-item, .cs-card, .ki-apps__card, .service-card, .problem-column, .solution-column, .featured-section';
+  '.stage-card, .timeline-item, .cs-card, .ki-apps__card, .service-card, .problem-column, .solution-column, .featured-section, .av-reveal';
 
 async function pruefeSichtbarkeit(browser) {
   console.log('\n2. Sichtbarkeit (normal, reduzierte Bewegung, ohne JavaScript)');
-  for (const pfad of ['/', '/pages/leistungen.html']) {
+  for (const pfad of ['/', '/pages/leistungen.html', '/pages/ki-sichtbarkeit.html']) {
     for (const modus of ['normal', 'reduced', 'ohne-js']) {
       const page = await browser.newPage({
         viewport: { width: 1440, height: 900 },
@@ -131,23 +132,43 @@ async function pruefeSichtbarkeit(browser) {
   }
 }
 
-// ── 3. Bewegung des Hero-Canvas ────────────────────────────────────────────
+// ── 3. Bewegung des Seitenhintergrunds ─────────────────────────────────────
+// Der Vertrag hat sich mit dem durchgehenden Hintergrund geändert. Vorher galt
+// "steht still, sobald der Hero aus dem Bild ist". Das Knotennetz liegt jetzt
+// hinter der gesamten Seite und soll beim Scrollen ausdrücklich weiterlaufen,
+// weil es den Fortschritt abbildet.
+//
+// Geprüft wird deshalb nicht mehr Stillstand beim Scrollen, sondern dass die
+// Schleife überall dort aussetzt, wo sie nur Strom kostet: bei reduzierter
+// Bewegung, auf schmalen Fenstern und im Hintergrundtab.
 async function pruefeBewegung(browser) {
-  console.log('\n3. Hero-Canvas: Stillstand außerhalb des Sichtfelds und bei reduzierter Bewegung');
+  console.log('\n3. Seitenhintergrund: laeuft beim Scrollen, steht wo er nichts bringt');
 
-  async function frames(reduced, wegscrollen) {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-    if (reduced) await page.emulateMedia({ reducedMotion: 'reduce' });
+  async function frames(optionen) {
+    const o = optionen || {};
+    const page = await browser.newPage({
+      viewport: { width: o.breite || 1280, height: 900 },
+    });
+    if (o.reduced) await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(BASIS + '/', { waitUntil: 'networkidle' });
     await page.evaluate(() => {
       window.__f = 0;
-      const o = window.requestAnimationFrame;
-      window.requestAnimationFrame = function (cb) { window.__f++; return o.call(window, cb); };
+      const orig = window.requestAnimationFrame;
+      window.requestAnimationFrame = function (cb) { window.__f++; return orig.call(window, cb); };
     });
-    if (wegscrollen) {
+    if (o.wegscrollen) {
       await page.evaluate(() => window.scrollTo(0, 6000));
       // Warten, bis einmalige Animationen (Zähler der Case Study) durchgelaufen sind
       await page.waitForTimeout(3500);
+    }
+    if (o.versteckt) {
+      // Hintergrundtab nachstellen: document.hidden lässt sich nicht setzen,
+      // also wird der Wert überschrieben und das Ereignis ausgelöst.
+      await page.evaluate(() => {
+        Object.defineProperty(document, 'hidden', { value: true, configurable: true });
+        Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true });
+        document.dispatchEvent(new Event('visibilitychange'));
+      });
     }
     await page.evaluate(() => { window.__f = 0; });
     await page.waitForTimeout(2000);
@@ -156,17 +177,25 @@ async function pruefeBewegung(browser) {
     return n;
   }
 
-  const laufend = await frames(false, false);
-  laufend > 0 ? ok(`Hero sichtbar: ${laufend} Frames in 2s (Animation laeuft)`)
-              : nok('Hero sichtbar: keine Frames, Animation laeuft nicht');
+  const oben = await frames({});
+  oben > 0 ? ok(`Seitenanfang: ${oben} Frames in 2s (Hintergrund laeuft)`)
+           : nok('Seitenanfang: keine Frames, Hintergrund laeuft nicht');
 
-  const weg = await frames(false, true);
-  weg === 0 ? ok('Hero ausserhalb des Sichtfelds: 0 Frames')
-            : nok(`Hero ausserhalb des Sichtfelds: ${weg} Frames, Schleife pausiert nicht`);
+  const gescrollt = await frames({ wegscrollen: true });
+  gescrollt > 0 ? ok(`Weit gescrollt: ${gescrollt} Frames (laeuft weiter, wie vorgesehen)`)
+                : nok('Weit gescrollt: 0 Frames, der durchgehende Hintergrund steht still');
 
-  const red = await frames(true, false);
+  const red = await frames({ reduced: true });
   red === 0 ? ok('prefers-reduced-motion: 0 Frames')
             : nok(`prefers-reduced-motion: ${red} Frames, Animation laeuft trotzdem`);
+
+  const schmal = await frames({ breite: 420 });
+  schmal === 0 ? ok('Schmales Fenster: 0 Frames (Telefon bleibt unbelastet)')
+               : nok(`Schmales Fenster: ${schmal} Frames, Schleife laeuft auf dem Telefon`);
+
+  const versteckt = await frames({ versteckt: true });
+  versteckt === 0 ? ok('Hintergrundtab: 0 Frames')
+                  : nok(`Hintergrundtab: ${versteckt} Frames, Schleife pausiert nicht`);
 }
 
 // ── 4. Bildverhältnisse ────────────────────────────────────────────────────
@@ -294,6 +323,11 @@ async function pruefeKontrast(browser) {
     await pruefeBilder(browser);
     await pruefeLayout(browser);
     await pruefeKontrast(browser);
+    try {
+      await require('./conversions')(browser, BASIS);
+    } catch (error) {
+      nok('Kontakt/Conversions: ' + error.stack);
+    }
   } finally {
     await browser.close();
   }

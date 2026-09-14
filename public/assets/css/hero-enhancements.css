@@ -8,13 +8,13 @@
 
    Aufbau in Ebenen, von hinten nach vorn:
      1. Grundverlauf        (CSS)
-     2. Canvas-Knotennetz   (hero-canvas.js)
+     2. (entfallen, Knotennetz liegt global: background-canvas.js)
      3. Aurora-Lichter      (CSS, animiert)
      4. Raster              (CSS, statisch)
      5. Vignette            (CSS, sorgt für Textkontrast)
      6. Inhalt
 
-   Schalter am <section>-Element: no-aurora, no-grid, no-canvas, no-fade.
+   Schalter am <section>-Element: no-aurora, no-grid, no-fade.
    ============================================================================ */
 
 section.hero-section.hero-enhanced {
@@ -31,19 +31,13 @@ section.hero-section.hero-enhanced {
     overflow: hidden;
     text-align: center;
     background:
-        radial-gradient(ellipse 120% 80% at 50% -10%, #12305c 0%, transparent 60%),
-        linear-gradient(180deg, #0b2044 0%, var(--surface-base) 70%);
+        radial-gradient(ellipse 120% 80% at 50% -10%, rgba(18, 48, 92, .46) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(11, 32, 68, .30) 0%, rgba(10, 25, 49, .52) 70%);
 }
 
-/* ── Ebene 2: Canvas ──────────────────────────────────────────────────────── */
-section.hero-section.hero-enhanced #hero-canvas {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -3;
-    opacity: .85;
-}
+/* Ebene 2 (Canvas) ist entfallen. Das Knotennetz liegt nicht mehr im Hero,
+   sondern als #site-canvas fest hinter der gesamten Seite, gesteuert von
+   background-canvas.js. Die Regeln dafuer stehen in style.css. */
 
 /* ── Ebene 3: Aurora ──────────────────────────────────────────────────────
    Zwei weiche Lichtflächen, die sich langsam bewegen. Sie erzeugen Tiefe,
@@ -80,7 +74,6 @@ section.hero-section.hero-enhanced::after {
 
 section.hero-section.hero-enhanced.no-aurora::before { display: none; }
 section.hero-section.hero-enhanced.no-grid::after { display: none; }
-section.hero-section.hero-enhanced.no-canvas #hero-canvas { display: none; }
 
 @keyframes heroAurora {
     0%   { transform: translate3d(0, 0, 0) scale(1); }
@@ -131,13 +124,24 @@ section.hero-section.hero-enhanced h1 {
     text-wrap: balance;
 }
 
-/* Der Akzentteil der Headline, statisch.
-   Vorher lief hier ein endloser Farbverlauf ("heroShimmer", 9s, infinite).
-   Zusammen mit dem Aufblitzen der Überschriften wirkte die Seite unruhig, und
-   dauerhaft laufende Glanzeffekte auf Text sind ein Vorlagen-Merkmal.
-   Die Farbe allein trägt die Betonung. */
+/* Der Akzentteil der Headline.
+   Der frühere endlose Farbverlauf ("heroShimmer", 9s, infinite) bleibt
+   entfernt: dauerhaft laufende Glanzeffekte auf Text sind ein Vorlagen-
+   Merkmal und machen die Seite unruhig.
+   Stattdessen landet die Phrase einmalig als letztes Element der Headline und
+   quittiert das mit einem kurzen Aufleuchten. Das ist Regel 4 der
+   Bewegungsspec: Gold bewegt sich zuletzt und nur an dieser einen Stelle. */
 section.hero-section.hero-enhanced .text-cyan {
     color: var(--accent);
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: heroAkzent 820ms var(--ease-out) 520ms forwards;
+}
+@keyframes heroAkzent {
+    0%   { opacity: 0; transform: translateY(14px); text-shadow: none; }
+    55%  { opacity: 1; transform: translateY(0);    text-shadow: 0 0 28px rgba(255, 201, 71, .6); }
+    100% { opacity: 1; transform: translateY(0);    text-shadow: 0 0 0 rgba(255, 201, 71, 0); }
 }
 
 section.hero-section.hero-enhanced .subtitle {
@@ -164,8 +168,8 @@ section.hero-section.hero-enhanced .cta-button {
     border-radius: var(--radius-md);
     font-size: var(--text-base);
     box-shadow: var(--shadow-accent);
-    transition: transform var(--duration-base) var(--ease-out),
-                box-shadow var(--duration-base) var(--ease-out);
+    transition: transform var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
 }
 /* Lichtreflex, der beim Überfahren einmal durchläuft */
 section.hero-section.hero-enhanced .cta-button::after {
@@ -195,14 +199,14 @@ section.hero-section.hero-enhanced .cta-secondary {
     font-weight: var(--weight-bold);
     padding: var(--space-2) 0;
     border-bottom: 1px solid transparent;
-    transition: color var(--duration-base) var(--ease-out),
-                border-color var(--duration-base) var(--ease-out);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
 }
 section.hero-section.hero-enhanced .cta-secondary:hover {
     color: var(--accent);
     border-bottom-color: var(--accent);
 }
-section.hero-section.hero-enhanced .cta-secondary svg { transition: transform var(--duration-base) var(--ease-out); }
+section.hero-section.hero-enhanced .cta-secondary svg { transition: transform var(--duration-fast) var(--ease-out); }
 section.hero-section.hero-enhanced .cta-secondary:hover svg { transform: translateX(4px); }
 
 section.hero-section.hero-enhanced .hero-note {
@@ -227,23 +231,57 @@ section.hero-section.hero-enhanced .hero-note {
     animation: heroEnter var(--duration-reveal) var(--ease-out) forwards;
 }
 section.hero-section.hero-enhanced .hero-eyebrow { animation-delay: .05s; }
-section.hero-section.hero-enhanced h1           { animation-delay: .18s; }
-section.hero-section.hero-enhanced .subtitle    { animation-delay: .32s; }
-section.hero-section.hero-enhanced .hero-actions{ animation-delay: .46s; }
-section.hero-section.hero-enhanced .hero-note   { animation-delay: .58s; }
+section.hero-section.hero-enhanced .subtitle    { animation-delay: .46s; }
+section.hero-section.hero-enhanced .hero-actions{ animation-delay: .62s; }
+section.hero-section.hero-enhanced .hero-note   { animation-delay: .76s; }
 
 @keyframes heroEnter {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Die Headline blendet nicht, sie steigt aus einer Maske auf.
+   Der Unterschied zur reinen Deckkraftblende ist der eigentliche Auftritt:
+   Der Satz kommt hinter einer Kante hervor, statt an Ort und Stelle heller zu
+   werden. Die negativen Anteile der Maske verhindern, dass Unterlängen und
+   der Schein der Akzentphrase beschnitten werden. */
+section.hero-section.hero-enhanced h1 {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(108% 0 -30% 0);
+    animation: heroHeadline 920ms var(--ease-out) .18s forwards;
+}
+@keyframes heroHeadline {
+    from { clip-path: inset(108% 0 -30% 0); transform: translateY(26px); }
+    to   { clip-path: inset(-30% 0 -30% 0); transform: translateY(0); }
+}
+
+/* ── Signatur: Übergabe an den Inhalt ─────────────────────────────────────
+   Der eine scroll-gekoppelte Moment der Seite. Beim Scrollen tritt der Hero
+   zurück und der erste Abschnitt kommt nach vorn, wie ein Fokuswechsel der
+   Kamera. Der Fortschritt --sig-p (0 bis 1) wird in hero-signature.js
+   gesetzt. Ohne JavaScript und bei reduzierter Bewegung bleibt er 0, dann
+   passiert hier schlicht nichts. */
+section.hero-section.hero-enhanced .container {
+    transform: translateY(calc(var(--sig-p, 0) * -54px))
+               scale(calc(1 - var(--sig-p, 0) * 0.035));
+    opacity: calc(1 - var(--sig-p, 0) * 0.92);
+    will-change: transform, opacity;
+}
+section.hero-section.hero-enhanced .hero-scroll-hint {
+    opacity: calc(1 - var(--sig-p, 0) * 2.4);
+}
+
 section.hero-section.hero-enhanced.no-fade .hero-eyebrow,
 section.hero-section.hero-enhanced.no-fade h1,
+section.hero-section.hero-enhanced.no-fade .text-cyan,
 section.hero-section.hero-enhanced.no-fade .subtitle,
 section.hero-section.hero-enhanced.no-fade .hero-actions,
 section.hero-section.hero-enhanced.no-fade .hero-note {
     opacity: 1;
     transform: none;
     animation: none;
+    clip-path: none;
+    text-shadow: none;
 }
 
 /* ── Scroll-Hinweis ───────────────────────────────────────────────────────── */
@@ -263,7 +301,7 @@ section.hero-section.hero-enhanced.no-fade .hero-note {
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     text-decoration: none;
-    transition: color var(--duration-base) var(--ease-out);
+    transition: color var(--duration-fast) var(--ease-out);
 }
 .hero-scroll-hint:hover { color: var(--accent); }
 .hero-scroll-hint__line {
@@ -315,17 +353,27 @@ section.hero-section.hero-enhanced.no-fade .hero-note {
 
 /* ── Bewegung reduzieren ──────────────────────────────────────────────────
    Alle Bewegung steht still, die Inhalte bleiben vollständig sichtbar.
-   Der Canvas wird zusätzlich in hero-canvas.js angehalten. */
+   Der Seitenhintergrund wird zusätzlich in background-canvas.js angehalten. */
 @media (prefers-reduced-motion: reduce) {
     section.hero-section.hero-enhanced::before { animation: none; }
     section.hero-section.hero-enhanced .hero-eyebrow,
     section.hero-section.hero-enhanced h1,
+    section.hero-section.hero-enhanced .text-cyan,
     section.hero-section.hero-enhanced .subtitle,
     section.hero-section.hero-enhanced .hero-actions,
     section.hero-section.hero-enhanced .hero-note {
         opacity: 1;
         transform: none;
         animation: none;
+        clip-path: none;
+        text-shadow: none;
+    }
+    /* Die Übergabe steht ebenfalls still. Ebene 1 der Bewegungsspec ist die
+       scroll-gekoppelte Ebene und damit der häufigste Auslöser für Unwohlsein. */
+    section.hero-section.hero-enhanced .container,
+    section.hero-section.hero-enhanced .hero-scroll-hint {
+        transform: none;
+        opacity: 1;
     }
     .hero-scroll-hint__line::after { animation: none; opacity: .6; top: 0; }
 }

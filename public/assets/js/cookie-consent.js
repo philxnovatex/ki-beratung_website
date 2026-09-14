@@ -70,7 +70,7 @@
                                     },
                                     {
                                         title: 'Analyse & Tracking',
-                                        description: 'Aktuell setzen wir keine einwilligungspflichtigen Analyse-Cookies ein. Unsere Reichweitenmessung (Umami, Vercel Analytics) arbeitet ohne Cookies und ohne persönliche Profile – Details in der <a href="/pages/legal/datenschutz.html">Datenschutzerklärung</a>. Diese Kategorie greift erst, falls künftig einwilligungspflichtige Dienste hinzukommen.',
+                                        description: 'Aktuell setzen wir keine einwilligungspflichtigen Analyse-Cookies ein. Unsere Reichweitenmessung (Umami, Vercel Analytics) arbeitet ohne Cookies und ohne persönliche Profile. Details in der <a href="/pages/legal/datenschutz.html">Datenschutzerklärung</a>. Diese Kategorie greift erst, falls künftig einwilligungspflichtige Dienste hinzukommen.',
                                         linkedCategory: 'analytics'
                                     }
                                 ]

@@ -31,12 +31,17 @@
     <noscript><style>.featured-section,.services-grid .service-card,.problem-column,.solution-column,.stage-card,.timeline-item,.testimonial-card,.cs-card,.ki-apps__card{opacity:1!important;transform:none!important;}</style></noscript>
     <link rel="stylesheet" href="assets/css/sections/ki-anwendungen.css">
     <link rel="stylesheet" href="assets/css/sections/case-study.css">
+    <link rel="stylesheet" href="assets/css/sections/ablauf.css">
+    <link rel="stylesheet" href="assets/css/sections/problem-pin.css">
     <!-- Hero Enhancements: Entfernen oder auskommentieren um zu deaktivieren -->
     <link rel="stylesheet" href="assets/css/hero-enhancements.css">
     <link rel="stylesheet" href="assets/vendor/cookieconsent/cookieconsent.css">
     <script defer src="assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
 </head>
 <body>
+    <!-- Knotennetz als durchgehender Seitenhintergrund (background-canvas.js).
+         Liegt fest hinter allen Abschnitten, wird vom Scrollfortschritt gesteuert. -->
+    <canvas id="site-canvas" aria-hidden="true"></canvas>
     <a href="#main-content" class="sr-only skip-link">Zum Inhalt springen</a>
     <header class="main-header">
         <div class="container">
@@ -46,6 +51,7 @@
             <nav id="primary-navigation" class="main-nav" data-visible="false">
                 <ul>
                     <li><a href="pages/leistungen.html">Leistungen</a></li>
+                    <li><a href="pages/ki-sichtbarkeit.html">KI Sichtbarkeit</a></li>
                     <li><a href="#ki-anwendungen">KI-Anwendungen</a></li>
                     <li><a href="#about">Über Neuratex AI</a></li>
                     <li><a href="#demo">Demo</a></li>
@@ -63,13 +69,12 @@
         <!-- Klasse 'hero-enhanced' aktiviert modernisierte Styles (hero-enhancements.css) -->
         <!-- Optionen: 'no-aurora' = ohne Gradient, 'no-fade' = ohne Animation, 'no-canvas' = Canvas ausblenden -->
         <section id="hero" class="hero-section hero-enhanced">
-            <canvas id="hero-canvas" aria-hidden="true"></canvas>
             <div class="container">
                 <p class="hero-eyebrow">KI-Beratung für den Mittelstand</p>
                 <h1>Planbarer KI-Erfolg beginnt <span class="text-cyan">vor der Technik.</span></h1>
                 <p class="subtitle">Wir klären zuerst, wo KI echten Nutzen schafft. Dann befähigen wir Ihr Team und setzen die passende Lösung um. So entstehen Anwendungen, die im Alltag funktionieren und sich rechnen.</p>
                 <div class="hero-actions">
-                    <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">KI-Potenziale gemeinsam prüfen</a>
+                    <a data-calendly-location="home_hero" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">KI-Potenziale gemeinsam prüfen</a>
                     <a href="#referenz" class="cta-secondary">
                         Projektbeispiel ansehen
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -85,47 +90,71 @@
             </a>
         </section>
         <!-- Problem & Lösung Sektion mit Scroll Animation -->
-        <section id="problem-solution" class="problem-solution-section" aria-labelledby="problem-solution-heading">
-            <div class="container">
+        <section id="problem-solution" class="problem-solution-section pin-track" aria-labelledby="problem-solution-heading">
+            <div class="container pin-stage">
                 <!-- Bewusst eine Frage an den Leser statt einer weiteren These.
                      Der Hero sagt bereits, dass es nicht an der Technik liegt.
                      Diese Sektion soll das nicht wiederholen, sondern konkret werden. -->
                 <h2 id="problem-solution-heading">Erkennen Sie Ihr Unternehmen wieder?</h2>
                 <div class="problem-solution-grid">
                     <!-- Linke Spalte: Symptome, die der Leser wiedererkennt -->
-                    <div class="problem-column slide-from-left">
+                    <div class="problem-column slide-from-left" data-pin-step="0">
                         <h3>Im Tagesgeschäft</h3>
-                        <ul class="ps-list">
-                            <li>Prozesse laufen manuell und in jeder Abteilung ein bisschen anders.</li>
-                            <li>Wissen steckt in Köpfen und in Ordnern, die niemand mehr durchsucht.</li>
-                            <li>Entscheidungen dauern, weil die Zahlen erst zusammengesucht werden müssen.</li>
-                            <li>Das Team ist schon am Limit, bevor überhaupt ein KI-Projekt startet.</li>
+                        <!-- Als Kacheln statt als Liste: Vier gleichrangige Symptome
+                             untereinander liest niemand, nebeneinander erkennt man sie
+                             wieder. Die fette Benennung fasst den jeweiligen Satz
+                             zusammen und behauptet nichts Zusaetzliches. -->
+                        <ul class="ps-list ps-symptome">
+                            <li>
+                                <i class="icon icon-gears" aria-hidden="true"></i>
+                                <strong>Uneinheitliche Prozesse</strong>
+                                <span>Prozesse laufen manuell und in jeder Abteilung ein bisschen anders.</span>
+                            </li>
+                            <li>
+                                <i class="icon icon-folders" aria-hidden="true"></i>
+                                <strong>Verstreutes Wissen</strong>
+                                <span>Wissen steckt in Köpfen und in Ordnern, die niemand mehr durchsucht.</span>
+                            </li>
+                            <li>
+                                <i class="icon icon-chart-line" aria-hidden="true"></i>
+                                <strong>Späte Entscheidungen</strong>
+                                <span>Entscheidungen dauern, weil die Zahlen erst zusammengesucht werden müssen.</span>
+                            </li>
+                            <li>
+                                <i class="icon icon-warning" aria-hidden="true"></i>
+                                <strong>Team am Limit</strong>
+                                <span>Das Team ist schon am Limit, bevor überhaupt ein KI-Projekt startet.</span>
+                            </li>
                         </ul>
                     </div>
                     <!-- Rechte Spalte: die Diagnose, nicht die Lösung.
                          Die Lösung steht in der Stufen-Sektion direkt darunter. Beides hier
                          zu erklären, hat die Aussage vorher doppelt und unschärfer gemacht. -->
-                    <div class="solution-column slide-from-right">
+                    <div class="solution-column slide-from-right" data-pin-step="1">
                         <h3>Das Muster dahinter</h3>
-                        <p>In dieser Lage liegt der Griff zum Werkzeug nahe. Es wird eingeführt, bevor geklärt ist, welchen Prozess es verbessern soll, wer damit arbeiten wird und woran sich der Erfolg messen lässt.</p>
-                        <p>So entstehen Lösungen, die in der Vorführung überzeugen und im Arbeitsalltag nicht ankommen.</p>
+                        <p class="ps-leitsatz">In dieser Lage liegt der Griff zum Werkzeug nahe. Es wird eingeführt, bevor geklärt ist, welchen Prozess es verbessern soll, wer damit arbeiten wird und woran sich der Erfolg messen lässt.</p>
+                        <p class="ps-folge">So entstehen Lösungen, die in der Vorführung überzeugen und im Arbeitsalltag nicht ankommen.</p>
                     </div>
+                    <!-- Formuliert bewusst anders als die Überschrift im Hero.
+                         "beginnt vor der Technik" stand sonst zweimal auf der Seite.
+                         Steht im Raster statt darunter, damit die drei Schritte
+                         Geschwister sind und sich im eingerasteten Zustand
+                         uebereinander legen lassen. In der Listenansicht laeuft
+                         der Satz ueber beide Spalten, wie zuvor. -->
+                    <p class="ps-bridge" data-pin-step="2">Genau dort setzen wir an.</p>
                 </div>
-                <!-- Formuliert bewusst anders als die Überschrift im Hero.
-                     "beginnt vor der Technik" stand sonst zweimal auf der Seite. -->
-                <p class="ps-bridge">Genau dort setzen wir an.</p>
             </div>
         </section>
         <!-- Ende Problem & Lösung Sektion -->
         <!-- Kundenstimmen
-             Nur freigegebene Zitate. Zweiter und dritter Platz folgen, sobald
-             die Freigaben von Kervin Krück (i-Alarmsysteme) und vom ZDH
-             vorliegen. Bis dahin steht hier bewusst nur eine Stimme, statt den
-             Bereich mit Platzhaltern zu füllen. -->
+             Nur freigegebene Zitate. Alle drei Freigaben liegen vor.
+             Die Reihenfolge folgt den drei Stufen des Angebots: Herangehensweise,
+             Befähigung, Umsetzung. Weitere Stimmen deshalb nicht einfach
+             anhängen, sondern in diese Logik einordnen. -->
         <section id="stimmen" class="testimonials-section" aria-labelledby="tm-heading">
             <div class="container">
                 <h2 id="tm-heading">Was Kunden sagen</h2>
-                <div class="testimonials-grid testimonials-grid--single">
+                <div class="testimonials-grid">
                     <!-- Freigabe von Stefan Jaenecke liegt vor, einschließlich der
                          Funktionsbezeichnung in genau dieser Fassung. -->
                     <article class="testimonial-card">
@@ -133,6 +162,27 @@
                         <footer class="tm-author">
                             <span class="tm-name">Stefan Jaenecke</span>
                             <span class="tm-role">Beirat mittelständischer Unternehmer</span>
+                        </footer>
+                    </article>
+                    <!-- Freigabe liegt vor. Der erste Buchstabe wurde grossgeschrieben,
+                         weil das Zitat aus der Mitte einer E-Mail stammt. Sonst
+                         unveraendert. -->
+                    <article class="testimonial-card">
+                        <p class="tm-quote">Vielen Dank nochmals für die interessante, aufschlussreiche und sehr gut moderierte Schulung, die im Haus sehr gutes Feedback hervorgerufen hat.</p>
+                        <footer class="tm-author">
+                            <span class="tm-name">Robert Härtel</span>
+                            <span class="tm-role">Referatsleiter, ZDH</span>
+                        </footer>
+                    </article>
+                    <!-- Freigabe liegt vor. Belegt bewusst die Umsetzung im laufenden
+                         Betrieb, waehrend die beiden Stimmen davor Herangehensweise und
+                         Schulung abdecken. Damit steht zu jeder der drei Stufen eine
+                         Stimme. -->
+                    <article class="testimonial-card">
+                        <p class="tm-quote">Mit dem Forecasting-Tool brauchen wir deutlich weniger Zeit für die Bestellplanung. Alle relevanten Zahlen sind an einem Ort, und wir sehen auf einen Blick, was bestellt werden muss.</p>
+                        <footer class="tm-author">
+                            <span class="tm-name">Kevin Krück-Spilke</span>
+                            <span class="tm-role">Geschäftsführer, i-Alarmsysteme</span>
                         </footer>
                     </article>
                 </div>
@@ -231,15 +281,18 @@
                     <!-- CTA -->
                     <div class="cs-cta-bar">
                         <p class="cs-cta-text"><strong>Ähnliche Herausforderung?</strong> Lassen Sie uns gemeinsam Ihren Use-Case prüfen.</p>
-                        <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cs-cta-button">
+                        <a data-calendly-location="home_case_study" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cs-cta-button">
                             Kostenlose Potenzial-Analyse <i class="icon icon-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
             </div>
         </section>
-        <section id="principles" class="timeline-section">
-            <div class="container">
+        <!-- Gepinnter Projektablauf. Ohne JavaScript, bei reduzierter Bewegung und
+             auf schmalen Fenstern bleibt es die normale Liste untereinander.
+             Die Klasse .pin-aktiv setzt pin-sequence.js. -->
+        <section id="principles" class="timeline-section pin-track">
+            <div class="container pin-stage">
                 <!-- Bewusst als Projektablauf benannt und nicht als zweites Modell.
                      Die drei Stufen weiter oben beschreiben das Angebot, dieser Abschnitt
                      beschreibt, wie ein einzelnes Projekt konkret abläuft. Ohne die
@@ -247,7 +300,7 @@
                 <h2>So läuft ein Projekt konkret ab</h2>
                 <p class="services-intro">Unabhängig davon, auf welcher der drei Stufen wir einsteigen: Der Ablauf ist immer derselbe und Sie wissen nach jeder Phase, woran Sie sind.</p>
                 <div class="timeline">
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-phase="0">
                         <h3>1. Analyse & Potenzial</h3>
                         <ul>
                             <li><strong>Kick-off & Kennenlernen:</strong> Wir verstehen Ihre Ziele und Herausforderungen.</li>
@@ -255,7 +308,7 @@
                             <li><strong>Ergebnis & Ausblick:</strong> Sie erhalten einen priorisierten Maßnahmenkatalog als Entscheidungsgrundlage.</li>
                         </ul>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-phase="1">
                         <h3>2. Konzeption & Planung</h3>
                         <ul>
                             <li><strong>Tiefenanalyse & Daten-Check:</strong> Wir prüfen Prozesse und die Qualität Ihrer Daten.</li>
@@ -263,7 +316,7 @@
                             <li><strong>Ergebnis & Fahrplan:</strong> Sie erhalten eine detaillierte KI-Roadmap mit Zeitplan und Meilensteinen.</li>
                         </ul>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item" data-phase="2">
                         <h3>3. Umsetzung & Befähigung</h3>
                         <ul>
                             <li><strong>Agile Entwicklung & Prototyping:</strong> Wir entwickeln einen ersten Prototypen (MVP) in kurzen Zyklen.</li>
@@ -383,7 +436,7 @@
                         <!-- Call-to-Action -->
                         <div class="demo-cta">
                             <p class="cta-text">Beeindruckt? Lassen Sie uns Ihre KI-Lösung entwickeln.</p>
-                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="premium-cta-button">
+                            <a data-calendly-location="home_demo" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="premium-cta-button">
                                 <span>Kostenlose Beratung buchen</span>
                                 <svg viewBox="0 0 24 24" width="16" height="16">
                                     <path d="M5 12h14m-7-7l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
@@ -400,17 +453,16 @@
             <div class="container about-flex">
                 <div class="about-image"><img src="assets/images/smart-700.webp" loading="lazy" decoding="async" width="700" height="700" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI"></div>
                 <div class="about-text">
-                    <h2>Was ich im Konzern gelernt habe</h2>
-                    <p><strong>Als KI-Verantwortlicher im Business Development eines Versicherungskonzerns habe ich interne Chatbots entwickelt, RAG-gestützte Assistenten umgesetzt und Workshops bis in den Vorstand gehalten. Unter den strengsten Datenschutz- und Compliance-Vorgaben, die es in Deutschland gibt.</strong></p>
-                    <!-- Formuliert die These bewusst nicht erneut aus. Sie steht bereits im
-                         Hero und wird in der Diagnose-Sektion konkretisiert. Hier zaehlt die
-                         eigene Erfahrung, nicht die Wiederholung des Arguments. -->
-                    <p>Dort habe ich gelernt, welche Fragen vor dem ersten Prototypen beantwortet sein müssen: Wer trägt die Verantwortung für das Ergebnis? Welche Daten dürfen überhaupt verwendet werden? Und was passiert mit der Lösung, wenn der Projektleiter das Unternehmen verlässt? Wer diese Fragen erst am Ende stellt, hat sie meist zu spät gestellt.</p>
-                    <p>Vorher habe ich Business Management studiert und in Unternehmensberatungen gearbeitet. Diese Kombination ist der Grund, warum ich mit Geschäftsführern über Wirtschaftlichkeit und mit der IT über Architektur sprechen kann, ohne dass eine der beiden Seiten das Gespräch verliert.</p>
-                    <!-- Wechsel von "ich" auf "wir": Die Absätze davor erzählen die eigene
-                         Berufsbiografie, hier beginnt das Leistungsversprechen des
-                         Unternehmens. Deshalb steht ab hier die Firmenform. -->
-                    <p>Neuratex AI habe ich gegründet, um dem deutschen Mittelstand genau diesen Umweg zu ersparen. Bei uns bekommen Sie keinen Hype und keine Präsentation über die Zukunft der Arbeit, sondern eine ehrliche Einschätzung, was sich in Ihrem Unternehmen rechnet, und jemanden, der es dann auch umsetzt.</p>
+                    <h2>Transformation verstehen. Verantwortung übernehmen.</h2>
+                    <!-- Der erste Absatz ist die Kurzfassung der ganzen Biografie: drei
+                         Stationen in einem Satzpaar. Er ist hervorgehoben, weil er auch
+                         allein gelesen trägt, wenn jemand nur überfliegt. -->
+                    <p><strong>Als Unternehmensberater habe ich Transformationen begleitet, als KI-Verantwortlicher im Versicherungskonzern praktische Lösungen umgesetzt. Heute verbinde ich beides mit der Erfahrung, selbst ein Unternehmen aufzubauen.</strong></p>
+                    <p>In der Transformationsberatung habe ich gelernt, Geschäftsmodelle, Prozesse und Menschen zusammenzudenken. Im Versicherungskonzern kam die technische Praxis dazu: interne Chatbots, RAG-gestützte Assistenten und Workshops bis in den Vorstand. Datenschutz und Compliance waren dabei feste Anforderungen an jede Lösung.</p>
+                    <p>Die Selbstständigkeit hat meinen Blick noch einmal geschärft: Welche Investition lohnt sich? Was muss zuerst gelöst werden? Und was funktioniert auch mit begrenztem Budget im Alltag? Diese Fragen bestimmen heute, wie ich berate und umsetze.</p>
+                    <!-- Bleibt bewusst in der Ich-Form bis zur Signatur. Der frühere Text
+                         wechselte hier auf "wir", was den persönlichen Ton brach. -->
+                    <p>Neuratex AI habe ich gegründet, um mittelständische Unternehmen genau dabei zu unterstützen: Potenziale ehrlich bewerten, Prioritäten setzen und KI-Lösungen umsetzen, die im Betrieb einen konkreten Nutzen bringen.</p>
                     <p class="about-signature">Philipp Koch, Gründer</p>
                 </div>
             </div>
@@ -688,7 +740,7 @@
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Der <strong>„Potenzial‑Workshop“</strong> ist ideal für Sie. Gemeinsam identifizieren wir die Anwendungsfälle mit dem größten Hebel und schaffen die Basis für Ihre ersten erfolgreichen KI‑Projekte.</p>
-                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Potenzial‑Workshop besprechen</a>
+                            <a data-calendly-location="quiz_level_1" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Potenzial‑Workshop besprechen</a>
                         </div>
                     </div>
                     <div id="result-2" class="result-card" hidden>
@@ -697,7 +749,7 @@
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Der <strong>„Strategie‑ & Roadmap‑Workshop“</strong> bündelt Ihre Erfahrungen und führt zu einem klaren Fahrplan, um KI vom Experiment zum festen Bestandteil Ihrer Wertschöpfung zu machen.</p>
-                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategie‑Workshop besprechen</a>
+                            <a data-calendly-location="quiz_level_2" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategie‑Workshop besprechen</a>
                         </div>
                     </div>
                     <div id="result-3" class="result-card" hidden>
@@ -706,7 +758,7 @@
                         <div class="next-step">
                             <h4>Ihr nächster Schritt mit Neuratex:</h4>
                             <p>Vereinbaren Sie ein <strong>individuelles Strategiegespräch</strong>. Wir skalieren Ihre KI‑Initiativen und erschließen neue Geschäftsmodelle.</p>
-                            <a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategiegespräch vereinbaren</a>
+                            <a data-calendly-location="quiz_level_3" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="reifegrad-btn">Strategiegespräch vereinbaren</a>
                         </div>
                     </div>
                 </div>
@@ -716,7 +768,7 @@
             <div class="container">
                 <h2>Starten Sie mit dem ersten, richtigen Schritt.</h2>
                 <p>In einer kostenlosen und unverbindlichen Potenzial-Analyse identifizieren wir gemeinsam den größten Hebel für den KI-Einsatz in Ihrem Unternehmen. Buchen Sie Ihren Termin direkt online.</p>
-<a href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">Termin für Potenzial-Analyse buchen</a>
+<a data-calendly-location="home_final" href="https://calendly.com/aiconsulting-jx7n/30min" target="_blank" rel="noopener noreferrer" class="cta-button">Termin für Potenzial-Analyse buchen</a>
             </div>
         </section>
     </main>
@@ -738,7 +790,11 @@
     <!-- Animations werden von main.js gesteuert -->
     <!-- GSAP entfernt: wurde nicht verwendet (~45KB gespart) -->
     <!-- Core Scripts (ausgelagert für besseres Caching und CSP) -->
-    <script src="assets/js/hero-canvas.js" defer></script>
+    <script src="assets/js/analytics.js" defer></script>
+    <script src="assets/js/background-canvas.js" defer></script>
+    <script src="assets/js/hero-signature.js" defer></script>
+    <script src="assets/js/pin-sequence.js" defer></script>
+    <script src="assets/js/testimonial-slider.js" defer></script>
     <script src="assets/js/sections/ki-anwendungen.js" defer></script>
     <script src="assets/js/main.js" defer></script>
     <script src="assets/js/scroll-reveal.js" defer></script>

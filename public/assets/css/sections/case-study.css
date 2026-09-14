@@ -4,7 +4,7 @@
    ============================================= */
 
 .case-study-section {
-    background: var(--card-bg);
+    background: rgba(17, 34, 64, .62);
     position: relative;
     overflow: hidden;
 }
@@ -156,7 +156,7 @@
     padding: 36px 32px;
     text-align: center;
     position: relative;
-    transition: background 0.3s ease;
+    transition: background var(--duration-fast) var(--ease-out);
 }
 
 .cs-metric:not(:last-child) {
@@ -178,7 +178,7 @@
     /* Counter animation via JS */
     opacity: 0;
     transform: translateY(12px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
 }
 
 .cs-metric.in-view .cs-metric-value {
@@ -277,7 +277,7 @@
     text-decoration: none;
     font-size: var(--text-sm);
     border: 2px solid var(--accent-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
     white-space: nowrap;
 }
 
@@ -288,7 +288,7 @@
 
 .cs-cta-button i {
     font-size: var(--text-xs);
-    transition: transform 0.3s ease;
+    transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .cs-cta-button:hover i {

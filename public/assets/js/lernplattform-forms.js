@@ -16,8 +16,10 @@ function triggerDownload(url) {
 // ── Whitepaper-Formular: Daten an Brevo senden, dann PDF-Download ──
 const whitepaperForm = document.getElementById('whitepaper-form');
 if (whitepaperForm) {
+  let sending = false;
   whitepaperForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (sending) return;
 
     const nameEl = document.getElementById('wp-name');
     const emailEl = document.getElementById('wp-email');
@@ -49,6 +51,7 @@ if (whitepaperForm) {
 
     // UI-Feedback: Button deaktivieren
     const originalLabel = submitBtn ? submitBtn.textContent : '';
+    sending = true;
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
     setStatus('', '');
 
@@ -69,6 +72,7 @@ if (whitepaperForm) {
         setStatus(data.message || 'Vielen Dank! Der Download startet…', '#4caf50');
         whitepaperForm.reset();
         triggerDownload('/assets/downloads/neuratex-whitepaper.pdf');
+        window.neuratexTrack?.('form_complete', { form: 'whitepaper' });
       } else {
         setStatus(data.message || 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
       }
@@ -76,6 +80,7 @@ if (whitepaperForm) {
       console.warn('whitepaper submit error', error);
       setStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
     } finally {
+      sending = false;
       // Label aus dem DOM übernehmen statt hart zu kodieren, damit Textänderungen
       // im HTML nicht stillschweigend überschrieben werden.
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
@@ -87,12 +92,14 @@ const newsletterForm = document.getElementById('newsletter-form');
 const newsletterInput = document.getElementById('newsletter-email');
 
 if (newsletterForm && newsletterInput) {
+  let sending = false;
   const nlStatus = document.getElementById('newsletter-status');
   function setNlStatus(msg, color) {
     if (nlStatus) { nlStatus.textContent = msg; nlStatus.style.color = color; }
   }
   newsletterForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (sending) return;
     const email = newsletterInput.value.trim();
     if (!email) {
       setNlStatus('Bitte E‑Mail angeben.', '#ff6b6b');
@@ -106,6 +113,7 @@ if (newsletterForm && newsletterInput) {
     // Disable button during request
     const submitBtn = newsletterForm.querySelector('button[type="submit"]');
     const originalLabel = submitBtn ? submitBtn.textContent : '';
+    sending = true;
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
     setNlStatus('', '');
 
@@ -121,12 +129,14 @@ if (newsletterForm && newsletterInput) {
       if (response.ok && data.ok) {
         setNlStatus(data.message || 'Erfolgreich eingetragen! Vielen Dank.', '#4caf50');
         newsletterInput.value = '';
+        window.neuratexTrack?.('form_complete', { form: 'newsletter' });
       } else {
         setNlStatus(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
       }
     } catch (error) {
       setNlStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
     } finally {
+      sending = false;
       if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
     }
   });

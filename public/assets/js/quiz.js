@@ -50,7 +50,7 @@
             },
             q8: {
                 C: 'Richtig: „Halluzination" = überzeugend, aber falsch.',
-                default: 'Achte auf plausible, aber falsche Aussagen – das nennt man Halluzination.'
+                default: 'Achte auf plausible, aber falsche Aussagen. Das nennt man Halluzination.'
             },
             q9: {
                 B: 'Richtig: Bias/Prompting kann zu einseitigen Ergebnissen führen.',
@@ -196,6 +196,8 @@
 
     // Zuletzt berechnetes Ergebnis, damit das Lead-Formular es mitsenden kann
     let lastResults = null;
+    let quizCompleted = false;
+    let leadSending = false;
 
     // Ergebnis anzeigen
     function displayResults(results) {
@@ -287,6 +289,7 @@
 
         leadForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            if (leadSending) return;
 
             const nameEl = document.getElementById('quiz-name');
             const emailEl = document.getElementById('quiz-email');
@@ -309,6 +312,7 @@
             }
 
             const originalLabel = submitBtn ? submitBtn.textContent : '';
+            leadSending = true;
             if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
             setLeadStatus('', '');
 
@@ -340,6 +344,7 @@
                 if (response.ok && data.ok) {
                     if (leadGate) leadGate.hidden = true;
                     if (lastResults) unlockDetails(lastResults);
+                    window.neuratexTrack?.('form_complete', { form: 'quiz_lead' });
                 } else {
                     setLeadStatus(data.message || 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
                 }
@@ -347,6 +352,7 @@
                 console.warn('[Quiz] Lead submit error', error);
                 setLeadStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
             } finally {
+                leadSending = false;
                 if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
             }
         });
@@ -368,10 +374,13 @@
         // Form Submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            if (quizCompleted || steps.some(step => !step.querySelector('input[type="radio"]:checked'))) return;
             
             try {
                 const results = calculateResults();
                 displayResults(results);
+                quizCompleted = true;
+                window.neuratexTrack?.('quiz_complete');
             } catch (error) {
                 console.error('[Quiz] Fehler bei der Auswertung:', error);
                 // Fallback: Zeige Level 1
