@@ -1,0 +1,131 @@
+/* ============================================================================
+   ICONS
+
+   Ersetzt Font Awesome. Auf der ganzen Seite wurden nur zehn verschiedene
+   Symbole verwendet, dafür lud jede Seite eine vollständige Icon-Schrift von
+   cdnjs.cloudflare.com nach. Das kostete einen zusätzlichen Fremdhost im
+   kritischen Ladepfad und erzwang cdnjs in style-src und font-src der
+   Content-Security-Policy.
+
+   Umsetzung als Maske: Die Fläche wird mit currentColor gefüllt und über ein
+   SVG maskiert. Dadurch erben die Symbole die Textfarbe wie zuvor, lassen sich
+   über font-size skalieren und benötigen keinerlei Netzwerkzugriff.
+
+   Verwendung:  <i class="icon icon-check" aria-hidden="true"></i>
+   ============================================================================ */
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    vertical-align: -0.125em;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / contain no-repeat;
+            mask: var(--icon) center / contain no-repeat;
+}
+
+.icon-check {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg>');
+}
+
+.icon-arrow-right {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>');
+}
+
+.icon-bolt {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M13.5 2L4 13.2h6.1L9.8 22l9.7-11.4h-6.4z"/></svg>');
+}
+
+.icon-chart-line {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v17a1 1 0 001 1h17"/><path d="M7 14.5l4-4.5 3.2 3 4.8-6"/></svg>');
+}
+
+/* Vortrag: Rednerpult mit Schallwellen */
+.icon-microphone {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v4M8.5 22h7"/></svg>');
+}
+
+/* Workshop: Tafel mit Person davor */
+.icon-workshop {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="3" width="19" height="12" rx="1.5"/><path d="M7 7.5h7M7 11h4"/><circle cx="12" cy="18.5" r="2"/><path d="M8.5 23a3.6 3.6 0 017 0"/></svg>');
+}
+
+/* Strategie: verzweigter Weg */
+.icon-route {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="5" r="2.5"/><circle cx="18.5" cy="19" r="2.5"/><path d="M5.5 7.5v5a4 4 0 004 4h5.5"/></svg>');
+}
+
+.icon-gears {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M21.5 12h-3M5.5 12h-3M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1M18.7 18.7l-2.1-2.1M7.4 7.4L5.3 5.3"/></svg>');
+}
+
+/* Verstreute Ablagen: zwei versetzte Ordner, einer angeschnitten.
+   Ergaenzt fuer die Symptomkacheln im Abschnitt "Erkennen Sie Ihr Unternehmen
+   wieder?". Die zehn vorhandenen Symbole trafen "Wissen steckt in Koepfen und
+   in Ordnern" nicht. */
+.icon-folders {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 18.5V7.5a1 1 0 011-1h4.6l1.8 2h6.6a1 1 0 011 1v9a1 1 0 01-1 1h-13a1 1 0 01-1-1z"/><path d="M7.5 6.5v-1a1 1 0 011-1h4.6l1.8 2h4.6a1 1 0 011 1v8"/></svg>');
+}
+
+.icon-warning {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L1.7 20.5h20.6z"/><path d="M12 9.5v5M12 17.6v.1"/></svg>');
+}
+
+.icon-quote {
+    --icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M9.6 5.5C6 7 3.8 10 3.8 13.7c0 2.9 1.8 4.8 4.2 4.8 2.2 0 3.8-1.6 3.8-3.7 0-2-1.4-3.5-3.3-3.5-.4 0-.8.1-1 .2.5-1.9 2.1-3.5 4-4.4zm10.6 0c-3.6 1.5-5.8 4.5-5.8 8.2 0 2.9 1.8 4.8 4.2 4.8 2.2 0 3.8-1.6 3.8-3.7 0-2-1.4-3.5-3.3-3.5-.4 0-.8.1-1 .2.5-1.9 2.1-3.5 4-4.4z"/></svg>');
+}
+
+/* Häkchen in Aufzählungen der Leistungsseite. Ersetzt zugleich 20 gleichlautende
+   Inline-Styles im Markup. */
+.icon-check-list {
+    position: absolute;
+    left: 0;
+    top: 0.32em;
+    color: var(--accent);
+    font-size: 0.85em;
+}
+
+/* ── Vorteilslisten mit Häkchen ───────────────────────────────────────────
+   Ersetzt 30 gleichlautende Inline-Styles auf der Leistungsseite. */
+.check-list {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-5, 1.25rem);
+}
+.check-list li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: var(--space-2);
+}
+
+/* Bildrahmen in den Leistungskarten. Die Klasse .service-image war bereits im
+   Markup vorhanden, hatte aber kein CSS. Ersetzt 14 Inline-Styles. */
+.service-image {
+    margin-bottom: var(--space-5, 1.25rem);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+.service-image--tight { margin-bottom: var(--space-3); }
+.service-image img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+/* Kategoriezeile über den Leistungstexten */
+.eyebrow-italic {
+    font-style: italic;
+    font-size: var(--text-sm);
+    color: var(--accent);
+    margin-top: -10px;
+    margin-bottom: var(--space-4);
+}
+.eyebrow-italic--sm {
+    font-style: italic;
+    font-size: var(--text-xs);
+    color: var(--accent);
+    margin-bottom: var(--space-2);
+}

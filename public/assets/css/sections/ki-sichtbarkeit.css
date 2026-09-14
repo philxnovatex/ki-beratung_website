@@ -1,0 +1,668 @@
+/* ============================================================================
+   KI SICHTBARKEIT: Landingpage zum AI Visibility Audit
+
+   Eigene Datei, weil die Seite eigene Abschnitte mitbringt, die es sonst
+   nirgends gibt. Die Tokens kommen aus style.css, hier steht nur Anordnung.
+
+   Grundsatz dieser Seite: Der Besucher soll in wenigen Sekunden sehen, was er
+   bekommt. Deshalb steht direkt unter dem Hero eine vollstaendige, als
+   Beispiel gekennzeichnete Auswertung und nicht noch ein Textblock.
+
+   Der Hero ist bewusst NICHT .hero-section.hero-enhanced: Diese Kombination
+   gehoert laut AGENTS.md ausschliesslich zur Startseite und bringt dort
+   min-height: 100vh mit. Auf einer Landingpage muss die Auswertung direkt
+   darunter angeschnitten sein, sonst scrollt niemand dorthin.
+   ============================================================================ */
+
+/* ── Einblenden ───────────────────────────────────────────────────────────
+   scroll-reveal.js setzt 'visible' und 'in-view'. Ohne JavaScript wird der
+   Startzustand vom noscript-Block im Kopf der Seite zurueckgenommen, genau
+   wie auf den uebrigen Seiten. Bei reduzierter Bewegung blendet das Skript
+   sofort ein, die Regel unten ist die zweite Absicherung. */
+.av-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+}
+.av-reveal.visible,
+.av-reveal.in-view { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    .av-reveal { opacity: 1; transform: none; }
+}
+
+/* ── Gemeinsame Bausteine ─────────────────────────────────────────────────
+   Die Seite ist ueberwiegend linksbuendig. Das globale h2 ist zentriert, das
+   wird hier abschnittsweise zurueckgenommen. */
+.av-section { background: rgba(10, 25, 49, .64); }
+.av-section--raised { background: rgba(17, 34, 64, .62); }
+
+.av-head { max-width: 56rem; margin-bottom: var(--space-12); }
+.av-head h2 { text-align: left; margin-bottom: var(--space-4); }
+.av-head p { color: var(--text-body); }
+
+.av-eyebrow {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-4);
+}
+
+/* Karten dieser Seite. Halbtransparent, damit das Knotennetz durchscheint. */
+.av-card {
+    background: rgba(17, 34, 64, .72);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+}
+.av-card h3 { margin-bottom: var(--space-2); font-size: var(--text-md); }
+.av-card p { max-width: none; color: var(--text-muted); font-size: var(--text-base); }
+
+/* ── Hero ─────────────────────────────────────────────────────────────────
+   Kompakt gehalten. Auf 390 px muss die Kernbotschaft samt erster
+   Handlungsaufforderung ohne groesseren Scroll lesbar sein, deshalb keine
+   Mindesthoehe und ein knapper Innenabstand. */
+.av-hero {
+    position: relative;
+    padding-block: var(--space-12) var(--space-8);
+    background: linear-gradient(180deg, rgba(11, 30, 58, .48) 0%, rgba(10, 25, 49, .62) 100%);
+    text-align: center;
+    overflow: hidden;
+}
+.av-hero .container { position: relative; z-index: 2; }
+
+.av-hero h1 {
+    max-width: 30ch;
+    margin-inline: auto;
+    margin-bottom: var(--space-6);
+    text-wrap: balance;
+}
+.av-hero .av-eyebrow { margin-bottom: var(--space-3); }
+
+/* Der erste Satz ordnet ein, der zweite ist das Versprechen. Der zweite traegt
+   deshalb mehr Gewicht und die hellere Farbe. */
+.av-hero__intro {
+    max-width: 60ch;
+    margin: 0 auto var(--space-4);
+    color: var(--text-muted);
+    font-size: var(--text-base);
+}
+.av-hero__lead {
+    max-width: 62ch;
+    margin: 0 auto var(--space-8);
+    color: var(--text-strong);
+    font-size: var(--text-md);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+}
+
+.av-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    justify-content: center;
+    align-items: center;
+}
+.av-actions--left { justify-content: flex-start; }
+
+/* Zweitrangige Handlung: nur Text mit Pfeil. Gold bleibt der Anfrage
+   vorbehalten, so wie es das Design-System vorgibt. */
+.av-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-strong);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    padding: var(--space-3) var(--space-2);
+    border-bottom: 1px solid rgba(159, 179, 217, .45);
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+.av-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.av-link .icon { transition: transform var(--duration-fast) var(--ease-out); }
+.av-link:hover .icon { transform: translateX(4px); }
+
+.av-note {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin: var(--space-6) auto 0;
+    max-width: 52ch;
+}
+
+/* ── Die Beispielauswertung ───────────────────────────────────────────────
+   Das Kernstueck. Gebaut als Tabelle aus Text und Balken, nicht als Bild:
+   So bleibt sie ohne JavaScript lesbar, skaliert bis 390 px, ist markierbar
+   und kostet keine Ladezeit. */
+.av-report {
+    background: rgba(17, 34, 64, .62);
+    padding-top: var(--space-12);
+}
+.av-report .av-head { margin-bottom: var(--space-6); }
+
+.avr-panel {
+    margin: 0;
+    background: rgba(7, 20, 38, .82);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.avr-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    border-bottom: 1px solid var(--border-subtle);
+    background: rgba(17, 34, 64, .7);
+}
+.avr-head__title {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+/* Die Kennzeichnung als Beispiel ist keine Fussnote, sondern steht im Kopf
+   der Auswertung. Sie muss auffallen, bevor jemand die Zahlen glaubt. */
+.avr-flag {
+    margin-left: auto;
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(255, 201, 71, .12);
+    border: 1px solid rgba(255, 201, 71, .45);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+}
+
+.avr-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-8);
+    padding: var(--space-6);
+}
+.avr-block h3 {
+    font-size: var(--text-sm);
+    font-family: var(--font-secondary);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+}
+
+/* Balken: Share of Voice ................................................. */
+.avr-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
+.avr-bar__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+}
+.avr-bar__name { font-size: var(--text-base); color: var(--text-body); }
+.avr-bar__value {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: var(--text-md);
+    color: var(--text-strong);
+}
+.avr-bar__track {
+    display: block;
+    height: 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(30, 41, 59, .9);
+    overflow: hidden;
+}
+/* Die Breite steht im Markup als --wert und gilt immer, auch ohne
+   JavaScript. Die Bewegung laeuft ueber scaleX und ist damit nur Zugabe. */
+.avr-bar__fill {
+    display: block;
+    height: 100%;
+    width: var(--wert, 0%);
+    border-radius: var(--radius-pill);
+    background: var(--c-blue-500);
+    transform-origin: left center;
+}
+.av-reveal.in-view .avr-bar__fill {
+    animation: avrGrow var(--duration-slow) var(--ease-out) both;
+}
+@keyframes avrGrow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+/* Die eigene Marke ist die Zeile, um die es geht. Sie traegt den Akzent,
+   die Wettbewerber bleiben blau. */
+.avr-bar--eigen .avr-bar__fill { background: var(--accent); }
+.avr-bar--eigen .avr-bar__name { color: var(--text-strong); font-weight: var(--weight-bold); }
+.avr-bar--eigen .avr-bar__value { color: var(--accent); }
+.avr-bar--rest .avr-bar__fill { background: var(--text-faint); opacity: .55; }
+
+/* Kennzahlen: eigene Marke gegen den staerksten Wettbewerber ............. */
+.avr-kpis { margin: 0; display: grid; gap: var(--space-3); }
+.avr-kpi {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: baseline;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(17, 34, 64, .72);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+}
+.avr-kpi__name { font-size: var(--text-sm); color: var(--text-body); }
+.avr-kpi__own,
+.avr-kpi__rival {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: var(--text-md);
+    text-align: right;
+    min-width: 4.5ch;
+}
+.avr-kpi__own { color: var(--accent); }
+.avr-kpi__rival { color: var(--text-muted); }
+.avr-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    font-size: var(--text-xs);
+    font-family: var(--font-secondary);
+    color: var(--text-muted);
+}
+.avr-legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
+.avr-legend i {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--text-muted);
+}
+.avr-legend .avr-legend__own { background: var(--accent); }
+
+/* Quellen hinter dem Wettbewerber ....................................... */
+.avr-sources h3 {
+    font-size: var(--text-sm);
+    font-family: var(--font-secondary);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: var(--space-4);
+}
+.avr-sources {
+    padding: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+    background: rgba(10, 25, 49, .55);
+}
+.avr-source-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-3);
+}
+.avr-source-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    background: rgba(17, 34, 64, .72);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    color: var(--text-body);
+}
+.avr-source-list b {
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    color: var(--text-strong);
+    white-space: nowrap;
+}
+
+/* Der Befund unter der Auswertung. Ohne ihn sind es nur Zahlen. */
+.avr-finding {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+    border-top: 1px solid rgba(255, 201, 71, .35);
+    background: rgba(255, 201, 71, .07);
+}
+.avr-finding strong { color: var(--accent); font-size: var(--text-md); }
+.avr-finding p { max-width: none; color: var(--text-body); }
+
+.avr-caption {
+    margin: var(--space-6) 0 0;
+    max-width: 62ch;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* ── Fragen, die Kunden heute stellen ─────────────────────────────────── */
+.av-quotes {
+    list-style: none;
+    margin: 0 0 var(--space-8);
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-4);
+}
+.av-quotes li {
+    padding: var(--space-6);
+    background: rgba(17, 34, 64, .72);
+    border: 1px solid var(--border-subtle);
+    border-left: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--text-strong);
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+}
+
+/* Ueberleitung von den Beispielfragen zur Gegenueberstellung. */
+.av-bridge {
+    max-width: 62ch;
+    margin-bottom: var(--space-8);
+    color: var(--text-strong);
+    font-size: var(--text-md);
+}
+
+/* Die Kernfrage der Seite, als Gegenueberstellung. */
+.av-pivot {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-6);
+}
+.av-pivot__item {
+    padding: var(--space-6);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: rgba(10, 25, 49, .6);
+}
+.av-pivot__item p { max-width: none; }
+.av-pivot__kicker {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: var(--space-2);
+}
+.av-pivot__frage {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    color: var(--text-muted);
+    line-height: var(--leading-snug);
+}
+.av-pivot__item--jetzt {
+    border-color: rgba(255, 201, 71, .45);
+    background: rgba(255, 201, 71, .07);
+}
+.av-pivot__item--jetzt .av-pivot__kicker { color: var(--accent); }
+.av-pivot__item--jetzt .av-pivot__frage { color: var(--text-strong); }
+
+/* ── Raster fuer Untersuchungsfelder und Ergebnisse ───────────────────── */
+.av-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-6);
+}
+
+/* Die sechs Felder tragen eine Nummer statt eines Symbols. Es gibt im
+   Icon-System kein passendes Symbol fuer "Share of Voice", und sechs
+   notduerftig gewaehlte Symbole waeren schlechter als keines. */
+.av-dim__nr {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+}
+
+/* ── Was wir zusaetzlich analysieren ──────────────────────────────────── */
+.av-why {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: var(--space-12);
+    align-items: start;
+}
+.av-why__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.av-why__list li {
+    position: relative;
+    padding-left: var(--space-8);
+    color: var(--text-body);
+}
+.av-why__list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: var(--space-4);
+    height: 2px;
+    background: var(--accent);
+    opacity: .7;
+}
+
+/* Das Beispiel fuer eine Zahl, die allein nichts nuetzt. */
+.av-hollow {
+    padding: var(--space-6);
+    border: 1px dashed var(--border-subtle);
+    border-radius: var(--radius-md);
+    background: rgba(10, 25, 49, .5);
+    margin-bottom: var(--space-6);
+}
+.av-hollow__zahl {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-faint);
+    margin-bottom: var(--space-2);
+}
+.av-hollow p { max-width: none; color: var(--text-muted); font-size: var(--text-sm); }
+
+.av-payoff {
+    padding: var(--space-6);
+    border: 1px solid rgba(255, 201, 71, .45);
+    border-radius: var(--radius-md);
+    background: rgba(255, 201, 71, .07);
+}
+.av-payoff p { max-width: none; color: var(--text-strong); font-size: var(--text-md); }
+
+/* ── Ablauf in fuenf Schritten ────────────────────────────────────────── */
+.av-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+}
+.av-step {
+    display: grid;
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: var(--space-6);
+    align-items: start;
+    padding: var(--space-6);
+    background: rgba(17, 34, 64, .72);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+}
+.av-step__nr {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+    opacity: .55;
+}
+.av-step h3 { margin-bottom: var(--space-2); }
+.av-step p { max-width: none; color: var(--text-muted); }
+.av-tags {
+    list-style: none;
+    margin: var(--space-4) 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+.av-tags li {
+    font-size: var(--text-xs);
+    font-family: var(--font-secondary);
+    color: var(--text-muted);
+    background: rgba(10, 25, 49, .7);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+}
+/* Als eigener Abschnitt ("Von der Analyse zur Sichtbarkeit") stehen dieselben
+   Schlagworte allein und brauchen mehr Gewicht als im Anhang eines Schrittes.
+   Muss nach der Grundregel stehen, sonst gewinnt deren gleiche Spezifitaet. */
+.av-tags--gross { gap: var(--space-3); }
+.av-tags--gross li {
+    font-size: var(--text-sm);
+    color: var(--text-body);
+    padding: var(--space-2) var(--space-4);
+}
+
+/* ── Wiederkehrende Handlungsaufforderung ─────────────────────────────── */
+.av-band {
+    background: rgba(10, 25, 49, .72);
+    border-block: 1px solid var(--border-subtle);
+    padding-block: var(--space-12);
+}
+.av-band .container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+}
+.av-band h2 {
+    text-align: left;
+    margin: 0;
+    max-width: 30ch;
+    font-size: var(--text-lg);
+}
+.av-band p { margin-top: var(--space-2); color: var(--text-muted); font-size: var(--text-sm); }
+.av-band__text { max-width: 44ch; }
+
+/* ── Abgrenzung: keine Versprechen ────────────────────────────────────── */
+.av-honest .av-head { margin-bottom: var(--space-6); }
+.av-honest__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-6);
+}
+.av-honest__item p { max-width: none; color: var(--text-body); }
+.av-honest__item h3 { color: var(--text-strong); }
+
+/* ── Anfrage ──────────────────────────────────────────────────────────── */
+.av-request { background: rgba(17, 34, 64, .62); }
+.av-request__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: var(--space-12);
+    align-items: center;
+}
+.av-request__grid h2 { text-align: left; margin-bottom: var(--space-4); }
+.av-request__intro { color: var(--text-body); margin-bottom: var(--space-6); }
+.av-request__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.av-request__list li {
+    position: relative;
+    padding-left: var(--space-8);
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+}
+.av-request__list li .icon {
+    position: absolute;
+    left: 0;
+    top: 0.25em;
+    color: var(--accent);
+}
+
+/* Das Formular uebernimmt Aufbau und Verhalten vom Kontaktformular
+   (contact.js, /api/contact). Hier steht nur die Flaeche drumherum. */
+.av-form-card {
+    background: rgba(10, 25, 49, .78);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-md);
+}
+.av-form-card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
+.av-form-card > p {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    max-width: none;
+    margin-bottom: var(--space-6);
+}
+
+/* ── Breakpoints ──────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .avr-body { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+    .av-request__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+    .av-why { gap: var(--space-8); }
+    .av-band .container { flex-direction: column; align-items: flex-start; }
+    .av-band .cta-button { width: 100%; }
+}
+
+@media (max-width: 600px) {
+    .av-hero { padding-block: var(--space-8) var(--space-6); }
+    .av-hero h1 { max-width: none; margin-bottom: var(--space-4); }
+    .av-hero__lead { margin-bottom: var(--space-6); }
+    .av-actions { flex-direction: column; align-items: stretch; }
+    /* Die Handlungsaufforderung ist auf dem Telefon ohnehin schon volle
+       Breite (siehe style.css). Der Textlink darunter bekommt nur die Breite
+       seines Textes, sonst zieht sich seine Unterstreichung ueber die ganze
+       Spalte und sieht wie eine Trennlinie aus. */
+    .av-link { align-self: center; }
+    .av-note { margin-top: var(--space-4); }
+
+    .avr-head { padding: var(--space-3) var(--space-4); }
+    .avr-flag { margin-left: 0; }
+    .avr-body,
+    .avr-sources,
+    .avr-finding { padding: var(--space-4); }
+    .avr-kpi {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        gap: var(--space-2) var(--space-3);
+    }
+    .avr-source-list li { flex-wrap: wrap; gap: var(--space-2); }
+
+    .av-step {
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-2);
+        padding: var(--space-4);
+    }
+    .av-card { padding: var(--space-4); }
+    .av-form-card { padding: var(--space-4); }
+    .av-quotes li { padding: var(--space-4); font-size: var(--text-base); }
+}
+
+/* ── Niedrige Fenster ─────────────────────────────────────────────────────
+   Ein 1366x600-Fenster hat unter dem klebenden Kopf rund 520 px. Der Hero
+   muss dort so kompakt sein, dass die Auswertung darunter noch angeschnitten
+   ist. Sonst sieht der Besucher genau das nicht, wofuer er gekommen ist. */
+@media (min-width: 901px) and (max-height: 760px) {
+    .av-hero { padding-block: var(--space-8) var(--space-6); }
+    .av-hero h1 {
+        font-size: clamp(1.9rem, 1.6vw + 1.2rem, 2.35rem);
+        max-width: 34ch;
+        margin-bottom: var(--space-4);
+    }
+    .av-hero__intro { margin-bottom: var(--space-3); }
+    .av-hero__lead { margin-bottom: var(--space-6); }
+    .av-note { margin-top: var(--space-4); }
+}

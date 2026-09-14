@@ -31,9 +31,16 @@ function validateOrigin(req) {
   // Allow if origin matches
   if (origin && ALLOWED_ORIGINS.includes(origin)) return true;
 
-  // Fallback: check referer header
+  // Fallback: check referer header.
+  // Wichtig: Vergleich über den geparsten Origin, nicht über startsWith().
+  // startsWith('https://neuratex.de') passt sonst auch auf
+  // https://neuratex.de.angreifer.example/ und lässt fremde Hosts durch.
   if (referer) {
-    return ALLOWED_ORIGINS.some(o => referer.startsWith(o));
+    try {
+      return ALLOWED_ORIGINS.includes(new URL(referer).origin);
+    } catch {
+      return false; // unparsbarer Referer
+    }
   }
 
   // No origin and no referer → might be server-to-server or curl
@@ -44,8 +51,10 @@ function validateOrigin(req) {
 // ── Rate Limiting (in-memory, per warm instance) ──────────────────
 const rateLimitStore = new Map();
 
-// Clean old entries every 5 minutes
-setInterval(() => {
+// Clean old entries every 5 minutes.
+// unref(): Ohne das hält der Timer den Event-Loop offen und verhindert, dass eine
+// Lambda-Instanz sauber einfriert bzw. ein Node-Prozess terminiert.
+const cleanupTimer = setInterval(() => {
   const now = Date.now();
   for (const [key, entry] of rateLimitStore) {
     if (now - entry.windowStart > 120_000) { // 2 min window
@@ -53,6 +62,8 @@ setInterval(() => {
     }
   }
 }, 300_000);
+
+if (typeof cleanupTimer.unref === 'function') cleanupTimer.unref();
 
 /**
  * Check rate limit for an IP address.
@@ -135,8 +146,39 @@ function isValidEmail(email) {
  * Vercel limits body to 5MB by default, but we want a tighter limit.
  */
 function isBodyTooLarge(req, maxBytes = 10_000) {
-  const contentLength = parseInt(req.headers['content-length'] || '0', 10);
+  const raw = req.headers['content-length'];
+  const contentLength = parseInt(raw, 10);
+
+  // Fehlender oder unlesbarer Header darf die Prüfung nicht aushebeln:
+  // dann anhand des bereits geparsten Body entscheiden.
+  if (!Number.isFinite(contentLength)) {
+    if (req.body === undefined || req.body === null) return false;
+    try {
+      const size = Buffer.byteLength(
+        typeof req.body === 'string' ? req.body : JSON.stringify(req.body),
+        'utf8'
+      );
+      return size > maxBytes;
+    } catch {
+      return true; // nicht serialisierbar → im Zweifel ablehnen
+    }
+  }
+
   return contentLength > maxBytes;
+}
+
+/**
+ * fetch mit Timeout. Ohne Limit kann ein haengender Brevo-Aufruf die Function
+ * bis zum Vercel-Timeout blockieren und den Nutzer ohne Rueckmeldung lassen.
+ */
+async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 module.exports = {
@@ -146,5 +188,6 @@ module.exports = {
   sanitizeString,
   isValidEmail,
   isBodyTooLarge,
+  fetchWithTimeout,
   ALLOWED_ORIGINS,
 };

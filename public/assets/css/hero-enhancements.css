@@ -1,468 +1,379 @@
-/* ================================================================
-   HERO ENHANCEMENTS - Neuratex AI Futuristic 3D Sphere
-   ================================================================
-   
-   Futuristischer Hero mit:
-   - 3D Wireframe Sphere (Three.js Canvas)
-   - Morphing Blob-Effekt
-   - Gold Orbit-Ringe
-   - Premium Gold Text-Highlight
-   - GPU-optimiert mit reduced-motion Fallback
-   
-   ================================================================ */
+/* ============================================================================
+   HERO (Schritt 3 des Design-Umbaus)
 
-/* --------------------------
-   CSS Custom Properties
-   -------------------------- */
-:root {
-    /* Futuristic Colors */
-    --hero-dark: #050a15;
-    --hero-base: #0a1628;
-    --grid-color: rgba(24, 90, 219, 0.25);
-    --grid-glow: rgba(24, 90, 219, 0.6);
-    --orb-blue: rgba(24, 90, 219, 0.35);
-    --orb-cyan: rgba(0, 212, 255, 0.25);
-    
-    /* Gold Palette */
-    --gold-primary: #FFC947;
-    --gold-light: #FFE082;
-    --gold-glow: rgba(255, 201, 71, 0.5);
-}
+   Ersetzt die frühere Fassung mit 107 !important-Regeln. Die Spezifität wird
+   hier über die Klassenkombination .hero-section.hero-enhanced erreicht, damit
+   die Design-Tokens durchgreifen und spätere Änderungen nicht wieder mit
+   !important erzwungen werden müssen.
 
-/* ================================================================
-   1. KEYFRAME ANIMATIONS
-   ================================================================ */
+   Aufbau in Ebenen, von hinten nach vorn:
+     1. Grundverlauf        (CSS)
+     2. (entfallen, Knotennetz liegt global: background-canvas.js)
+     3. Aurora-Lichter      (CSS, animiert)
+     4. Raster              (CSS, statisch)
+     5. Vignette            (CSS, sorgt für Textkontrast)
+     6. Inhalt
 
-/* Floating Orbs */
-@keyframes floatOrb1 {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.4;
-    }
-    50% {
-        transform: translate(30px, -20px) scale(1.1);
-        opacity: 0.6;
-    }
-}
-
-@keyframes floatOrb2 {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-        opacity: 0.3;
-    }
-    50% {
-        transform: translate(-25px, 15px) scale(1.15);
-        opacity: 0.5;
-    }
-}
-
-@keyframes floatOrb3 {
-    0%, 100% {
-        transform: translate(0, 0) scale(0.9);
-        opacity: 0.25;
-    }
-    50% {
-        transform: translate(15px, 25px) scale(1);
-        opacity: 0.45;
-    }
-}
-
-/* Gold Shimmer */
-@keyframes goldShimmer {
-    0% {
-        background-position: -100% 0;
-    }
-    100% {
-        background-position: 200% 0;
-    }
-}
-
-/* Fade In */
-@keyframes heroFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Subtle glow pulse for canvas area */
-@keyframes canvasGlow {
-    0%, 100% {
-        opacity: 0.3;
-    }
-    50% {
-        opacity: 0.5;
-    }
-}
-
-/* ================================================================
-   2. HERO BASE STYLING
-   ================================================================ */
+   Schalter am <section>-Element: no-aurora, no-grid, no-fade.
+   ============================================================================ */
 
 section.hero-section.hero-enhanced {
-    position: relative !important;
-    background: linear-gradient(180deg, 
-        var(--hero-dark) 0%, 
-        var(--hero-base) 40%, 
-        #0d1f3c 70%,
-        var(--hero-base) 100%
-    ) !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    min-height: 100vh !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
+    position: relative;
+    isolation: isolate;              /* eigener Stapelkontext für die Ebenen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: min(100svh, 900px);  /* svh: keine Sprünge durch die Mobil-Adressleiste */
+    /* Unten mehr Luft, damit der Scroll-Hinweis nicht an den Fließtext stößt.
+       Auf niedrigen Fenstern (etwa 1280x720) blieben vorher nur 10 Pixel
+       Abstand, was optisch als Überlappung gelesen wurde. */
+    padding: var(--space-24) 0 calc(var(--space-24) + var(--space-8));
+    overflow: hidden;
+    text-align: center;
+    background:
+        radial-gradient(ellipse 120% 80% at 50% -10%, rgba(18, 48, 92, .46) 0%, transparent 60%),
+        linear-gradient(180deg, rgba(11, 32, 68, .30) 0%, rgba(10, 25, 49, .52) 70%);
 }
 
+/* Ebene 2 (Canvas) ist entfallen. Das Knotennetz liegt nicht mehr im Hero,
+   sondern als #site-canvas fest hinter der gesamten Seite, gesteuert von
+   background-canvas.js. Die Regeln dafuer stehen in style.css. */
+
+/* ── Ebene 3: Aurora ──────────────────────────────────────────────────────
+   Zwei weiche Lichtflächen, die sich langsam bewegen. Sie erzeugen Tiefe,
+   ohne vom Text abzulenken, weil sie stark weichgezeichnet sind. */
+section.hero-section.hero-enhanced::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    z-index: -2;
+    pointer-events: none;
+    background:
+        radial-gradient(circle 38rem at 18% 28%, rgba(24, 90, 219, .30), transparent 62%),
+        radial-gradient(circle 30rem at 82% 68%, rgba(255, 201, 71, .13), transparent 60%);
+    filter: blur(30px);
+    animation: heroAurora 24s var(--ease-in-out) infinite alternate;
+}
+
+/* ── Ebene 4 und 5: Raster und Vignette ───────────────────────────────────
+   Das Raster gibt der Fläche Struktur und Maßstab, die Vignette dunkelt die
+   Ränder ab und hebt damit den Text hervor. */
+section.hero-section.hero-enhanced::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(159, 179, 217, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(159, 179, 217, .055) 1px, transparent 1px);
+    background-size: 72px 72px;
+    -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 30%, transparent 78%);
+            mask-image: radial-gradient(ellipse 75% 65% at 50% 45%, #000 30%, transparent 78%);
+}
+
+section.hero-section.hero-enhanced.no-aurora::before { display: none; }
+section.hero-section.hero-enhanced.no-grid::after { display: none; }
+
+@keyframes heroAurora {
+    0%   { transform: translate3d(0, 0, 0) scale(1); }
+    50%  { transform: translate3d(2.5%, -2%, 0) scale(1.06); }
+    100% { transform: translate3d(-2%, 2.5%, 0) scale(1.02); }
+}
+
+/* ── Inhalt ───────────────────────────────────────────────────────────────── */
 section.hero-section.hero-enhanced .container {
-    position: relative !important;
-    z-index: 10 !important;
-    max-width: 1000px !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    
-    /* Transparent - kein Kasten */
-    background: transparent !important;
-    border: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-    padding: 0 24px !important;
+    position: relative;
+    z-index: 1;
+    max-width: 62rem;
 }
 
-/* ================================================================
-   3. CANVAS
-   ================================================================ */
-
-section.hero-section.hero-enhanced #hero-canvas {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    z-index: 2 !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    opacity: 0.7 !important;
+/* Einordnungszeile über der Headline.
+   Bewusst kein Pillen-Abzeichen mit pulsierendem Punkt: Diese Kombination ist
+   das Erkennungszeichen jeder KI-Produktseite und liest sich sofort als
+   Vorlage. Hier steht schlichter Satz zwischen zwei feinen Linien, der die
+   Zeile als Einordnung markiert, ohne wie ein Systemzustand auszusehen. */
+section.hero-section.hero-enhanced .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
 }
-
-/* ================================================================
-   4. FLOATING GLOW ORBS
-   ================================================================ */
-
-/* Orb 1 - Links oben (blau) */
-section.hero-section.hero-enhanced .container::before {
+section.hero-section.hero-enhanced .hero-eyebrow::before,
+section.hero-section.hero-enhanced .hero-eyebrow::after {
     content: "";
-    position: absolute;
-    width: 350px;
-    height: 350px;
-    left: -150px;
-    top: -80px;
-    background: radial-gradient(circle, var(--orb-blue) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(50px);
-    z-index: -1;
-    animation: floatOrb1 10s ease-in-out infinite;
-    pointer-events: none;
+    width: 28px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--text-faint));
 }
-
-/* Orb 2 - Rechts mitte (cyan) */
-section.hero-section.hero-enhanced .container::after {
-    content: "";
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    right: -100px;
-    top: 20%;
-    background: radial-gradient(circle, var(--orb-cyan) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(60px);
-    z-index: -1;
-    animation: floatOrb2 12s ease-in-out infinite;
-    pointer-events: none;
+section.hero-section.hero-enhanced .hero-eyebrow::after {
+    background: linear-gradient(90deg, var(--text-faint), transparent);
 }
-
-/* Orb 3 - Gold glow unter Headline */
-section.hero-section.hero-enhanced h1::after {
-    content: "";
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    left: 50%;
-    bottom: -120px;
-    transform: translateX(-50%);
-    background: radial-gradient(circle, rgba(255, 201, 71, 0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    filter: blur(40px);
-    z-index: -1;
-    animation: floatOrb3 8s ease-in-out infinite;
-    pointer-events: none;
-}
-
-/* ================================================================
-   6. HEADLINE TYPOGRAPHY
-   ================================================================ */
 
 section.hero-section.hero-enhanced h1 {
-    position: relative;
-    font-size: clamp(2rem, 5vw, 3.5rem) !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.02em !important;
-    margin: 0 0 40px 0 !important;
-    padding: 0 !important;
-    font-weight: 800 !important;
-    white-space: normal !important;
-    width: auto !important;
-    max-width: 100% !important;
-    display: block !important;
-    
-    text-shadow: 
-        0 2px 10px rgba(0, 0, 0, 0.5),
-        0 4px 30px rgba(0, 0, 0, 0.3) !important;
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-black);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin-bottom: var(--space-6);
+    text-wrap: balance;
 }
 
-/* Auf Tablet/Mobile: kleinere Schriftgröße */
-@media (max-width: 1100px) {
-    section.hero-section.hero-enhanced h1 {
-        font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
-    }
-}
-
-/* ================================================================
-   7. GOLD TEXT HIGHLIGHT "KI Erfolg"
-   ================================================================ */
-
+/* Der Akzentteil der Headline.
+   Der frühere endlose Farbverlauf ("heroShimmer", 9s, infinite) bleibt
+   entfernt: dauerhaft laufende Glanzeffekte auf Text sind ein Vorlagen-
+   Merkmal und machen die Seite unruhig.
+   Stattdessen landet die Phrase einmalig als letztes Element der Headline und
+   quittiert das mit einem kurzen Aufleuchten. Das ist Regel 4 der
+   Bewegungsspec: Gold bewegt sich zuletzt und nur an dieser einen Stelle. */
 section.hero-section.hero-enhanced .text-cyan {
-    color: var(--gold-primary) !important;
-    position: relative;
+    color: var(--accent);
     display: inline-block;
-    
-    /* Animierter Gold Shimmer Gradient */
-    background: linear-gradient(
-        90deg,
-        var(--gold-primary) 0%,
-        var(--gold-light) 25%,
-        var(--gold-primary) 50%,
-        var(--gold-light) 75%,
-        var(--gold-primary) 100%
-    ) !important;
-    background-size: 200% 100% !important;
-    background-clip: text !important;
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
-    
-    animation: goldShimmer 4s ease-in-out infinite !important;
-    
-    /* Glow Effect */
-    filter: drop-shadow(0 0 10px var(--gold-glow)) 
-            drop-shadow(0 0 25px rgba(255, 201, 71, 0.3)) !important;
-}
-
-/* ================================================================
-   8. SUBTITLE
-   ================================================================ */
-
-section.hero-section.hero-enhanced .subtitle {
-    font-size: clamp(1.2rem, 2.8vw, 1.6rem) !important;
-    line-height: 1.7 !important;
-    max-width: 850px !important;
-    margin: 0 auto 60px auto !important;
-    padding: 0 !important;
-    color: rgba(203, 213, 225, 0.9) !important;
-    font-weight: 400 !important;
-    text-align: center !important;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4) !important;
-}
-
-/* ================================================================
-   9. CTA BUTTON
-   ================================================================ */
-
-section.hero-section.hero-enhanced .cta-button {
-    position: relative !important;
-    z-index: 1 !important;
-    display: inline-block !important;
-    padding: 22px 52px !important;
-    font-size: 1.2rem !important;
-    font-weight: 700 !important;
-    border-radius: 10px !important;
-    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-section.hero-section.hero-enhanced .cta-button:hover {
-    transform: translateY(-3px) !important;
-    box-shadow: 0 6px 40px rgba(255, 201, 71, 0.7) !important;
-}
-
-section.hero-section.hero-enhanced .cta-button:active {
-    transform: translateY(-1px) !important;
-}
-
-/* ================================================================
-   10. FADE-IN ANIMATION
-   ================================================================ */
-
-section.hero-section.hero-enhanced .container > h1,
-section.hero-section.hero-enhanced .container > .subtitle,
-section.hero-section.hero-enhanced .container > .cta-button {
     opacity: 0;
-    animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    transform: translateY(14px);
+    animation: heroAkzent 820ms var(--ease-out) 520ms forwards;
 }
-
-section.hero-section.hero-enhanced h1 {
-    animation-delay: 0.1s !important;
+@keyframes heroAkzent {
+    0%   { opacity: 0; transform: translateY(14px); text-shadow: none; }
+    55%  { opacity: 1; transform: translateY(0);    text-shadow: 0 0 28px rgba(255, 201, 71, .6); }
+    100% { opacity: 1; transform: translateY(0);    text-shadow: 0 0 0 rgba(255, 201, 71, 0); }
 }
 
 section.hero-section.hero-enhanced .subtitle {
-    animation-delay: 0.25s !important;
+    font-size: var(--text-md);
+    line-height: var(--leading-snug);
+    color: var(--text-muted);
+    max-width: 46rem;
+    margin: 0 auto var(--space-8);
+}
+
+/* ── Handlungsaufforderungen ──────────────────────────────────────────────── */
+section.hero-section.hero-enhanced .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4) var(--space-6);
 }
 
 section.hero-section.hero-enhanced .cta-button {
-    animation-delay: 0.4s !important;
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-md);
+    font-size: var(--text-base);
+    box-shadow: var(--shadow-accent);
+    transition: transform var(--duration-fast) var(--ease-out),
+                box-shadow var(--duration-fast) var(--ease-out);
+}
+/* Lichtreflex, der beim Überfahren einmal durchläuft */
+section.hero-section.hero-enhanced .cta-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .45), transparent);
+    transition: left var(--duration-slow) var(--ease-out);
+}
+section.hero-section.hero-enhanced .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 44px rgba(255, 201, 71, .42);
+}
+section.hero-section.hero-enhanced .cta-button:hover::after { left: 140%; }
+section.hero-section.hero-enhanced .cta-button:active { transform: translateY(-1px); }
+
+/* Zweitrangiger Weg für Besucher, die noch kein Gespräch wollen */
+section.hero-section.hero-enhanced .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-body);
+    text-decoration: none;
+    font-weight: var(--weight-bold);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid transparent;
+    transition: color var(--duration-fast) var(--ease-out),
+                border-color var(--duration-fast) var(--ease-out);
+}
+section.hero-section.hero-enhanced .cta-secondary:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+section.hero-section.hero-enhanced .cta-secondary svg { transition: transform var(--duration-fast) var(--ease-out); }
+section.hero-section.hero-enhanced .cta-secondary:hover svg { transform: translateX(4px); }
+
+section.hero-section.hero-enhanced .hero-note {
+    margin-top: var(--space-6);
+    font-size: var(--text-sm);
+    color: var(--text-faint);
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* ================================================================
-   11. REDUCED MOTION (Accessibility)
-   ================================================================ */
+/* ── Gestaffelter Auftritt ────────────────────────────────────────────────
+   Die Elemente erscheinen in Leserichtung nacheinander. Ohne JavaScript oder
+   bei reduzierter Bewegung sind sie sofort sichtbar (siehe unten). */
+section.hero-section.hero-enhanced .hero-eyebrow,
+section.hero-section.hero-enhanced h1,
+section.hero-section.hero-enhanced .subtitle,
+section.hero-section.hero-enhanced .hero-actions,
+section.hero-section.hero-enhanced .hero-note {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: heroEnter var(--duration-reveal) var(--ease-out) forwards;
+}
+section.hero-section.hero-enhanced .hero-eyebrow { animation-delay: .05s; }
+section.hero-section.hero-enhanced .subtitle    { animation-delay: .46s; }
+section.hero-section.hero-enhanced .hero-actions{ animation-delay: .62s; }
+section.hero-section.hero-enhanced .hero-note   { animation-delay: .76s; }
 
+@keyframes heroEnter {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Die Headline blendet nicht, sie steigt aus einer Maske auf.
+   Der Unterschied zur reinen Deckkraftblende ist der eigentliche Auftritt:
+   Der Satz kommt hinter einer Kante hervor, statt an Ort und Stelle heller zu
+   werden. Die negativen Anteile der Maske verhindern, dass Unterlängen und
+   der Schein der Akzentphrase beschnitten werden. */
+section.hero-section.hero-enhanced h1 {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(108% 0 -30% 0);
+    animation: heroHeadline 920ms var(--ease-out) .18s forwards;
+}
+@keyframes heroHeadline {
+    from { clip-path: inset(108% 0 -30% 0); transform: translateY(26px); }
+    to   { clip-path: inset(-30% 0 -30% 0); transform: translateY(0); }
+}
+
+/* ── Signatur: Übergabe an den Inhalt ─────────────────────────────────────
+   Der eine scroll-gekoppelte Moment der Seite. Beim Scrollen tritt der Hero
+   zurück und der erste Abschnitt kommt nach vorn, wie ein Fokuswechsel der
+   Kamera. Der Fortschritt --sig-p (0 bis 1) wird in hero-signature.js
+   gesetzt. Ohne JavaScript und bei reduzierter Bewegung bleibt er 0, dann
+   passiert hier schlicht nichts. */
+section.hero-section.hero-enhanced .container {
+    transform: translateY(calc(var(--sig-p, 0) * -54px))
+               scale(calc(1 - var(--sig-p, 0) * 0.035));
+    opacity: calc(1 - var(--sig-p, 0) * 0.92);
+    will-change: transform, opacity;
+}
+section.hero-section.hero-enhanced .hero-scroll-hint {
+    opacity: calc(1 - var(--sig-p, 0) * 2.4);
+}
+
+section.hero-section.hero-enhanced.no-fade .hero-eyebrow,
+section.hero-section.hero-enhanced.no-fade h1,
+section.hero-section.hero-enhanced.no-fade .text-cyan,
+section.hero-section.hero-enhanced.no-fade .subtitle,
+section.hero-section.hero-enhanced.no-fade .hero-actions,
+section.hero-section.hero-enhanced.no-fade .hero-note {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    clip-path: none;
+    text-shadow: none;
+}
+
+/* ── Scroll-Hinweis ───────────────────────────────────────────────────────── */
+.hero-scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-8);
+    transform: translateX(-50%);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-faint);
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+.hero-scroll-hint:hover { color: var(--accent); }
+.hero-scroll-hint__line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--text-faint), transparent);
+    position: relative;
+    overflow: hidden;
+}
+/* Ein Lichtpunkt wandert die Linie hinunter und deutet die Scrollrichtung an */
+.hero-scroll-hint__line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -40%;
+    width: 100%;
+    height: 40%;
+    background: var(--accent);
+    animation: heroScrollDot 2.2s var(--ease-in-out) infinite;
+}
+
+@keyframes heroScrollDot {
+    0%   { top: -40%; opacity: 0; }
+    30%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* ── Schmale Bildschirme ──────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+    section.hero-section.hero-enhanced {
+        min-height: auto;
+        padding: var(--space-16) 0 var(--space-12);
+    }
+    section.hero-section.hero-enhanced::after { background-size: 48px 48px; }
+    /* Einzeilig halten: bei Umbruch stehen die Zierlinien in einer eigenen
+       Zeile und die Einordnung wirkt zerrissen. */
+    section.hero-section.hero-enhanced .hero-eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 0.06em;
+        gap: var(--space-2);
+        white-space: nowrap;
+    }
+    section.hero-section.hero-enhanced .hero-eyebrow::before,
+    section.hero-section.hero-enhanced .hero-eyebrow::after { width: 16px; }
+    section.hero-section.hero-enhanced .hero-actions { flex-direction: column; gap: var(--space-4); }
+    section.hero-section.hero-enhanced .cta-button { width: 100%; max-width: 22rem; }
+    .hero-scroll-hint { display: none; }
+}
+
+/* ── Bewegung reduzieren ──────────────────────────────────────────────────
+   Alle Bewegung steht still, die Inhalte bleiben vollständig sichtbar.
+   Der Seitenhintergrund wird zusätzlich in background-canvas.js angehalten. */
 @media (prefers-reduced-motion: reduce) {
-    section.hero-section.hero-enhanced::before {
-        animation: none !important;
+    section.hero-section.hero-enhanced::before { animation: none; }
+    section.hero-section.hero-enhanced .hero-eyebrow,
+    section.hero-section.hero-enhanced h1,
+    section.hero-section.hero-enhanced .text-cyan,
+    section.hero-section.hero-enhanced .subtitle,
+    section.hero-section.hero-enhanced .hero-actions,
+    section.hero-section.hero-enhanced .hero-note {
+        opacity: 1;
+        transform: none;
+        animation: none;
+        clip-path: none;
+        text-shadow: none;
     }
-    
-    section.hero-section.hero-enhanced .container::before,
-    section.hero-section.hero-enhanced .container::after,
-    section.hero-section.hero-enhanced h1::after {
-        animation: none !important;
+    /* Die Übergabe steht ebenfalls still. Ebene 1 der Bewegungsspec ist die
+       scroll-gekoppelte Ebene und damit der häufigste Auslöser für Unwohlsein. */
+    section.hero-section.hero-enhanced .container,
+    section.hero-section.hero-enhanced .hero-scroll-hint {
+        transform: none;
+        opacity: 1;
     }
-    
-    section.hero-section.hero-enhanced .text-cyan {
-        animation: none !important;
-        background: var(--gold-primary) !important;
-        -webkit-text-fill-color: var(--gold-primary) !important;
-    }
-    
-    section.hero-section.hero-enhanced .container > h1,
-    section.hero-section.hero-enhanced .container > .subtitle,
-    section.hero-section.hero-enhanced .container > .cta-button {
-        animation: none !important;
-        opacity: 1 !important;
-    }
-    
-    /* Canvas mit reduzierter Opazität */
-    section.hero-section.hero-enhanced #hero-canvas {
-        opacity: 0.25 !important;
-    }
-}
-
-/* ================================================================
-   12. RESPONSIVE
-   ================================================================ */
-
-@media (max-width: 900px) {
-    section.hero-section.hero-enhanced {
-        padding: 60px 0 80px !important;
-        min-height: 75vh !important;
-    }
-    
-    section.hero-section.hero-enhanced #hero-canvas {
-        opacity: 0.35 !important;
-    }
-    
-    section.hero-section.hero-enhanced h1 {
-        font-size: clamp(1.8rem, 5vw, 2.4rem) !important;
-    }
-    
-    section.hero-section.hero-enhanced .subtitle {
-        font-size: 1rem !important;
-        margin-bottom: 36px !important;
-    }
-    
-    /* Orbs kleiner */
-    section.hero-section.hero-enhanced .container::before {
-        width: 180px;
-        height: 180px;
-        left: -40px;
-        top: -40px;
-    }
-    
-    section.hero-section.hero-enhanced .container::after {
-        width: 150px;
-        height: 150px;
-        right: -40px;
-    }
-}
-
-@media (max-width: 480px) {
-    section.hero-section.hero-enhanced {
-        padding: 50px 0 70px !important;
-        min-height: 65vh !important;
-    }
-    
-    section.hero-section.hero-enhanced #hero-canvas {
-        opacity: 0.3 !important;
-    }
-    
-    section.hero-section.hero-enhanced h1 {
-        font-size: 1.6rem !important;
-        margin-bottom: 20px !important;
-    }
-    
-    section.hero-section.hero-enhanced .subtitle {
-        font-size: 0.95rem !important;
-        margin-bottom: 28px !important;
-        line-height: 1.6 !important;
-    }
-    
-    section.hero-section.hero-enhanced .cta-button {
-        padding: 14px 28px !important;
-        width: 100% !important;
-        display: block !important;
-    }
-    
-    /* Orbs noch kleiner */
-    section.hero-section.hero-enhanced .container::before,
-    section.hero-section.hero-enhanced .container::after {
-        width: 100px;
-        height: 100px;
-        filter: blur(30px);
-    }
-}
-
-/* ================================================================
-   13. FEATURE TOGGLES
-   ================================================================ */
-
-/* Ohne 3D Canvas */
-section.hero-section.hero-enhanced.no-canvas #hero-canvas {
-    display: none !important;
-}
-
-section.hero-section.hero-enhanced.no-canvas::before {
-    display: none !important;
-}
-
-/* Ohne Floating Orbs */
-section.hero-section.hero-enhanced.no-orbs .container::before,
-section.hero-section.hero-enhanced.no-orbs .container::after,
-section.hero-section.hero-enhanced.no-orbs h1::after {
-    display: none !important;
-}
-
-/* Ohne Fade-In */
-section.hero-section.hero-enhanced.no-fade .container > h1,
-section.hero-section.hero-enhanced.no-fade .container > .subtitle,
-section.hero-section.hero-enhanced.no-fade .container > .cta-button {
-    animation: none !important;
-    opacity: 1 !important;
+    .hero-scroll-hint__line::after { animation: none; opacity: .6; top: 0; }
 }

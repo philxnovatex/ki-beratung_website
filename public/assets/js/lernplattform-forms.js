@@ -1,32 +1,59 @@
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Löst einen Datei-Download aus, ohne die Seite zu verlassen.
+// window.location.href würde das PDF in den meisten Browsern inline öffnen
+// und den Nutzer damit von der Lernplattform wegnavigieren.
+function triggerDownload(url) {
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = '';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
 // ── Whitepaper-Formular: Daten an Brevo senden, dann PDF-Download ──
 const whitepaperForm = document.getElementById('whitepaper-form');
 if (whitepaperForm) {
+  let sending = false;
   whitepaperForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (sending) return;
 
     const nameEl = document.getElementById('wp-name');
     const emailEl = document.getElementById('wp-email');
     const privacyEl = document.getElementById('wp-privacy');
+    const companyEl = document.getElementById('wp-company');
     const statusEl = document.getElementById('wp-status');
     const submitBtn = whitepaperForm.querySelector('button[type="submit"]');
 
+    // Ohne diese Felder ist das Formular nicht bedienbar. Lieber sichtbar
+    // scheitern als dem Nutzer eine irreführende Netzwerkfehler-Meldung zeigen.
+    if (!nameEl || !emailEl || !privacyEl) {
+      console.error('[whitepaper] Pflichtfelder fehlen im DOM');
+      return;
+    }
+
+    function setStatus(msg, color) {
+      if (statusEl) { statusEl.textContent = msg; statusEl.style.color = color; }
+    }
+
     // Validierung
     if (!nameEl.value.trim() || !emailEl.value.trim() || !privacyEl.checked) {
-      statusEl.textContent = 'Bitte Name, E\u2011Mail ausfüllen und Datenschutz bestätigen.';
-      statusEl.style.color = '#ff6b6b';
+      setStatus('Bitte Name, E‑Mail ausfüllen und Datenschutz bestätigen.', '#ff6b6b');
       return;
     }
     if (!emailPattern.test(emailEl.value.trim())) {
-      statusEl.textContent = 'Bitte eine gültige E\u2011Mail-Adresse eingeben.';
-      statusEl.style.color = '#ff6b6b';
+      setStatus('Bitte eine gültige E‑Mail-Adresse eingeben.', '#ff6b6b');
       return;
     }
 
     // UI-Feedback: Button deaktivieren
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet\u2026'; }
-    statusEl.textContent = '';
+    const originalLabel = submitBtn ? submitBtn.textContent : '';
+    sending = true;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+    setStatus('', '');
 
     try {
       const response = await fetch('/api/whitepaper', {
@@ -35,28 +62,28 @@ if (whitepaperForm) {
         body: JSON.stringify({
           email: emailEl.value.trim(),
           name: nameEl.value.trim(),
-          company: document.getElementById('wp-company').value.trim()
+          company: companyEl ? companyEl.value.trim() : ''
         })
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (response.ok && data.ok) {
-        statusEl.textContent = data.message || 'Vielen Dank! Download startet\u2026';
-        statusEl.style.color = '#4caf50';
-        // PDF-Download starten
-        window.location.href = '/assets/downloads/neuratex-whitepaper.pdf';
+        setStatus(data.message || 'Vielen Dank! Der Download startet…', '#4caf50');
         whitepaperForm.reset();
+        triggerDownload('/assets/downloads/neuratex-whitepaper.pdf');
+        window.neuratexTrack?.('form_complete', { form: 'whitepaper' });
       } else {
-        statusEl.textContent = data.message || 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.';
-        statusEl.style.color = '#ff6b6b';
+        setStatus(data.message || 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
       }
     } catch (error) {
       console.warn('whitepaper submit error', error);
-      statusEl.textContent = 'Netzwerkfehler. Bitte versuchen Sie es später.';
-      statusEl.style.color = '#ff6b6b';
+      setStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
     } finally {
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Neuratex-Prinzip anfordern'; }
+      sending = false;
+      // Label aus dem DOM übernehmen statt hart zu kodieren, damit Textänderungen
+      // im HTML nicht stillschweigend überschrieben werden.
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
     }
   });
 }
@@ -65,25 +92,29 @@ const newsletterForm = document.getElementById('newsletter-form');
 const newsletterInput = document.getElementById('newsletter-email');
 
 if (newsletterForm && newsletterInput) {
+  let sending = false;
   const nlStatus = document.getElementById('newsletter-status');
   function setNlStatus(msg, color) {
     if (nlStatus) { nlStatus.textContent = msg; nlStatus.style.color = color; }
   }
   newsletterForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (sending) return;
     const email = newsletterInput.value.trim();
     if (!email) {
-      setNlStatus('Bitte E\u2011Mail angeben.', '#ff6b6b');
+      setNlStatus('Bitte E‑Mail angeben.', '#ff6b6b');
       return;
     }
     if (!emailPattern.test(email)) {
-      setNlStatus('Bitte eine gültige E\u2011Mail-Adresse eingeben.', '#ff6b6b');
+      setNlStatus('Bitte eine gültige E‑Mail-Adresse eingeben.', '#ff6b6b');
       return;
     }
 
     // Disable button during request
     const submitBtn = newsletterForm.querySelector('button[type="submit"]');
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet\u2026'; }
+    const originalLabel = submitBtn ? submitBtn.textContent : '';
+    sending = true;
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
     setNlStatus('', '');
 
     try {
@@ -98,13 +129,15 @@ if (newsletterForm && newsletterInput) {
       if (response.ok && data.ok) {
         setNlStatus(data.message || 'Erfolgreich eingetragen! Vielen Dank.', '#4caf50');
         newsletterInput.value = '';
+        window.neuratexTrack?.('form_complete', { form: 'newsletter' });
       } else {
         setNlStatus(data.message || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
       }
     } catch (error) {
       setNlStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
     } finally {
-      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Jetzt anmelden'; }
+      sending = false;
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
     }
   });
 }

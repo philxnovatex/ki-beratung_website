@@ -1,8 +1,14 @@
 {
   "name": "ki-beratung-website",
   "version": "1.0.0",
-  "description": "Neuratex KI-Beratungs-Website – Vercel static hosting + Serverless Functions",
   "private": true,
-  "author": "",
-  "license": "MIT"
+  "description": "Website Neuratex AI. Statisches HTML, CSS und JavaScript ohne Build-Schritt.",
+  "scripts": {
+    "start": "serve public -l 4173",
+    "test": "node tests/run.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0",
+    "serve": "^14.2.4"
+  }
 }

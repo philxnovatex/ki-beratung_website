@@ -42,3 +42,4 @@ logs/
 .pid
 .seed
 .coverage
+node_modules/

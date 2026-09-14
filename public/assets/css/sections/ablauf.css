@@ -1,0 +1,306 @@
+/* ============================================================================
+   PROJEKTABLAUF ALS GEPINNTE SEKTION
+
+   Der Abschnitt rastet beim Scrollen ein und die drei Phasen schalten durch,
+   statt als Liste vorbeizuziehen. Das ist der eine choreografierte Moment der
+   Seite: Er hat einen Anfang, ein Ende und eine Reihenfolge.
+
+   Grundsatz: Ohne die Klasse .pin-aktiv passiert hier nichts. Die Sektion ist
+   dann die gewohnte Liste untereinander. Gesetzt wird die Klasse von
+   pin-sequence.js, und zwar nur, wenn das Fenster breit genug ist, JavaScript
+   laeuft und keine reduzierte Bewegung gewuenscht ist. Damit bleiben
+   Barrierefreiheit und der Betrieb ohne JavaScript unberuehrt.
+   ============================================================================ */
+
+.timeline-section.pin-aktiv {
+    --phasen: 3;
+    /* Scrollweg: ein Bildschirm pro Phase, plus Vorlauf zum Einrasten. */
+    height: calc(var(--phasen) * 92vh + 50vh);
+    padding-top: 0;
+    padding-bottom: 0;
+    position: relative;
+}
+
+.timeline-section.pin-aktiv .pin-stage {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* Oben ausgerichtet statt mittig: Mittig gesetzt rutschte die Ueberschrift
+       weit in die Bildmitte und der Abschnitt wirkte gedrungen. */
+    justify-content: flex-start;
+    gap: var(--space-8);
+
+    /* Der Kopfbereich ist klebend und liegt ueber der Buehne. Ohne diesen
+       Freiraum ruecken Ueberschrift und Einleitung im eingerasteten Zustand
+       darunter: Auf 700 px Fensterhoehe blieben nur 18 px Abstand.
+       Die Hoehe wird in pin-sequence.js gemessen und als --kopf-hoehe gesetzt,
+       damit der Wert nicht auseinanderlaeuft, wenn sich der Kopf aendert. */
+    padding-block: calc(var(--kopf-hoehe, 90px) + var(--space-8)) var(--space-12);
+}
+
+.timeline-section.pin-aktiv h2 { margin-bottom: var(--space-3); }
+.timeline-section.pin-aktiv .services-intro { margin-bottom: 0; }
+
+/* ── Fortschrittsleiste ───────────────────────────────────────────────────
+   Zeigt, wo man im Ablauf steht. Ohne diese Anzeige fuehlt sich ein
+   eingerasteter Abschnitt an, als haenge das Scrollen. */
+.pin-rail {
+    display: grid;
+    grid-template-columns: repeat(var(--phasen, 3), 1fr);
+    gap: var(--space-4);
+    margin-block: var(--space-2) var(--space-6);
+}
+.pin-rail__step {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 2px solid var(--border-subtle);
+    transition: border-color var(--duration-base) var(--ease-out),
+                color var(--duration-base) var(--ease-out);
+    color: var(--text-faint);
+}
+.pin-rail__step[data-status="aktiv"],
+.pin-rail__step[data-status="fertig"] { border-top-color: var(--accent); color: var(--accent); }
+.pin-rail__step[data-status="fertig"] { color: var(--text-muted); border-top-color: rgba(255, 201, 71, .45); }
+
+.pin-rail__nr {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+}
+.pin-rail__label {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: inherit;
+    line-height: 1.3;
+}
+
+/* ── Phasenfläche ─────────────────────────────────────────────────────────
+   Die Phasen liegen uebereinander und werden ausgetauscht. Die Hoehe richtet
+   sich nach der laengsten Phase, damit beim Wechsel nichts springt. */
+.timeline-section.pin-aktiv .timeline {
+    display: grid;
+    /* Ausdruecklich einspaltig: Die Zeitleiste ist im Grundzustand ein
+       Dreispalter. Ohne diese Zeile saesse jede Phase in einem Drittel der
+       Breite, obwohl sie allein im Bild steht. */
+    grid-template-columns: 1fr;
+    position: relative;
+    /* Keine Mindesthoehe noetig: Alle Phasen liegen in derselben Rasterzelle,
+       die Hoehe richtet sich also ohnehin nach der laengsten. Eine zusaetzliche
+       Mindesthoehe erzeugte nur Leerraum unter den Karten. */
+}
+/* Die Verbindungslinie der Zeitleiste gilt nur der Listenansicht. Im
+   eingerasteten Zustand liegt immer genau eine Phase im Bild, dann verbindet
+   sie nichts und laeuft bloss quer durch das Layout. */
+.timeline-section.pin-aktiv .timeline::before,
+.timeline-section.pin-aktiv .timeline::after { display: none; }
+.timeline-section.pin-aktiv .timeline-item {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+    pointer-events: none;
+
+    /* Titel links, Inhalt rechts. Einspaltig blieb die halbe Breite leer,
+       was den eingerasteten Abschnitt unfertig wirken liess. */
+    display: grid;
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    gap: var(--space-6) var(--space-12);
+    align-items: start;
+    text-align: left;
+
+    /* Die Listenansicht begrenzt jeden Eintrag auf 360 px und zentriert ihn,
+       damit die drei Spalten gleich breit sind. Im eingerasteten Zustand steht
+       eine Phase allein im Bild und nutzt die volle Breite. */
+    max-width: none;
+    width: 100%;
+    margin: 0;
+}
+.timeline-section.pin-aktiv .timeline-item h3 { margin-top: 0; }
+.timeline-section.pin-aktiv .timeline-item::before { display: none; }
+
+/* ── Die drei Schritte als Karten ─────────────────────────────────────────
+   Als blosse Aufzaehlung nebeneinander liefen die Spalten ineinander: Der
+   Haken der naechsten Spalte stand direkt neben dem Text der vorigen, und beim
+   Phasenwechsel war kaum zu sehen, dass sich etwas geaendert hat. Eigene
+   Flaechen trennen die Schritte und machen den Wechsel sichtbar. */
+.timeline-section.pin-aktiv .timeline-item ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: var(--space-6);
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
+}
+
+.timeline-section.pin-aktiv .timeline-item li {
+    margin: 0;
+    padding: var(--space-6) var(--space-6) var(--space-6) calc(var(--space-6) + 24px);
+    background: rgba(17, 34, 64, .78);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+}
+
+/* Der Haken sitzt in der Karte, nicht davor. */
+.timeline-section.pin-aktiv .timeline-item li::before {
+    content: '✓';
+    left: var(--space-6);
+    top: var(--space-6);
+    color: var(--text-faint);
+    font-size: var(--text-sm);
+    line-height: inherit;
+}
+
+/* Der fette Auftakt ist die Schrittbezeichnung und gehoert auf eine eigene
+   Zeile, sonst verschwimmt er mit der Erlaeuterung. */
+.timeline-section.pin-aktiv .timeline-item li strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-strong);
+    font-size: var(--text-md);
+    line-height: 1.3;
+}
+
+/* Der letzte Schritt ist in jeder Phase das Ergebnis, also das, was der Kunde
+   in der Hand haelt. Deshalb traegt er den Markenakzent und nicht alle drei. */
+.timeline-section.pin-aktiv .timeline-item li:last-child {
+    background: rgba(255, 201, 71, .07);
+    border-color: rgba(255, 201, 71, .4);
+}
+.timeline-section.pin-aktiv .timeline-item li:last-child::before { color: var(--accent); }
+.timeline-section.pin-aktiv .timeline-item li:last-child strong { color: var(--accent); }
+
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+
+/* Die Karten der aktiven Phase laufen gestaffelt ein, in Leserichtung.
+   Der Versatz ist hier groesser als die 90 ms der uebrigen Seite: Beim
+   Phasenwechsel bleibt der Rahmen stehen und nur der Inhalt tauscht, deshalb
+   braucht es einen deutlicheren Auftritt, damit der Wechsel auffaellt. */
+.timeline-section.pin-aktiv .timeline-item li {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+}
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv li {
+    opacity: 1;
+    transform: none;
+}
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv li:nth-child(1) { transition-delay: 120ms; }
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv li:nth-child(2) { transition-delay: 240ms; }
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv li:nth-child(3) { transition-delay: 360ms; }
+
+/* ── Phasenziffer ─────────────────────────────────────────────────────────
+   Grosser, ruhiger Anker in der linken Spalte. Er wechselt sichtbar mit der
+   Phase und beantwortet die Frage "wo bin ich gerade" ohne Lesen.
+   Gesetzt wird das Element von pin-sequence.js. */
+.phase-nr {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--accent);
+    opacity: .28;
+    letter-spacing: -0.04em;
+    margin-bottom: var(--space-3);
+}
+.timeline-section.pin-aktiv .timeline-item.phase-aktiv .phase-nr {
+    animation: phaseNr var(--duration-reveal) var(--ease-out) both;
+}
+@keyframes phaseNr {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: .28; transform: none; }
+}
+
+/* Die Phasenueberschrift traegt die linke Spalte und darf deshalb gross sein. */
+.timeline-section.pin-aktiv .timeline-item h3 {
+    font-size: var(--text-xl);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
+    border-left: 2px solid var(--accent);
+    padding-left: var(--space-8);
+}
+
+/* Titel und Einleitung stehen links wie der Inhalt, nicht mittig. Ein
+   zentrierter Kopf ueber linksbuendigem Inhalt wirkte wie zwei Layouts. */
+.timeline-section.pin-aktiv .pin-stage { text-align: left; }
+.timeline-section.pin-aktiv .services-intro { margin-inline: 0; max-width: 52rem; }
+
+@media (max-width: 900px) {
+    /* Unterhalb dieser Breite wird nicht eingerastet, siehe pin-sequence.js.
+       Die Regeln hier greifen dann ohnehin nicht, der Block bleibt als
+       Sicherung, falls die Klasse doch gesetzt ist. */
+    .timeline-section.pin-aktiv { height: auto; padding-block: var(--space-section); }
+    .timeline-section.pin-aktiv .pin-stage { position: static; min-height: 0; }
+    .timeline-section.pin-aktiv .timeline { display: grid; }
+    .timeline-section.pin-aktiv .timeline-item {
+        grid-area: auto;
+        opacity: 1;
+        transform: none;
+    }
+    .timeline-section.pin-aktiv .timeline-item li { opacity: 1; transform: none; }
+    .pin-rail { display: none; }
+}
+
+/* ── Niedrige Fenster ─────────────────────────────────────────────────────
+   Ein 1366x768-Laptop hat nach Browser- und Taskleiste rund 600 px Hoehe.
+   Statt das Einrasten dort abzuschalten, wird die Buehne kompakter: weniger
+   Abstand, kleinere Ziffer, engere Karten. So passt eine Phase weiterhin
+   vollstaendig ins Bild. */
+@media (min-width: 901px) and (max-height: 820px) {
+    .timeline-section.pin-aktiv .pin-stage {
+        gap: var(--space-4);
+        padding-block: calc(var(--kopf-hoehe, 90px) + var(--space-4)) var(--space-6);
+    }
+    /* Die Ueberschrift bleibt auf voller Groesse. Sie hier zu verkleinern
+       liess den Abschnitt gegenueber den uebrigen Sektionen zurueckfallen.
+       Der Platz kommt stattdessen aus Abstaenden. */
+    .timeline-section.pin-aktiv h2 { margin-bottom: var(--space-2); }
+    .pin-rail { margin-block: 0 var(--space-3); }
+    .pin-rail__step { padding-top: 8px; gap: 6px; }
+    .phase-nr { font-size: 3.4rem; margin-bottom: var(--space-2); }
+    .timeline-section.pin-aktiv .timeline-item {
+        grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+        gap: var(--space-4) var(--space-8);
+    }
+    .timeline-section.pin-aktiv .timeline-item ul { gap: var(--space-4); }
+    .timeline-section.pin-aktiv .timeline-item li {
+        padding: var(--space-4) var(--space-4) var(--space-4) calc(var(--space-4) + 22px);
+    }
+    .timeline-section.pin-aktiv .timeline-item li::before {
+        left: var(--space-4);
+        top: var(--space-4);
+    }
+}
+
+/* ── Schmale, aber noch eingerastete Fenster ──────────────────────────────
+   Zwischen 901 und 1150 px reicht die Breite nicht fuer Titelspalte und drei
+   Karten nebeneinander. Die Karten brachen auf zwei Spalten um und wurden
+   dadurch hoeher, sodass es in der Hoehe eng wurde. Hier steht der Titel
+   deshalb ueber den Karten und die drei Karten teilen sich die volle Breite. */
+@media (min-width: 901px) and (max-width: 1150px) {
+    .timeline-section.pin-aktiv .timeline-item {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    .timeline-section.pin-aktiv .timeline-item ul {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-4);
+    }
+    .phase-nr { font-size: 2.5rem; margin-bottom: var(--space-1); }
+}

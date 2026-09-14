@@ -2,16 +2,16 @@
 :root {
   /* Override-able design tokens for this section */
   --ntx-bg: var(--bg-color, #0A1931);
-  --ntx-card: var(--card-bg, #112240);
-  --ntx-text: var(--text-color, #cbd5e1);
-  --ntx-accent: var(--accent-color, #FFC947);
+  --ntx-card: var(--card-bg, var(--surface-card));
+  --ntx-text: var(--text-color, var(--text-body));
+  --ntx-accent: var(--accent-color, var(--accent));
 }
 
 .ki-apps-section {
-  background: var(--ntx-bg);
-  padding: 100px 0;
-  border-top: 1px solid #1e293b;
-  border-bottom: 1px solid #1e293b;
+  background: rgba(10, 25, 49, .62);
+  padding: var(--space-section) 0;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 .ki-apps__title {
   font-size: var(--unified-heading-size, 2.4rem);
@@ -23,7 +23,7 @@
 .ki-apps__intro {
   max-width: 900px;
   margin: 0 auto 3rem;
-  font-size: 1.05rem;
+  font-size: var(--text-md);
   line-height: 1.6;
   text-align: center;
   color: var(--ntx-text);
@@ -43,7 +43,7 @@
 
 .ki-apps__card {
   background: var(--ntx-card);
-  border: 1px solid #1e293b;
+  border: 1px solid var(--border-subtle);
   padding: 1.5rem 1.5rem 1.75rem;
   border-radius: 14px;
   position: relative;
@@ -52,12 +52,12 @@
   outline: none;
   opacity: 0;
   transform: translateY(12px);
-  transition: opacity .6s ease, transform .6s cubic-bezier(.4,0,.2,1), box-shadow .35s ease, translate .6s;
+  transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), translate var(--duration-slow);
   will-change: transform, opacity;
 }
 .prefers-reduced-motion .ki-apps__card { transition: none; }
 .ki-apps__card:focus-visible { box-shadow: 0 0 0 3px var(--ntx-accent); }
-.ki-apps__card h3 { font-size: 1.15rem; margin: 0 0 .75rem; color: var(--ntx-accent); position: relative; }
+.ki-apps__card h3 { font-size: var(--text-md); margin: 0 0 .75rem; color: var(--ntx-accent); position: relative; }
 .ki-apps__card h3::after {
   content: "";
   position: absolute;
@@ -66,10 +66,10 @@
   background: linear-gradient(90deg,var(--ntx-accent),transparent 70%);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform .5s ease;
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 .prefers-reduced-motion .ki-apps__card h3::after { transition: none; }
-.ki-apps__card p { font-size: .95rem; line-height: 1.55; }
+.ki-apps__card p { font-size: var(--text-sm); line-height: 1.55; }
 
 /* Media placeholder */
 .ki-apps__media { margin: -0.5rem -0.5rem 1rem; padding:0; }

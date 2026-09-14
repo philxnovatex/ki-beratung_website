@@ -38,8 +38,8 @@
 /* Leistungen: Scroll- und Hover-Animationen */
 .featured-section {
     opacity: 0;
-    transform: translateY(40px) scale(0.98);
-    transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+    transform: translateY(18px) scale(0.99);
+    transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
 }
 .featured-section.in-view {
     opacity: 1;
@@ -50,7 +50,7 @@
     font-size: 2.5rem;
     color: var(--accent-color);
     margin-bottom: 10px;
-    transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+    transition: transform var(--duration-fast) var(--ease-out);
 }
 .leistung-icon.icon-animate {
     animation: iconWobble 0.5s;
@@ -64,7 +64,7 @@
     100% { transform: rotate(0deg) scale(1); }
 }
 .featured-section .text-container {
-    transition: box-shadow 0.3s, transform 0.3s;
+    transition: box-shadow var(--duration-fast), transform var(--duration-fast);
     border-radius: 12px;
 }
 .featured-section.in-view .text-container:hover {
@@ -78,7 +78,7 @@
 /* Mobile / Accessibility fixes (fallbacks & tap targets) */
 @media (max-width: 900px) {
     /* Hide heavy canvas on small screens and use a lightweight fallback background */
-    #hero-canvas { display: none !important; }
+    #site-canvas { display: none !important; }
     .hero-section {
         background-image: url('../images/smart-hero.webp');
         background-size: cover;
@@ -153,7 +153,7 @@
 /* Problem-Abschnitt   */
 /* ------------------- */
 .problem-section {
-    background: linear-gradient(135deg, #0A1931 0%, #112240 100%);
+    background: linear-gradient(135deg, rgba(10, 25, 49, .64) 0%, rgba(17, 34, 64, .64) 100%);
     padding: 100px 20px;
     text-align: center;
     font-size: 1.5rem;
@@ -202,7 +202,7 @@
     background: radial-gradient(circle, var(--accent-color) 0%, rgba(255,201,71,0) 70%);
     transform: translateY(-50%) scale(0.4);
     opacity: 0;
-    transition: transform .6s ease, opacity .6s ease;
+    transition: transform var(--duration-slow) var(--ease-out), opacity var(--duration-slow) var(--ease-out);
     pointer-events: none;
     filter: drop-shadow(0 0 6px rgba(255,201,71,0.6));
 }
@@ -215,7 +215,7 @@
 
 .problem-line {
     opacity: 0;
-    transform: translateY(20px) scale(0.95);
+    transform: translateY(18px) scale(0.99);
     margin-bottom: 40px;
     position: relative;
     z-index: 1;
@@ -224,7 +224,7 @@
 @keyframes problemLineIn {
     0% {
         opacity: 0;
-        transform: translateY(20px) scale(0.95);
+        transform: translateY(18px) scale(0.99);
     }
     100% {
         opacity: 1;
@@ -287,29 +287,195 @@
 /* ------------------- */
 /* Reset & Grundstile  */
 /* ------------------- */
+/* ============================================================================
+   DESIGN-SYSTEM (Schritt 1)
+
+   Alle Gestaltungswerte laufen ab hier über Tokens. Regel für neue Regeln:
+   keine rohen Hex-Farben, keine frei gewählten Pixelabstände, keine
+   Schriftgrößen außerhalb der Skala. Wer einen Wert braucht, den es hier nicht
+   gibt, erweitert die Skala, statt einen Sonderwert einzustreuen.
+
+   Ausgangslage vor diesem Schritt: 39 verschiedene Schriftgrößen, 59 Margin-
+   Werte, 43 Padding-Werte, 45 Hex-Literale. Diese Streuung ist der Grund,
+   warum die Seite unruhig wirkt.
+   ============================================================================ */
 :root {
-    --primary-color: #0A1931;
-    --secondary-color: #185ADB;
-    --accent-color: #FFC947;
-    --bg-color: #0A1931;
-    --card-bg: #112240;
-    --headline-color: #f8fafc;
-    --text-color: #cbd5e1;
+    /* ── Farben: Rohwerte ─────────────────────────────────────────────────
+       Die Palette selbst. Nicht direkt in Regeln verwenden, dafür sind die
+       semantischen Rollen weiter unten da. */
+    --c-navy-900: #071426;   /* dunkler als der Grund, für Tiefe */
+    --c-navy-800: #0A1931;   /* Seitenhintergrund */
+    --c-navy-700: #0f2344;   /* angehobene Fläche */
+    --c-navy-600: #112240;   /* Karten */
+    --c-navy-500: #1e293b;   /* Rahmen und Trennlinien */
+
+    --c-blue-500: #185ADB;   /* Interaktion */
+    --c-blue-400: #3b7bf0;
+    --c-violet-500: #4f46e5; /* Akzent im Demo-Player */
+    --c-violet-600: #7c3aed;
+
+    --c-gold-500: #FFC947;   /* Markenakzent */
+    --c-gold-400: #ffe08e;   /* Hover */
+
+    --c-slate-050: #f8fafc;  /* Überschriften */
+    --c-slate-300: #cbd5e1;  /* Fließtext */
+    --c-slate-400: #9fb3d9;  /* gedämpfter Text */
+    --c-slate-500: #8a99ad;  /* noch schwächer */
+
+    --c-success: #4caf50;
+    --c-danger:  #ff6b6b;
+
+    /* ── Farben: semantische Rollen ───────────────────────────────────────
+       Diese werden in Regeln verwendet. Ein Themenwechsel oder eine
+       Farbkorrektur passiert dann an genau einer Stelle. */
+    --surface-base:    var(--c-navy-800);
+    --surface-raised:  var(--c-navy-700);
+    --surface-card:    var(--c-navy-600);
+    --surface-sunken:  var(--c-navy-900);
+    --border-subtle:   var(--c-navy-500);
+    --border-strong:   var(--c-blue-500);
+
+    --text-strong:     var(--c-slate-050);
+    --text-body:       var(--c-slate-300);
+    --text-muted:      var(--c-slate-400);
+    --text-faint:      var(--c-slate-500);
+    --text-on-accent:  var(--c-navy-800);
+
+    --accent:          var(--c-gold-500);
+    --accent-hover:    var(--c-gold-400);
+    --interactive:     var(--c-blue-500);
+    --feedback-ok:     var(--c-success);
+    --feedback-error:  var(--c-danger);
+
+    /* ── Typografie ───────────────────────────────────────────────────────
+       Sieben Stufen, Verhältnis rund 1,25. Die großen Stufen skalieren fluid
+       zwischen Mobil und Desktop, damit keine Breakpoint-Sprünge nötig sind. */
     --font-primary: 'Inter', sans-serif;
     --font-secondary: 'Roboto Mono', monospace;
+
+    /* Eine Stufe kleiner als der erste Entwurf: Der wirkte auf großen Schirmen
+       plakativ statt souverän. Der Fließtext bleibt bei 16px, darunter leidet
+       die Lesbarkeit. Verkleinert wurden vor allem die oberen Stufen, die den
+       Größeneindruck der Seite bestimmen. */
+    --text-xs:   0.75rem;                            /* 12px, Labels */
+    --text-sm:   0.875rem;                           /* 14px, Hilfstexte */
+    --text-base: 1rem;                               /* 16px, Fließtext */
+    --text-md:   1.0625rem;                          /* 17px, Einleitungen */
+    --text-lg:   clamp(1.125rem, 0.5vw + 1rem, 1.3rem);     /* h3, max 21px */
+    --text-xl:   clamp(1.4rem, 1.1vw + 1.1rem, 1.85rem);    /* h2, max 30px */
+    --text-2xl:  clamp(1.9rem, 2.6vw + 1.1rem, 3rem);       /* h1, max 48px */
+
+    --leading-tight: 1.15;   /* Überschriften */
+    --leading-snug:  1.4;    /* kurze Absätze */
+    --leading-normal: 1.7;   /* Fließtext */
+
+    --tracking-wide: 0.14em; /* Versalien-Labels */
+
+    --weight-regular: 400;
+    --weight-bold: 700;
+    --weight-black: 800;
+
+    /* ── Abstände: 4px-Basis ──────────────────────────────────────────────
+       Acht Stufen. Alles, was dazwischen liegt, ist ein Sonderfall und
+       gehört begründet. */
+    --space-1: 0.25rem;   /*  4px */
+    --space-2: 0.5rem;    /*  8px */
+    --space-3: 0.75rem;   /* 12px */
+    --space-4: 1rem;      /* 16px */
+    --space-6: 1.5rem;    /* 24px */
+    --space-8: 2rem;      /* 32px */
+    --space-12: 3rem;     /* 48px */
+    --space-16: 4rem;     /* 64px */
+    --space-24: 6rem;     /* 96px */
+
+    /* Sektionsabstände wachsen mit der Viewportbreite. Ebenfalls eine Stufe
+       zurückgenommen, damit die Seite kompakter wirkt. */
+    --space-section: clamp(3.25rem, 5.5vw, 5.5rem);
+
+    /* ── Radien ───────────────────────────────────────────────────────────── */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-pill: 999px;
+
+    /* ── Schatten ─────────────────────────────────────────────────────────── */
+    --shadow-sm: 0 2px 12px rgba(7, 20, 38, .35);
+    --shadow-md: 0 12px 32px rgba(7, 20, 38, .45);
+    --shadow-lg: 0 24px 60px rgba(7, 20, 38, .55);
+    --shadow-accent: 0 12px 40px rgba(255, 201, 71, .18);
+
+    /* ── Bewegung ─────────────────────────────────────────────────────────── */
+    --duration-fast: 150ms;
+    --duration-base: 300ms;
+    --duration-slow: 600ms;
+    --duration-reveal: 800ms;
+    --ease-out: cubic-bezier(.2, .8, .3, 1);
+    --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+
+    /* ── Layout ───────────────────────────────────────────────────────────── */
+    --container-max: 1200px;
+    --container-narrow: 820px;   /* Fließtext, begrenzt die Zeilenlänge */
+    --measure: 68ch;             /* angestrebte Zeilenlänge */
+
+    /* ── Rückwärtskompatibilität ──────────────────────────────────────────
+       Die alten Namen bleiben als Aliase bestehen, damit die rund 2.600 Zeilen
+       CSS unverändert weiterlaufen und schrittweise umgestellt werden können. */
+    --primary-color: var(--c-navy-800);
+    --secondary-color: var(--c-blue-500);
+    --accent-color: var(--c-gold-500);
+    --bg-color: var(--c-navy-800);
+    --card-bg: var(--c-navy-600);
+    --headline-color: var(--c-slate-050);
+    --text-color: var(--c-slate-300);
+}
+
+/* Bewegung global zurücknehmen, wenn das System es verlangt. Gilt ab hier für
+   alle Animationen der Seite, auch für spätere Ergänzungen. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* clip auch am Wurzelelement, nicht nur am Body.
+   Die Mobil-Navigation ist position: fixed und haengt damit am Viewport, nicht
+   am Body. Ein clip am Body erreicht sie deshalb nicht, und die rechts
+   geparkte Navigation machte jede Seite auf Telefonen doppelt so breit wie das
+   Fenster. Gemessen: scrollWidth 780 bei 390 Pixeln Fensterbreite, auf allen
+   Seiten. Am Wurzelelement wirkt die Begrenzung auf den Viewport.
+   clip statt hidden, damit kein Scroll-Container entsteht und das
+   position: sticky des Kopfbereichs erhalten bleibt. */
+html {
+    overflow-x: clip;
+}
+
+/* Weiches Scrollen nur fuer Besucher, die keine reduzierte Bewegung wuenschen.
+   Vorher galt es fuer alle. Ein erzwungener Gleitvorgang ueber mehrere
+   Bildschirmhoehen ist genau die Art Bewegung, die bei vestibulaeren
+   Beschwerden Probleme macht. */
+@media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+}
 
 body {
     font-family: var(--font-primary);
-    line-height: 1.7;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    background-color: var(--surface-base);
+    color: var(--text-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* clip statt hidden: verhindert das horizontale Scrollen, das die rechts
+       geparkte Mobil-Navigation erzeugt, ohne einen Scroll-Container zu bilden.
+       overflow-x: hidden wuerde das position:sticky des Headers aushebeln. */
+    overflow-x: clip;
 }
 
-.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--space-6); }
 
 /* ------------------- */
 /* Header & Navigation */
@@ -317,7 +483,7 @@ body {
 .main-header {
     background-color: rgba(10, 25, 49, 0.85);
     backdrop-filter: blur(10px);
-    border-bottom: 1px solid #1e293b;
+    border-bottom: 1px solid var(--border-subtle);
     padding: 0.5rem 0;
     position: sticky;
     top: 0;
@@ -329,7 +495,23 @@ body {
     width: auto;
 }
 .main-nav ul { list-style: none; display: flex; align-items: center; gap: 2rem; }
-.main-nav a { text-decoration: none; color: var(--headline-color); font-weight: 700; transition: color 0.3s ease; padding: 5px 0; }
+/* Ab dem siebten Eintrag ("KI Sichtbarkeit") passt die Navigation zwischen
+   901 und 1300 px nicht mehr in eine Zeile. Statt Eintraege zu streichen wird
+   der Abstand dort enger und die Lernplattform-Schaltflaeche kompakter. Der
+   Umbruch auf das Mobilmenue bleibt wie gehabt bei 900 px. */
+@media (min-width: 901px) and (max-width: 1300px) {
+    .main-nav ul { gap: 1.1rem; }
+    .main-nav a { font-size: var(--text-sm); }
+    .main-nav a.nav-highlight { padding: 10px 16px; }
+    .logo img { height: 54px; }
+}
+/* Knapp oberhalb des Mobilumbruchs bleiben sonst nur sieben Pixel zwischen
+   Logo und erstem Eintrag. */
+@media (min-width: 901px) and (max-width: 1040px) {
+    .main-nav ul { gap: 0.7rem; }
+    .main-nav a.nav-highlight { padding: 9px 12px; }
+}
+.main-nav a { text-decoration: none; color: var(--headline-color); font-weight: 700; transition: color var(--duration-fast) var(--ease-out); padding: 5px 0; }
 .main-nav a:hover { color: var(--accent-color); }
 
 .main-nav a.nav-highlight {
@@ -337,7 +519,7 @@ body {
     color: var(--primary-color);
     padding: 12px 25px;
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: all var(--duration-fast) var(--ease-out);
 }
 .main-nav a.nav-highlight:hover {
     background-color: var(--headline-color);
@@ -352,46 +534,109 @@ body {
 /* Sektionen Allgemein */
 /* ------------------- */
 section {
-    padding: 100px 0;
-    border-bottom: 1px solid #1e293b;
+    padding: var(--space-section) 0;
+    border-bottom: 1px solid var(--border-subtle);
 }
 section:last-of-type {
     border-bottom: none;
 }
 
-/* Unified Headings */
+/* ── Überschriften-Hierarchie ────────────────────────────────────────────
+   Vorher galt fuer h1, h2 und h3 dieselbe Groesse (2.4rem, "unified heading").
+   Damit war eine Kartenueberschrift optisch so wichtig wie die Seitenueberschrift
+   und die Seite hatte keine Hierarchie. Jetzt drei klar getrennte Stufen, die
+   ueber clamp() stufenlos zwischen Mobil und Desktop skalieren. */
 h1, h2, h3 {
-    --unified-heading-size: 2.4rem;
     font-family: var(--font-primary);
-    font-weight: 700;
-    color: var(--headline-color);
-    margin-bottom: 24px;
-    line-height: 1.25;
+    color: var(--text-strong);
+    line-height: var(--leading-tight);
+    text-wrap: balance;      /* verhindert einzelne Waisenwoerter in der letzten Zeile */
     position: relative;
-    transition: color .3s ease;
+    transition: color var(--duration-fast) var(--ease-out);
 }
-h1, h2, h3 { font-size: var(--unified-heading-size); }
-/* Maintain spacing differences where needed */
-h2 { text-align: center; margin-bottom: 55px; }
-/* Smaller contextual headings overrides */
-.service-card h3, .principle-card h3, .lead-gen-form-container h3, .contact-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
-/* Flash / Glow animation */
-@keyframes headingFlash {
-    0% { color: var(--headline-color); text-shadow: none; }
-    20% { color: var(--accent-color); text-shadow: 0 0 10px rgba(255,201,71,0.9), 0 0 24px rgba(255,201,71,0.5); }
-    55% { color: var(--accent-color); text-shadow: 0 0 6px rgba(255,201,71,0.7); }
-    100% { color: var(--headline-color); text-shadow: none; }
+
+h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-black);
+    letter-spacing: -0.02em;  /* grosse Grade brauchen engeren Satz */
+    margin-bottom: var(--space-6);
 }
-.heading-watch.hover-flash:hover { animation: headingFlash 1.2s ease; }
-.heading-watch.heading-in-view { animation: headingFlash 1.2s ease; }
+
+h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
+    letter-spacing: -0.01em;
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-3);
+}
+
+/* Fliesstext: Zeilenlaenge begrenzen. Ueber rund 75 Zeichen hinaus verliert das
+   Auge beim Zeilenwechsel den Anschluss. */
+p { max-width: var(--measure); }
+
+/* Abstand zwischen aufeinanderfolgenden Absaetzen. Das globale "* { margin: 0 }"
+   im Reset setzt ihn auf null, wiederhergestellt wurde er nie. Mehrere Absaetze
+   klebten dadurch zu einem Block zusammen, etwa im Ueber-mich-Text.
+   Bewusst als p + p, damit einzelne Absaetze in Karten und Rastern keinen
+   ungewollten Abstand bekommen. */
+p + p { margin-top: var(--space-4); }
+/* In zentrierten Sektionen bleibt der Text mittig, aber begrenzt.
+   Ohne margin auto sitzt der durch max-width verschmälerte Absatz am linken
+   Rand, obwohl text-align die Zeilen zentriert. Das sah in der Demo-Sektion
+   nach einem Ausrichtungsfehler aus. */
+.hero-section p,
+.services-section > .container > p,
+.testimonials-section > .container > p,
+.demo-section > .container > p,
+.contact-section > .container > p,
+.reifegrad-intro, .ki-apps__intro, .cs-subtitle { margin-left: auto; margin-right: auto; }
+/* Kurze Textbausteine in Karten und Listen brauchen keine Begrenzung. */
+.stage-card p, .service-card p, .testimonial-card p, .timeline-item p,
+.ki-apps__card p, .result-card p, li p { max-width: none; }
+
+/* Kontextuelle Ausnahmen: Ueberschriften in Karten eine Stufe kleiner */
+.service-card h3, .principle-card h3, .lead-gen-form-container h3, .contact-card h3 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-3);
+}
+/* Überschriften-Auftritt
+   Vorher lief hier "headingFlash": Jede h1, h2 und h3 der Seite sprang beim
+   Hineinscrollen und bei jedem Überfahren mit der Maus hart auf Gold um,
+   inklusive Neon-Textschatten. Bei einer Seite mit über 30 Überschriften
+   entstand daraus ein permanentes Blinken beim Scrollen.
+
+   Ersetzt durch einen einmaligen, ruhigen Auftritt: nur Deckkraft und eine
+   kleine Bewegung, kein Farbwechsel, kein Leuchten. */
+.heading-watch {
+    opacity: 0;
+    transform: translateY(12px);
+}
+.heading-watch.heading-in-view {
+    animation: headingEnter var(--duration-slow) var(--ease-out) forwards;
+}
+
+@keyframes headingEnter {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ohne JavaScript oder bei reduzierter Bewegung bleiben Überschriften sichtbar. */
+@media (prefers-reduced-motion: reduce) {
+    .heading-watch { opacity: 1; transform: none; animation: none; }
+}
 
 /* ------------------- */
 /* Hero-Sektion        */
 /* ------------------- */
 .hero-section {
     text-align: center;
-    padding: 120px 0;
-    background: linear-gradient(180deg, #0b1e3a 0%, var(--primary-color) 100%);
+    padding: var(--space-section) 0;
+    background: linear-gradient(180deg, rgba(11, 30, 58, .42) 0%, rgba(10, 25, 49, .58) 100%);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -399,20 +644,50 @@ h2 { text-align: center; margin-bottom: 55px; }
     justify-content: center;
     min-height: 100vh;
 }
-#hero-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* Knotennetz als durchgehender Seitenhintergrund.
+   fixed statt absolute: Die Flaeche bleibt beim Scrollen stehen, waehrend der
+   Inhalt darueber laeuft. z-index 0 setzt sie ueber den Koerperhintergrund und
+   unter alle Abschnitte. pointer-events: none, damit sie keine Klicks abfaengt,
+   die Interaktion haengt in background-canvas.js am Dokument. */
+#site-canvas {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+
+    /* Lesespalte freihalten.
+       Der Text steht mittig, das Netz soll dort zurücktreten und an den Rändern
+       voll stehen. Eine Maske löst das besser als ein dunklerer Schleier über
+       allem: Die Wirkung bleibt erhalten, ohne dass Linien und Leuchtpunkte
+       hinter dem Fließtext liegen. */
+    -webkit-mask-image: radial-gradient(ellipse 62% 58% at 50% 50%,
+                            rgba(0, 0, 0, .18) 0%,
+                            rgba(0, 0, 0, .45) 45%,
+                            #000 80%);
+            mask-image: radial-gradient(ellipse 62% 58% at 50% 50%,
+                            rgba(0, 0, 0, .18) 0%,
+                            rgba(0, 0, 0, .45) 45%,
+                            #000 80%);
+}
+
+/* Der Inhalt liegt ueber der Flaeche. Ohne diesen Stapel wuerde der
+   Seitenhintergrund die Abschnitte ueberdecken.
+   .main-header steht hier bewusst nicht drin: Der Kopfbereich ist sticky mit
+   z-index 1000 und liegt damit ohnehin darueber. Ihn hier aufzufuehren wuerde
+   seine Position ueberschreiben, weil diese Regel spaeter in der Datei steht. */
+#main-content,
+.main-footer {
+    position: relative;
     z-index: 1;
 }
 .hero-section .container {
     position: relative;
     z-index: 2;
 }
-.hero-section .subtitle { font-size: 1.25rem; max-width: 750px; margin: 0 auto 40px; color: var(--text-color); }
-.cta-button { display: inline-block; background: var(--accent-color); color: var(--primary-color); font-weight: 700; padding: 15px 35px; border-radius: 8px; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease; font-size: 1rem; border: 2px solid var(--accent-color); }
+.hero-section .subtitle { font-size: var(--text-md); max-width: 750px; margin: 0 auto 40px; color: var(--text-color); }
+.cta-button { display: inline-block; background: var(--accent-color); color: var(--primary-color); font-weight: 700; padding: 15px 35px; border-radius: 8px; text-decoration: none; transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out); font-size: var(--text-base); border: 2px solid var(--accent-color); }
 .cta-button:hover { transform: translateY(-3px); box-shadow: 0 6px 40px rgba(255, 201, 71, 0.7); }
 
 
@@ -420,15 +695,15 @@ h2 { text-align: center; margin-bottom: 55px; }
 /* Komponenten & Layout-Blöcke */
 /* ------------------- */
 .services-section, .about-section, .contact-section {
-    background-color: var(--bg-color);
+    background-color: rgba(10, 25, 49, .64);
 }
 .principles-section, .demo-section {
-    background-color: var(--card-bg);
+    background-color: rgba(17, 34, 64, .62);
 }
 /* Timeline (replaces principles) */
-.timeline-section { background: var(--card-bg); }
+.timeline-section { background: rgba(17, 34, 64, .62); }
 .timeline { position: relative; display: flex; gap: 30px; justify-content: space-between; }
-.timeline::before { content:""; position:absolute; top: 26px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, #0f2344, var(--accent-color)); opacity:.5; border-radius:2px; }
+.timeline::before { content:""; position:absolute; top: 26px; left: 5%; width: 90%; height: 3px; background: linear-gradient(90deg, var(--surface-raised), var(--accent-color)); opacity:.5; border-radius:2px; }
 .timeline-item { position: relative; width: 100%; max-width: 360px; text-align: left; margin: 0 auto; }
 .timeline-item::before { content:""; position:absolute; top: 16px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; background: #0a1931; border: 3px solid var(--accent-color); border-radius:50%; z-index:1; box-shadow:0 0 12px rgba(255,201,71,.35); }
 .timeline-item h3 { margin-top: 48px; font-size: 1.4rem; color: var(--headline-color); }
@@ -437,38 +712,57 @@ h2 { text-align: center; margin-bottom: 55px; }
 .timeline-item li::before { content: '✔'; position: absolute; left: 0; color: #22c55e; }
 
 /* Reifegrad Check */
-.reifegrad-section { background: var(--bg-color); border-top: 1px solid #1e293b; }
+.reifegrad-section { background: rgba(10, 25, 49, .62); border-top: 1px solid var(--border-subtle); }
 .reifegrad-intro { max-width: 820px; margin: 0 auto 1.5rem; color: var(--text-color); }
-.reifegrad-form { max-width: 900px; margin: 0 auto; background: var(--card-bg); border: 1px solid #1e293b; border-radius: 12px; padding: 24px; }
-.quiz-progress { font-family: var(--font-secondary); font-size:.95rem; color:#9fb3d9; margin-bottom:.75rem; text-align:right; }
+.reifegrad-form { max-width: 900px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 24px; }
+.quiz-progress { font-family: var(--font-secondary); font-size: var(--text-sm); color:var(--text-muted); margin-bottom:.75rem; text-align:right; }
 .module-divider { position: relative; margin: 1rem 0 1rem; padding: .5rem 0 .5rem; }
-.module-divider:before { content:""; position:absolute; left:0; right:0; top:0; height:1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); }
-.module-divider:after { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background: linear-gradient(90deg, transparent, #1e293b, transparent); }
-.module-divider span { display:inline-block; background: var(--card-bg); padding: .2rem .6rem; border:1px solid #1b2f57; border-radius:999px; font-size:.8rem; color:#9fb3d9; box-shadow: 0 0 0 1px rgba(255,201,71,.05) inset; }
+.module-divider:before { content:""; position:absolute; left:0; right:0; top:0; height:1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); }
+.module-divider:after { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background: linear-gradient(90deg, transparent, var(--border-subtle), transparent); }
+.module-divider span { display:inline-block; background: var(--card-bg); padding: .2rem .6rem; border:1px solid #1b2f57; border-radius:999px; font-size: var(--text-xs); color:var(--text-muted); box-shadow: 0 0 0 1px rgba(255,201,71,.05) inset; }
 .question-block { margin-bottom: 1.5rem; }
 .question-title { font-weight: 800; margin-bottom: .75rem; color: var(--headline-color); background: #0c1e3e; border:1px solid #1b2f57; padding:.75rem 1rem; border-radius:8px; box-shadow: inset 0 0 0 1px rgba(255,201,71,.06); }
-.question-title .module-label { display:block; font-family: var(--font-secondary); font-size:.85rem; color:#93a7cc; margin-bottom:.35rem; }
+.question-title .module-label { display:block; font-family: var(--font-secondary); font-size: var(--text-xs); color:#93a7cc; margin-bottom:.35rem; }
 .answers { margin-top:.6rem; }
-.answer-feedback { margin-top:.55rem; font-size:.9rem; font-family: var(--font-secondary); }
-.answer-feedback.saved { color:#9fb3d9; }
+.answer-feedback { margin-top:.55rem; font-size: var(--text-sm); font-family: var(--font-secondary); }
+.answer-feedback.saved { color:var(--text-muted); }
 .answer-feedback.correct { color:#34d399; }
 .answer-feedback.incorrect { color:#f87171; }
-.question-block label { display:block; padding:.75rem 1rem; margin-bottom:.5rem; background: #0d2243; border:1px solid #1e293b; border-radius: 8px; cursor: pointer; transition: background .2s, border-color .2s, transform .08s; }
+.question-block label { display:block; padding:.75rem 1rem; margin-bottom:.5rem; background: #0d2243; border:1px solid var(--border-subtle); border-radius: 8px; cursor: pointer; transition: background var(--duration-fast), border-color var(--duration-fast), transform var(--duration-fast); }
 .question-block label:hover { background:#0f274d; border-color:#23406f; }
 .question-block input[type="radio"] { margin-right: .65rem; accent-color: var(--accent-color); }
-.choice-prefix { font-family: var(--font-secondary); color:#9fb3d9; margin-right:.35rem; }
+.choice-prefix { font-family: var(--font-secondary); color:var(--text-muted); margin-right:.35rem; }
 .reifegrad-btn { padding: .9rem 1.6rem; font-weight:700; background: var(--accent-color); border:2px solid var(--accent-color); color: var(--primary-color); border-radius:8px; cursor:pointer; }
-.reifegrad-btn:hover { background: #ffe08e; }
+.reifegrad-btn:hover { background: var(--accent-hover); }
 .reifegrad-results { max-width: 900px; margin: 1.5rem auto 0; }
-.result-card { background: var(--card-bg); border:1px solid #1e293b; border-radius:12px; padding: 1.5rem; }
+.result-card { background: var(--card-bg); border:1px solid var(--border-subtle); border-radius:12px; padding: 1.5rem; }
 .result-card[hidden] { display:none; }
 .result-card h3 { font-size: 1.4rem; margin-top: 0; }
-.result-card .next-step { margin-top: 1.75rem; padding-top:1.1rem; border-top:1px solid #1e293b; }
+.result-card .next-step { margin-top: 1.75rem; padding-top:1.1rem; border-top:1px solid var(--border-subtle); }
 .result-card .next-step a.reifegrad-btn { display:inline-block; margin-top:.85rem; }
-.subscores { margin-top:1rem; }
-.subscores h4 { margin:0 0 .5rem; font-size:1rem; color: var(--headline-color); }
-.subscores ul { list-style:none; padding:0; margin:0; display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:.5rem .75rem; }
-.subscores li { font-family: var(--font-secondary); color:#9fb3d9; font-size:.9rem; }
+.result-score { font-family: var(--font-secondary); color: var(--accent-color); font-size: var(--text-md); margin: .35rem 0 1rem; }
+.result-card .next-step[hidden] { display:none; }
+
+/* Lead-Gate nach dem Reifegrad-Check */
+.quiz-lead-gate { background: var(--card-bg); border:1px solid var(--accent-color); border-radius:12px; padding:1.5rem; margin-bottom:1.25rem; }
+.quiz-lead-gate[hidden] { display:none; }
+.quiz-lead-gate h3 { margin:0 0 .5rem; font-size: var(--text-md); color: var(--headline-color); }
+.quiz-lead-gate > p { margin:0 0 1.25rem; color: var(--text-color); }
+.quiz-lead-fields { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap:1rem; }
+.quiz-lead-field { display:flex; flex-direction:column; gap:.35rem; }
+.quiz-lead-field label { font-size: var(--text-sm); color:var(--text-muted); }
+.quiz-lead-field input { padding:.7rem .8rem; border-radius:8px; border:1px solid var(--border-subtle); background: var(--bg-color); color: var(--headline-color); font-family: var(--font-primary); font-size: var(--text-base); }
+.quiz-lead-field input:focus-visible { outline:2px solid var(--accent-color); outline-offset:2px; border-color: var(--accent-color); }
+.quiz-lead-privacy { display:flex; gap:.6rem; align-items:flex-start; margin:1.1rem 0; font-size: var(--text-sm); color:var(--text-muted); line-height:1.5; }
+.quiz-lead-privacy input { margin-top:.28rem; flex-shrink:0; width:1.05rem; height:1.05rem; accent-color: var(--accent-color); }
+.quiz-lead-privacy a { color: var(--accent-color); }
+.quiz-lead-status { font-size: var(--text-sm); margin-top:.75rem; min-height:1.2em; }
+
+.result-card .next-step a.reifegrad-btn { text-decoration: none; }
+.subscores { margin-top:1.75rem; padding-top:1.1rem; border-top:1px solid var(--border-subtle); }
+.subscores h4 { margin:0 0 .5rem; font-size: var(--text-base); color: var(--headline-color); }
+.subscores ul { list-style:none; padding:0; margin:0; display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap:.5rem .75rem; }
+.subscores li { font-family: var(--font-secondary); color:var(--text-muted); font-size: var(--text-sm); }
 
 /* Tech section */
 .tech-section { max-width: 1000px; margin: 4rem auto 6rem; padding: 2rem; background: #0f2242; border-left: 5px solid var(--accent-color); border-radius: 8px; }
@@ -488,7 +782,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 /* Responsive: stack principles timeline items vertically on small screens */
 @media (max-width: 720px) {
     .timeline { display:block; }
-    .timeline::before { top: 8px; left: 14px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, #0f2344, var(--accent-color)); }
+    .timeline::before { top: 8px; left: 14px; width: 6px; height: calc(100% - 16px); background: linear-gradient(180deg, var(--surface-raised), var(--accent-color)); }
     .timeline-item { max-width: none; margin: 20px 0; padding-left: 52px; }
     .timeline-item::before { left: 18px; transform: none; top: 10px; }
     .timeline-item h3 { margin-top: 0.4rem; }
@@ -507,12 +801,12 @@ h2 { text-align: center; margin-bottom: 55px; }
     top: 0; 
     width: 6px; 
     height: 100vh; 
-    background: linear-gradient(180deg, var(--accent-color) 0%, #1e293b 100%); 
+    background: linear-gradient(180deg, var(--accent-color) 0%, var(--border-subtle) 100%); 
     border-radius: 0 8px 8px 0; 
     z-index: 1500; 
     transform: scaleY(0); 
     transform-origin: top; 
-    transition: transform .2s; 
+    transition: transform var(--duration-fast); 
     opacity: 0; 
     display: none; 
 }
@@ -523,11 +817,11 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 /* Enhanced Service Cards + Icons */
-.services-grid .service-card { opacity:0; transform:translateY(60px) scale(.97); transition:opacity .8s cubic-bezier(.4,0,.2,1), transform .8s cubic-bezier(.4,0,.2,1), box-shadow .3s; box-shadow:0 2px 12px rgba(30,41,59,.08); }
+.services-grid .service-card { opacity:0; transform:translateY(18px) scale(.99); transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out), box-shadow var(--duration-fast); box-shadow:0 2px 12px rgba(30,41,59,.08); }
 .services-grid .service-card.in-view { opacity:1; transform:translateY(0) scale(1); box-shadow:0 8px 32px rgba(30,41,59,.12); }
-.service-icon { display:flex; justify-content:center; align-items:center; margin:0 auto 18px; width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#1e293b 60%, var(--accent-color) 100%); box-shadow:0 4px 24px rgba(255,201,71,.15); font-size:2.5rem; color:#fff; transition:transform .3s cubic-bezier(.4,0,.2,1), box-shadow .3s; }
-.services-grid .service-card:hover .service-icon { transform:scale(1.15) rotate(-6deg); box-shadow:0 8px 32px rgba(255,201,71,.35); }
-.services-grid .service-card:hover { box-shadow:0 12px 40px rgba(255,201,71,.18); transform:translateY(-8px) scale(1.03); }
+.service-icon { display:flex; justify-content:center; align-items:center; margin:0 auto 18px; width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,var(--border-subtle) 60%, var(--accent-color) 100%); box-shadow:0 4px 24px rgba(255,201,71,.15); font-size:2.5rem; color:#fff; transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast); }
+.services-grid .service-card:hover .service-icon { transform:scale(1.06); box-shadow:0 8px 32px rgba(255,201,71,.35); }
+.services-grid .service-card:hover { box-shadow:0 12px 40px rgba(255,201,71,.18); transform:translateY(-4px) scale(1.01); }
 
 .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
 .service-card-link {
@@ -539,8 +833,8 @@ h2 { text-align: center; margin-bottom: 55px; }
     background-color: var(--card-bg);
     padding: 40px;
     border-radius: 12px;
-    border: 1px solid #1e293b;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    border: 1px solid var(--border-subtle);
+    transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
     height: 100%;
 }
 .service-card:hover {
@@ -550,16 +844,139 @@ h2 { text-align: center; margin-bottom: 55px; }
 .service-card p { margin-top: 15px; }
 /* Headings inside cards now inherit unified white base; optional subtle accent underline on hover */
 .service-card h3 { color: var(--headline-color); position:relative; }
-.service-card h3::after { content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:linear-gradient(90deg,var(--accent-color), rgba(255,201,71,0)); transition:width .4s ease; }
+.service-card h3::after { content:""; position:absolute; left:0; bottom:-6px; height:2px; width:0; background:linear-gradient(90deg,var(--accent-color), rgba(255,201,71,0)); transition: width var(--duration-fast) var(--ease-out); }
 .service-card:hover h3::after { width: 70%; }
 
-.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; }
+/* ------------------------------------ */
+/* Hero-Zusatz, Stufen-Sequenz, Stimmen */
+/* ------------------------------------ */
+
+.hero-note { font-size: var(--text-sm); color: var(--text-muted); margin-top: 1.1rem; max-width: 620px; margin-left: auto; margin-right: auto; }
+
+.services-intro { max-width: 820px; margin: 0 auto 2.5rem; color: var(--text-color); }
+
+/* Die drei Stufen bauen aufeinander auf, deshalb bewusst nebeneinander
+   in fester Reihenfolge statt als gleichrangiges 2x2-Raster. */
+.stage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; text-align: left; }
+.stage-card-link { text-decoration: none; color: inherit; display: block; }
+.stage-card {
+    position: relative;
+    background-color: var(--card-bg);
+    padding: 36px 32px 32px;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    border-top: 3px solid var(--accent-color);
+    transition: transform var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+    height: 100%;
+    /* Spalte, damit die Ergebnis-Zeile über alle drei Karten auf einer Linie
+       sitzt, auch wenn die Beschreibungstexte unterschiedlich lang sind. */
+    display: flex;
+    flex-direction: column;
+}
+.stage-card-link:hover .stage-card,
+.stage-card-link:focus-visible .stage-card {
+    transform: translateY(-6px);
+    border-color: var(--secondary-color);
+    border-top-color: var(--accent-color);
+    box-shadow: 0 12px 40px rgba(255,201,71,.14);
+}
+.stage-card-link:focus-visible { outline: 2px solid var(--accent-color); outline-offset: 4px; border-radius: 12px; }
+.stage-number {
+    font-family: var(--font-secondary);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(255,201,71,.22);
+    margin-bottom: .35rem;
+}
+.stage-label {
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    margin-bottom: .7rem;
+}
+.stage-card h3 { font-size: 1.3rem; color: var(--headline-color); margin-bottom: .8rem; }
+.stage-card p { margin-top: 0; }
+.stage-result { margin-top: auto; padding-top: .9rem; border-top: 1px solid var(--border-subtle); font-size: .93rem; color: var(--text-muted); }
+.stage-card > p:not(.stage-result) { margin-bottom: 1.1rem; }
+.stage-result strong { color: var(--headline-color); }
+
+/* Kundenstimmen */
+.testimonials-section { background: rgba(10, 25, 49, .62); padding: var(--space-section) 0; text-align: center; }
+/* Drei Stimmen, deshalb drei Spalten oder eine, aber nie zwei.
+   Mit auto-fit brach das Raster zwischen rund 760 und 930 Pixeln auf zwei
+   Spalten um, und die dritte Karte stand allein in einer eigenen Reihe. Eine
+   einzelne Karte unter zwei vollen wirkt wie ein Fehler im Layout. */
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 2.5rem; text-align: left; }
+@media (max-width: 1000px) {
+    .testimonials-grid {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 46rem;
+        margin-inline: auto;
+    }
+}
+.testimonial-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+.testimonial-card[hidden] { display: none; }
+/* Das Anführungszeichen steht außerhalb des Textflusses. Inline gesetzt ragte
+   es in die zweite Zeile und überlagerte dort Buchstaben. */
+.tm-quote { position: relative; font-size: var(--text-md); line-height: 1.75; color: var(--text-strong); }
+.tm-quote::before {
+    content: "\201E";
+    position: absolute;
+    left: -0.75em;
+    top: -0.2em;
+    color: var(--accent);
+    font-size: 2.2rem;
+    line-height: 1;
+}
+.tm-author { display: flex; flex-direction: column; gap: .15rem; }
+.tm-name { font-weight: 700; color: var(--headline-color); }
+.tm-role { font-family: var(--font-secondary); font-size: var(--text-xs); color: var(--text-muted); }
+
+.about-signature { margin-top: 1.5rem; font-family: var(--font-secondary); font-size: var(--text-sm); color: var(--accent-color); }
+
+@media (max-width: 900px) {
+    .stage-grid { grid-template-columns: 1fr; }
+}
+
+.principles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 40px; }
 .principle-card { text-align: center; }
 .principle-card span { font-family: var(--font-secondary); font-size: 2rem; font-weight: 700; color: var(--accent-color); display: block; margin-bottom: 10px; }
 .principle-card h3 { margin-bottom: 10px; }
 
-.about-flex { display: flex; align-items: center; gap: 60px; }
-.about-image img { width: 100%; max-width: 350px; border-radius: 50%; box-shadow: 0 0 40px rgba(24, 90, 219, 0.5); border: 2px solid var(--secondary-color); }
+/* Der Bildcontainer braucht eine eigene Breite. Ohne sie schrumpft er im
+   Flex-Layout auf null, sobald das Bild nicht mehr durch eine feste Höhe
+   aufgespannt wird. */
+.about-flex { display: flex; align-items: center; gap: var(--space-12); }
+.about-image { flex: 0 0 auto; width: 300px; max-width: 100%; }
+/* Portrait ohne Neonschein. Der blaue Leuchtring wirkte wie ein Avatar aus
+   einer Produktvorlage. Ein Bildnis eines Beraters soll wie ein Foto aussehen,
+   nicht wie ein Benutzerkonto. */
+.about-image img {
+    width: 100%;
+    max-width: 300px;
+    /* height: auto ist zwingend. Ohne das greift das HTML-Attribut height="700"
+       als Praesentationshinweis und das Bild wird auf 350x700 gestreckt,
+       also auf die doppelte Hoehe. */
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-subtle);
+}
 .about-text { flex: 1; }
 .about-text h2 { text-align: left; margin-bottom: 20px; }
 
@@ -602,7 +1019,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
-    transition: all 0.3s ease;
+    transition: all var(--duration-fast) var(--ease-out);
 }
 .quick-nav-button:hover {
     background-color: var(--headline-color);
@@ -610,11 +1027,11 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 .featured-section {
-    padding: 100px 0;
-    border-bottom: 1px solid #1e293b;
+    padding: var(--space-section) 0;
+    border-bottom: 1px solid var(--border-subtle);
 }
 .featured-section:nth-child(even) {
-    background-color: var(--bg-color);
+    background-color: rgba(10, 25, 49, .64);
 }
 .featured-section:nth-child(odd) {
     background-color: var(--card-bg);
@@ -659,7 +1076,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 /* Lead Gen Form (Lernplattform) */
 /* ------------------- */
 .lead-gen-section {
-    padding: 100px 0;
+    padding: var(--space-section) 0;
     background-color: var(--card-bg);
 }
 .lead-gen-flex {
@@ -695,7 +1112,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     background-color: var(--primary-color);
     padding: 40px;
     border-radius: 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-subtle);
 }
 .lead-gen-form-container h3 {
     text-align: center;
@@ -715,10 +1132,10 @@ h2 { text-align: center; margin-bottom: 55px; }
     width: 100%;
     padding: 12px;
     background-color: var(--card-bg);
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-subtle);
     border-radius: 8px;
     color: var(--text-color);
-    font-size: 1rem;
+    font-size: var(--text-base);
 }
 .form-group input:focus {
     outline: none;
@@ -729,7 +1146,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     margin-top: 10px;
 }
 .form-privacy {
-    font-size: 0.8rem;
+    font-size: var(--text-xs);
     text-align: center;
     margin-top: 20px;
     color: var(--text-color);
@@ -758,7 +1175,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     background-color: var(--card-bg);
     padding: 25px;
     border-radius: 12px;
-    border: 1px solid #1e293b;
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     z-index: 2000;
     /* display:flex wird erst durch .show aktiviert */
@@ -781,9 +1198,9 @@ h2 { text-align: center; margin-bottom: 55px; }
     padding: 13px 35px;
     border-radius: 8px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    border: 2px solid #1e293b;
+    transition: all var(--duration-fast) var(--ease-out);
+    font-size: var(--text-base);
+    border: 2px solid var(--border-subtle);
     cursor: pointer;
 }
 .cta-button-secondary:hover {
@@ -797,38 +1214,108 @@ h2 { text-align: center; margin-bottom: 55px; }
 .contact-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 60px;
+    gap: var(--space-8);
+    margin-top: var(--space-8);
     text-align: left;
 }
 .contact-card {
     background-color: var(--card-bg);
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid #1e293b;
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    min-width: 0;
+    overflow-wrap: anywhere;
+    border: 1px solid var(--border-subtle);
 }
-.contact-card h3 {
+.contact-card h2 {
     color: var(--accent-color);
+    font-size: var(--text-lg);
 }
 .contact-card p {
-    margin-top: 15px;
-    margin-bottom: 30px;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.contact-form-card {
+    max-width: 48rem;
+    margin: var(--space-8) auto 0;
+    padding: clamp(var(--space-4), 4vw, var(--space-8));
+    text-align: left;
+    background: var(--card-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+}
+.contact-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); }
+.contact-field { display: grid; gap: var(--space-2); margin-bottom: var(--space-6); }
+.contact-field label { color: var(--headline-color); font-weight: var(--weight-bold); }
+.contact-field input, .contact-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: var(--space-3);
+    background: var(--surface-sunken);
+    color: var(--text-strong);
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius-sm);
+    font: inherit;
+}
+.contact-field textarea { resize: vertical; }
+.contact-field input:focus-visible, .contact-field textarea:focus-visible, .contact-privacy input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+}
+.contact-hint { font-size: var(--text-sm); font-weight: var(--weight-regular); }
+.contact-privacy { display: flex; align-items: flex-start; gap: var(--space-3); margin-bottom: var(--space-6); }
+.contact-privacy input { flex: 0 0 auto; width: 1.25rem; height: 1.25rem; margin-top: var(--space-1); accent-color: var(--accent); }
+.contact-privacy label { font-size: var(--text-sm); }
+/* Der Link zu den Datenschutzhinweisen war ungestylt und lief damit im
+   Browserstandard rgb(0,0,238) auf dunklem Grund: Kontrast 1,7 statt der
+   geforderten 4,5. Er steht auf jeder Seite mit Formular. */
+.contact-privacy a {
+    color: var(--text-strong);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color var(--duration-fast) var(--ease-out);
+}
+.contact-privacy a:hover,
+.contact-privacy a:focus-visible { color: var(--accent); }
+.contact-honeypot { display: none; }
+.contact-status { min-height: 1.7em; margin: var(--space-4) 0 0; }
+.contact-status[data-state="error"] { color: var(--feedback-error); }
+.contact-status[data-state="success"] { color: var(--text-strong); }
+#contact-form button:disabled { opacity: 0.7; cursor: wait; }
+@media (max-width: 600px) {
+    .contact-fields { grid-template-columns: 1fr; gap: 0; }
 }
 
 /* ------------------- */
 /* Footer              */
 /* ------------------- */
 .main-footer {
-    background: var(--primary-color);
-    border-top: 1px solid #1e293b;
+    background: rgba(10, 25, 49, .70);
+    border-top: 1px solid var(--border-subtle);
     color: var(--text-color);
     padding: 3rem 0;
     text-align: center;
 }
 .main-footer .container { display: flex; justify-content: space-between; align-items: center; }
 .main-footer ul { list-style: none; display: flex; gap: 1.5rem; }
-.main-footer a { color: var(--text-color); text-decoration: none; transition: color 0.3s ease; }
+.main-footer a { color: var(--text-color); text-decoration: none; transition: color var(--duration-fast) var(--ease-out); }
 .main-footer a:hover { color: var(--accent-color); }
+
+/* Auf schmalen Telefonen passen Zeile und Linkliste nicht nebeneinander.
+   Ohne Umbruch ragte die Liste 4 px ueber den Rand hinaus, und zwar auf jeder
+   Seite. Gemessen bei 320 px: Liste 328 px breit in einem 320 px Container. */
+@media (max-width: 600px) {
+    .main-footer .container {
+        flex-direction: column;
+        gap: var(--space-4);
+        text-align: center;
+    }
+    .main-footer ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-3) var(--space-4);
+    }
+}
 
 /* ------------------- */
 /* Responsive Design   */
@@ -838,6 +1325,9 @@ h2 { text-align: center; margin-bottom: 55px; }
         flex-direction: column;
         align-items: center;
     }
+    /* 40 px Innenabstand auf jeder Seite lassen auf einem 320 px breiten
+       Telefon zu wenig Platz, der Kasten ragte dadurch heraus. */
+    .lead-gen-form-container { padding: var(--space-6); }
     .lead-gen-text, .lead-gen-form-container {
         flex-basis: 100%;
         max-width: 600px;
@@ -845,8 +1335,9 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 @media (max-width: 768px) {
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2.2rem; }
+    /* Feste Groessen fuer h1/h2 entfernt: die Skala skaliert bereits fluid ueber
+       clamp(). Die alten Werte kehrten die Hierarchie auf schmalen Displays sogar
+       um, h1 war dort kleiner als h2. */
 
     .main-nav {
         position: fixed;
@@ -860,13 +1351,21 @@ h2 { text-align: center; margin-bottom: 55px; }
         justify-content: center;
         align-items: center;
         padding: 2rem;
-        background: linear-gradient(135deg, #0a1931 0%, #112240 100%);
+        background: linear-gradient(135deg, var(--surface-base) 0%, var(--surface-card) 100%);
         transform: translateX(100%);
-        transition: transform 350ms ease-out;
+        /* visibility mitanimieren: Ohne das bleibt das geschlossene Menue rechts
+           neben dem Viewport liegen. Das erzeugte horizontales Scrollen auf
+           Mobilgeraeten, und die Links waren per Tab erreichbar, obwohl sie
+           unsichtbar sind. Tastaturnutzer landeten in einem Menue, das sie nicht
+           sehen konnten. */
+        visibility: hidden;
+        transition: transform var(--duration-base) var(--ease-out), visibility 0s linear var(--duration-base);
         z-index: 9998;
     }
     .main-nav[data-visible="true"] {
         transform: translateX(0%);
+        visibility: visible;
+        transition: transform var(--duration-base) var(--ease-out), visibility 0s linear 0s;
     }
     .main-nav ul {
         display: flex;
@@ -884,14 +1383,14 @@ h2 { text-align: center; margin-bottom: 55px; }
     }
     .main-nav ul li a {
         display: block;
-        font-size: 1.5rem;
+        font-size: var(--text-md);
         font-weight: 700;
         color: #ffffff;
         padding: 18px 24px;
         border-radius: 10px;
         background: rgba(255,255,255,0.05);
         border: 1px solid rgba(255,255,255,0.1);
-        transition: all 0.3s ease;
+        transition: all var(--duration-fast) var(--ease-out);
     }
     .main-nav ul li a:hover,
     .main-nav ul li a:focus {
@@ -920,7 +1419,7 @@ h2 { text-align: center; margin-bottom: 55px; }
         top: 1.5rem;
         right: 1.5rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all var(--duration-fast) var(--ease-out);
     }
     .mobile-nav-toggle:hover {
         background-color: rgba(255,201,71,0.2);
@@ -959,7 +1458,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     }
     .quick-nav-button {
         width: 100%;
-        font-size: 0.95rem;
+        font-size: var(--text-sm);
         padding: 12px 16px;
     }
     
@@ -1008,7 +1507,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     .service-card div[style*="width: 60px; height: 60px"] {
         width: 50px !important;
         height: 50px !important;
-        font-size: 1.2rem !important;
+        font-size: var(--text-md) !important;
     }
     
     /* Überschriften in centered header sections */
@@ -1019,7 +1518,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     
     div[style*="max-width: 800px"] h3,
     div[style*="max-width: 900px"] h3 {
-        font-size: 1.2rem !important;
+        font-size: var(--text-md) !important;
     }
     
     /* Service Image responsive */
@@ -1032,25 +1531,25 @@ h2 { text-align: center; margin-bottom: 55px; }
 .site-note-banner { background: linear-gradient(90deg,#fff7e6,#fff2e0); border-left:4px solid #ffb74d; padding:12px 0; }
 .site-note-inner { display:flex; gap:12px; align-items:center; justify-content:space-between; }
 .site-note-icon { flex: 0 0 auto; display:flex; align-items:center; justify-content:center; }
-.site-note-text { margin:0; color:#0f2344; font-weight:600; padding:0 12px; flex:1; }
-.site-note-close { background:transparent; border:0; font-size:18px; color:#0f2344; cursor:pointer; padding:6px 10px; }
+.site-note-text { margin:0; color:var(--surface-raised); font-weight:600; padding:0 12px; flex:1; }
+.site-note-close { background:transparent; border:0; font-size:18px; color:var(--surface-raised); cursor:pointer; padding:6px 10px; }
 
 /* --- Mobile adjustments --- */
 @media (max-width: 720px) {
   .site-note-inner { padding:8px 6px; }
-  .site-note-text { font-size:0.95rem; }
+  .site-note-text { font-size: var(--text-sm); }
 }
 
 /* --- Podcast Section --- */
 .podcast-section { padding: 48px 0; background: linear-gradient(180deg, rgba(255,201,71,0.02), transparent); }
-.podcast-banner { background: linear-gradient(90deg, #07142a, #0f2344); color: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 30px rgba(2,6,23,0.6); text-align: center; }
+.podcast-banner { background: linear-gradient(90deg, #07142a, var(--surface-raised)); color: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 8px 30px rgba(2,6,23,0.6); text-align: center; }
 .podcast-banner h2 { margin: 0 0 8px; color: var(--accent-color); }
-.podcast-intro { color: #cbd5e1; margin: 0 auto; max-width: 820px; }
+.podcast-intro { color: var(--text-body); margin: 0 auto; max-width: 820px; }
 .podcast-player audio { width: 100%; max-width: 640px; height: 48px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
 .podcast-player p { margin-top: 8px; }
 
 /* Fullwidth hero adjustments */
-.hero-fullwidth { padding: 80px 0; }
+.hero-fullwidth { padding: var(--space-section) 0; }
 .hero-fullwidth h1 { font-family: var(--font-primary); font-weight:800; letter-spacing: -0.6px; }
 .hero-fullwidth .subtitle { opacity: .92; }
 
@@ -1089,7 +1588,7 @@ h2 { text-align: center; margin-bottom: 55px; }
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     overflow: hidden;
     transform: translateY(0);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--duration-fast) var(--ease-out);
 }
 
 .player-card-premium:hover {
@@ -1118,7 +1617,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     position: absolute;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(79, 70, 229, 0.3), transparent 70%);
-    animation: pulse 4s ease-in-out infinite;
+    animation: none;
 }
 
 .pulse-1 {
@@ -1172,7 +1671,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 .ai-icon {
     position: relative;
-    animation: float 3s ease-in-out infinite;
+    animation: none;
 }
 
 @keyframes float {
@@ -1182,10 +1681,10 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 .track-meta h3 {
     margin: 0 0 4px 0;
-    color: #f8fafc;
+    color: var(--text-strong);
     font-size: 1.4rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #f8fafc, #cbd5e1);
+    background: linear-gradient(135deg, var(--text-strong), var(--text-body));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1194,18 +1693,18 @@ h2 { text-align: center; margin-bottom: 55px; }
 .track-meta p {
     margin: 0 0 8px 0;
     color: #94a3b8;
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
 }
 
 .ai-badge {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(79, 70, 229, 0.2);
-    border: 1px solid rgba(79, 70, 229, 0.3);
-    border-radius: 12px;
+    background: rgba(24, 90, 219, 0.16);
+    border: 1px solid rgba(24, 90, 219, 0.3);
+    border-radius: var(--radius-sm);
     padding: 4px 8px;
-    font-size: 0.75rem;
+    font-size: var(--text-xs);
     color: #a5b4fc;
     font-weight: 600;
 }
@@ -1214,13 +1713,13 @@ h2 { text-align: center; margin-bottom: 55px; }
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #4f46e5;
-    animation: glow 2s ease-in-out infinite alternate;
+    background: var(--c-blue-500);
+    animation: none;
 }
 
 @keyframes glow {
-    from { box-shadow: 0 0 5px #4f46e5; }
-    to { box-shadow: 0 0 15px #4f46e5, 0 0 25px #4f46e5; }
+    from { box-shadow: 0 0 5px var(--c-blue-500); }
+    to { box-shadow: 0 0 15px var(--c-blue-500), 0 0 25px var(--c-blue-500); }
 }
 
 /* Waveform Visualizer */
@@ -1244,11 +1743,11 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 .bar {
     flex: 1;
-    background: linear-gradient(to top, #4f46e5, #7c3aed);
+    background: linear-gradient(to top, var(--c-blue-500), var(--c-blue-400));
     border-radius: 2px;
     min-height: 4px;
-    animation: wave 2s ease-in-out infinite;
-    transition: all 0.3s ease;
+    animation: none;
+    transition: all var(--duration-fast) var(--ease-out);
 }
 
 .bar:nth-child(odd) { animation-delay: 0.1s; }
@@ -1286,13 +1785,13 @@ h2 { text-align: center; margin-bottom: 55px; }
     height: 56px;
     border-radius: 50%;
     border: none;
-    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    background: linear-gradient(135deg, var(--c-blue-500), var(--c-blue-400));
     color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all var(--duration-fast) var(--ease-out);
     box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
     overflow: hidden;
 }
@@ -1325,24 +1824,24 @@ h2 { text-align: center; margin-bottom: 55px; }
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #cbd5e1;
-    font-size: 0.9rem;
+    color: var(--text-body);
+    font-size: var(--text-sm);
     font-weight: 600;
     font-variant-numeric: tabular-nums;
 }
 
 .time-separator {
-    color: #8a99ad;
+    color: var(--text-faint);
 }
 
 .volume-control {
     color: #94a3b8;
     cursor: pointer;
-    transition: color 0.2s;
+    transition: color var(--duration-fast);
 }
 
 .volume-control:hover {
-    color: #cbd5e1;
+    color: var(--text-body);
 }
 
 /* Premium Progress Bar */
@@ -1363,7 +1862,7 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 .premium-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    background: linear-gradient(90deg, var(--c-blue-500), var(--c-blue-400));
     border-radius: 3px;
     width: 0%;
     transition: width 0.1s linear;
@@ -1378,7 +1877,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     width: 20px;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
-    animation: shimmer 2s ease-in-out infinite;
+    animation: none;
 }
 
 @keyframes shimmer {
@@ -1392,11 +1891,11 @@ h2 { text-align: center; margin-bottom: 55px; }
     width: 16px;
     height: 16px;
     background: #ffffff;
-    border: 3px solid #4f46e5;
+    border: 3px solid var(--c-blue-500);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity var(--duration-fast);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -1414,23 +1913,23 @@ h2 { text-align: center; margin-bottom: 55px; }
 }
 
 .cta-text {
-    color: #cbd5e1;
+    color: var(--text-body);
     margin: 0 0 16px 0;
-    font-size: 0.9rem;
+    font-size: var(--text-sm);
 }
 
 .premium-cta-button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #FFC947, #FFB020);
-    color: #0f2344;
+    background: linear-gradient(135deg, var(--accent), #FFB020);
+    color: var(--surface-raised);
     text-decoration: none;
     padding: 12px 24px;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 0.9rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: var(--text-sm);
+    transition: all var(--duration-fast) var(--ease-out);
     box-shadow: 0 8px 16px rgba(255, 201, 71, 0.3);
     position: relative;
     overflow: hidden;
@@ -1444,7 +1943,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
+    transition: left var(--duration-fast);
 }
 
 .premium-cta-button:hover::before {
@@ -1491,9 +1990,9 @@ h2 { text-align: center; margin-bottom: 55px; }
 
 /* Problem & Lösung Sektion mit Scroll Animation */
 .problem-solution-section {
-    background: var(--primary-color, #0A1931);
-    padding: 80px 0;
-    border-top: 1px solid #1e293b;
+    background: rgba(10, 25, 49, .62);
+    padding: var(--space-section) 0;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .problem-solution-grid {
@@ -1507,12 +2006,16 @@ h2 { text-align: center; margin-bottom: 55px; }
 .problem-column,
 .solution-column {
     opacity: 0;
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    background: linear-gradient(145deg, #1e293b, #334155);
+    transition: opacity var(--duration-slow) var(--ease-out), transform var(--duration-slow) var(--ease-out);
+    background: linear-gradient(145deg, var(--border-subtle), #334155);
     border: 1px solid #475569;
-    border-radius: 16px;
-    padding: 35px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-radius: var(--radius-lg);
+    /* Innenabstand zurückgenommen: Bei kürzerem Text entstand vorher viel
+       ungenutzte Fläche, besonders in der rechten Karte. */
+    padding: var(--space-8);
+    box-shadow: var(--shadow-sm);
+    /* Gleiche Höhe, damit die Karten nicht unterschiedlich weit herunterlaufen */
+    height: 100%;
 }
 
 .problem-column {
@@ -1529,27 +2032,69 @@ h2 { text-align: center; margin-bottom: 55px; }
     transform: translateX(0);
 }
 
-.problem-column:hover,
-.solution-column:hover {
-    box-shadow: 0 8px 32px rgba(255, 201, 71, 0.15);
-    border-color: var(--accent-color, #FFC947);
-    transform: translateY(-4px);
-}
+/* Kein Hover-Effekt auf diesen Karten.
+   Sie sind reine Textflächen ohne Verweis. Anheben und ein goldener Rand sind
+   Signale für Klickbarkeit und wecken eine Erwartung, die nichts einlöst.
+   Karten, die tatsächlich verlinken (etwa .stage-card), behalten ihren Effekt. */
 
-.problem-column h2,
-.solution-column h2 {
-    font-size: 1.8rem;
-    color: var(--accent-color, #FFC947);
-    margin: 0 0 20px 0;
-    line-height: 1.3;
+/* Kartenüberschriften: eine Stufe unter der Sektionsüberschrift.
+   Vorher standen hier zwei gleichrangige h2 in Gold nebeneinander, ohne
+   gemeinsame Überschrift darüber. Zwei konkurrierende Hauptüberschriften auf
+   einer Höhe erzeugen keine Hierarchie, sondern heben sie auf. */
+.problem-column h3,
+.solution-column h3 {
+    font-size: var(--text-lg);
+    color: var(--text-strong);
+    margin: 0 0 var(--space-4) 0;
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid rgba(255, 201, 71, .25);
 }
 
 .problem-column p,
 .solution-column p {
-    color: #cbd5e1;
-    line-height: 1.7;
-    margin: 0 0 16px 0;
-    font-size: 1.05rem;
+    color: var(--text-body);
+    line-height: var(--leading-snug);
+    margin: 0 0 var(--space-4) 0;
+    font-size: var(--text-base);
+    max-width: none;
+}
+.problem-column p:last-child,
+.solution-column p:last-child { margin-bottom: 0; }
+
+/* Symptomliste: kurze Zeilen statt Fließtext, damit der Leser sich
+   wiedererkennt, statt einen Absatz zu lesen. */
+.ps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-3);
+}
+.ps-list li {
+    position: relative;
+    padding-left: var(--space-6);
+    color: var(--text-body);
+    line-height: var(--leading-snug);
+}
+.ps-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 10px;
+    height: 1px;
+    background: var(--accent);
+}
+
+/* Überleitung zur Stufen-Sektion. Macht aus der Diagnose die Begründung für
+   die Reihenfolge, die direkt darunter erklärt wird. */
+.ps-bridge {
+    margin: var(--space-12) auto 0;
+    text-align: center;
+    font-size: var(--text-md);
+    color: var(--text-strong);
+    font-weight: var(--weight-bold);
+    max-width: none;
 }
 
 @media (max-width: 900px) {
@@ -1560,7 +2105,7 @@ h2 { text-align: center; margin-bottom: 55px; }
     
     .problem-column,
     .solution-column {
-        transform: translateY(30px);
+        transform: translateY(18px);
     }
     
     .problem-column.visible,
@@ -1597,4 +2142,248 @@ button[data-cc="show-preferencesModal"] {
 button[data-cc="show-preferencesModal"]:hover {
     color: var(--accent-color);
     text-decoration: underline;
+}
+
+/* Player-Animationen laufen nur waehrend der Wiedergabe.
+   Zuvor liefen Wellenbalken, Pulskreise, Schweben und Glanz dauerhaft,
+   auch bei stehendem Audio. Das erzeugte Unruhe und taeuschte Wiedergabe vor. */
+.player-card-premium.is-playing .pulse-circle { animation: pulse 4s ease-in-out infinite; }
+.player-card-premium.is-playing .ai-icon { animation: float 3s ease-in-out infinite; }
+.player-card-premium.is-playing .bar { animation: wave 2s ease-in-out infinite; }
+.player-card-premium.is-playing .premium-progress-fill::after { animation: shimmer 2s ease-in-out infinite; }
+
+/* ── Einblenden beim Scrollen (Schritt 4) ─────────────────────────────────
+   Gesteuert von scroll-reveal.js, das die Klassen "visible" und "in-view"
+   setzt und innerhalb einer Gruppe gestaffelte Verzoegerungen vergibt.
+
+   Wichtig: Der Ausgangszustand mit Deckkraft 0 gilt nur fuer Elemente, die das
+   Skript auch wirklich erfasst. Faellt JavaScript aus, greift der noscript-Block
+   im HTML, faellt nur der Observer aus, das Sicherheitsnetz im Skript. */
+.stage-card,
+.timeline-item,
+.testimonial-card,
+.cs-card {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--duration-reveal) var(--ease-out),
+                transform var(--duration-reveal) var(--ease-out);
+}
+.stage-card.in-view,
+.timeline-item.in-view,
+.testimonial-card.in-view,
+.cs-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Die Stufenkarten heben sich beim Erscheinen leicht an, damit die Reihenfolge
+   01, 02, 03 auch in der Bewegung ablesbar wird. */
+.stage-card { transform: translateY(18px) scale(.99); }
+.stage-card.in-view { transform: translateY(0) scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+    .stage-card,
+    .timeline-item,
+    .testimonial-card,
+    .cs-card {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ── Glossar-Karten der Lernplattform ─────────────────────────────────────
+   Diese Regeln standen zuvor als Inline-Styles im Markup, 42 Karten mal sechs
+   Deklarationen, also 252 Wiederholungen derselben Werte. Die Klassen waren
+   bereits vorhanden und wurden nur nicht gestylt.
+   Das Aufklappen setzt max-height per JavaScript direkt am Element und
+   uebersteuert damit den Ausgangswert hier. */
+.faq-card {
+    background: linear-gradient(145deg, var(--border-subtle), #334155);
+    border: 1px solid #475569;
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--duration-fast) var(--ease-out),
+                transform var(--duration-fast) var(--ease-out);
+}
+.faq-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-4);
+    gap: var(--space-4);
+}
+.faq-header h3 {
+    color: var(--accent);
+    font-size: var(--text-md);
+    margin: 0;
+}
+/* Der Schalter traegt den Text und muss wie eine Ueberschrift aussehen,
+   damit die Karte optisch unveraendert bleibt. */
+.faq-toggle {
+    background: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+.faq-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+.faq-icon {
+    color: var(--accent);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: transform var(--duration-base) var(--ease-out);
+}
+
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height var(--duration-base) var(--ease-in-out), opacity var(--duration-base) var(--ease-in-out);
+}
+.faq-content p {
+    color: var(--text-body);
+    line-height: 1.6;
+    margin: 0;
+    padding-top: var(--space-3);
+    max-width: none;
+}
+
+/* Eine einzelne Kundenstimme soll nicht über die ganze Breite laufen und
+   nicht wie eine Lücke neben leeren Plätzen wirken. Sobald der zweite und
+   dritte Slot gefüllt sind, kann die Modifizierer-Klasse entfallen. */
+.testimonials-grid--single {
+    grid-template-columns: minmax(0, 46rem);
+    justify-content: center;
+}
+.testimonials-grid--single .tm-quote { font-size: var(--text-md); }
+
+/* ── Kundenstimmen als Slideshow ──────────────────────────────────────────
+   Greift erst, wenn testimonial-slider.js die Klasse .tm-slider-aktiv setzt.
+   Ohne JavaScript bleibt das Raster oben stehen, damit alle Zitate lesbar und
+   auffindbar sind. */
+.tm-slider-aktiv .tm-slider {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--space-6);
+    margin-top: 2.5rem;
+    max-width: 58rem;
+    margin-inline: auto;
+}
+
+/* Die Spur wird zum Stapel: Alle Stimmen liegen in derselben Rasterzelle.
+   Dadurch richtet sich die Hoehe nach der laengsten und springt beim Wechsel
+   nicht. */
+.tm-slider-aktiv .testimonials-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-top: 0;
+    max-width: none;
+}
+.tm-slider-aktiv .testimonial-card {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateX(24px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+    pointer-events: none;
+}
+.tm-slider-aktiv .testimonial-card.tm-aktiv {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+}
+/* Bei reduzierter Bewegung wird hart umgeschaltet. Die Bedienung bleibt, nur
+   der Weg entfaellt. */
+.tm-ohne-bewegung .testimonial-card { transition: none; transform: none; }
+
+/* ── Pfeile ───────────────────────────────────────────────────────────────
+   Bewusst gross und in Gold: Sie sind die einzige Bedienung des Abschnitts.
+   Ein dezenter Pfeil wird uebersehen, und dann sieht der Besucher nur eine
+   von drei Stimmen. */
+.tm-nav {
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    box-shadow: var(--shadow-accent);
+    transition: background var(--duration-fast) var(--ease-out),
+                transform var(--duration-fast) var(--ease-out);
+}
+.tm-nav .icon { font-size: 1.5rem; }
+.tm-nav--zurueck .icon { transform: rotate(180deg); }
+.tm-nav:hover { background: var(--accent-hover); transform: scale(1.06); }
+.tm-nav:active { transform: scale(1.01); }
+/* Heller Rahmen statt Gold: Der Knopf ist selbst golden, ein goldener
+   Fokusrahmen waere darauf unsichtbar. */
+.tm-nav:focus-visible { outline: 3px solid var(--text-strong); outline-offset: 3px; }
+
+/* ── Positionsanzeige ─────────────────────────────────────────────────────
+   Auch anklickbar: Wer die dritte Stimme sehen will, soll nicht zweimal
+   blaettern muessen. */
+.tm-punkte {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+/* Der sichtbare Strich ist 4 px hoch, das Tippziel aber 24 px.
+   Ein 4 px hoher Schalter ist auf dem Telefon praktisch nicht zu treffen.
+   Die Flaeche traegt deshalb der Knopf, der Strich liegt als Pseudoelement
+   darin. 24 px ist die Untergrenze aus WCAG 2.2 (Zielgroesse, AA). */
+.tm-punkt {
+    width: 44px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+.tm-punkt::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border-subtle);
+    transition: background var(--duration-fast) var(--ease-out);
+}
+.tm-punkt:hover::before { background: var(--text-faint); }
+.tm-punkt[aria-current="true"]::before { background: var(--accent); }
+.tm-punkt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Auf schmalen Fenstern stehen die Pfeile nebeneinander unter der Karte,
+   sonst bleibt fuer das Zitat zu wenig Breite. */
+@media (max-width: 720px) {
+    .tm-slider-aktiv .tm-slider {
+        grid-template-columns: 1fr 1fr;
+        column-gap: var(--space-6);
+        row-gap: var(--space-8);
+    }
+    /* Karte oben ueber beide Spalten, die Pfeile darunter. Sie werden zur
+       Mitte hin ausgerichtet, damit sie als Paar zusammenstehen und nicht an
+       den Raendern kleben. */
+    .tm-slider-aktiv .tm-slider .testimonials-grid {
+        grid-column: 1 / -1;
+        grid-row: 1;
+    }
+    .tm-nav--zurueck { grid-column: 1; grid-row: 2; justify-self: end; }
+    .tm-nav--vor     { grid-column: 2; grid-row: 2; justify-self: start; }
 }

@@ -1,0 +1,82 @@
+# Kontaktformular und Conversion-Tracking
+
+Umgesetzt auf `fix/audit-paket-4`, noch nicht veröffentlicht.
+
+## Kontaktanfragen
+
+`public/pages/kontakt.html` sendet an `POST /api/contact`. Name, E-Mail,
+Nachricht und Datenschutzbestätigung sind Pflicht, Unternehmen ist optional.
+Der Endpunkt übernimmt die gemeinsame Origin-Prüfung, das Rate-Limit und
+den Brevo-Timeout aus `api/_shared/security.js`. Zusätzlich prüft er Feldtypen,
+Längen, Datenschutzbestätigung und ein unsichtbares Spam-Feld.
+
+Die vollständige Nachricht wird als Klartext über Brevos Transaktionsmail-API
+an `philippkoch@neuratex.de` übergeben. Die Antwortadresse ist die E-Mail-Adresse
+des Anfragenden. Eine Newsletter-Anmeldung findet dabei nicht statt.
+Erfolg bedeutet, dass Brevo den Versandauftrag angenommen hat, nicht dass die
+E-Mail nachweislich im Posteingang liegt. Providerfehler werden als Fehler angezeigt.
+Bei Netzwerkfehlern oder Timeouts kann der Versandstatus unklar sein; deshalb
+wird nicht automatisch erneut versendet. Eingaben bleiben im Browser erhalten.
+
+| Vercel-Variable | Verwendung |
+|---|---|
+| `BREVO_API_KEY` | Bestehender API-Key, muss Transaktionsmails erlauben |
+| `BREVO_CONTACT_SENDER_EMAIL` | Optionaler verifizierter Brevo-Absender; Standard `philippkoch@neuratex.de` |
+| `CONTACT_RECIPIENT_EMAIL` | Optionaler Empfänger; Standard `philippkoch@neuratex.de` |
+
+Vor Freischaltung muss der gewählte Absender in Brevo verifiziert und der
+Transaktionsversand im Konto aktiviert sein. Es sind keine neuen Listen oder
+Kontaktattribute nötig. Die Kontokonfiguration und echte Zustellung wurden lokal
+nicht überprüft. Secrets ausschließlich im Vercel-Dashboard hinterlegen.
+
+Ohne JavaScript sendet das Formular als normaler HTML-POST und erhält eine
+eigenständige Bestätigungs- oder Fehlerseite. In diesem Fall gibt es kein
+browserseitiges Conversion-Event. Das Rate-Limit gilt wie bei den vorhandenen
+Endpunkten pro warmer Serverless-Instanz und ist kein globales Bot-Limit.
+
+## Umami-Events
+
+| Event | Daten | Auslöser |
+|---|---|---|
+| `calendly_click` | `location` | Klick auf einen Calendly-Link, einschließlich Tastaturaktivierung |
+| `form_complete` | `form: contact` | Brevo hat die Kontaktmail angenommen |
+| `form_complete` | `form: quiz_lead` | Quiz-Kontakt erfolgreich erfasst |
+| `form_complete` | `form: whitepaper` | Whitepaper-Anfrage erfolgreich erfasst |
+| `form_complete` | `form: newsletter` | Newsletter-Endpunkt bestätigt die Anmeldung, auch bei bereits vorhandenem Kontakt |
+| `quiz_complete` | keine | Alle 17 Fragen beantwortet und Auswertung berechnet, einmal pro Seitenaufruf |
+
+`location` unterscheidet `home_hero`, `home_case_study`, `home_demo`,
+`quiz_level_1`, `quiz_level_2`, `quiz_level_3`, `home_final`, `contact_calendar`
+und `services_final`. Die URL erfasst Umami mit seinem vorhandenen Tracker.
+Diese Werte bleiben bei Textänderungen der Buttons stabil.
+
+Im Umami-Dashboard für neuratex.de unter Events nach diesen Namen filtern.
+Bei `form_complete` nach `form`, bei `calendly_click` nach `location` aufschlüsseln.
+Ein Calendly-Klick misst den Wechsel zum Kalender, keine abgeschlossene Buchung.
+Quiz-Abschluss und anschließende Kontakterfassung werden getrennt gezählt.
+
+Es werden keine Namen, E-Mail-Adressen, Unternehmen, Nachrichten, einzelnen
+Quiz-Antworten oder Scores als Event-Daten gesendet. Das bestehende DNT-Verhalten
+bleibt erhalten. Bei fehlendem, blockiertem oder fehlerhaftem Tracker funktioniert
+die Website weiter; solche Aufrufe erscheinen nicht in Umami. Ereignisse werden
+nicht lokal gespeichert oder nachträglich in eine Warteschlange aufgenommen.
+
+API-Grundlagen: [Umami Tracker Functions](https://docs.umami.is/docs/tracker-functions),
+[Brevo Transaktionsmail](https://developers.brevo.com/reference/send-transac-email).
+
+## Prüfen
+
+1. `npx serve public -l 4173`
+2. In einem zweiten Terminal `npm test`
+
+Die Tests prüfen zusätzlich den Endpunkt mit einem simulierten Brevo-Dienst,
+Formularvalidierung, Erfolgs- und Fehlerfälle, Mehrfachabsenden, normale HTML-POSTs,
+Event-Daten und das Layout bei 390, 768 und 1440 Pixeln. Die neuen Conversion-Tests
+verwenden einen Umami-Stub und senden weder echte E-Mails noch Events an Umami.
+Screenshots liegen lokal unter `.cache/contact-qa/`.
+
+Der statische `serve`-Server führt keine Vercel Functions aus. Deshalb simulieren
+die Browserprüfungen die API-Antworten; der echte Handler wird zusätzlich direkt
+getestet. Ein echter Versandtest auf Vercel bleibt vor der Freischaltung erforderlich.
+Die gemeinsame Origin-Prüfung erlaubt die beiden Produktionsdomains und bestehende
+lokale Entwicklungsadressen. Vercel-Preview-Domains sind nicht pauschal freigegeben.

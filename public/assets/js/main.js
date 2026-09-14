@@ -17,28 +17,30 @@
     function initMobileNav() {
         const nav = document.querySelector('.main-nav');
         const navToggle = document.querySelector('.mobile-nav-toggle');
-        
+
         if (!nav || !navToggle) return;
-        
+
+        // Identisch zu page-common.js auf den Unterseiten.
+        function setzeZustand(sichtbar) {
+            nav.setAttribute('data-visible', String(sichtbar));
+            navToggle.setAttribute('aria-expanded', String(sichtbar));
+            navToggle.setAttribute('aria-label', sichtbar ? 'Navigation schließen' : 'Navigation öffnen');
+        }
+
         navToggle.addEventListener('click', () => {
-            const isVisible = nav.getAttribute('data-visible') === 'true';
-            nav.setAttribute('data-visible', !isVisible);
-            navToggle.setAttribute('aria-expanded', !isVisible);
+            setzeZustand(nav.getAttribute('data-visible') !== 'true');
         });
-        
-        // Schließen bei Klick auf Link
+
         nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
-            });
+            link.addEventListener('click', () => setzeZustand(false));
         });
-        
-        // Schließen bei Escape-Taste
+
+        // Escape schliesst und gibt den Fokus zurueck, damit Tastaturnutzer
+        // nicht im geschlossenen Menue stehen bleiben.
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && nav.getAttribute('data-visible') === 'true') {
-                nav.setAttribute('data-visible', 'false');
-                navToggle.setAttribute('aria-expanded', 'false');
+                setzeZustand(false);
+                navToggle.focus();
             }
         });
     }
@@ -48,39 +50,50 @@
     // ========================================
     function initScrollProgress() {
         const scrollBar = document.getElementById('scroll-progress');
-        const problemEl = document.getElementById('problem');
-        
+        // Die Section heißt 'problem-solution'; die alte ID 'problem' existierte nicht,
+        // wodurch der Aktivierungs-Listener nie entfernt wurde und dauerhaft mitlief.
+        const triggerEl = document.getElementById('problem-solution');
+
         if (!scrollBar) return;
-        
+
         let progressActive = false;
-        
-        function updateScrollBar() {
-            if (!progressActive) return;
-            
+        let ticking = false;
+
+        function render() {
+            ticking = false;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = docHeight > 0 ? scrollTop / docHeight : 0;
-            
+
             scrollBar.style.transform = `scaleY(${progress})`;
-            scrollBar.classList.add('active');
         }
-        
+
+        function updateScrollBar() {
+            if (!progressActive || ticking) return;
+            ticking = true;
+            requestAnimationFrame(render);
+        }
+
+        function activate() {
+            progressActive = true;
+            scrollBar.style.display = 'block';
+            scrollBar.classList.add('active');
+            render();
+            window.removeEventListener('scroll', checkActivateBar);
+        }
+
         function checkActivateBar() {
-            if (!problemEl) {
-                progressActive = true;
-                scrollBar.style.display = 'block';
+            if (!triggerEl) {
+                activate();
                 return;
             }
-            
-            const rect = problemEl.getBoundingClientRect();
+
+            const rect = triggerEl.getBoundingClientRect();
             if (rect.top <= window.innerHeight * 0.9) {
-                progressActive = true;
-                scrollBar.style.display = 'block';
-                updateScrollBar();
-                window.removeEventListener('scroll', checkActivateBar);
+                activate();
             }
         }
-        
+
         window.addEventListener('scroll', updateScrollBar, { passive: true });
         window.addEventListener('scroll', checkActivateBar, { passive: true });
     }
@@ -88,72 +101,48 @@
     // ========================================
     // Scroll Reveal Animations (DRY-konsolidiert)
     // ========================================
-    function initScrollAnimations() {
-        // Fallback für Browser ohne IntersectionObserver
-        if (!('IntersectionObserver' in window)) {
-            document.querySelectorAll('.problem-column, .solution-column, .service-card, .featured-section')
-                .forEach(el => el.classList.add('visible', 'in-view'));
-            return;
-        }
-        
-        // Generische Observer-Factory
-        function createObserver(threshold = 0.2, once = true) {
-            return new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible', 'in-view');
-                        if (once) observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold });
-        }
-        
-        // Problem & Lösung Columns
-        const columnObserver = createObserver(0.2);
-        document.querySelectorAll('.problem-column, .solution-column')
-            .forEach(el => columnObserver.observe(el));
-        
-        // Service Cards
-        const cardObserver = createObserver(0.15);
-        document.querySelectorAll('.services-grid .service-card')
-            .forEach(el => cardObserver.observe(el));
-        
-        // Featured Sections (Leistungen)
-        const sectionObserver = createObserver(0.2);
-        document.querySelectorAll('.featured-section')
-            .forEach(el => sectionObserver.observe(el));
-        
-        // Fallback: Nach 2s alle sichtbar machen
-        setTimeout(() => {
-            document.querySelectorAll('.service-card, .problem-column, .solution-column')
-                .forEach(el => el.classList.add('visible', 'in-view'));
-        }, 2000);
-    }
+    // Das Einblenden beim Scrollen liegt seit Schritt 4 zentral in
+    // scroll-reveal.js und laeuft auf allen Seiten identisch. Die frueheren
+    // drei Implementierungen beobachteten teils dieselben Elemente mit
+    // unterschiedlichen Schwellwerten.
     
     // ========================================
     // Heading Animations
     // ========================================
     function initHeadingAnimations() {
-        const excludeSelectors = '.service-card, .principle-card, .lead-gen-form-container, .contact-card';
-        const headings = Array.from(document.querySelectorAll('h1, h2, h3'))
-            .filter(h => !h.closest(excludeSelectors));
-        
-        headings.forEach(h => h.classList.add('heading-watch', 'hover-flash'));
-        
+        // Ohne IntersectionObserver bleiben die Ueberschriften unangetastet und
+        // damit sichtbar. Die Klasse darf dann gar nicht erst gesetzt werden,
+        // weil sie die Deckkraft auf 0 stellt.
         if (!('IntersectionObserver' in window)) return;
-        
-        const headingObserver = new IntersectionObserver((entries) => {
+
+        // Nur Sektionsueberschriften. Frueher lief der Effekt auf allen h1, h2
+        // und h3 der Seite, also auf ueber 30 Elementen. Beim Scrollen entstand
+        // daraus eine Dauerbewegung. h3 in Karten animiert ohnehin die Karte.
+        const excludeSelectors = '.service-card, .stage-card, .testimonial-card, .principle-card,'
+            + ' .lead-gen-form-container, .contact-card, .hero-section, .result-card';
+        const headings = Array.from(document.querySelectorAll('h2'))
+            .filter(h => !h.closest(excludeSelectors));
+
+        headings.forEach(h => h.classList.add('heading-watch'));
+
+        const headingObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('heading-in-view');
-                    entry.target.addEventListener('animationend', () => {
-                        entry.target.classList.remove('heading-in-view');
-                    }, { once: true });
-                }
+                if (!entry.isIntersecting) return;
+                // Klasse bleibt bestehen: Der Auftritt ist ein Fade-in, kein Blitz.
+                // Wuerde sie nach der Animation entfernt, faellt die Ueberschrift
+                // auf Deckkraft 0 zurueck und verschwindet.
+                entry.target.classList.add('heading-in-view');
+                observer.unobserve(entry.target);
             });
-        }, { threshold: 0.4 });
-        
+        }, { threshold: 0.25 });
+
         headings.forEach(h => headingObserver.observe(h));
+
+        // Sicherheitsnetz: Ueberschriften, die nach 2 Sekunden nie beobachtet
+        // wurden (etwa in anfangs ausgeblendeten Bereichen), werden sichtbar.
+        setTimeout(() => {
+            headings.forEach(h => h.classList.add('heading-in-view'));
+        }, 2000);
     }
     
     // ========================================
@@ -223,7 +212,6 @@
     function init() {
         initMobileNav();
         initScrollProgress();
-        initScrollAnimations();
         initHeadingAnimations();
         initCaseStudyMetrics();
         initProblemLines();

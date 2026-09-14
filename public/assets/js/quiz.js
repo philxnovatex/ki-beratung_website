@@ -50,7 +50,7 @@
             },
             q8: {
                 C: 'Richtig: „Halluzination" = überzeugend, aber falsch.',
-                default: 'Achte auf plausible, aber falsche Aussagen – das nennt man Halluzination.'
+                default: 'Achte auf plausible, aber falsche Aussagen. Das nennt man Halluzination.'
             },
             q9: {
                 B: 'Richtig: Bias/Prompting kann zu einseitigen Ergebnissen führen.',
@@ -183,46 +183,181 @@
         return { percent, avgPct, level };
     }
     
+    // Lesbare Namen für die Dimensionen (data-module nutzt technische Schlüssel)
+    const DIMENSION_LABELS = {
+        Grundlagen: 'Grundlagen & technisches Verständnis',
+        Anwendung: 'Praktische Anwendung',
+        Bewertung: 'Kritische Bewertung',
+        Ethik_Recht: 'Ethik & Recht',
+        Strategie: 'Strategische Perspektive'
+    };
+
+    const LEVEL_LABELS = { 1: 'KI-Entdecker', 2: 'KI-Experimentator', 3: 'KI-Stratege' };
+
+    // Zuletzt berechnetes Ergebnis, damit das Lead-Formular es mitsenden kann
+    let lastResults = null;
+    let quizCompleted = false;
+    let leadSending = false;
+
     // Ergebnis anzeigen
     function displayResults(results) {
+        lastResults = results;
         form.style.display = 'none';
-        
+
         if (!resultsContainer) {
             console.error('[Quiz] Results container nicht gefunden');
             return;
         }
-        
+
         resultsContainer.style.display = 'block';
-        
+
         const card = document.getElementById('result-' + results.level);
         if (!card) {
             console.error('[Quiz] Result card nicht gefunden:', results.level);
             return;
         }
-        
+
         card.hidden = false;
-        
-        // Subscores hinzufügen
-        let subs = card.querySelector('.subscores');
-        if (!subs) {
-            subs = document.createElement('div');
-            subs.className = 'subscores';
-            
-            const h = document.createElement('h4');
-            h.textContent = 'Teilbereiche (Subscores)';
-            subs.appendChild(h);
-            
-            const ul = document.createElement('ul');
-            Object.entries(results.percent).forEach(([k, v]) => {
-                const li = document.createElement('li');
-                li.textContent = `${k}: ${Math.round(v * 100)}%`;
-                ul.appendChild(li);
-            });
-            subs.appendChild(ul);
-            card.appendChild(subs);
+
+        // Gesamtscore sichtbar machen: Das ist die Belohnung für 17 beantwortete
+        // Fragen und der Grund, warum das Lead-Formular darunter überhaupt gelesen wird.
+        if (!card.querySelector('.result-score')) {
+            const score = document.createElement('p');
+            score.className = 'result-score';
+            score.textContent = `Ihr Gesamtwert: ${Math.round(results.avgPct * 100)} von 100 Punkten`;
+            card.insertBefore(score, card.firstElementChild ? card.firstElementChild.nextSibling : null);
         }
+
+        // Die Handlungsempfehlung ist der wertvolle Teil und bleibt bis zur
+        // Kontaktaufnahme verborgen.
+        const nextStep = card.querySelector('.next-step');
+        if (nextStep) nextStep.hidden = true;
+
+        showLeadGate();
+
+        // Ohne Scroll steht der Nutzer nach dem Absenden vor dem leeren Bereich,
+        // in dem eben noch das Formular war.
+        resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Detailauswertung freischalten, nachdem der Kontakt hinterlegt wurde
+    function unlockDetails(results) {
+        const card = document.getElementById('result-' + results.level);
+        if (!card) return;
+
+        const nextStep = card.querySelector('.next-step');
+        if (nextStep) nextStep.hidden = false;
+
+        if (card.querySelector('.subscores')) return;
+
+        const subs = document.createElement('div');
+        subs.className = 'subscores';
+
+        const h = document.createElement('h4');
+        h.textContent = 'Ihre Teilbereiche im Detail';
+        subs.appendChild(h);
+
+        const ul = document.createElement('ul');
+        Object.entries(results.percent).forEach(([k, v]) => {
+            const li = document.createElement('li');
+            li.textContent = `${DIMENSION_LABELS[k] || k}: ${Math.round(v * 100)}%`;
+            ul.appendChild(li);
+        });
+        subs.appendChild(ul);
+        card.appendChild(subs);
     }
     
+    // ── Lead-Erfassung ──────────────────────────────────────────────
+    const leadGate = document.getElementById('quiz-lead-gate');
+    const leadForm = document.getElementById('quiz-lead-form');
+    const leadStatus = document.getElementById('quiz-lead-status');
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showLeadGate() {
+        if (leadGate) leadGate.hidden = false;
+    }
+
+    function setLeadStatus(msg, color) {
+        if (leadStatus) {
+            leadStatus.textContent = msg;
+            leadStatus.style.color = color;
+        }
+    }
+
+    function initLeadForm() {
+        if (!leadForm) return;
+
+        leadForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (leadSending) return;
+
+            const nameEl = document.getElementById('quiz-name');
+            const emailEl = document.getElementById('quiz-email');
+            const companyEl = document.getElementById('quiz-company');
+            const privacyEl = document.getElementById('quiz-privacy');
+            const submitBtn = leadForm.querySelector('button[type="submit"]');
+
+            if (!nameEl || !emailEl || !privacyEl) {
+                console.error('[Quiz] Lead-Formular unvollständig');
+                return;
+            }
+
+            if (!nameEl.value.trim() || !privacyEl.checked) {
+                setLeadStatus('Bitte Name angeben und Einwilligung bestätigen.', '#ff6b6b');
+                return;
+            }
+            if (!emailPattern.test(emailEl.value.trim())) {
+                setLeadStatus('Bitte eine gültige E-Mail-Adresse eingeben.', '#ff6b6b');
+                return;
+            }
+
+            const originalLabel = submitBtn ? submitBtn.textContent : '';
+            leadSending = true;
+            if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Wird gesendet…'; }
+            setLeadStatus('', '');
+
+            // Subscores in ganze Prozentwerte umrechnen
+            const subscores = {};
+            if (lastResults) {
+                Object.entries(lastResults.percent).forEach(([k, v]) => {
+                    subscores[k] = Math.round(v * 100);
+                });
+            }
+
+            try {
+                const response = await fetch('/api/quiz-lead', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: emailEl.value.trim(),
+                        name: nameEl.value.trim(),
+                        company: companyEl ? companyEl.value.trim() : '',
+                        level: lastResults ? lastResults.level : 1,
+                        levelLabel: lastResults ? LEVEL_LABELS[lastResults.level] : '',
+                        scorePct: lastResults ? Math.round(lastResults.avgPct * 100) : 0,
+                        subscores
+                    })
+                });
+
+                const data = await response.json().catch(() => ({}));
+
+                if (response.ok && data.ok) {
+                    if (leadGate) leadGate.hidden = true;
+                    if (lastResults) unlockDetails(lastResults);
+                    window.neuratexTrack?.('form_complete', { form: 'quiz_lead' });
+                } else {
+                    setLeadStatus(data.message || 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später.', '#ff6b6b');
+                }
+            } catch (error) {
+                console.warn('[Quiz] Lead submit error', error);
+                setLeadStatus('Netzwerkfehler. Bitte versuchen Sie es später.', '#ff6b6b');
+            } finally {
+                leadSending = false;
+                if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+            }
+        });
+    }
+
     // Event Listeners initialisieren
     function initEventListeners() {
         // Schritt-weise Navigation
@@ -239,10 +374,13 @@
         // Form Submit
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            if (quizCompleted || steps.some(step => !step.querySelector('input[type="radio"]:checked'))) return;
             
             try {
                 const results = calculateResults();
                 displayResults(results);
+                quizCompleted = true;
+                window.neuratexTrack?.('quiz_complete');
             } catch (error) {
                 console.error('[Quiz] Fehler bei der Auswertung:', error);
                 // Fallback: Zeige Level 1
@@ -255,6 +393,7 @@
     try {
         updateCounter(0);
         initEventListeners();
+        initLeadForm();
     } catch (error) {
         console.error('[Quiz] Initialisierungsfehler:', error);
     }
