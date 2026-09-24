@@ -65,40 +65,46 @@
 
     <main id="main-content">
 
-        <!-- ══ Hero ══════════════════════════════════════════════════════════
-             Beantwortet die drei Fragen, für die der Besucher gekommen ist:
-             Werden wir in KI-Systemen gefunden, wer wird stattdessen empfohlen,
-             und was können wir dagegen tun. Bewusst kurz, damit die
-             Beispielauswertung darunter sofort angeschnitten ist. -->
+        <!-- ══ Einstieg ══════════════════════════════════════════════════════
+             Ziel der Seite: Ein Besucher aus einer Anzeige fragt einen von drei
+             Pilotplätzen an. Überschrift, drei Sätze, ein einziger Button. Auf
+             dem Telefon muss der Button im ersten Bildschirm stehen. -->
         <section class="av-hero" aria-labelledby="hero-heading">
             <div class="container">
                 <p class="av-eyebrow">KI Sichtbarkeit</p>
                 <h1 id="hero-heading">Werden Sie von KI-Systemen empfohlen oder Ihre Wettbewerber?</h1>
-                <p class="av-hero__intro">Immer mehr Kunden nutzen Claude, ChatGPT und andere KI-Systeme, um Anbieter zu recherchieren, Lösungen zu vergleichen und Kaufentscheidungen vorzubereiten.</p>
-                <p class="av-hero__lead">Wir analysieren, wie sichtbar Ihr Unternehmen bei relevanten Kauf- und Recherchefragen in führenden KI-Systemen ist, welche Wettbewerber stattdessen empfohlen werden und welche konkreten Maßnahmen Ihre Sichtbarkeit erhöhen können.</p>
+                <p class="av-hero__intro">Immer mehr Kaufentscheidungen beginnen mit einer Frage an ChatGPT, Claude oder Gemini. Diese Systeme nennen dabei konkrete Anbieter.</p>
+                <p class="av-hero__lead">Wir messen, ob Sie dazugehören und wer stattdessen genannt wird.</p>
                 <div class="av-actions">
-                    <a href="#audit-anfrage" class="cta-button">AI Visibility Audit anfragen</a>
-                    <a href="#auswertung" class="av-link">
-                        Beispielauswertung ansehen
-                        <i class="icon icon-arrow-right" aria-hidden="true"></i>
-                    </a>
+                    <a href="#pilot-anfrage" class="cta-button">Pilotplatz für 500 Euro netto anfragen</a>
                 </div>
-                <p class="av-note">Sie erhalten Ihre Sichtbarkeit im direkten Vergleich mit Ihren wichtigsten Wettbewerbern, die Quellen hinter deren Empfehlungen und einen priorisierten Maßnahmenplan.</p>
+                <p class="av-note">Drei Pilotplätze. Danach kostet der Audit 1.900 Euro netto.</p>
             </div>
         </section>
 
-        <!-- ══ Beispielauswertung ════════════════════════════════════════════
-             Das Kernstück der Seite. Wer hier zehn Sekunden hinschaut, weiß,
-             was er kauft. Alle Zahlen sind erfunden und im Kopf der Fläche als
-             Beispielwerte gekennzeichnet, zusätzlich in Überschrift, Einleitung
-             und Bildunterschrift. Die Quellen sind bewusst als Kategorien
-             benannt, nicht als echte Domains. -->
+        <!-- ══ Was Sie bekommen, mit Beispielauswertung ══════════════════════
+             Die Beispielauswertung ist der wichtigste Vertrauensbeleg: Sie zeigt,
+             wie ein Ergebnis aussieht, ohne etwas zu behaupten. Alle Zahlen sind
+             erfunden und im Kopf der Fläche als Beispielwerte gekennzeichnet,
+             zusätzlich im Satz davor und in der Bildunterschrift. Jede Quote
+             trägt ihren Nenner, weil die Seite genau das verspricht. Die Quellen
+             sind bewusst als Kategorien benannt, nicht als echte Domains. -->
         <section id="auswertung" class="av-report" aria-labelledby="auswertung-heading">
             <div class="container">
                 <div class="av-head">
-                    <h2 id="auswertung-heading">Das sehen Sie nach dem Audit</h2>
-                    <p>Die Auswertung zeigt, wie oft Ihr Unternehmen bei kaufrelevanten Fragen genannt und empfohlen wird, wer stattdessen gewinnt und auf welche Quellen sich diese Antworten stützen. Die folgende Ansicht enthält ausschließlich erfundene Beispielwerte zur Veranschaulichung.</p>
+                    <h2 id="auswertung-heading">Was Sie bekommen</h2>
                 </div>
+
+                <ul class="av-checks">
+                    <li><i class="icon icon-check" aria-hidden="true"></i>36 echte Kaufentscheidungsfragen, aus Ihrer Website und Ihrem Marktumfeld abgeleitet</li>
+                    <li><i class="icon icon-check" aria-hidden="true"></i>Gemessen über ChatGPT, Claude und Gemini, jede Frage mehrfach wiederholt</li>
+                    <li><i class="icon icon-check" aria-hidden="true"></i>In wie vielen Fragen Sie genannt werden, mit Zähler und Nenner</li>
+                    <li><i class="icon icon-check" aria-hidden="true"></i>Welche Wettbewerber stattdessen genannt werden, wie oft und an welcher Stelle</li>
+                    <li><i class="icon icon-check" aria-hidden="true"></i>Aus welchen Quellen die Antworten stammen</li>
+                    <li><i class="icon icon-check" aria-hidden="true"></i>Eine priorisierte Maßnahmenliste, jede Maßnahme an einen konkreten Befund gebunden</li>
+                </ul>
+
+                <p class="av-report__intro">So sieht das Ergebnis aus. Die Zahlen im Beispiel sind erfunden, der Aufbau ist der echte.</p>
 
                 <figure class="avr-panel av-reveal" data-reveal>
                     <figcaption class="avr-head">
@@ -113,32 +119,33 @@
                                 <li class="avr-bar avr-bar--eigen">
                                     <p class="avr-bar__label">
                                         <span class="avr-bar__name">Ihre Marke</span>
-                                        <span class="avr-bar__value">18 %</span>
+                                        <span class="avr-bar__value">18 %<small class="avr-n">36/200</small></span>
                                     </p>
                                     <span class="avr-bar__track"><span class="avr-bar__fill" style="--wert: 18%"></span></span>
                                 </li>
                                 <li class="avr-bar">
                                     <p class="avr-bar__label">
                                         <span class="avr-bar__name">Wettbewerber A</span>
-                                        <span class="avr-bar__value">41 %</span>
+                                        <span class="avr-bar__value">41 %<small class="avr-n">82/200</small></span>
                                     </p>
                                     <span class="avr-bar__track"><span class="avr-bar__fill" style="--wert: 41%"></span></span>
                                 </li>
                                 <li class="avr-bar">
                                     <p class="avr-bar__label">
                                         <span class="avr-bar__name">Wettbewerber B</span>
-                                        <span class="avr-bar__value">27 %</span>
+                                        <span class="avr-bar__value">27 %<small class="avr-n">54/200</small></span>
                                     </p>
                                     <span class="avr-bar__track"><span class="avr-bar__fill" style="--wert: 27%"></span></span>
                                 </li>
                                 <li class="avr-bar avr-bar--rest">
                                     <p class="avr-bar__label">
                                         <span class="avr-bar__name">Weitere Anbieter</span>
-                                        <span class="avr-bar__value">14 %</span>
+                                        <span class="avr-bar__value">14 %<small class="avr-n">28/200</small></span>
                                     </p>
                                     <span class="avr-bar__track"><span class="avr-bar__fill" style="--wert: 14%"></span></span>
                                 </li>
                             </ul>
+                            <p class="avr-basis">Nenner: alle 200 Nennungen von Anbietern</p>
                         </div>
 
                         <div class="avr-block">
@@ -146,18 +153,18 @@
                             <dl class="avr-kpis">
                                 <div class="avr-kpi">
                                     <dt class="avr-kpi__name">Mention Rate</dt>
-                                    <dd class="avr-kpi__own">34 %</dd>
-                                    <dd class="avr-kpi__rival">71 %</dd>
+                                    <dd class="avr-kpi__own">33 %<small class="avr-n">12/36</small></dd>
+                                    <dd class="avr-kpi__rival">72 %<small class="avr-n">26/36</small></dd>
                                 </div>
                                 <div class="avr-kpi">
                                     <dt class="avr-kpi__name">Recommendation Rate</dt>
-                                    <dd class="avr-kpi__own">12 %</dd>
-                                    <dd class="avr-kpi__rival">48 %</dd>
+                                    <dd class="avr-kpi__own">11 %<small class="avr-n">4/36</small></dd>
+                                    <dd class="avr-kpi__rival">47 %<small class="avr-n">17/36</small></dd>
                                 </div>
                                 <div class="avr-kpi">
                                     <dt class="avr-kpi__name">Nennung in der engeren Auswahl</dt>
-                                    <dd class="avr-kpi__own">9 %</dd>
-                                    <dd class="avr-kpi__rival">55 %</dd>
+                                    <dd class="avr-kpi__own">8 %<small class="avr-n">3/36</small></dd>
+                                    <dd class="avr-kpi__rival">56 %<small class="avr-n">20/36</small></dd>
                                 </div>
                                 <div class="avr-kpi">
                                     <dt class="avr-kpi__name">Abgedeckte Kaufphasen</dt>
@@ -168,6 +175,7 @@
                             <p class="avr-legend">
                                 <span><i class="avr-legend__own" aria-hidden="true"></i>Ihre Marke</span>
                                 <span><i aria-hidden="true"></i>Wettbewerber A</span>
+                                <span>Nenner: 36 Fragen</span>
                             </p>
                         </div>
                     </div>
@@ -194,295 +202,152 @@
             </div>
         </section>
 
-        <!-- ══ Warum das jetzt zählt ═════════════════════════════════════════ -->
-        <section id="wandel" class="av-section" aria-labelledby="wandel-heading">
+        <!-- ══ Eigene Messung ════════════════════════════════════════════════
+             Nur Beobachtungen, keine aggregierten Zahlen, keine Ursachen und
+             keine Namen der genannten Wettbewerber. -->
+        <section id="eigenmessung" class="av-section--raised" aria-labelledby="eigenmessung-heading">
             <div class="container">
                 <div class="av-head">
-                    <h2 id="wandel-heading">Ihre Kunden suchen nicht mehr nur bei Google</h2>
-                    <p>Die Customer Journey verändert sich. Statt zehn Suchergebnisse zu öffnen, fragen Nutzer heute KI-Assistenten:</p>
+                    <h2 id="eigenmessung-heading">Wir haben uns selbst gemessen</h2>
                 </div>
+                <div class="av-prose">
+                    <p>Im September 2026 haben wir sechs Kaufentscheidungsfragen unserer eigenen Kategorie an ChatGPT gestellt. <strong>Neuratex AI wurde in keiner dieser sechs Antworten genannt.</strong></p>
+                    <p>Auf die Frage nach einer Shortlist nannte ChatGPT sechs kleine deutsche Agenturen. Zitiert wurden jeweils deren eigene Websites.</p>
+                    <p>In einer zusätzlichen Frage, die unseren Namen ausdrücklich nannte, wurde unsere Website zitiert und zutreffend wiedergegeben.</p>
+                </div>
+                <p class="av-protocol"><strong>Messprotokoll:</strong> Messung vom 22.09.2026. ChatGPT, kostenlose Stufe, ohne Anmeldung. Sechs ungebrandete Fragen plus zwei mit Markennennung, je ein Durchlauf, jede Frage in einem eigenen temporären Chat. Eine einzelne Messung ist eine Momentaufnahme, keine belastbare Quote.</p>
+            </div>
+        </section>
 
-                <ul class="av-quotes">
-                    <li>„Welche Anbieter eignen sich für mein Problem?“</li>
-                    <li>„Welche Lösung würdest du empfehlen?“</li>
-                    <li>„Welche Alternativen gibt es zu Anbieter X?“</li>
-                    <li>„Welche drei Unternehmen sollte ich mir genauer ansehen?“</li>
+        <!-- ══ Selbsttest ════════════════════════════════════════════════════
+             Steht nach der eigenen Messung und vor dem Angebot: erst messen wir
+             uns, dann prüft der Besucher sich. Der Hinweis auf die Schwankung
+             führt direkt zum Grund für die bezahlte Messung. Den Kopierknopf
+             erzeugt page-common.js, ohne JavaScript bleibt der Text markierbar.
+             Kein Zeitversprechen und keine Vorhersage des Ergebnisses. -->
+        <section id="selbsttest" class="av-section" aria-labelledby="selbsttest-heading">
+            <div class="container">
+                <div class="av-selftest">
+                    <h2 id="selbsttest-heading">Prüfen Sie es selbst, bevor Sie uns glauben</h2>
+                    <p>Öffnen Sie ChatGPT und starten Sie einen temporären Chat, damit Ihre eigene Historie das Ergebnis nicht verfälscht. Dann fragen Sie:</p>
+                    <p class="av-prompt" data-kopieren>Wir suchen einen Anbieter für [Ihre Leistung]. Welche Unternehmen kommen dafür infrage? Bitte nennen Sie konkrete Firmen.</p>
+                    <p>Stellen Sie dieselbe Frage ein zweites Mal in einem neuen Chat. Sie werden sehen, dass sich die genannten Firmen unterscheiden können. Genau deshalb reicht eine einzelne Abfrage nicht, und genau deshalb messen wir mehrfach.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ Angebot ═══════════════════════════════════════════════════════ -->
+        <section id="angebot" class="av-section--raised" aria-labelledby="angebot-heading">
+            <div class="container">
+                <div class="av-offer">
+                    <div class="av-offer__text">
+                        <h2 id="angebot-heading">Drei Pilotplätze</h2>
+                        <p>Nach der Pilotphase kostet der AI Visibility Audit 1.900 Euro netto.</p>
+                        <p>Für drei Pilotprojekte bieten wir ihn für <strong>500 Euro netto</strong> an. Die Gegenleistung: Wir dürfen Ihr Unternehmen namentlich als Referenz nennen und den Fall als Fallstudie veröffentlichen. Was genau veröffentlicht wird, stimmen wir vorher schriftlich mit Ihnen ab, und Sie geben es frei.</p>
+                        <p>Das ist der ganze Grund für den Preis. Wir bauen damit die Referenzen auf, die wir noch nicht haben.</p>
+                    </div>
+                    <div class="av-price">
+                        <p class="av-price__label">Pilotpreis</p>
+                        <p class="av-price__wert">500 Euro <span>netto</span></p>
+                        <p class="av-price__bedingung">gegen namentliche Referenz und eine Fallstudie, die Sie vorher freigeben</p>
+                        <p class="av-price__danach">Nach der Pilotphase 1.900 Euro netto</p>
+                        <!-- PLATZSTATUS: Muss stimmen. Nach der ersten bestätigten
+                             Buchung ändern in "Noch 2 von 3 Plätzen frei", danach
+                             entsprechend. Sind alle vergeben, Angebot, Einstieg und
+                             Formular auf den Preis nach der Pilotphase umstellen. -->
+                        <p class="av-price__plaetze">Drei Plätze verfügbar</p>
+                        <a href="#pilot-anfrage" class="cta-button">Pilotplatz anfragen</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ Absicherung ═══════════════════════════════════════════════════
+             Nimmt dem Kauf bei einem unbekannten Anbieter das Risiko der
+             Vorkasse. Muss zum Satz unter dem Formular passen. -->
+        <section id="absicherung" class="av-section" aria-labelledby="absicherung-heading">
+            <div class="container">
+                <div class="av-guarantee">
+                    <h2 id="absicherung-heading">Sie zahlen erst, wenn die Auswertung vorliegt</h2>
+                    <p>Keine Vorkasse. Wir klären den Umfang, bestätigen ihn schriftlich und liefern die schriftliche Auswertung innerhalb von drei Werktagen. Die Rechnung kommt erst danach.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ Häufige Einwände ══════════════════════════════════════════════
+             Offen als Liste statt Akkordeon: ohne JavaScript und ohne Klick
+             vollständig lesbar. Jede Antwort höchstens drei Sätze, keine
+             unbelegten Marktzahlen. -->
+        <section id="einwaende" class="av-section--raised" aria-labelledby="einwaende-heading">
+            <div class="container">
+                <div class="av-head">
+                    <h2 id="einwaende-heading">Häufige Einwände</h2>
+                </div>
+                <dl class="av-faq">
+                    <div class="av-card">
+                        <dt>Ist das nicht noch Zukunftsmusik?</dt>
+                        <dd>Beim Volumen ja, der Anteil ist heute noch klein. Eine Messung jetzt ist Ihre Ausgangslage. Nur so sehen Sie später, ob Maßnahmen etwas bewirken.</dd>
+                    </div>
+                    <div class="av-card">
+                        <dt>Wir machen doch schon SEO.</dt>
+                        <dd>Das ist die Grundlage, und Googles KI-Antworten bauen ausdrücklich auf der normalen Suche auf. Ob ChatGPT, Claude oder Gemini Sie nennen, zeigen Ihre Rankings aber nicht. Genau das messen wir.</dd>
+                    </div>
+                    <div class="av-card">
+                        <dt>Können Sie garantieren, dass wir danach genannt werden?</dt>
+                        <dd>Nein. Niemand kontrolliert, was ein Modell antwortet. Wer das garantiert, sollten Sie nicht beauftragen.</dd>
+                    </div>
+                    <div class="av-card">
+                        <dt>Woher weiß ich, dass die Zahlen stimmen?</dt>
+                        <dd>Jede Quote steht mit ihrem Nenner da, und jede Zahl lässt sich bis zur Rohantwort zurückverfolgen. Den Wortlaut der Fragen bekommen Sie mit.</dd>
+                    </div>
+                    <div class="av-card">
+                        <dt>Wie lange dauert es?</dt>
+                        <dd>Die schriftliche Auswertung liegt innerhalb von drei Werktagen nach Auftragsbestätigung vor. Die Besprechung der Ergebnisse dauert etwa eine Stunde, den Termin stimmen wir mit Ihnen ab.</dd>
+                    </div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- ══ Grenzen der Methode ═══════════════════════════════════════════ -->
+        <section id="grenzen" class="av-section av-honest" aria-labelledby="grenzen-heading">
+            <div class="container">
+                <div class="av-head">
+                    <h2 id="grenzen-heading">Keine Ranking-Versprechen. Keine GEO-Magie.</h2>
+                </div>
+                <ul class="av-limits">
+                    <li class="av-card"><strong>Keine Garantie auf Nennungen.</strong> Niemand kontrolliert, was ein Modell antwortet.</li>
+                    <li class="av-card"><strong>Kein zusammengefasster Score.</strong> Wir weisen Quoten mit Zähler und Nenner aus, damit Sie jede Zahl nachrechnen können.</li>
+                    <li class="av-card"><strong>llms.txt setzen wir nicht ein.</strong> Google hat erklärt, dass die Datei für seine generativen Suchfunktionen keinen Sichtbarkeitsvorteil bringt. Für andere Systeme gibt es bislang keinen belegten Effekt.</li>
+                    <li class="av-card"><strong>„Nicht messbar“ heißt nicht null.</strong> Wo die Daten nicht reichen, steht das so da.</li>
                 </ul>
-
-                <p class="av-bridge">Claude, ChatGPT und Co. treffen dabei bereits eine Vorauswahl. Die entscheidende Frage ist deshalb nicht mehr nur die eine von früher.</p>
-
-                <div class="av-pivot">
-                    <div class="av-pivot__item">
-                        <p class="av-pivot__kicker">Bisher die Leitfrage</p>
-                        <p class="av-pivot__frage">Wie gut ranken Sie bei Google?</p>
-                    </div>
-                    <div class="av-pivot__item av-pivot__item--jetzt">
-                        <p class="av-pivot__kicker">Jetzt ebenso entscheidend</p>
-                        <p class="av-pivot__frage">Werden Sie von KI-Systemen überhaupt berücksichtigt?</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ Was der Audit untersucht ══════════════════════════════════════ -->
-        <section id="audit" class="av-section--raised" aria-labelledby="audit-heading">
-            <div class="container">
-                <div class="av-head">
-                    <p class="av-eyebrow">Der AI Visibility Audit</p>
-                    <h2 id="audit-heading">Wir testen, wie KI-Systeme über Sie sprechen</h2>
-                    <p>Wir prüfen systematisch, wie Ihr Unternehmen bei realistischen Kauf- und Recherchefragen in führenden KI-Systemen dargestellt wird. Dabei betrachten wir nicht nur Ihre eigene Marke, sondern vergleichen Ihre Sichtbarkeit direkt mit Ihren wichtigsten Wettbewerbern.</p>
-                </div>
-
-                <div class="av-grid">
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">01</span>
-                        <h3>AI Visibility</h3>
-                        <p>Wie häufig wird Ihr Unternehmen von relevanten KI-Systemen genannt?</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">02</span>
-                        <h3>Recommendations</h3>
-                        <p>Wann werden Sie tatsächlich empfohlen und wann gewinnt ein Wettbewerber?</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">03</span>
-                        <h3>Share of Voice</h3>
-                        <p>Welchen Anteil der relevanten KI-Empfehlungen erhalten Sie im Vergleich zum Wettbewerb?</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">04</span>
-                        <h3>Customer Journey Coverage</h3>
-                        <p>Bei welchen Problemen, Anforderungen und Kaufabsichten sind Sie sichtbar und wo fehlen Sie vollständig?</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">05</span>
-                        <h3>Citation und Source Intelligence</h3>
-                        <p>Auf welche Quellen greifen KI-Systeme zurück und warum profitieren Ihre Wettbewerber davon?</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <span class="av-dim__nr">06</span>
-                        <h3>Technical Readiness</h3>
-                        <p>Können KI- und Suchsysteme Ihre Website, Leistungen und Unternehmensinformationen zuverlässig erfassen?</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ Wiederkehrende Handlungsaufforderung ══════════════════════════ -->
-        <section class="av-band" aria-label="Audit anfragen">
-            <div class="container">
-                <div class="av-band__text">
-                    <h2>Wissen Sie, welche Anbieter KI-Systeme Ihren Kunden gerade empfehlen?</h2>
-                    <p>Der Audit beantwortet das mit Zahlen statt mit Vermutungen.</p>
-                </div>
-                <a href="#audit-anfrage" class="cta-button">AI Visibility Audit anfragen</a>
-            </div>
-        </section>
-
-        <!-- ══ Nicht nur messen ══════════════════════════════════════════════ -->
-        <section id="warum" class="av-section" aria-labelledby="warum-heading">
-            <div class="container">
-                <div class="av-head">
-                    <h2 id="warum-heading">Nicht nur messen. Verstehen, warum.</h2>
-                    <p>Eine einzelne Kennzahl sagt Ihnen nicht, was Sie tun sollen. Deshalb endet der Audit nicht bei der Messung.</p>
-                </div>
-
-                <div class="av-why">
-                    <div>
-                        <div class="av-hollow">
-                            <span class="av-hollow__zahl">37 %</span>
-                            <p>„Ihre AI Visibility beträgt 37 Prozent.“ Ein solches Ergebnis hilft Ihnen kaum weiter, solange niemand sagt, woran es liegt.</p>
-                        </div>
-                        <div class="av-payoff">
-                            <p>Das Ergebnis ist keine Sammlung allgemeiner SEO-Tipps. Sie erhalten einen priorisierten Maßnahmenplan auf Basis Ihrer tatsächlichen Sichtbarkeit.</p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3>Deshalb analysieren wir zusätzlich</h3>
-                        <ul class="av-why__list">
-                            <li>Welche Wettbewerber werden häufiger empfohlen?</li>
-                            <li>Bei welchen Fragen verlieren Sie?</li>
-                            <li>Welche Websites und Drittquellen werden besonders häufig herangezogen?</li>
-                            <li>Welche Inhalte fehlen auf Ihrer Website?</li>
-                            <li>Welche Unternehmensinformationen sind unklar oder inkonsistent?</li>
-                            <li>Gibt es technische Hindernisse für KI-Crawler und Suchsysteme?</li>
-                            <li>Welche Maßnahmen haben belastbare Evidenz und welche vermeintlichen GEO-Tricks sind hauptsächlich Marketing?</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ Ablauf ════════════════════════════════════════════════════════
-             Fünf Schritte, bewusst ohne Zahlenwerk zur Methodik. Dass mehrfach
-             und kontrolliert getestet wird, genügt an dieser Stelle. -->
-        <section id="ablauf" class="av-section--raised" aria-labelledby="ablauf-heading">
-            <div class="container">
-                <div class="av-head">
-                    <h2 id="ablauf-heading">So funktioniert der Audit</h2>
-                    <p>Fünf Schritte von Ihren Angaben bis zum priorisierten Maßnahmenplan.</p>
-                </div>
-
-                <ol class="av-steps">
-                    <li class="av-step av-reveal" data-reveal>
-                        <span class="av-step__nr" aria-hidden="true">1</span>
-                        <div>
-                            <h3>Unternehmen verstehen</h3>
-                            <p>Sie geben uns die Grundlagen, aus denen wir den Test aufbauen.</p>
-                            <ul class="av-tags">
-                                <li>Website</li>
-                                <li>Produkte und Leistungen</li>
-                                <li>Zielkunden</li>
-                                <li>Relevante Regionen</li>
-                                <li>Wichtigste Wettbewerber</li>
-                                <li>Wichtigste Anwendungsfälle</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="av-step av-reveal" data-reveal>
-                        <span class="av-step__nr" aria-hidden="true">2</span>
-                        <div>
-                            <h3>Reale Customer Journeys testen</h3>
-                            <p>Wir entwickeln daraus Fragen, die potenzielle Kunden tatsächlich an KI-Systeme stellen könnten. Von der ersten Recherche bis zur konkreten Anbieterentscheidung.</p>
-                        </div>
-                    </li>
-                    <li class="av-step av-reveal" data-reveal>
-                        <span class="av-step__nr" aria-hidden="true">3</span>
-                        <div>
-                            <h3>Sichtbarkeit messen</h3>
-                            <p>Die Fragen werden mehrfach und unter kontrollierten Bedingungen in relevanten KI-Systemen getestet. So reduzieren wir Zufallseffekte einzelner Antworten.</p>
-                        </div>
-                    </li>
-                    <li class="av-step av-reveal" data-reveal>
-                        <span class="av-step__nr" aria-hidden="true">4</span>
-                        <div>
-                            <h3>Wettbewerber und Quellen analysieren</h3>
-                            <p>Wir untersuchen nicht nur, <strong>wer gewinnt</strong>, sondern auch, <strong>warum</strong>.</p>
-                        </div>
-                    </li>
-                    <li class="av-step av-reveal" data-reveal>
-                        <span class="av-step__nr" aria-hidden="true">5</span>
-                        <div>
-                            <h3>Maßnahmen priorisieren</h3>
-                            <p>Sie erhalten klare Empfehlungen, sortiert nach vier Kriterien.</p>
-                            <ul class="av-tags">
-                                <li>Impact</li>
-                                <li>Aufwand</li>
-                                <li>Evidenz</li>
-                                <li>Umsetzbarkeit</li>
-                            </ul>
-                        </div>
-                    </li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- ══ Lieferumfang ══════════════════════════════════════════════════ -->
-        <section id="ergebnis" class="av-section" aria-labelledby="ergebnis-heading">
-            <div class="container">
-                <div class="av-head">
-                    <h2 id="ergebnis-heading">Das erhalten Sie</h2>
-                    <p>Acht Bestandteile, die zusammen ein Bild ergeben: wo Sie stehen, wer vor Ihnen liegt und was als Nächstes zu tun ist.</p>
-                </div>
-
-                <div class="av-grid">
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Executive Summary</h3>
-                        <p>Die wichtigsten Erkenntnisse für Geschäftsführung und Marketing auf einen Blick.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>AI Visibility Benchmark</h3>
-                        <p>Ihre Sichtbarkeit im direkten Vergleich zu Ihren wichtigsten Wettbewerbern.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Recommendation Analysis</h3>
-                        <p>Welche Unternehmen Claude, ChatGPT und andere relevante KI-Systeme bei kaufrelevanten Fragen empfehlen.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Customer Journey Heatmap</h3>
-                        <p>Wo Ihre Marke präsent ist und wo sie aktuell nicht stattfindet.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Source Intelligence</h3>
-                        <p>Welche Domains und Quellen besonders häufig mit erfolgreichen Wettbewerbern verbunden sind.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Technical AI Search Check</h3>
-                        <p>Prüfung relevanter technischer Voraussetzungen Ihrer Website.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Content und Entity Gaps</h3>
-                        <p>Welche Themen, Informationen und Signale bei Ihnen fehlen.</p>
-                    </article>
-                    <article class="av-card av-reveal" data-reveal>
-                        <h3>Priorisierter Maßnahmenplan</h3>
-                        <p>Konkrete nächste Schritte statt allgemeiner GEO-Empfehlungen.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- ══ Nach dem Audit ════════════════════════════════════════════════ -->
-        <section id="danach" class="av-section--raised" aria-labelledby="danach-heading">
-            <div class="container">
-                <div class="av-head">
-                    <h2 id="danach-heading">Von der Analyse zur Sichtbarkeit</h2>
-                    <p>Der AI Visibility Audit ist bewusst ein eigenständiges Produkt. Sie erhalten die Ergebnisse und können die Maßnahmen selbst, mit Ihrer bestehenden Agentur oder gemeinsam mit uns umsetzen. Wenn Unterstützung gewünscht ist, können wir anschließend unter anderem bei diesen Themen helfen:</p>
-                </div>
-                <ul class="av-tags av-tags--gross">
-                    <li>AI Search und GEO Optimierung</li>
-                    <li>Technische Optimierung</li>
-                    <li>Content und Source Strategy</li>
-                    <li>Strukturierte Unternehmens- und Produktinformation</li>
-                    <li>Laufendes AI Visibility Monitoring</li>
-                    <li>Paid Advertising in KI-Systemen</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- ══ Abgrenzung ════════════════════════════════════════════════════ -->
-        <section id="seriositaet" class="av-section av-honest" aria-labelledby="seriositaet-heading">
-            <div class="container">
-                <div class="av-head">
-                    <h2 id="seriositaet-heading">Keine Ranking-Versprechen. Keine GEO-Magie.</h2>
-                    <p>KI-Antworten sind dynamisch. Niemand kann seriös garantieren, dass ein Unternehmen dauerhaft die erste Empfehlung eines KI-Systems wird.</p>
-                </div>
-                <div class="av-honest__grid">
-                    <div class="av-honest__item av-card">
-                        <h3>Was wir nicht tun</h3>
-                        <p>Wir arbeiten nicht mit Ranking-Versprechen und verkaufen keine Tricks, für die es keine belastbare Evidenz gibt.</p>
-                    </div>
-                    <div class="av-honest__item av-card">
-                        <h3>Worauf wir uns konzentrieren</h3>
-                        <p>Wir messen reproduzierbar, vergleichen Wettbewerber, analysieren Quellen und arbeiten an den Faktoren, die sich tatsächlich beeinflussen lassen.</p>
-                    </div>
-                </div>
             </div>
         </section>
 
         <!-- ══ Anfrage ═══════════════════════════════════════════════════════
-             Das Formular nutzt dieselben Kennungen wie die Kontaktseite und
-             damit contact.js und /api/contact ohne neue Serverfunktion. Ohne
-             JavaScript sendet es über action und method. -->
-        <section id="audit-anfrage" class="av-request" aria-labelledby="anfrage-heading">
+             Das einzige Formular, alle Buttons springen hierher. Es nutzt
+             contact.js und /api/contact wie die Kontaktseite. Unterschiede:
+             "domain" statt "message" (der Server erkennt daran die
+             Pilotanfrage), "herkunft" trägt die UTM-Parameter der Anzeige.
+             "website" ist die Spamfalle und bleibt unverändert. Ohne
+             JavaScript sendet das Formular über action und method. -->
+        <section id="pilot-anfrage" class="av-request" aria-labelledby="anfrage-heading">
             <div class="container">
                 <div class="av-request__grid">
                     <div>
-                        <p class="av-eyebrow">AI Visibility Audit</p>
-                        <h2 id="anfrage-heading">Wissen Sie, welche Anbieter KI-Systeme Ihren Kunden empfehlen?</h2>
-                        <p class="av-request__intro">Finden Sie heraus, wo Ihr Unternehmen heute steht, welche Wettbewerber Ihnen in der KI-gestützten Customer Journey voraus sind und warum.</p>
+                        <p class="av-eyebrow">Pilotplatz</p>
+                        <h2 id="anfrage-heading">Pilotplatz anfragen</h2>
                         <ul class="av-request__list">
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Nennen Sie uns Ihre Website und Ihre wichtigsten Leistungen.</li>
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Nennen Sie uns zwei bis vier Wettbewerber, mit denen Sie sich vergleichen.</li>
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Wir melden uns per E-Mail mit Rückfragen und einem Vorschlag zum Umfang.</li>
+                            <li><i class="icon icon-check" aria-hidden="true"></i>Pilotpreis 500 Euro netto, nach der Pilotphase 1.900 Euro netto</li>
+                            <li><i class="icon icon-check" aria-hidden="true"></i>Gegenleistung: namentliche Referenz und eine Fallstudie, die Sie vorher freigeben</li>
+                            <li><i class="icon icon-check" aria-hidden="true"></i>Schriftliche Auswertung innerhalb von drei Werktagen nach Auftragsbestätigung</li>
+                            <li><i class="icon icon-check" aria-hidden="true"></i>Rechnung erst mit der fertigen Auswertung</li>
                         </ul>
                     </div>
 
                     <div class="av-form-card">
-                        <h3 id="anfrage-form-heading">Audit anfragen</h3>
-                        <p class="contact-hint" id="anfrage-required">Alle Felder außer Unternehmen sind Pflichtfelder.</p>
-                        <form id="contact-form" action="/api/contact" method="post" aria-labelledby="anfrage-form-heading" aria-describedby="anfrage-required">
+                        <h3 id="anfrage-form-heading">Ihre Angaben</h3>
+                        <p class="contact-hint" id="anfrage-required">Alle Felder sind Pflichtfelder.</p>
+                        <form id="contact-form" data-form="pilot" action="/api/contact" method="post" aria-labelledby="anfrage-heading" aria-describedby="anfrage-required">
                             <div class="contact-fields">
                                 <div class="contact-field">
                                     <label for="contact-name">Name</label>
@@ -493,19 +358,17 @@
                                     <input id="contact-email" name="email" type="email" autocomplete="email" maxlength="254" required>
                                 </div>
                             </div>
-                            <div class="contact-field">
-                                <label for="contact-company">Unternehmen <span class="contact-hint">(optional)</span></label>
-                                <input id="contact-company" name="company" autocomplete="organization" maxlength="140">
+                            <div class="contact-fields">
+                                <div class="contact-field">
+                                    <label for="contact-company">Unternehmen</label>
+                                    <input id="contact-company" name="company" autocomplete="organization" maxlength="140" required>
+                                </div>
+                                <div class="contact-field">
+                                    <label for="contact-domain">Website-Adresse</label>
+                                    <input id="contact-domain" name="domain" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="200" required>
+                                </div>
                             </div>
-                            <div class="contact-field">
-                                <label for="contact-message">Ihre Anfrage</label>
-                                <textarea id="contact-message" name="message" rows="6" maxlength="5000" aria-describedby="contact-message-hint" required>Wir möchten einen AI Visibility Audit anfragen.
-
-Website:
-Wichtigste Leistungen:
-Wichtigste Wettbewerber:</textarea>
-                                <span class="contact-hint" id="contact-message-hint">Ergänzen Sie die Angaben, dann können wir den Umfang direkt einschätzen. Maximal 5.000 Zeichen.</span>
-                            </div>
+                            <input type="hidden" id="contact-herkunft" name="herkunft" value="">
                             <div class="contact-honeypot" aria-hidden="true">
                                 <label for="contact-website">Dieses Feld bitte leer lassen</label>
                                 <input id="contact-website" name="website" tabindex="-1" autocomplete="off">
@@ -514,7 +377,8 @@ Wichtigste Wettbewerber:</textarea>
                                 <input id="contact-privacy" name="privacy" type="checkbox" required>
                                 <label for="contact-privacy">Ich habe die <a href="legal/datenschutz.html#kontaktformular" target="_blank" rel="noopener noreferrer">Datenschutzhinweise (öffnet in neuem Tab)</a> zur Verarbeitung meiner Angaben für die Bearbeitung meiner Anfrage zur Kenntnis genommen.</label>
                             </div>
-                            <button type="submit" class="cta-button">AI Visibility Audit anfragen</button>
+                            <button type="submit" class="cta-button">Pilotplatz anfragen</button>
+                            <p class="av-form-note">Sie gehen damit noch keine Verpflichtung ein. Wir melden uns innerhalb eines Werktags und klären den Umfang. Die Rechnung kommt erst mit der fertigen Auswertung.</p>
                             <p id="contact-status" class="contact-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
                         </form>
                     </div>

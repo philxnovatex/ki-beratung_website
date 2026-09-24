@@ -60,12 +60,33 @@ async function checkEndpoint() {
     assert.deepEqual(calls[0].replyTo, { email: valid.email, name: valid.name });
     assert.ok(calls[0].textContent.includes(valid.message));
     assert.equal(calls[0].htmlContent, undefined);
+    // Pilotanfrage der Landingpage: Website-Adresse statt Nachricht, Herkunft
+    // der Anzeige in der Mail. Die Spamfalle heißt weiterhin "website".
+    const pilot = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH',
+      domain: 'www.beispiel.de', herkunft: 'utm_source=google; utm_campaign=pilot', privacy: true };
+    calls = [];
+    assert.match((await request(pilot)).body.message, /innerhalb eines Werktags/);
+    assert.match(calls[0].subject, /Pilotanfrage/);
+    assert.ok(calls[0].textContent.includes('Website: www.beispiel.de'));
+    assert.ok(calls[0].textContent.includes('Herkunft: utm_source=google; utm_campaign=pilot'));
+    assert.ok(!calls[0].textContent.includes('Nachricht:'));
+    assert.equal((await request({ ...pilot, herkunft: { x: 1 } })).statusCode, 200, 'Unbrauchbare Herkunft weist niemanden ab');
+    assert.ok(calls[1].textContent.includes('Herkunft: keine Angabe'));
+    assert.equal((await request({ ...pilot, herkunft: 'x\r\nBcc: y@example.com' })).statusCode, 200);
+    assert.ok(calls[2].textContent.includes('Herkunft: x Bcc: y@example.com'));
+    const nativePilot = await request(new URLSearchParams({ ...pilot, privacy: 'on' }).toString(), { headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+    assert.equal(nativePilot.statusCode, 200);
+    assert.ok(calls[3].textContent.includes('Website: www.beispiel.de'));
     calls = [];
     for (const patch of [ { name: '' }, { name: ' '.repeat(3) }, { name: 'A'.repeat(121) },
       { name: 'A\r\nBcc: x@example.com' }, { email: 'invalid' }, { email: ['x@example.com'] },
       { company: {} }, { company: 'A'.repeat(141) }, { message: '' }, { message: 'A'.repeat(5001) },
       { message: '\u0000' }, { privacy: false }, { privacy: 'true' }, { website: 'https://spam.example' } ]) {
       assert.equal((await request({ ...valid, ...patch })).statusCode, 400, JSON.stringify(patch));
+    }
+    for (const patch of [ { company: '' }, { company: '  ' }, { domain: 'a\nb' }, { domain: 'x'.repeat(201) },
+      { domain: '' }, { domain: ['www.beispiel.de'] }, { privacy: false }, { website: 'https://spam.example' } ]) {
+      assert.equal((await request({ ...pilot, ...patch })).statusCode, 400, 'Pilot ' + JSON.stringify(patch));
     }
     for (const body of [null, [], 'malformed']) assert.equal((await request(body)).statusCode, 400);
     assert.equal((await request(valid, { method: 'GET' })).statusCode, 405);
@@ -160,6 +181,40 @@ async function checkBrowser(browser, base) {
       await page.screenshot({ path: path.join(__dirname, `../.cache/contact-qa/${width}.png`), fullPage: true });
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Kontaktseite ${width}px ohne Überlauf`);
     }
+
+    // Landingpage: Pilotanfrage mit Website-Adresse und Herkunft der Anzeige.
+    // Dasselbe Skript wie die Kontaktseite oben. Bewusst ohne ".html": Der
+    // lokale serve-Server leitet .html auf die saubere Adresse um und verwirft
+    // dabei die Parameter. Vercel liefert .html direkt aus, dort bleiben sie.
+    await open('/pages/ki-sichtbarkeit?utm_source=google&utm_medium=cpc&utm_campaign=pilot');
+    requests = 0;
+    await page.locator('#contact-name').fill('Alex Test');
+    await page.locator('#contact-email').fill('alex@example.com');
+    await page.locator('#contact-company').fill('Beispiel GmbH');
+    await page.locator('#contact-privacy').check();
+    await page.locator('#contact-form button').click();
+    assert.equal(requests, 0, 'Website-Adresse ist Pflicht');
+    await page.locator('#contact-domain').fill('www.beispiel.de');
+    await page.locator('#contact-form button').click();
+    await page.waitForFunction(() => document.querySelector('#contact-status').dataset.state === 'success');
+    assert.equal(requests, 1);
+    assert.equal(payload.domain, 'www.beispiel.de');
+    assert.equal(payload.company, 'Beispiel GmbH');
+    assert.equal(payload.herkunft, 'utm_source=google; utm_medium=cpc; utm_campaign=pilot');
+    assert.equal(payload.website, '');
+    assert.equal(payload.privacy, true);
+    assert.deepEqual(await events(), [['form_complete', { form: 'pilot' }]]);
+    assert.equal(await page.locator('.kopieren-knopf').count(), 1);
+    fs.mkdirSync(path.join(__dirname, '../.cache/landing-qa'), { recursive: true });
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 844 });
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.screenshot({ path: path.join(__dirname, `../.cache/landing-qa/${width}.png`), fullPage: true });
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, `Landingpage ${width}px ohne Überlauf`);
+      const cta = await page.locator('.av-hero .cta-button').boundingBox();
+      assert.ok(cta.y + cta.height <= 844, `Landingpage ${width}px: Button im ersten Bildschirm`);
+    }
+    console.log('  OK    Landingpage: Pilotanfrage mit Website-Adresse und UTM-Herkunft, Event, Button im ersten Bildschirm, kein Überlauf');
     for (const url of ['/', '/pages/kontakt.html', '/pages/leistungen.html']) {
       await open(url);
       assert.equal(await page.locator('a[href^="https://calendly.com/"]:not([data-calendly-location])').count(), 0);
@@ -234,7 +289,19 @@ async function checkBrowser(browser, base) {
     await noJs.waitForURL('**/api/contact');
     assert.equal(body.get('message'), 'Anfrage ohne JavaScript');
     assert.equal(body.get('privacy'), 'on');
-    console.log('  OK    Kontaktformular sendet auch ohne JavaScript');
+    await noJs.goto(base + '/pages/ki-sichtbarkeit.html');
+    assert.equal(await noJs.locator('.kopieren-knopf').count(), 0, 'Ohne JavaScript kein funktionsloser Knopf');
+    await noJs.locator('#contact-name').fill('Alex Test');
+    await noJs.locator('#contact-email').fill('alex@example.com');
+    await noJs.locator('#contact-company').fill('Beispiel GmbH');
+    await noJs.locator('#contact-domain').fill('www.beispiel.de');
+    await noJs.locator('#contact-privacy').check();
+    await noJs.locator('#contact-form button').click();
+    await noJs.waitForURL('**/api/contact');
+    assert.equal(body.get('domain'), 'www.beispiel.de');
+    assert.equal(body.get('company'), 'Beispiel GmbH');
+    assert.equal(body.get('website'), '');
+    console.log('  OK    Kontaktformular und Pilotanfrage senden auch ohne JavaScript');
   } finally { await noJs.close(); }
 }
 

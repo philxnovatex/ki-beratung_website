@@ -10,6 +10,26 @@ Der Endpunkt übernimmt die gemeinsame Origin-Prüfung, das Rate-Limit und
 den Brevo-Timeout aus `api/_shared/security.js`. Zusätzlich prüft er Feldtypen,
 Längen, Datenschutzbestätigung und ein unsichtbares Spam-Feld.
 
+### Pilotanfrage der Landingpage
+
+`public/pages/ki-sichtbarkeit.html` nutzt denselben Endpunkt und dasselbe
+Skript (`contact.js`), sendet aber statt einer Nachricht die Website des
+Interessenten im Feld `domain`. Ist `domain` gefüllt, behandelt der Server die
+Anfrage als Pilotanfrage: Unternehmen und Website sind dann Pflicht, die
+Nachricht nicht. Betreff und Mailtext kennzeichnen die Pilotanfrage.
+
+- `domain` heißt bewusst nicht `website`: `website` ist die Spamfalle und
+  bleibt unverändert.
+- `herkunft` ist ein verborgenes Feld. `contact.js` füllt es mit den
+  UTM-Parametern des Aufrufs (`utm_source`, `utm_medium`, `utm_campaign`,
+  `utm_content`, `utm_term`), hilfsweise mit der verweisenden Domain. Die Werte
+  bleiben für die Sitzung erhalten. Der Server übernimmt sie bereinigt und
+  gekürzt als Zeile „Herkunft“ in die Mail. Eine fehlende oder unbrauchbare
+  Herkunft weist keine Anfrage ab.
+- Ohne JavaScript bleibt `herkunft` leer, die Anfrage kommt trotzdem an.
+- Anzeigen müssen UTM-Parameter tragen, sonst steht in der Mail nur
+  „direkt oder unbekannt“ oder die verweisende Domain.
+
 Die vollständige Nachricht wird als Klartext über Brevos Transaktionsmail-API
 an `philippkoch@neuratex.de` übergeben. Die Antwortadresse ist die E-Mail-Adresse
 des Anfragenden. Eine Newsletter-Anmeldung findet dabei nicht statt.
@@ -40,6 +60,7 @@ Endpunkten pro warmer Serverless-Instanz und ist kein globales Bot-Limit.
 |---|---|---|
 | `calendly_click` | `location` | Klick auf einen Calendly-Link, einschließlich Tastaturaktivierung |
 | `form_complete` | `form: contact` | Brevo hat die Kontaktmail angenommen |
+| `form_complete` | `form: pilot` | Brevo hat die Pilotanfrage der Landingpage angenommen |
 | `form_complete` | `form: quiz_lead` | Quiz-Kontakt erfolgreich erfasst |
 | `form_complete` | `form: whitepaper` | Whitepaper-Anfrage erfolgreich erfasst |
 | `form_complete` | `form: newsletter` | Newsletter-Endpunkt bestätigt die Anmeldung, auch bei bereits vorhandenem Kontakt |

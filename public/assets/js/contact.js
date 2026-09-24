@@ -11,16 +11,50 @@
     const beschriftung = button.textContent;
     let sending = false;
 
+    // Herkunft des Besuchs fuer die Auswertung von Kampagnen, nur auf Formularen
+    // mit dem verborgenen Feld "herkunft". Erfasst werden ausschliesslich die
+    // UTM-Parameter der Anzeige. Sie bleiben fuer die Sitzung erhalten, falls
+    // der Besucher die Seite ohne Parameter neu laedt.
+    const herkunft = form.elements.herkunft;
+    if (herkunft) {
+        const params = new URLSearchParams(location.search);
+        let wert = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
+            .filter((key) => params.get(key))
+            .map((key) => `${key}=${params.get(key).slice(0, 80)}`)
+            .join('; ');
+        try {
+            if (wert) sessionStorage.setItem('neuratex-herkunft', wert);
+            else wert = sessionStorage.getItem('neuratex-herkunft') || '';
+        } catch { /* Ohne Speicher zaehlt nur der aktuelle Aufruf. */ }
+        if (!wert) {
+            try { wert = document.referrer ? 'Verweis von ' + new URL(document.referrer).hostname : ''; }
+            catch { wert = ''; }
+        }
+        herkunft.value = wert || 'direkt oder unbekannt';
+    }
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (sending || !form.reportValidity()) return;
         const fields = new FormData(form);
-        if (!fields.get('name').trim() || !fields.get('message').trim()) {
-            status.textContent = 'Bitte geben Sie Ihren Namen und eine Nachricht ein.';
+        // Nur Leerzeichen gelten als leer. Welche Felder Pflicht sind, steht im
+        // Markup, damit Kontaktseite und Landingpage dasselbe Skript nutzen.
+        const leer = [...form.querySelectorAll('input[required]:not([type="checkbox"]), textarea[required]')]
+            .some((feld) => !feld.value.trim());
+        if (leer) {
+            status.textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
             status.dataset.state = 'error';
             status.focus();
             return;
         }
+        const text = (key) => (fields.get(key) || '').trim();
+        const daten = {
+            name: text('name'), email: text('email'),
+            company: text('company'), message: text('message'),
+            privacy: fields.get('privacy') === 'on', website: fields.get('website'),
+        };
+        // Nur die Landingpage hat diese Felder. Fehlen sie, bleibt die Anfrage wie bisher.
+        for (const key of ['domain', 'herkunft']) if (fields.has(key)) daten[key] = text(key);
         sending = true;
         button.disabled = true;
         button.textContent = 'Wird gesendet…';
@@ -34,18 +68,15 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 signal: controller.signal,
-                body: JSON.stringify({
-                    name: fields.get('name').trim(), email: fields.get('email').trim(),
-                    company: fields.get('company').trim(), message: fields.get('message').trim(),
-                    privacy: fields.get('privacy') === 'on', website: fields.get('website'),
-                }),
+                body: JSON.stringify(daten),
             });
             const data = await response.json().catch(() => ({}));
             if (response.ok && data.ok === true) {
-                status.textContent = 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.';
+                status.textContent = data.message || 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.';
                 status.dataset.state = 'success';
                 form.reset();
-                window.neuratexTrack?.('form_complete', { form: 'contact' });
+                // Feste Kategorie aus dem Markup, niemals Formularinhalte.
+                window.neuratexTrack?.('form_complete', { form: form.dataset.form || 'contact' });
             } else {
                 status.textContent = data.message || 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.';
                 status.dataset.state = 'error';

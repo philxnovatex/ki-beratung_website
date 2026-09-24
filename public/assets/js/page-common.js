@@ -41,3 +41,31 @@
         }
     });
 })();
+
+// ── Text kopieren ─────────────────────────────────────────────────
+// Elemente mit data-kopieren bekommen einen Kopierknopf. Er entsteht hier und
+// steht nicht im HTML, weil er ohne JavaScript funktionslos waere. Der Text
+// selbst bleibt immer markierbar.
+(function () {
+    document.querySelectorAll('[data-kopieren]').forEach((block) => {
+        if (!navigator.clipboard) return;
+        const knopf = document.createElement('button');
+        knopf.type = 'button';
+        knopf.className = 'kopieren-knopf';
+        knopf.textContent = 'Frage kopieren';
+        const meldung = document.createElement('span');
+        meldung.className = 'sr-only';
+        meldung.setAttribute('role', 'status');
+        knopf.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(block.textContent.trim().replace(/\s+/g, ' '));
+                knopf.textContent = 'Kopiert';
+                meldung.textContent = 'Frage in die Zwischenablage kopiert.';
+            } catch {
+                knopf.textContent = 'Bitte markieren und kopieren';
+            }
+            setTimeout(() => { knopf.textContent = 'Frage kopieren'; meldung.textContent = ''; }, 2500);
+        });
+        block.after(knopf, meldung);
+    });
+})();

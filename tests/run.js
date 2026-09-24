@@ -255,8 +255,12 @@ async function pruefeLayout(browser) {
 // ── 6. Kontrast nach WCAG AA ───────────────────────────────────────────────
 async function pruefeKontrast(browser) {
   console.log('\n6. Kontrast nach WCAG AA');
+  for (const pfad of ['/', '/pages/ki-sichtbarkeit.html']) await pruefeKontrastSeite(browser, pfad);
+}
+
+async function pruefeKontrastSeite(browser, pfad) {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(BASIS + '/', { waitUntil: 'networkidle' });
+  await page.goto(BASIS + pfad, { waitUntil: 'networkidle' });
   await page.waitForTimeout(700);
   const verstoesse = await page.evaluate(() => {
     const lum = (c) => {
@@ -307,8 +311,8 @@ async function pruefeKontrast(browser) {
     return out;
   });
   verstoesse.length === 0
-    ? ok('alle geprueften Kombinationen erfuellen WCAG AA')
-    : nok(`${verstoesse.length} Verstoesse`);
+    ? ok(`${pfad}  alle geprueften Kombinationen erfuellen WCAG AA`)
+    : nok(`${pfad}  ${verstoesse.length} Verstoesse`);
   verstoesse.forEach((v) => console.log('         ' + v));
   await page.close();
 }

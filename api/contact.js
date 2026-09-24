@@ -49,17 +49,29 @@ module.exports = async function handler(req, res) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return reply(400, 'invalid_body', 'Bitte füllen Sie das Kontaktformular aus.');
   }
-  const { name, email, company = '', message, privacy, website = '' } = body;
+  const { name, email, company = '', message = '', privacy, website = '', domain = '', herkunft = '' } = body;
   if (website !== '') return reply(400, 'invalid_request', 'Anfrage konnte nicht verarbeitet werden.');
+  // Pilotanfragen der Landingpage schicken statt einer Nachricht die Website
+  // des Interessenten. Dann sind Unternehmen und Website Pflicht, die Nachricht
+  // nicht. Das Feld heißt bewusst domain, denn website ist die Spamfalle.
+  const pilot = typeof domain === 'string' && domain.trim() !== '';
   // Klartext erhalten, einschließlich Apostrophen und Zeilenumbrüchen. Kein HTML-Versand.
   const validText = (value, max, required) => typeof value === 'string'
     && value.length <= max && (!required || value.trim().length > 0)
     && !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value);
   if (!validText(name, 120, true) || /[\r\n]/.test(name)
-    || !validText(company, 140, false) || /[\r\n]/.test(company)
-    || !validText(message, 5000, true) || !isValidEmail(email)) {
-    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Name, E-Mail und Nachricht sowie die angegebenen Zeichenlimits.');
+    || !validText(company, 140, pilot) || /[\r\n]/.test(company)
+    || !validText(domain, 200, false) || /[\r\n]/.test(domain)
+    || !validText(message, 5000, !pilot) || !isValidEmail(email)) {
+    return reply(400, 'invalid_fields', pilot
+      ? 'Bitte prüfen Sie Name, E-Mail, Unternehmen und Website-Adresse.'
+      : 'Bitte prüfen Sie Name, E-Mail und Nachricht sowie die angegebenen Zeichenlimits.');
   }
+  // Herkunft des Besuchs (UTM-Parameter), vom Skript befüllt. Sie dient nur der
+  // Auswertung der Kampagnen. Fehlt sie oder ist sie unbrauchbar, geht die
+  // Anfrage trotzdem durch, statt einen echten Interessenten abzuweisen.
+  const quelle = typeof herkunft === 'string'
+    ? herkunft.replace(/[\x00-\x1f\x7f]+/g, ' ').trim().slice(0, 300) : '';
   if (privacy !== true && !(nativeForm && privacy === 'on')) {
     return reply(400, 'privacy_required', 'Bitte bestätigen Sie die Datenschutzhinweise.');
   }
@@ -78,9 +90,14 @@ module.exports = async function handler(req, res) {
         sender: { email: sender.trim(), name: 'Neuratex AI Website' },
         to: [{ email: recipient.trim() }],
         replyTo: { email: email.trim().toLowerCase(), name: name.trim() },
-        subject: 'Neue Kontaktanfrage über neuratex.de',
-        textContent: [`Name: ${name.trim()}`, `E-Mail: ${email.trim().toLowerCase()}`,
-          `Unternehmen: ${company.trim() || 'Nicht angegeben'}`, '', 'Nachricht:', message.trim(), '',
+        subject: pilot ? 'Neue Pilotanfrage AI Visibility Audit über neuratex.de' : 'Neue Kontaktanfrage über neuratex.de',
+        textContent: [
+          ...(pilot ? ['Anfrage: Pilotplatz AI Visibility Audit', ''] : []),
+          `Name: ${name.trim()}`, `E-Mail: ${email.trim().toLowerCase()}`,
+          `Unternehmen: ${company.trim() || 'Nicht angegeben'}`,
+          ...(pilot ? [`Website: ${domain.trim()}`] : []),
+          ...(pilot || quelle ? [`Herkunft: ${quelle || 'keine Angabe'}`] : []),
+          ...(message.trim() ? ['', 'Nachricht:', message.trim()] : []), '',
           'Datenschutzhinweise bestätigt: ja', `Eingang: ${new Date().toISOString()}`].join('\n'),
       }),
     });
@@ -88,7 +105,9 @@ module.exports = async function handler(req, res) {
       console.error('[contact] Brevo status:', response.status);
       return reply(502, 'api_error', 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.');
     }
-    return reply(200, null, 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.');
+    return reply(200, null, pilot
+      ? 'Vielen Dank! Ihre Anfrage ist eingegangen. Wir melden uns innerhalb eines Werktags per E-Mail bei Ihnen.'
+      : 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.');
   } catch {
     // Keine Nutzereingaben oder Provider-Antworten in Logs schreiben.
     console.error('[contact] Brevo request failed');
