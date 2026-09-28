@@ -32,6 +32,18 @@ const EINGANGSBESTAETIGUNG = [
   'www.neuratex.de',
 ].join('\n');
 
+// Grund einer Ablehnung durch Brevo für das Log: immer nur Brevos Fehlercode,
+// bei 401 und 403 zusätzlich die Meldung (betrifft Schlüssel oder IP-Adresse).
+// Andere Meldungen können Formularinhalte wiederholen und bleiben draußen.
+async function brevoGrund(response) {
+  try {
+    const { code = '', message = '' } = await response.json();
+    return [401, 403].includes(response.status) ? `${code}: ${String(message).slice(0, 200)}` : String(code);
+  } catch {
+    return '';
+  }
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   const contentType = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
@@ -116,7 +128,8 @@ module.exports = async function handler(req, res) {
   if (pilot && (!bestaetigt(unternehmer) || !bestaetigt(referenz))) {
     return reply(400, 'terms_required', 'Bitte bestätigen Sie, dass Sie als Unternehmen buchen, und Ihr Einverständnis zu Referenz und Fallstudie.');
   }
-  const apiKey = process.env.BREVO_API_KEY;
+  // Beim Einfügen im Dashboard rutschen leicht Leerzeichen oder Umbrüche mit.
+  const apiKey = (process.env.BREVO_API_KEY || '').trim();
   const sender = process.env.BREVO_CONTACT_SENDER_EMAIL || 'philippkoch@neuratex.de';
   const recipient = process.env.CONTACT_RECIPIENT_EMAIL || 'philippkoch@neuratex.de';
   if (!apiKey || !isValidEmail(sender) || !isValidEmail(recipient)) {
@@ -155,7 +168,7 @@ module.exports = async function handler(req, res) {
       textContent: text.join('\n'),
     });
     if (response.status !== 201) {
-      console.error('[contact] Brevo status:', response.status);
+      console.error('[contact] Brevo status:', response.status, await brevoGrund(response));
       return reply(502, 'api_error', 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.');
     }
   } catch {
@@ -177,7 +190,7 @@ module.exports = async function handler(req, res) {
       textContent: EINGANGSBESTAETIGUNG,
     }, 4000);
     eingangsmail = response.status === 201;
-    if (!eingangsmail) console.error('[contact] Eingangsbestätigung Brevo status:', response.status);
+    if (!eingangsmail) console.error('[contact] Eingangsbestätigung Brevo status:', response.status, await brevoGrund(response));
   } catch {
     console.error('[contact] Eingangsbestätigung fehlgeschlagen');
   }
