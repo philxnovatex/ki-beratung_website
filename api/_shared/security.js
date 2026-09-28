@@ -19,6 +19,16 @@ if (process.env.VERCEL_ENV !== 'production') {
   ALLOWED_ORIGINS.push('http://localhost:3000', 'http://localhost:8080', 'http://127.0.0.1:3000');
 }
 
+// In einer Vercel-Vorschau zusätzlich genau die eigene Adresse dieser Vorschau
+// zulassen, damit sich Formulare dort mit echtem Versand testen lassen. Vercel
+// setzt beide Variablen selbst. Andere Vorschauen und fremde Domains bleiben
+// gesperrt, die Vorschau selbst ist durch den Vercel-Login geschützt.
+if (process.env.VERCEL_ENV === 'preview') {
+  for (const host of [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]) {
+    if (host && /^[a-z0-9.-]+\.vercel\.app$/.test(host)) ALLOWED_ORIGINS.push('https://' + host);
+  }
+}
+
 /**
  * Validate that the request originates from an allowed domain.
  * Returns true if origin is valid, false otherwise.

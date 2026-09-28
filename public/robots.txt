@@ -8,6 +8,14 @@ Allow: /
 User-agent: GPTBot
 Allow: /
 
+# ChatGPT-Suche und Prüfung der Zielseiten von ChatGPT-Anzeigen.
+# Wird OAI-AdsBot blockiert, lehnt OpenAI die Anzeigen ab.
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: OAI-AdsBot
+Allow: /
+
 User-agent: Claude-Web
 Allow: /
 

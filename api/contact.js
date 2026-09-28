@@ -1,26 +1,78 @@
 /**
- * POST /api/contact: Kontaktanfrage als Transaktionsmail über Brevo.
+ * POST /api/contact: Kontaktanfrage oder Pilotbuchung als Transaktionsmail über Brevo.
  * BREVO_API_KEY ist erforderlich. Optional: BREVO_CONTACT_SENDER_EMAIL und
  * CONTACT_RECIPIENT_EMAIL (jeweils Standard: philippkoch@neuratex.de).
  * Der Absender muss in Brevo verifiziert sein. Keine Newsletter-Anmeldung.
+ * Bei einer Pilotbuchung geht zusätzlich eine feste Eingangsbestätigung an den Kunden.
  */
 const { validateOrigin, checkRateLimit, getClientIP, isValidEmail,
   isBodyTooLarge, fetchWithTimeout, ALLOWED_ORIGINS } = require('./_shared/security');
+
+// Eingangsbestätigung an den Kunden. Bewusst ohne Formularinhalte: Wer eine
+// fremde Adresse einträgt, kann darüber keinen eigenen Text verschicken.
+const EINGANGSBESTAETIGUNG = [
+  'Guten Tag,',
+  '',
+  'vielen Dank für Ihre Buchung des AI Visibility Audit. Ihre Angaben sind bei uns eingegangen.',
+  '',
+  'Wir prüfen sie und melden uns innerhalb eines Werktags mit der Auftragsbestätigung oder einer Rückmeldung, falls wir den Auftrag nicht annehmen können. Erst mit der Auftragsbestätigung kommt der Auftrag zustande.',
+  '',
+  'Haben Sie diese Buchung nicht selbst vorgenommen, antworten Sie bitte kurz auf diese E-Mail. Wir löschen die Angaben dann.',
+  '',
+  'Bei Fragen antworten Sie einfach auf diese E-Mail oder rufen Sie an: 0176 47338240.',
+  '',
+  'Viele Grüße',
+  'Philipp Koch',
+  '',
+  'Neuratex AI',
+  'Pionierstraße 43, 40215 Düsseldorf',
+  'www.neuratex.de',
+].join('\n');
+
+// Grund einer Ablehnung durch Brevo für das Log: immer nur Brevos Fehlercode,
+// bei 401 und 403 zusätzlich die Meldung (betrifft Schlüssel oder IP-Adresse).
+// Andere Meldungen können Formularinhalte wiederholen und bleiben draußen.
+async function brevoGrund(response) {
+  try {
+    const { code = '', message = '' } = await response.json();
+    return [401, 403].includes(response.status) ? `${code}: ${String(message).slice(0, 200)}` : String(code);
+  } catch {
+    return '';
+  }
+}
+
+// Nachrichten-ID einer angenommenen Mail für das Log. Damit lässt sich jede
+// Mail in Brevos Protokoll und beim Support eindeutig finden. Keine Inhalte.
+async function brevoId(response) {
+  try {
+    const { messageId = '' } = await response.json();
+    return String(messageId).slice(0, 120);
+  } catch {
+    return '';
+  }
+}
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   const contentType = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
   const nativeForm = contentType === 'application/x-www-form-urlencoded';
+  // Pilotbuchung der Landingpage, erkannt am Feld domain (siehe unten).
+  let pilot = false;
   // Ausschließlich feste Meldungen ausgeben, niemals Formulardaten in HTML einsetzen.
   function reply(status, error, message) {
     res.status(status);
     if (!nativeForm) return res.json(error ? { error, message } : { ok: true, message });
+    const titel = error ? (pilot ? 'Buchung nicht gesendet' : 'Nachricht nicht gesendet')
+      : (pilot ? 'Vielen Dank für Ihre Buchung' : 'Vielen Dank für Ihre Anfrage');
+    const zurueck = pilot
+      ? '<a href="/pages/ki-sichtbarkeit.html#pilot-anfrage">Zurück zum Buchungsformular</a>'
+      : '<a href="/pages/kontakt.html">Zurück zum Kontaktformular</a>';
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     return res.send(`<!doctype html><html lang="de"><head><meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Kontakt | Neuratex AI</title><link rel="stylesheet" href="/assets/css/style.css"></head>
-      <body><main class="container page-hero"><h1>${error ? 'Nachricht nicht gesendet' : 'Vielen Dank für Ihre Anfrage'}</h1>
-      <p>${message}</p><p><a href="/pages/kontakt.html">Zurück zum Kontaktformular</a></p>
+      <title>${pilot ? 'Pilotbuchung' : 'Kontakt'} | Neuratex AI</title><link rel="stylesheet" href="/assets/css/style.css"></head>
+      <body><main class="container page-hero"><h1>${titel}</h1>
+      <p>${message}</p><p>${zurueck}</p>
       <p><a href="mailto:philippkoch@neuratex.de">philippkoch@neuratex.de</a></p></main></body></html>`);
   }
   if (req.method === 'OPTIONS') return res.status(204).end();
@@ -49,49 +101,118 @@ module.exports = async function handler(req, res) {
   if (!body || typeof body !== 'object' || Array.isArray(body)) {
     return reply(400, 'invalid_body', 'Bitte füllen Sie das Kontaktformular aus.');
   }
-  const { name, email, company = '', message, privacy, website = '' } = body;
+  const { name, email, company = '', message = '', privacy, website = '', domain = '', herkunft = '',
+    leistungen = '', kunden = '', markt = '', region = '', wettbewerber = '', strasse = '', plz = '', ort = '',
+    bestaetigung } = body;
   if (website !== '') return reply(400, 'invalid_request', 'Anfrage konnte nicht verarbeitet werden.');
+  // Pilotbuchungen der Landingpage schicken statt einer Nachricht die Website
+  // des Kunden. Dann sind Unternehmen, Website und die Angaben für Messung und
+  // Rechnung Pflicht, die Nachricht nicht. Der Datenschutz ist dort ein Hinweis
+  // statt eines Häkchens (Vertragsanbahnung, keine Einwilligung nötig). Das Feld heißt bewusst domain, denn
+  // website ist die Spamfalle.
+  pilot = typeof domain === 'string' && domain.trim() !== '';
   // Klartext erhalten, einschließlich Apostrophen und Zeilenumbrüchen. Kein HTML-Versand.
   const validText = (value, max, required) => typeof value === 'string'
     && value.length <= max && (!required || value.trim().length > 0)
     && !/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/.test(value);
-  if (!validText(name, 120, true) || /[\r\n]/.test(name)
-    || !validText(company, 140, false) || /[\r\n]/.test(company)
-    || !validText(message, 5000, true) || !isValidEmail(email)) {
-    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Name, E-Mail und Nachricht sowie die angegebenen Zeichenlimits.');
+  const validLine = (value, max, required) => validText(value, max, required) && !/[\r\n]/.test(value);
+  if (!validLine(name, 120, true) || !validLine(company, 140, pilot) || !validLine(domain, 200, false)
+    || !validText(message, 5000, !pilot) || !isValidEmail(email)) {
+    return reply(400, 'invalid_fields', pilot
+      ? 'Bitte prüfen Sie Name, E-Mail, Unternehmen und Website-Adresse.'
+      : 'Bitte prüfen Sie Name, E-Mail und Nachricht sowie die angegebenen Zeichenlimits.');
   }
-  if (privacy !== true && !(nativeForm && privacy === 'on')) {
+  const MAERKTE = { Deutschland: 'Deutschland', DACH: 'Deutschland, Österreich, Schweiz', Region: 'Region' };
+  if (pilot && (!validLine(leistungen, 600, true) || !validLine(kunden, 300, true)
+    || typeof markt !== 'string' || !Object.hasOwn(MAERKTE, markt)
+    || !validLine(region, 120, markt === 'Region') || !validText(wettbewerber, 600, false))) {
+    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Ihre Angaben zu Leistungen, Kunden und Markt.');
+  }
+  if (pilot && (!validLine(strasse, 120, true) || !validLine(ort, 80, true)
+    || typeof plz !== 'string' || !/^[0-9A-Za-z -]{3,10}$/.test(plz.trim()))) {
+    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Straße, PLZ und Ort der Rechnungsanschrift.');
+  }
+  // Herkunft des Besuchs (UTM-Parameter), vom Skript befüllt. Sie dient nur der
+  // Auswertung der Kampagnen. Fehlt sie oder ist sie unbrauchbar, geht die
+  // Anfrage trotzdem durch, statt einen echten Interessenten abzuweisen.
+  const quelle = typeof herkunft === 'string'
+    ? herkunft.replace(/[\x00-\x1f\x7f]+/g, ' ').trim().slice(0, 300) : '';
+  const bestaetigt = (value) => value === true || (nativeForm && value === 'on');
+  if (!pilot && !bestaetigt(privacy)) {
     return reply(400, 'privacy_required', 'Bitte bestätigen Sie die Datenschutzhinweise.');
   }
-  const apiKey = process.env.BREVO_API_KEY;
+  if (pilot && !bestaetigt(bestaetigung)) {
+    return reply(400, 'terms_required', 'Bitte bestätigen Sie, dass Sie als Unternehmen buchen und mit Referenz und Fallstudie einverstanden sind.');
+  }
+  // Beim Einfügen im Dashboard rutschen leicht Leerzeichen oder Umbrüche mit.
+  const apiKey = (process.env.BREVO_API_KEY || '').trim();
   const sender = process.env.BREVO_CONTACT_SENDER_EMAIL || 'philippkoch@neuratex.de';
   const recipient = process.env.CONTACT_RECIPIENT_EMAIL || 'philippkoch@neuratex.de';
   if (!apiKey || !isValidEmail(sender) || !isValidEmail(recipient)) {
     console.error('[contact] Missing or invalid server configuration');
     return reply(503, 'server_config_error', 'Das Formular ist derzeit nicht verfügbar. Bitte schreiben Sie uns per E-Mail.');
   }
+  const send = (mail, timeoutMs) => fetchWithTimeout('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: { accept: 'application/json', 'content-type': 'application/json', 'api-key': apiKey },
+    body: JSON.stringify(mail),
+  }, timeoutMs);
+  const kunde = email.trim().toLowerCase();
+  const eingang = `Eingang: ${new Date().toISOString()}`;
+  const text = pilot ? [
+    'Pilotbuchung AI Visibility Audit: verbindlich gebucht, Auftragsbestätigung steht aus', '',
+    `Name: ${name.trim()}`, `E-Mail: ${kunde}`, `Website: ${domain.trim()}`, '',
+    `Leistungen: ${leistungen.trim()}`, `Kunden: ${kunden.trim()}`,
+    `Markt: ${markt === 'Region' ? 'Region: ' + region.trim() : MAERKTE[markt]}`, '',
+    'Wettbewerber:', wettbewerber.trim() || 'keine Angabe, aus den Antworten ermitteln', '',
+    'Rechnungsanschrift:', company.trim(), strasse.trim(), `${plz.trim()} ${ort.trim()}`, '',
+    'Bucht als Unternehmer, Referenz und Fallstudie nach Freigabe: bestätigt',
+    `Herkunft: ${quelle || 'keine Angabe'}`, eingang,
+  ] : [
+    `Name: ${name.trim()}`, `E-Mail: ${kunde}`,
+    `Unternehmen: ${company.trim() || 'Nicht angegeben'}`,
+    ...(quelle ? [`Herkunft: ${quelle}`] : []),
+    ...(message.trim() ? ['', 'Nachricht:', message.trim()] : []), '',
+    'Datenschutzhinweise bestätigt: ja', eingang,
+  ];
   try {
-    const response = await fetchWithTimeout('https://api.brevo.com/v3/smtp/email', {
-      method: 'POST',
-      headers: { accept: 'application/json', 'content-type': 'application/json', 'api-key': apiKey },
-      body: JSON.stringify({
-        sender: { email: sender.trim(), name: 'Neuratex AI Website' },
-        to: [{ email: recipient.trim() }],
-        replyTo: { email: email.trim().toLowerCase(), name: name.trim() },
-        subject: 'Neue Kontaktanfrage über neuratex.de',
-        textContent: [`Name: ${name.trim()}`, `E-Mail: ${email.trim().toLowerCase()}`,
-          `Unternehmen: ${company.trim() || 'Nicht angegeben'}`, '', 'Nachricht:', message.trim(), '',
-          'Datenschutzhinweise bestätigt: ja', `Eingang: ${new Date().toISOString()}`].join('\n'),
-      }),
+    const response = await send({
+      sender: { email: sender.trim(), name: 'Neuratex AI Website' },
+      to: [{ email: recipient.trim() }],
+      replyTo: { email: kunde, name: name.trim() },
+      subject: pilot ? `Neue Pilotbuchung AI Visibility Audit: ${company.trim()}` : 'Neue Kontaktanfrage über neuratex.de',
+      textContent: text.join('\n'),
     });
     if (response.status !== 201) {
-      console.error('[contact] Brevo status:', response.status);
+      console.error('[contact] Brevo status:', response.status, await brevoGrund(response));
       return reply(502, 'api_error', 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.');
     }
-    return reply(200, null, 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.');
+    console.log('[contact] Brevo angenommen, Mail an uns:', await brevoId(response));
   } catch {
     // Keine Nutzereingaben oder Provider-Antworten in Logs schreiben.
     console.error('[contact] Brevo request failed');
     return reply(502, 'api_error', 'Die Übermittlung konnte nicht bestätigt werden. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.');
   }
+  if (!pilot) return reply(200, null, 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.');
+  // Die Buchung liegt jetzt bei uns. Scheitert die Eingangsbestätigung, bleibt
+  // die Buchungsanfrage eingegangen, die Meldung verspricht dann nur keine Bestätigungsmail.
+  // Kurzes Zeitlimit, damit beide Aufrufe unter den 15 Sekunden des Browsers bleiben.
+  let eingangsmail = false;
+  try {
+    const response = await send({
+      sender: { email: sender.trim(), name: 'Philipp Koch, Neuratex AI' },
+      to: [{ email: kunde }],
+      replyTo: { email: recipient.trim(), name: 'Philipp Koch' },
+      subject: 'Eingang Ihrer Buchung: AI Visibility Audit',
+      textContent: EINGANGSBESTAETIGUNG,
+    }, 4000);
+    eingangsmail = response.status === 201;
+    if (eingangsmail) console.log('[contact] Brevo angenommen, Eingangsbestätigung:', await brevoId(response));
+    else console.error('[contact] Eingangsbestätigung Brevo status:', response.status, await brevoGrund(response));
+  } catch {
+    console.error('[contact] Eingangsbestätigung fehlgeschlagen');
+  }
+  return reply(200, null, eingangsmail
+    ? 'Vielen Dank! Ihre Buchung ist eingegangen, eine Eingangsbestätigung ist per E-Mail unterwegs. Innerhalb eines Werktags erhalten Sie unsere Auftragsbestätigung oder eine Rückmeldung, falls wir den Auftrag nicht annehmen können.'
+    : 'Vielen Dank! Ihre Buchung ist eingegangen. Innerhalb eines Werktags erhalten Sie unsere Auftragsbestätigung oder eine Rückmeldung, falls wir den Auftrag nicht annehmen können.');
 };
