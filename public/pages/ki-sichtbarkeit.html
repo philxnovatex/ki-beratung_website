@@ -48,58 +48,45 @@
     <main id="main-content" class="lp">
 
         <!-- ══ 1. Einstieg ═══════════════════════════════════════════════════
-             Links Frage, Versprechen, Button und drei Zusagen. Rechts die
-             Titelseite des Reports mit Beispieldaten. Der Button muss auf dem
-             Telefon im ersten Bildschirm stehen (Test in conversions.js). -->
+             Zentriert: Frage, ein Satz Versprechen, ein Button mit einer Zeile
+             Risikoabbau darunter. Darunter als Bild eine Beispiel-KI-Antwort,
+             in der drei Wettbewerber empfohlen werden und Ihr Unternehmen
+             fehlt. Sie zeigt das Problem, das die Frage stellt. Der Preis im
+             Button steht nie ohne seine Gegenleistung (Referenz und
+             Fallstudie) direkt darunter. Bewusst ohne Platzzahl, Restplatz-
+             hinweis oder Countdown. Der Button muss
+             auf dem Telefon im ersten Bildschirm stehen (Test in
+             conversions.js). Die Antwort blendet einmalig per CSS ein, ohne
+             JavaScript und bei reduzierter Bewegung steht sie sofort da. -->
         <section class="av-hero" aria-labelledby="hero-heading">
             <div class="lp-wrap lp-hero">
-                <div>
-                    <p class="lp-kicker">AI Visibility Audit für B2B-Unternehmen</p>
-                    <h1 id="hero-heading">Empfiehlt ChatGPT Ihr Unternehmen oder Ihre Konkurrenz?</h1>
-                    <p class="lp-lead">Wir stellen ChatGPT, Claude und Gemini die Fragen, die Ihre Kunden vor dem Kauf stellen. Sie sehen schwarz auf weiß, wer empfohlen wird, auf welche Quellen sich die Antworten stützen und wo Sie ansetzen können.</p>
-                    <div class="lp-actions">
-                        <a class="cta-button" href="#pilot-anfrage">Audit für 500 € buchen</a>
-                        <a class="lp-textlink" href="#report">Beispielreport ansehen</a>
-                    </div>
-                    <p class="lp-pricenote">500 € einmalig als Einführungspreis für die ersten drei Kunden, gegen namentliche Referenz und eine Fallstudie, die Sie vorher freigeben.</p>
-                    <ul class="lp-facts">
-                        <li>Ergebnis in 3 Werktagen</li>
-                        <li>Zahlung erst nach Lieferung</li>
-                        <li>Kein Vorgespräch nötig</li>
-                    </ul>
+                <p class="lp-kicker lp-hero__badge">AI Visibility Audit für B2B-Unternehmen</p>
+                <h1 id="hero-heading">Empfiehlt ChatGPT Ihr Unternehmen oder Ihre Konkurrenz?</h1>
+                <p class="lp-lead">Wir stellen ChatGPT, Claude und Gemini die Fragen, die Ihre Kunden vor dem Kauf stellen, und zeigen Ihnen, wen die Systeme empfehlen und wo Sie ansetzen können.</p>
+                <div class="lp-actions">
+                    <a class="cta-button" href="#pilot-anfrage">Audit für 500 € buchen</a>
+                    <a class="lp-textlink" href="#report">Beispielreport ansehen</a>
                 </div>
+                <p class="lp-hero__offer">Referenzkunden-Angebot: gegen namentliche Referenz und eine freigegebene Fallstudie.</p>
+                <p class="lp-hero__assure"><span>Ergebnis in 3 Werktagen</span> · <span>Zahlung erst nach Lieferung</span></p>
 
-                <!-- Zahlen erfunden und zueinander passend: 108/324 = 33 %,
-                     36/324 = 11 %, Wettbewerber A 152/324 = 47 %. -->
-                <div class="rp-card" aria-label="Vorschau eines Reports mit Beispieldaten">
-                    <div class="rp-card__head"><strong>KI-Sichtbarkeitsreport</strong><span class="rp-tag">Beispieldaten</span></div>
-                    <div class="rp-card__body">
-                        <div class="rp-kpis">
-                            <div class="rp-kpi"><b>33 %</b><span>genannt</span></div>
-                            <div class="rp-kpi rp-kpi--warn"><b>11 %</b><span>empfohlen</span></div>
-                            <div class="rp-kpi"><b>Platz 4</b><span>von 7 nach Empfehlungen</span></div>
+                <figure class="av-chat" aria-label="Beispiel: So antwortet eine KI auf eine Kauffrage">
+                    <div class="av-chat__bar"><span>Beispielantwort einer KI</span><span class="rp-tag">Beispieldaten</span></div>
+                    <div class="av-chat__body">
+                        <p class="av-chat__q">Welche Firma empfiehlst du für die Wartung von Industriekälteanlagen in NRW?</p>
+                        <div class="av-chat__a">
+                            <p>Für die Wartung von Industriekälteanlagen in NRW kommen vor allem diese Anbieter infrage:</p>
+                            <ol>
+                                <li><b>Wettbewerber A</b>: 24-Stunden-Notdienst und viele positive Bewertungen</li>
+                                <li><b>Wettbewerber B</b>: spezialisiert auf Lebensmittelbetriebe</li>
+                                <li><b>Wettbewerber C</b>: transparente Preise für Wartungsverträge</li>
+                            </ol>
                         </div>
-                        <div class="rp-bars">
-                            <p class="rp-label">Wer bei Kaufentscheidungen empfohlen wird</p>
-                            <div class="rp-bar"><span>Wettbewerber A</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:47%"></span></span><span class="rp-bar__val">47 %</span></div>
-                            <div class="rp-bar"><span>Wettbewerber B</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:29%"></span></span><span class="rp-bar__val">29 %</span></div>
-                            <div class="rp-bar"><span>Wettbewerber C</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:18%"></span></span><span class="rp-bar__val">18 %</span></div>
-                            <div class="rp-bar rp-bar--you"><span>Ihr Unternehmen</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:11%"></span></span><span class="rp-bar__val">11 %</span></div>
-                        </div>
-                        <p class="rp-insight">Sie werden gefunden, aber selten empfohlen. Wettbewerber A wird viermal so oft empfohlen wie Sie.</p>
+                        <p class="av-chat__miss"><b>Ihr Unternehmen</b><span class="rp-pill rp-pill--bad">nicht genannt</span></p>
                     </div>
-                </div>
+                </figure>
             </div>
         </section>
-
-        <div class="lp-strip">
-            <div class="lp-wrap">
-                <span>Gemessen in <strong>ChatGPT, Claude und Gemini</strong></span>
-                <span><strong>36 Kauffragen</strong> aus Ihrem Markt</span>
-                <span><strong>324 Antworten</strong> ausgewertet</span>
-                <span><strong>Festpreis</strong> statt Angebot nach Erstgespräch</span>
-            </div>
-        </div>
 
         <!-- ══ 2. Beispielreport ═════════════════════════════════════════════
              Zum Durchklicken wie eine Software. Reiter per report-tabs.js;
@@ -199,7 +186,7 @@
                 <h2 id="leistung-heading">Klarheit statt Bauchgefühl</h2>
                 <div class="lp-cols">
                     <article><h3>Report als PDF</h3><p>Übersicht, Fragen, Wettbewerb, Quellen und Maßnahmen. Verständlich ohne Vorwissen.</p></article>
-                    <article><h3>Alle 324 Antworten</h3><p>Jede Zahl lässt sich bis zur Originalantwort der KI zurückverfolgen.</p></article>
+                    <article><h3>Alle Originalantworten</h3><p>Jede Zahl lässt sich bis zur Antwort der KI zurückverfolgen.</p></article>
                     <article><h3>Priorisierter Maßnahmenplan</h3><p>Was zuerst kommt, was es bringt und wie viel Aufwand es macht.</p></article>
                     <article><h3>60 Minuten Besprechung</h3><p>Wir gehen die Ergebnisse gemeinsam durch, per Video.</p></article>
                 </div>
@@ -213,7 +200,7 @@
                 <h2 id="ablauf-heading">In drei Schritten zum Ergebnis</h2>
                 <ol class="lp-steps">
                     <li><h3>Online buchen</h3><em>2 Minuten</em><p>Website, Leistung und Markt angeben. Wir bestätigen den Auftrag innerhalb eines Werktags.</p></li>
-                    <li><h3>Wir messen</h3><em>3 Werktage</em><p>36 Kauffragen, je dreimal in ChatGPT, Claude und Gemini. Sie müssen nichts tun und keine Zugänge freigeben.</p></li>
+                    <li><h3>Wir messen</h3><em>3 Werktage</em><p>Die Kauffragen aus Ihrem Markt, jede mehrfach in ChatGPT, Claude und Gemini. Sie müssen nichts tun und keine Zugänge freigeben.</p></li>
                     <li><h3>Report und Besprechung</h3><em>60 Minuten</em><p>Sie erhalten den schriftlichen Report, die Rechnung liegt bei. Den Termin für die Besprechung vereinbaren wir mit Ihnen.</p></li>
                 </ol>
             </div>
@@ -243,25 +230,30 @@
         <section id="pilot-anfrage" class="lp-section lp-section--raised" aria-labelledby="anfrage-heading">
             <div class="lp-wrap lp-offer">
                 <div class="lp-price">
-                    <h2 id="anfrage-heading">Einführungspreis für die ersten drei Kunden</h2>
+                    <p class="lp-kicker">Referenzkunden-Angebot</p>
+                    <h2 id="anfrage-heading">Ihr Unternehmen als Referenzprojekt</h2>
+                    <!-- Kuenftiger Preis, kein "statt" oder "regulaer": 1.900 EUR
+                         hat noch niemand bezahlt. Ein erfundener Vergleichspreis
+                         waere irrefuehrend (UWG). Muss spaeter auch gelten. -->
                     <p class="lp-price__num">500 €<small>einmalig</small></p>
+                    <p class="lp-price__later"><span class="sr-only">Künftiger Preis: </span><s>1.900 €</s><span>Das zahlen alle nach Ihnen.</span></p>
                     <ul>
-                        <li>Vollständiger Audit mit Report und Besprechung</li>
+                        <li>Vollständiger Audit mit Report und Ergebnisbesprechung</li>
                         <li>Ergebnis in 3 Werktagen</li>
                         <li>Rechnung mit dem Report, keine Vorkasse</li>
-                        <li>Für spätere Kunden sind 1.900 € vorgesehen</li>
                     </ul>
-                    <p class="lp-price__note">Im Gegenzug nennen wir Sie als Referenz und veröffentlichen eine kurze Fallstudie. Den Inhalt geben Sie vorher frei.</p>
-                    <!-- PLATZSTATUS: Muss stimmen. Nach der ersten bestaetigten
-                         Buchung aendern in "Noch 2 von 3 Plaetzen frei", danach
-                         entsprechend. Sind alle vergeben, Preis und Formular auf
-                         den kuenftigen Preis umstellen. -->
-                    <p class="lp-price__seats">Noch 3 von 3 Plätzen frei</p>
+                    <!-- Bewusst ohne Platzzaehler: Er lenkt auf den eigenen
+                         Verkaufsstand statt auf den Nutzen. Das Angebot erklaert
+                         sich ueber Preis und Gegenleistung. -->
+                    <div class="lp-price__note">
+                        <p>Zum Start bieten wir den vollständigen AI Visibility Audit für einmalig 500 € an. Dafür dürfen wir Ihr Unternehmen als Referenz nennen und die Ergebnisse in einer gemeinsam abgestimmten Fallstudie vorstellen. Die Fallstudie veröffentlichen wir erst nach Ihrer Freigabe.</p>
+                        <p>Der Preis umfasst den gesamten beschriebenen Audit inklusive Ergebnisbesprechung. Es entstehen keine späteren Aufzahlungen.</p>
+                    </div>
                 </div>
 
                 <div class="lp-form">
                     <h3>Audit buchen</h3>
-                    <p class="lp-form__intro" id="anfrage-required">Dauert etwa 2 Minuten. Alle Felder außer den Wettbewerbern sind Pflicht.</p>
+                    <p class="lp-form__intro" id="anfrage-required">Dauert etwa 2 Minuten, ein Vorgespräch ist nicht nötig. Alle Felder außer den Wettbewerbern sind Pflicht.</p>
                     <form id="contact-form" data-form="pilot" data-track-start action="/api/contact" method="post" aria-labelledby="anfrage-heading" aria-describedby="anfrage-required">
                         <fieldset>
                             <legend>Ihr Unternehmen</legend>
@@ -338,7 +330,7 @@
                             <input id="contact-website" name="website" tabindex="-1" autocomplete="off">
                         </div>
                         <dl class="lp-terms" aria-label="Leistungsbeschreibung">
-                            <div><dt>Leistung</dt><dd>36 Kauffragen, jede dreimal in ChatGPT, Claude und Gemini (324 Antworten), schriftlicher Report mit priorisierten Maßnahmen, Besprechung von etwa einer Stunde per Video. Eine Website, ein Markt, Fragen auf Deutsch.</dd></div>
+                            <div><dt>Leistung</dt><dd>Mindestens 36 Kauffragen, jede mindestens dreimal in ChatGPT, Claude und Gemini, schriftlicher Report mit priorisierten Maßnahmen, Besprechung von etwa einer Stunde per Video. Eine Website, ein Markt, Fragen auf Deutsch.</dd></div>
                             <div><dt>Preis</dt><dd>500 € einmalig. Dafür dürfen wir Sie als Referenz nennen und eine Fallstudie veröffentlichen, deren Inhalt Sie vorher schriftlich freigeben.</dd></div>
                             <div><dt>Lieferung und Zahlung</dt><dd>Report innerhalb von drei Werktagen, gezählt ab dem Werktag nach unserer Auftragsbestätigung. Die Rechnung liegt dem Report bei, zahlbar innerhalb von 14 Tagen.</dd></div>
                         </dl>
