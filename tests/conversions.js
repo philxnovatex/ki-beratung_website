@@ -315,22 +315,6 @@ async function checkBrowser(browser, base) {
       await (await popupPromise).close();
       assert.deepEqual(await events(), [['calendly_click', { location: await link.getAttribute('data-calendly-location') }]]);
     }
-    await open('/');
-    await page.locator('#quizForm').dispatchEvent('submit');
-    assert.deepEqual(await events(), [], 'Unvollständiges Quiz zählt nicht');
-    const steps = page.locator('.quiz-step');
-    for (let i = 0; i < await steps.count(); i++) await steps.nth(i).locator('input[type="radio"]').first().check();
-    await page.locator('#quizSubmit').click();
-    await page.locator('#quizForm').dispatchEvent('submit');
-    assert.deepEqual(await events(), [['quiz_complete', {}]]);
-    await page.route('**/api/quiz-lead', route => route.fulfill({ json: { ok: true } }));
-    await page.locator('#quiz-name').fill('Alex Test');
-    await page.locator('#quiz-email').fill('alex@example.com');
-    await page.locator('#quiz-privacy').check();
-    await page.locator('#quiz-lead-form button').click();
-    await page.waitForFunction(() => document.querySelector('#quiz-lead-gate').hidden);
-    assert.deepEqual(await events(), [['quiz_complete', {}], ['form_complete', { form: 'quiz_lead' }]]);
-
     await open('/pages/lernplattform.html');
     await page.route('**/api/whitepaper', route => route.fulfill({ json: { ok: true } }));
     await page.route('**/api/newsletter', route => route.fulfill({ json: { ok: true } }));
@@ -346,17 +330,17 @@ async function checkBrowser(browser, base) {
     assert.deepEqual(await events(), [['form_complete', { form: 'whitepaper' }], ['form_complete', { form: 'newsletter' }]]);
     await page.evaluate(() => {
       window.umami.track = () => { throw new Error('Blockiert'); };
-      window.neuratexTrack('quiz_complete');
+      window.neuratexTrack('form_start', { form: 'pilot' });
       window.umami.track = () => Promise.reject(new Error('Offline'));
-      window.neuratexTrack('quiz_complete');
+      window.neuratexTrack('form_start', { form: 'pilot' });
       delete window.umami;
-      window.neuratexTrack('quiz_complete');
+      window.neuratexTrack('form_start', { form: 'pilot' });
       Object.defineProperty(navigator, 'doNotTrack', { configurable: true, value: '1' });
       window.umami = { track: () => { throw new Error('DNT ignoriert'); } };
-      window.neuratexTrack('quiz_complete');
+      window.neuratexTrack('form_start', { form: 'pilot' });
     });
     assert.deepEqual(jsErrors, []);
-    console.log('  OK    Kontaktformular, mobile Layouts, Calendly, Quiz und alle Formular-Events; keine Eingaben im Tracking');
+    console.log('  OK    Kontaktformular, mobile Layouts, Calendly und alle Formular-Events; keine Eingaben im Tracking');
   } finally { await context.close(); }
   // reducedMotion: Geprueft wird hier das Absenden ohne JavaScript, nicht das
   // Scrollverhalten. Die Datenschutz-Checkbox liegt weit unten, Playwright

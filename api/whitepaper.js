@@ -3,7 +3,8 @@
  *
  * Environment Variables (set in Vercel Dashboard):
  *   BREVO_API_KEY   – Brevo (ex-Sendinblue) API key
- *   BREVO_LIST_ID   – Numeric ID of the "Website Leads" list (default: 5)
+ *   BREVO_LIST_ID   – Numeric ID of the "Website Leads" list (default: 5).
+ *                     Reine Lead-Liste ohne Werbeeinwilligung, nie für Newsletter nutzen.
  *
  * Endpoint: POST /api/whitepaper
  * Body:     { "email": "user@example.com", "name": "Max Mustermann", "company": "Firma GmbH" }
@@ -41,8 +42,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const clientIP = getClientIP(req);
-  const rateCheck = checkRateLimit(clientIP, 5, 60_000);
+  const rateCheck = checkRateLimit('whitepaper:' + getClientIP(req), 5, 60_000);
   res.setHeader('X-RateLimit-Remaining', rateCheck.remaining);
 
   if (!rateCheck.allowed) {
@@ -114,13 +114,12 @@ module.exports = async function handler(req, res) {
         res.status(200).json({ ok: true, message: 'Vielen Dank! Ihr Download startet gleich.' });
         return;
       }
-      console.error('[whitepaper] Brevo API error:', errorBody);
+      console.error('[whitepaper] Brevo API error:', String(errorBody.code || ''));
       res.status(502).json({ error: 'api_error', message: 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.' });
       return;
     }
 
-    const errorText = await brevoRes.text().catch(() => '');
-    console.error('[whitepaper] Brevo unexpected status:', brevoRes.status, errorText);
+    console.error('[whitepaper] Brevo unexpected status:', brevoRes.status);
     res.status(502).json({ error: 'api_error', message: 'Anfrage fehlgeschlagen. Bitte versuchen Sie es später.' });
   } catch (err) {
     console.error('[whitepaper] Fetch error:', err.message);
@@ -143,7 +142,7 @@ async function addExistingContactToList(email, listId, apiKey) {
     body: JSON.stringify({ emails: [email] }),
   });
   if (!response.ok) {
-    const body = await response.text().catch(() => '');
-    throw new Error(`Brevo list-add failed: ${response.status} ${body}`);
+    // Nur den Status, die Antwort kann die Adresse enthalten.
+    throw new Error(`Brevo list-add failed: ${response.status}`);
   }
 }

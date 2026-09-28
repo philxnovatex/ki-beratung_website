@@ -39,7 +39,7 @@ Das Skript prüft:
 7. **Kontrast** nach WCAG AA für alle Text- und Größenkombinationen.
 8. **Kontaktformular und API**: Pflichtfelder, Datenschutz, Brevo-Payload,
    Fehlerfälle, Rate-Limit, Größenlimit, Schutz vor Mehrfachabsenden und Versand ohne JS.
-9. **Conversion-Events**: Calendly, alle Formulare und Quiz-Abschluss mit simuliertem
+9. **Conversion-Events**: Calendly, alle Formulare mit simuliertem
    Umami und simulierten API-Antworten; keine Formulareingaben in Event-Daten.
 10. **Website-Texte**: keine Gedankenstriche in HTML und eigenem JavaScript.
     Kommentare und Fremdbibliotheken sind ausgenommen.

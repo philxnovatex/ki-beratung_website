@@ -108,23 +108,19 @@ Endpunkten pro warmer Serverless-Instanz und ist kein globales Bot-Limit.
 | `form_complete` | `form: contact` | Brevo hat die Kontaktmail angenommen |
 | `form_complete` | `form: pilot` | Brevo hat die Pilotbuchung der Landingpage angenommen (Mail an uns) |
 | `form_start` | `form: pilot` | Erste Eingabe ins Buchungsformular, einmal pro Seitenaufruf. Zusammen mit `form_complete` ergibt das die Abbruchquote |
-| `form_complete` | `form: quiz_lead` | Quiz-Kontakt erfolgreich erfasst |
 | `form_complete` | `form: whitepaper` | Whitepaper-Anfrage erfolgreich erfasst |
 | `form_complete` | `form: newsletter` | Newsletter-Endpunkt bestätigt die Anmeldung, auch bei bereits vorhandenem Kontakt |
-| `quiz_complete` | keine | Alle 17 Fragen beantwortet und Auswertung berechnet, einmal pro Seitenaufruf |
 
 `location` unterscheidet `home_hero`, `home_case_study`, `home_demo`,
-`quiz_level_1`, `quiz_level_2`, `quiz_level_3`, `home_final`, `contact_calendar`
-und `services_final`. Die URL erfasst Umami mit seinem vorhandenen Tracker.
+`home_final`, `contact_calendar` und `services_final`. Die URL erfasst Umami mit seinem vorhandenen Tracker.
 Diese Werte bleiben bei Textänderungen der Buttons stabil.
 
 Im Umami-Dashboard für neuratex.de unter Events nach diesen Namen filtern.
 Bei `form_complete` nach `form`, bei `calendly_click` nach `location` aufschlüsseln.
 Ein Calendly-Klick misst den Wechsel zum Kalender, keine abgeschlossene Buchung.
-Quiz-Abschluss und anschließende Kontakterfassung werden getrennt gezählt.
 
-Es werden keine Namen, E-Mail-Adressen, Unternehmen, Nachrichten, einzelnen
-Quiz-Antworten oder Scores als Event-Daten gesendet. Das bestehende DNT-Verhalten
+Es werden keine Namen, E-Mail-Adressen, Unternehmen oder Nachrichten als
+Event-Daten gesendet. Das bestehende DNT-Verhalten
 bleibt erhalten. Bei fehlendem, blockiertem oder fehlerhaftem Tracker funktioniert
 die Website weiter; solche Aufrufe erscheinen nicht in Umami. Ereignisse werden
 nicht lokal gespeichert oder nachträglich in eine Warteschlange aufgenommen.

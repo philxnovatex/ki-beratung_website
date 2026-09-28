@@ -6,7 +6,7 @@
  * Bei einer Pilotbuchung geht zusätzlich eine feste Eingangsbestätigung an den Kunden.
  */
 const { validateOrigin, checkRateLimit, getClientIP, isValidEmail,
-  isBodyTooLarge, fetchWithTimeout, ALLOWED_ORIGINS } = require('./_shared/security');
+  isBodyTooLarge, fetchWithTimeout } = require('./_shared/security');
 
 // Eingangsbestätigung an den Kunden. Bewusst ohne Formularinhalte: Wer eine
 // fremde Adresse einträgt, kann darüber keinen eigenen Text verschicken.
@@ -80,8 +80,7 @@ module.exports = async function handler(req, res) {
     res.setHeader('Allow', 'POST, OPTIONS');
     return reply(405, 'method_not_allowed', 'Diese Methode wird nicht unterstützt.');
   }
-  // Origin-Fallback nur bei fehlendem Origin verwenden, nicht bei einem fremden.
-  if (req.headers.origin ? !ALLOWED_ORIGINS.includes(req.headers.origin) : !validateOrigin(req)) {
+  if (!validateOrigin(req)) {
     return reply(403, 'forbidden', 'Zugriff verweigert.');
   }
   if (isBodyTooLarge(req, 32_000) || isBodyTooLarge({ ...req, headers: {} }, 32_000)) {
