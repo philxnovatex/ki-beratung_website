@@ -44,6 +44,17 @@ async function brevoGrund(response) {
   }
 }
 
+// Nachrichten-ID einer angenommenen Mail für das Log. Damit lässt sich jede
+// Mail in Brevos Protokoll und beim Support eindeutig finden. Keine Inhalte.
+async function brevoId(response) {
+  try {
+    const { messageId = '' } = await response.json();
+    return String(messageId).slice(0, 120);
+  } catch {
+    return '';
+  }
+}
+
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   const contentType = (req.headers['content-type'] || '').split(';')[0].trim().toLowerCase();
@@ -171,6 +182,7 @@ module.exports = async function handler(req, res) {
       console.error('[contact] Brevo status:', response.status, await brevoGrund(response));
       return reply(502, 'api_error', 'Übermittlung fehlgeschlagen. Bitte versuchen Sie es später oder schreiben Sie uns per E-Mail.');
     }
+    console.log('[contact] Brevo angenommen, Mail an uns:', await brevoId(response));
   } catch {
     // Keine Nutzereingaben oder Provider-Antworten in Logs schreiben.
     console.error('[contact] Brevo request failed');
@@ -190,7 +202,8 @@ module.exports = async function handler(req, res) {
       textContent: EINGANGSBESTAETIGUNG,
     }, 4000);
     eingangsmail = response.status === 201;
-    if (!eingangsmail) console.error('[contact] Eingangsbestätigung Brevo status:', response.status, await brevoGrund(response));
+    if (eingangsmail) console.log('[contact] Brevo angenommen, Eingangsbestätigung:', await brevoId(response));
+    else console.error('[contact] Eingangsbestätigung Brevo status:', response.status, await brevoGrund(response));
   } catch {
     console.error('[contact] Eingangsbestätigung fehlgeschlagen');
   }
