@@ -46,7 +46,7 @@ Ablauf im Server:
    `CONTACT_RECIPIENT_EMAIL`. Sie enthält bewusst keine Formularinhalte,
    damit niemand über das Formular eigenen Text an fremde Adressen schicken
    kann. Zeitlimit 4 Sekunden, damit beide Aufrufe unter den 15 Sekunden des
-   Browsers bleiben. Scheitert sie, bleibt die Buchung gültig. Die Meldung auf
+   Browsers bleiben. Scheitert sie, bleibt die Buchungsanfrage eingegangen. Die Meldung auf
    der Seite verspricht dann keine Bestätigungsmail, und im Vercel-Log steht
    `[contact] Eingangsbestätigung ...`.
 
@@ -104,6 +104,7 @@ Endpunkten pro warmer Serverless-Instanz und ist kein globales Bot-Limit.
 | `calendly_click` | `location` | Klick auf einen Calendly-Link, einschließlich Tastaturaktivierung |
 | `form_complete` | `form: contact` | Brevo hat die Kontaktmail angenommen |
 | `form_complete` | `form: pilot` | Brevo hat die Pilotbuchung der Landingpage angenommen (Mail an uns) |
+| `form_start` | `form: pilot` | Erste Eingabe ins Buchungsformular, einmal pro Seitenaufruf. Zusammen mit `form_complete` ergibt das die Abbruchquote |
 | `form_complete` | `form: quiz_lead` | Quiz-Kontakt erfolgreich erfasst |
 | `form_complete` | `form: whitepaper` | Whitepaper-Anfrage erfolgreich erfasst |
 | `form_complete` | `form: newsletter` | Newsletter-Endpunkt bestätigt die Anmeldung, auch bei bereits vorhandenem Kontakt |

@@ -23,6 +23,36 @@ function checkCopy() {
   console.log('  OK    Website-Texte ohne Gedankenstriche (HTML und eigenes JavaScript)');
 }
 
+// Vercel-Vorschau: nur die eigene Adresse der Vorschau zusätzlich zulassen,
+// nie eine andere Vorschau. Das Modul liest die Umgebung beim Laden, daher
+// wird es hier mit gesetzten Variablen frisch geladen.
+function checkPreviewOrigin() {
+  const keys = ['VERCEL_ENV', 'VERCEL_URL', 'VERCEL_BRANCH_URL'];
+  const original = Object.fromEntries(keys.map(key => [key, process.env[key]]));
+  const modul = require.resolve('../api/_shared/security');
+  const laden = (env) => {
+    for (const key of keys) {
+      if (env[key] === undefined) delete process.env[key];
+      else process.env[key] = env[key];
+    }
+    delete require.cache[modul];
+    return require(modul).ALLOWED_ORIGINS;
+  };
+  try {
+    const vorschau = laden({ VERCEL_ENV: 'preview', VERCEL_URL: 'ki-beratung-website-abc123-team.vercel.app',
+      VERCEL_BRANCH_URL: 'ki-beratung-website-git-feat-team.vercel.app' });
+    assert.ok(vorschau.includes('https://ki-beratung-website-abc123-team.vercel.app'));
+    assert.ok(vorschau.includes('https://ki-beratung-website-git-feat-team.vercel.app'));
+    assert.ok(!vorschau.includes('https://andere-vorschau.vercel.app'));
+    assert.ok(!laden({ VERCEL_ENV: 'preview', VERCEL_URL: 'evil.example/x' }).some(o => o.includes('evil')));
+    const live = laden({ VERCEL_ENV: 'production', VERCEL_URL: 'ki-beratung-website-abc123-team.vercel.app' });
+    assert.deepEqual(live, ['https://neuratex.de', 'https://www.neuratex.de']);
+    console.log('  OK    Vorschau lässt nur ihre eigene Adresse zu, live nur neuratex.de');
+  } finally {
+    laden(original);
+  }
+}
+
 async function checkEndpoint() {
   const originalFetch = global.fetch;
   const keys = ['BREVO_API_KEY', 'BREVO_CONTACT_SENDER_EMAIL', 'CONTACT_RECIPIENT_EMAIL'];
@@ -104,7 +134,7 @@ async function checkEndpoint() {
     assert.ok(!/beispiel|Industriewartung/i.test(nativePilot.body), 'Kein Echo personenbezogener Daten');
     assert.equal(calls.length, 2);
     assert.ok(calls[0].textContent.includes('Website: www.beispiel.de'));
-    // Scheitert nur die Eingangsbestätigung, bleibt die Buchung gültig. Die
+    // Scheitert nur die Eingangsbestätigung, bleibt die Buchungsanfrage eingegangen. Die
     // Meldung verspricht dann keine Bestätigungsmail.
     const brevo = global.fetch;
     for (const zweiterAufruf of [async () => ({ status: 400 }), async () => { throw new Error('Simulierter Timeout'); }]) {
@@ -115,7 +145,7 @@ async function checkEndpoint() {
         return brevo(...args);
       };
       const ohneEingang = await request(pilot);
-      assert.equal(ohneEingang.statusCode, 200, 'Buchung gilt auch ohne Eingangsbestätigung');
+      assert.equal(ohneEingang.statusCode, 200, 'Buchungsanfrage bleibt ohne Eingangsbestätigung eingegangen');
       assert.doesNotMatch(ohneEingang.body.message, /Eingangsbestätigung/);
     }
     global.fetch = brevo;
@@ -251,7 +281,8 @@ async function checkBrowser(browser, base) {
     assert.deepEqual(payload, { ...buchung, domain: 'www.beispiel.de', message: '', wettbewerber: '',
       herkunft: 'utm_source=chatgpt; utm_medium=paid; utm_campaign=pilot-audit', website: '',
       unternehmer: true, referenz: true, privacy: true });
-    assert.deepEqual(await events(), [['form_complete', { form: 'pilot' }]]);
+    // Formularbeginn genau einmal, trotz vieler Eingaben, für die Abbruchquote.
+    assert.deepEqual(await events(), [['form_start', { form: 'pilot' }], ['form_complete', { form: 'pilot' }]]);
     assert.equal(await page.locator('.kopieren-knopf').count(), 1);
     fs.mkdirSync(path.join(__dirname, '../.cache/landing-qa'), { recursive: true });
     for (const width of [390, 768, 1440]) {
@@ -355,6 +386,7 @@ async function checkBrowser(browser, base) {
 module.exports = async function checkConversions(browser, base) {
   console.log('\n7. Kontaktformular, Conversion-Tracking und Website-Texte');
   checkCopy();
+  checkPreviewOrigin();
   await checkEndpoint();
   await checkBrowser(browser, base);
 };

@@ -17,7 +17,7 @@ const EINGANGSBESTAETIGUNG = [
   '',
   'So geht es weiter:',
   '1. Wir prüfen Ihre Angaben und senden Ihnen innerhalb eines Werktags die Auftragsbestätigung per E-Mail. Mit ihr kommt der Auftrag zustande.',
-  '2. Innerhalb von drei Werktagen nach der Auftragsbestätigung erhalten Sie die schriftliche Auswertung.',
+  '2. Die schriftliche Auswertung erhalten Sie innerhalb von drei Werktagen, gezählt ab dem Werktag nach der Auftragsbestätigung.',
   '3. Mit der Auswertung erhalten Sie die Rechnung, zahlbar innerhalb von 14 Tagen. Den Termin für die Besprechung der Ergebnisse stimmen wir mit Ihnen ab.',
   '',
   'Haben Sie diese Buchung nicht selbst vorgenommen, antworten Sie bitte kurz auf diese E-Mail. Wir löschen die Angaben dann.',
@@ -165,7 +165,7 @@ module.exports = async function handler(req, res) {
   }
   if (!pilot) return reply(200, null, 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.');
   // Die Buchung liegt jetzt bei uns. Scheitert die Eingangsbestätigung, bleibt
-  // die Buchung gültig, die Meldung verspricht dann nur keine Bestätigungsmail.
+  // die Buchungsanfrage eingegangen, die Meldung verspricht dann nur keine Bestätigungsmail.
   // Kurzes Zeitlimit, damit beide Aufrufe unter den 15 Sekunden des Browsers bleiben.
   let eingangsmail = false;
   try {

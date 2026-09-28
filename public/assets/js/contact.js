@@ -31,6 +31,15 @@
         herkunft.value = wert || 'direkt oder unbekannt';
     }
 
+    // Formularbeginn, nur auf Formularen mit data-track-start (Pilotbuchung).
+    // Zusammen mit form_complete ergibt das die Abbruchquote. Einmal pro
+    // Seitenaufruf, bei der ersten Eingabe, ohne Inhalte.
+    if ('trackStart' in form.dataset) {
+        form.addEventListener('input', () => {
+            window.neuratexTrack?.('form_start', { form: form.dataset.form || 'contact' });
+        }, { once: true });
+    }
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (sending || !form.reportValidity()) return;
