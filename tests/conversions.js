@@ -60,23 +60,65 @@ async function checkEndpoint() {
     assert.deepEqual(calls[0].replyTo, { email: valid.email, name: valid.name });
     assert.ok(calls[0].textContent.includes(valid.message));
     assert.equal(calls[0].htmlContent, undefined);
-    // Pilotanfrage der Landingpage: Website-Adresse statt Nachricht, Herkunft
-    // der Anzeige in der Mail. Die Spamfalle heißt weiterhin "website".
-    const pilot = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH',
-      domain: 'www.beispiel.de', herkunft: 'utm_source=google; utm_campaign=pilot', privacy: true };
+    // Pilotbuchung der Landingpage: Website-Adresse statt Nachricht, Angaben für
+    // Messung und Rechnung, Herkunft der Anzeige. Danach geht eine feste
+    // Eingangsbestätigung an den Kunden. Die Spamfalle heißt weiterhin "website".
+    const pilot = { name: 'Alex Test', email: 'Alex@Example.com', company: 'Beispiel GmbH',
+      domain: 'www.beispiel.de', herkunft: 'utm_source=chatgpt; utm_campaign=pilot',
+      leistungen: 'Industriewartung\nErsatzteile', kunden: 'Maschinenbauer, 50 bis 500 Mitarbeitende',
+      markt: 'DACH', wettbewerber: '', anschrift: 'Musterstraße 1\n40210 Düsseldorf',
+      unternehmer: true, referenz: true, privacy: true };
     calls = [];
-    assert.match((await request(pilot)).body.message, /innerhalb eines Werktags/);
-    assert.match(calls[0].subject, /Pilotanfrage/);
-    assert.ok(calls[0].textContent.includes('Website: www.beispiel.de'));
-    assert.ok(calls[0].textContent.includes('Herkunft: utm_source=google; utm_campaign=pilot'));
-    assert.ok(!calls[0].textContent.includes('Nachricht:'));
+    const gebucht = await request(pilot);
+    assert.equal(gebucht.statusCode, 200);
+    assert.match(gebucht.body.message, /Eingangsbestätigung/);
+    assert.equal(calls.length, 2, 'Buchung an uns, Eingangsbestätigung an den Kunden');
+    const [intern, eingang] = calls;
+    assert.deepEqual(intern.to, [{ email: 'philippkoch@neuratex.de' }]);
+    assert.equal(intern.replyTo.email, 'alex@example.com');
+    assert.equal(intern.subject, 'Neue Pilotbuchung AI Visibility Audit: Beispiel GmbH');
+    for (const zeile of ['Website: www.beispiel.de', 'Wofür empfohlen werden:\nIndustriewartung\nErsatzteile',
+      'Kunden: Maschinenbauer, 50 bis 500 Mitarbeitende', 'Markt: DACH', 'keine Angabe, aus den Antworten ermitteln',
+      'Rechnungsanschrift:\nBeispiel GmbH\nMusterstraße 1\n40210 Düsseldorf', 'Bucht als Unternehmer: ja',
+      'Referenz und Fallstudie nach Freigabe: einverstanden', 'Herkunft: utm_source=chatgpt; utm_campaign=pilot']) {
+      assert.ok(intern.textContent.includes(zeile), 'Mail an uns enthält: ' + zeile);
+    }
+    assert.ok(!intern.textContent.includes('Nachricht:'));
+    assert.deepEqual(eingang.to, [{ email: 'alex@example.com' }]);
+    assert.deepEqual(eingang.replyTo, { email: 'philippkoch@neuratex.de', name: 'Philipp Koch' });
+    assert.equal(eingang.htmlContent, undefined);
+    for (const wert of ['Alex', 'Beispiel', 'beispiel.de', 'Industriewartung', 'Maschinenbauer', 'Musterstraße']) {
+      assert.ok(!eingang.textContent.includes(wert) && !eingang.subject.includes(wert), 'Keine Formularinhalte in der Eingangsbestätigung: ' + wert);
+    }
+    calls = [];
     assert.equal((await request({ ...pilot, herkunft: { x: 1 } })).statusCode, 200, 'Unbrauchbare Herkunft weist niemanden ab');
-    assert.ok(calls[1].textContent.includes('Herkunft: keine Angabe'));
+    assert.ok(calls[0].textContent.includes('Herkunft: keine Angabe'));
+    calls = [];
     assert.equal((await request({ ...pilot, herkunft: 'x\r\nBcc: y@example.com' })).statusCode, 200);
-    assert.ok(calls[2].textContent.includes('Herkunft: x Bcc: y@example.com'));
-    const nativePilot = await request(new URLSearchParams({ ...pilot, privacy: 'on' }).toString(), { headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+    assert.ok(calls[0].textContent.includes('Herkunft: x Bcc: y@example.com'));
+    calls = [];
+    const nativePilot = await request(new URLSearchParams({ ...pilot, unternehmer: 'on', referenz: 'on', privacy: 'on' }).toString(), { headers: { 'content-type': 'application/x-www-form-urlencoded' } });
     assert.equal(nativePilot.statusCode, 200);
-    assert.ok(calls[3].textContent.includes('Website: www.beispiel.de'));
+    assert.match(nativePilot.body, /Vielen Dank für Ihre Buchung/);
+    assert.match(nativePilot.body, /ki-sichtbarkeit\.html#pilot-anfrage/);
+    assert.ok(!/beispiel|Industriewartung/i.test(nativePilot.body), 'Kein Echo personenbezogener Daten');
+    assert.equal(calls.length, 2);
+    assert.ok(calls[0].textContent.includes('Website: www.beispiel.de'));
+    // Scheitert nur die Eingangsbestätigung, bleibt die Buchung gültig. Die
+    // Meldung verspricht dann keine Bestätigungsmail.
+    const brevo = global.fetch;
+    for (const zweiterAufruf of [async () => ({ status: 400 }), async () => { throw new Error('Simulierter Timeout'); }]) {
+      let erster = true;
+      global.fetch = async (...args) => {
+        if (!erster) return zweiterAufruf();
+        erster = false;
+        return brevo(...args);
+      };
+      const ohneEingang = await request(pilot);
+      assert.equal(ohneEingang.statusCode, 200, 'Buchung gilt auch ohne Eingangsbestätigung');
+      assert.doesNotMatch(ohneEingang.body.message, /Eingangsbestätigung/);
+    }
+    global.fetch = brevo;
     calls = [];
     for (const patch of [ { name: '' }, { name: ' '.repeat(3) }, { name: 'A'.repeat(121) },
       { name: 'A\r\nBcc: x@example.com' }, { email: 'invalid' }, { email: ['x@example.com'] },
@@ -85,7 +127,11 @@ async function checkEndpoint() {
       assert.equal((await request({ ...valid, ...patch })).statusCode, 400, JSON.stringify(patch));
     }
     for (const patch of [ { company: '' }, { company: '  ' }, { domain: 'a\nb' }, { domain: 'x'.repeat(201) },
-      { domain: '' }, { domain: ['www.beispiel.de'] }, { privacy: false }, { website: 'https://spam.example' } ]) {
+      { domain: '' }, { domain: ['www.beispiel.de'] }, { privacy: false }, { website: 'https://spam.example' },
+      { leistungen: '' }, { leistungen: '  ' }, { leistungen: 'x'.repeat(601) }, { leistungen: ['x'] },
+      { kunden: '' }, { kunden: 'a\nb' }, { markt: '' }, { markt: {} }, { anschrift: '' },
+      { anschrift: 'x'.repeat(301) }, { anschrift: '\u0000' }, { wettbewerber: 'x'.repeat(601) },
+      { unternehmer: false }, { unternehmer: 'on' }, { referenz: undefined }, { referenz: 'true' } ]) {
       assert.equal((await request({ ...pilot, ...patch })).statusCode, 400, 'Pilot ' + JSON.stringify(patch));
     }
     for (const body of [null, [], 'malformed']) assert.equal((await request(body)).statusCode, 400);
@@ -112,7 +158,7 @@ async function checkEndpoint() {
     assert.equal((await request()).statusCode, 502);
     global.fetch = async () => { throw new Error('Simulierter Timeout'); };
     assert.equal((await request()).statusCode, 502);
-    console.log('  OK    Kontakt-API: Versandpayload, Validierung, Datenschutz, Origin, Größenlimit, Rate-Limit, Fehler und Versand ohne JS');
+    console.log('  OK    Kontakt-API: Versandpayload, Pilotbuchung mit Eingangsbestätigung, Validierung, Datenschutz, Origin, Größenlimit, Rate-Limit, Fehler und Versand ohne JS');
   } finally {
     global.fetch = originalFetch;
     for (const key of keys) {
@@ -186,23 +232,25 @@ async function checkBrowser(browser, base) {
     // Dasselbe Skript wie die Kontaktseite oben. Bewusst ohne ".html": Der
     // lokale serve-Server leitet .html auf die saubere Adresse um und verwirft
     // dabei die Parameter. Vercel liefert .html direkt aus, dort bleiben sie.
-    await open('/pages/ki-sichtbarkeit?utm_source=google&utm_medium=cpc&utm_campaign=pilot');
+    await open('/pages/ki-sichtbarkeit?utm_source=chatgpt&utm_medium=paid&utm_campaign=pilot-audit');
     requests = 0;
-    await page.locator('#contact-name').fill('Alex Test');
-    await page.locator('#contact-email').fill('alex@example.com');
-    await page.locator('#contact-company').fill('Beispiel GmbH');
-    await page.locator('#contact-privacy').check();
+    const buchung = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH',
+      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', markt: 'DACH', anschrift: 'Musterstraße 1, 40210 Düsseldorf' };
+    for (const [key, value] of Object.entries(buchung)) await page.locator('#contact-' + key).fill(value);
+    for (const key of ['unternehmer', 'referenz', 'privacy']) await page.locator('#contact-' + key).check();
     await page.locator('#contact-form button').click();
     assert.equal(requests, 0, 'Website-Adresse ist Pflicht');
     await page.locator('#contact-domain').fill('www.beispiel.de');
+    await page.locator('#contact-referenz').uncheck();
+    await page.locator('#contact-form button').click();
+    assert.equal(requests, 0, 'Einverständnis zu Referenz und Fallstudie ist Pflicht');
+    await page.locator('#contact-referenz').check();
     await page.locator('#contact-form button').click();
     await page.waitForFunction(() => document.querySelector('#contact-status').dataset.state === 'success');
     assert.equal(requests, 1);
-    assert.equal(payload.domain, 'www.beispiel.de');
-    assert.equal(payload.company, 'Beispiel GmbH');
-    assert.equal(payload.herkunft, 'utm_source=google; utm_medium=cpc; utm_campaign=pilot');
-    assert.equal(payload.website, '');
-    assert.equal(payload.privacy, true);
+    assert.deepEqual(payload, { ...buchung, domain: 'www.beispiel.de', message: '', wettbewerber: '',
+      herkunft: 'utm_source=chatgpt; utm_medium=paid; utm_campaign=pilot-audit', website: '',
+      unternehmer: true, referenz: true, privacy: true });
     assert.deepEqual(await events(), [['form_complete', { form: 'pilot' }]]);
     assert.equal(await page.locator('.kopieren-knopf').count(), 1);
     fs.mkdirSync(path.join(__dirname, '../.cache/landing-qa'), { recursive: true });
@@ -214,7 +262,7 @@ async function checkBrowser(browser, base) {
       const cta = await page.locator('.av-hero .cta-button').boundingBox();
       assert.ok(cta.y + cta.height <= 844, `Landingpage ${width}px: Button im ersten Bildschirm`);
     }
-    console.log('  OK    Landingpage: Pilotanfrage mit Website-Adresse und UTM-Herkunft, Event, Button im ersten Bildschirm, kein Überlauf');
+    console.log('  OK    Landingpage: Pilotbuchung mit allen Pflichtangaben und UTM-Herkunft, Event, Button im ersten Bildschirm, kein Überlauf');
     for (const url of ['/', '/pages/kontakt.html', '/pages/leistungen.html']) {
       await open(url);
       assert.equal(await page.locator('a[href^="https://calendly.com/"]:not([data-calendly-location])').count(), 0);
@@ -291,17 +339,16 @@ async function checkBrowser(browser, base) {
     assert.equal(body.get('privacy'), 'on');
     await noJs.goto(base + '/pages/ki-sichtbarkeit.html');
     assert.equal(await noJs.locator('.kopieren-knopf').count(), 0, 'Ohne JavaScript kein funktionsloser Knopf');
-    await noJs.locator('#contact-name').fill('Alex Test');
-    await noJs.locator('#contact-email').fill('alex@example.com');
-    await noJs.locator('#contact-company').fill('Beispiel GmbH');
-    await noJs.locator('#contact-domain').fill('www.beispiel.de');
-    await noJs.locator('#contact-privacy').check();
+    const buchung = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH', domain: 'www.beispiel.de',
+      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', markt: 'DACH', anschrift: 'Musterstraße 1, 40210 Düsseldorf' };
+    for (const [key, value] of Object.entries(buchung)) await noJs.locator('#contact-' + key).fill(value);
+    for (const key of ['unternehmer', 'referenz', 'privacy']) await noJs.locator('#contact-' + key).check();
     await noJs.locator('#contact-form button').click();
     await noJs.waitForURL('**/api/contact');
-    assert.equal(body.get('domain'), 'www.beispiel.de');
-    assert.equal(body.get('company'), 'Beispiel GmbH');
+    for (const [key, value] of Object.entries(buchung)) assert.equal(body.get(key), value, key);
+    for (const key of ['unternehmer', 'referenz', 'privacy']) assert.equal(body.get(key), 'on', key);
     assert.equal(body.get('website'), '');
-    console.log('  OK    Kontaktformular und Pilotanfrage senden auch ohne JavaScript');
+    console.log('  OK    Kontaktformular und Pilotbuchung senden auch ohne JavaScript');
   } finally { await noJs.close(); }
 }
 

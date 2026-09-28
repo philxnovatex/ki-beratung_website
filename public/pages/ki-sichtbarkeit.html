@@ -66,8 +66,8 @@
     <main id="main-content">
 
         <!-- ══ Einstieg ══════════════════════════════════════════════════════
-             Ziel der Seite: Ein Besucher aus einer Anzeige fragt einen von drei
-             Pilotplätzen an. Überschrift, drei Sätze, ein einziger Button. Auf
+             Ziel der Seite: Ein Besucher aus einer Anzeige bucht einen von drei
+             Pilotplätzen. Überschrift, drei Sätze, ein einziger Button. Auf
              dem Telefon muss der Button im ersten Bildschirm stehen. -->
         <section class="av-hero" aria-labelledby="hero-heading">
             <div class="container">
@@ -76,7 +76,7 @@
                 <p class="av-hero__intro">Immer mehr Kaufentscheidungen beginnen mit einer Frage an ChatGPT, Claude oder Gemini. Diese Systeme nennen dabei konkrete Anbieter.</p>
                 <p class="av-hero__lead">Wir messen, ob Sie dazugehören und wer stattdessen genannt wird.</p>
                 <div class="av-actions">
-                    <a href="#pilot-anfrage" class="cta-button">Pilotplatz für 500 Euro netto anfragen</a>
+                    <a href="#pilot-anfrage" class="cta-button">Pilotplatz für 500 Euro netto buchen</a>
                 </div>
                 <p class="av-note">Drei Pilotplätze. Danach kostet der Audit 1.900 Euro netto.</p>
             </div>
@@ -256,7 +256,7 @@
                              entsprechend. Sind alle vergeben, Angebot, Einstieg und
                              Formular auf den Preis nach der Pilotphase umstellen. -->
                         <p class="av-price__plaetze">Drei Plätze verfügbar</p>
-                        <a href="#pilot-anfrage" class="cta-button">Pilotplatz anfragen</a>
+                        <a href="#pilot-anfrage" class="cta-button">Pilotplatz buchen</a>
                     </div>
                 </div>
             </div>
@@ -269,7 +269,7 @@
             <div class="container">
                 <div class="av-guarantee">
                     <h2 id="absicherung-heading">Sie zahlen erst, wenn die Auswertung vorliegt</h2>
-                    <p>Keine Vorkasse. Wir klären den Umfang, bestätigen ihn schriftlich und liefern die schriftliche Auswertung innerhalb von drei Werktagen. Die Rechnung kommt erst danach.</p>
+                    <p>Keine Vorkasse. Sie buchen über das Formular, wir bestätigen den Auftrag schriftlich und liefern die schriftliche Auswertung innerhalb von drei Werktagen. Die Rechnung kommt erst danach.</p>
                 </div>
             </div>
         </section>
@@ -323,11 +323,14 @@
             </div>
         </section>
 
-        <!-- ══ Anfrage ═══════════════════════════════════════════════════════
-             Das einzige Formular, alle Buttons springen hierher. Es nutzt
+        <!-- ══ Buchung ═══════════════════════════════════════════════════════
+             Das einzige Formular, alle Buttons springen hierher. Der Besucher
+             bucht verbindlich, ohne Vorgespräch. Links steht die kurze
+             Leistungsbeschreibung, sie ist die Vertragsgrundlage. Das Formular
+             fragt alles ab, was Messung und Rechnung brauchen. Es nutzt
              contact.js und /api/contact wie die Kontaktseite. Unterschiede:
              "domain" statt "message" (der Server erkennt daran die
-             Pilotanfrage), "herkunft" trägt die UTM-Parameter der Anzeige.
+             Pilotbuchung), "herkunft" trägt die UTM-Parameter der Anzeige.
              "website" ist die Spamfalle und bleibt unverändert. Ohne
              JavaScript sendet das Formular über action und method. -->
         <section id="pilot-anfrage" class="av-request" aria-labelledby="anfrage-heading">
@@ -335,18 +338,22 @@
                 <div class="av-request__grid">
                     <div>
                         <p class="av-eyebrow">Pilotplatz</p>
-                        <h2 id="anfrage-heading">Pilotplatz anfragen</h2>
-                        <ul class="av-request__list">
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Pilotpreis 500 Euro netto, nach der Pilotphase 1.900 Euro netto</li>
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Gegenleistung: namentliche Referenz und eine Fallstudie, die Sie vorher freigeben</li>
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Schriftliche Auswertung innerhalb von drei Werktagen nach Auftragsbestätigung</li>
-                            <li><i class="icon icon-check" aria-hidden="true"></i>Rechnung erst mit der fertigen Auswertung</li>
-                        </ul>
+                        <h2 id="anfrage-heading">Pilotplatz buchen</h2>
+                        <p class="av-request__intro">Ohne Vorgespräch: Sie tragen ein, was wir für die Messung brauchen, wir bestätigen und legen los.</p>
+                        <h3 class="av-terms__heading" id="leistung-heading">Das buchen Sie</h3>
+                        <dl class="av-terms" aria-labelledby="leistung-heading">
+                            <div><dt>Leistung</dt><dd>AI Visibility Audit wie auf dieser Seite beschrieben: 36 Kaufentscheidungsfragen, gemessen in ChatGPT, Claude und Gemini, schriftliche Auswertung mit priorisierter Maßnahmenliste und eine Besprechung der Ergebnisse von etwa einer Stunde.</dd></div>
+                            <div><dt>Preis</dt><dd>500 Euro netto statt 1.900 Euro netto nach der Pilotphase.</dd></div>
+                            <div><dt>Gegenleistung</dt><dd>Wir dürfen Ihr Unternehmen namentlich als Referenz nennen und eine Fallstudie veröffentlichen. Was veröffentlicht wird, geben Sie vorher schriftlich frei.</dd></div>
+                            <div><dt>Auftrag</dt><dd>Der Auftrag kommt mit unserer Auftragsbestätigung per E-Mail zustande, in der Regel innerhalb eines Werktags. Passt der Audit nicht zu Ihrem Unternehmen oder sind alle Plätze vergeben, sagen wir ab. Dann entstehen keine Kosten.</dd></div>
+                            <div><dt>Lieferung</dt><dd>Schriftliche Auswertung innerhalb von drei Werktagen nach der Auftragsbestätigung.</dd></div>
+                            <div><dt>Zahlung</dt><dd>Keine Vorkasse. Die Rechnung kommt mit der fertigen Auswertung und ist innerhalb von 14 Tagen zahlbar.</dd></div>
+                        </dl>
                     </div>
 
                     <div class="av-form-card">
                         <h3 id="anfrage-form-heading">Ihre Angaben</h3>
-                        <p class="contact-hint" id="anfrage-required">Alle Felder sind Pflichtfelder.</p>
+                        <p class="contact-hint" id="anfrage-required">Alle Felder ohne den Zusatz „optional“ sind Pflichtfelder.</p>
                         <form id="contact-form" data-form="pilot" action="/api/contact" method="post" aria-labelledby="anfrage-heading" aria-describedby="anfrage-required">
                             <div class="contact-fields">
                                 <div class="contact-field">
@@ -368,17 +375,52 @@
                                     <input id="contact-domain" name="domain" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="200" required>
                                 </div>
                             </div>
+                            <div class="contact-field">
+                                <label for="contact-leistungen">Wofür möchten Sie empfohlen werden?</label>
+                                <p class="contact-field__hint" id="hint-leistungen">Ein bis drei Leistungen oder Produkte, so wie Ihre Kunden danach fragen würden.</p>
+                                <textarea id="contact-leistungen" name="leistungen" rows="3" maxlength="600" required aria-describedby="hint-leistungen"></textarea>
+                            </div>
+                            <div class="contact-fields">
+                                <div class="contact-field">
+                                    <label for="contact-kunden">Wer sind Ihre Kunden?</label>
+                                    <p class="contact-field__hint" id="hint-kunden">Branche und Unternehmensgröße</p>
+                                    <input id="contact-kunden" name="kunden" maxlength="300" required aria-describedby="hint-kunden">
+                                </div>
+                                <div class="contact-field">
+                                    <label for="contact-markt">Markt</label>
+                                    <p class="contact-field__hint" id="hint-markt">Deutschland, DACH oder Region</p>
+                                    <input id="contact-markt" name="markt" maxlength="120" required aria-describedby="hint-markt">
+                                </div>
+                            </div>
+                            <div class="contact-field">
+                                <label for="contact-wettbewerber">Wettbewerber zum Vergleich (optional)</label>
+                                <p class="contact-field__hint" id="hint-wettbewerber">Bis zu fünf. Ohne Angabe ermitteln wir sie aus den Antworten der KI-Systeme.</p>
+                                <textarea id="contact-wettbewerber" name="wettbewerber" rows="2" maxlength="600" aria-describedby="hint-wettbewerber"></textarea>
+                            </div>
+                            <div class="contact-field">
+                                <label for="contact-anschrift">Rechnungsanschrift</label>
+                                <p class="contact-field__hint" id="hint-anschrift">Straße, Postleitzahl und Ort. Den Firmennamen übernehmen wir aus dem Feld Unternehmen.</p>
+                                <textarea id="contact-anschrift" name="anschrift" rows="2" maxlength="300" autocomplete="street-address" required aria-describedby="hint-anschrift"></textarea>
+                            </div>
                             <input type="hidden" id="contact-herkunft" name="herkunft" value="">
                             <div class="contact-honeypot" aria-hidden="true">
                                 <label for="contact-website">Dieses Feld bitte leer lassen</label>
                                 <input id="contact-website" name="website" tabindex="-1" autocomplete="off">
                             </div>
                             <div class="contact-privacy">
-                                <input id="contact-privacy" name="privacy" type="checkbox" required>
-                                <label for="contact-privacy">Ich habe die <a href="legal/datenschutz.html#kontaktformular" target="_blank" rel="noopener noreferrer">Datenschutzhinweise (öffnet in neuem Tab)</a> zur Verarbeitung meiner Angaben für die Bearbeitung meiner Anfrage zur Kenntnis genommen.</label>
+                                <input id="contact-unternehmer" name="unternehmer" type="checkbox" required>
+                                <label for="contact-unternehmer">Ich buche im Namen meines Unternehmens und nicht als Verbraucher.</label>
                             </div>
-                            <button type="submit" class="cta-button">Pilotplatz anfragen</button>
-                            <p class="av-form-note">Sie gehen damit noch keine Verpflichtung ein. Wir melden uns innerhalb eines Werktags und klären den Umfang. Die Rechnung kommt erst mit der fertigen Auswertung.</p>
+                            <div class="contact-privacy">
+                                <input id="contact-referenz" name="referenz" type="checkbox" required>
+                                <label for="contact-referenz">Ich bin einverstanden, dass Neuratex AI unser Unternehmen als Referenz nennt und eine Fallstudie veröffentlicht, nachdem wir den Inhalt schriftlich freigegeben haben.</label>
+                            </div>
+                            <div class="contact-privacy">
+                                <input id="contact-privacy" name="privacy" type="checkbox" required>
+                                <label for="contact-privacy">Ich habe die <a href="legal/datenschutz.html#pilotbuchung" target="_blank" rel="noopener noreferrer">Datenschutzhinweise (öffnet in neuem Tab)</a> zur Verarbeitung meiner Angaben für die Bearbeitung meiner Buchung zur Kenntnis genommen.</label>
+                            </div>
+                            <button type="submit" class="cta-button">Pilotplatz verbindlich buchen</button>
+                            <p class="av-form-note">Sie erhalten eine Eingangsbestätigung per E-Mail. Der Auftrag kommt mit unserer Auftragsbestätigung zustande, in der Regel innerhalb eines Werktags. Die Rechnung kommt erst mit der fertigen Auswertung.</p>
                             <p id="contact-status" class="contact-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
                         </form>
                     </div>

@@ -5,16 +5,18 @@
     const button = form.querySelector('button[type="submit"]');
     const status = document.getElementById('contact-status');
     // Die Beschriftung kommt aus dem Markup, nicht aus diesem Skript. Auf der
-    // Seite zur KI-Sichtbarkeit heisst der Schalter "AI Visibility Audit
-    // anfragen"; fest verdrahtetes "Nachricht senden" haette ihn nach dem
+    // Seite zur KI-Sichtbarkeit heisst der Schalter "Pilotplatz verbindlich
+    // buchen"; fest verdrahtetes "Nachricht senden" haette ihn nach dem
     // ersten Absenden stillschweigend umbenannt.
     const beschriftung = button.textContent;
     let sending = false;
 
     // Herkunft des Besuchs fuer die Auswertung von Kampagnen, nur auf Formularen
     // mit dem verborgenen Feld "herkunft". Erfasst werden ausschliesslich die
-    // UTM-Parameter der Anzeige. Sie bleiben fuer die Sitzung erhalten, falls
-    // der Besucher die Seite ohne Parameter neu laedt.
+    // UTM-Parameter der Anzeige. Bewusst nur aus dem aktuellen Aufruf und ohne
+    // sessionStorage: Speichern auf dem Endgeraet fuer die Kampagnenauswertung
+    // ist nicht unbedingt erforderlich (Paragraf 25 TDDDG) und braeuchte eine
+    // Einwilligung. Das Formular steht auf derselben Seite wie der Einstieg.
     const herkunft = form.elements.herkunft;
     if (herkunft) {
         const params = new URLSearchParams(location.search);
@@ -22,10 +24,6 @@
             .filter((key) => params.get(key))
             .map((key) => `${key}=${params.get(key).slice(0, 80)}`)
             .join('; ');
-        try {
-            if (wert) sessionStorage.setItem('neuratex-herkunft', wert);
-            else wert = sessionStorage.getItem('neuratex-herkunft') || '';
-        } catch { /* Ohne Speicher zaehlt nur der aktuelle Aufruf. */ }
         if (!wert) {
             try { wert = document.referrer ? 'Verweis von ' + new URL(document.referrer).hostname : ''; }
             catch { wert = ''; }
@@ -53,14 +51,20 @@
             company: text('company'), message: text('message'),
             privacy: fields.get('privacy') === 'on', website: fields.get('website'),
         };
-        // Nur die Landingpage hat diese Felder. Fehlen sie, bleibt die Anfrage wie bisher.
-        for (const key of ['domain', 'herkunft']) if (fields.has(key)) daten[key] = text(key);
+        // Nur die Pilotbuchung der Landingpage hat diese Felder. Fehlen sie,
+        // bleibt die Anfrage der Kontaktseite wie bisher.
+        for (const key of ['domain', 'herkunft', 'leistungen', 'kunden', 'markt', 'wettbewerber', 'anschrift']) {
+            if (fields.has(key)) daten[key] = text(key);
+        }
+        for (const key of ['unternehmer', 'referenz']) {
+            if (form.elements[key]) daten[key] = fields.get(key) === 'on';
+        }
         sending = true;
         button.disabled = true;
         button.textContent = 'Wird gesendet…';
         form.setAttribute('aria-busy', 'true');
         status.dataset.state = 'pending';
-        status.textContent = 'Ihre Nachricht wird übermittelt.';
+        status.textContent = 'Ihre Angaben werden übermittelt.';
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 15000);
         try {

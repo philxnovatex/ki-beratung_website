@@ -539,9 +539,16 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
     gap: var(--space-12);
-    align-items: center;
+    align-items: start;
 }
 .av-request__grid h2 { text-align: left; margin-bottom: var(--space-4); }
+/* Kurze Leistungsbeschreibung neben dem Buchungsformular. Sie ist die
+   Vertragsgrundlage der Buchung und muss zur Auftragsbestätigung passen. */
+.av-terms__heading { font-size: var(--text-lg); margin-bottom: var(--space-4); }
+.av-terms { margin: 0; display: grid; gap: var(--space-4); }
+.av-terms div { padding-left: var(--space-4); border-left: 2px solid var(--accent); }
+.av-terms dt { color: var(--text-strong); font-weight: var(--weight-bold); font-size: var(--text-sm); }
+.av-terms dd { margin: 0; color: var(--text-body); font-size: var(--text-sm); }
 .av-request__intro { color: var(--text-body); margin-bottom: var(--space-6); }
 .av-request__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
 .av-request__list li {
@@ -567,6 +574,18 @@
     box-shadow: var(--shadow-md);
 }
 .av-form-card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
+/* Hinweis zwischen Beschriftung und Feld, per aria-describedby verknuepft. */
+.av-form-card .contact-field__hint {
+    max-width: none;
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+/* Zwei Felder nebeneinander mit unterschiedlich langen Hinweisen: Das Feld
+   steht unten, damit beide Eingaben auf einer Linie liegen. */
+.av-form-card .contact-fields .contact-field:has(.contact-field__hint) {
+    grid-template-rows: auto 1fr auto;
+}
 /* Haelt den naechsten Schritt klein: keine Verpflichtung, Rechnung erst nach
    Lieferung. Steht direkt unter dem Button, dort wird entschieden. */
 .av-form-note {
