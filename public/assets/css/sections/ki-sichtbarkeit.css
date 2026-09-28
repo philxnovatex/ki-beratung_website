@@ -68,6 +68,9 @@
 .lp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); }
 .lp-textlink { font-weight: var(--weight-bold); text-decoration: none; }
 .lp-textlink::after { content: " \2193"; }
+/* Preis und Referenzbedingung direkt unter dem Button, damit der Preis nie
+   ohne seine Bedingung steht. */
+.lp-pricenote { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); max-width: 34rem; }
 .lp-facts { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: var(--text-strong); font-size: var(--text-sm); }
 .lp-facts li { display: flex; align-items: center; gap: var(--space-2); }
 .lp-facts li::before {
@@ -147,10 +150,11 @@
 .rp-table thead th:first-child { text-align: left; }
 .rp-table tbody th { text-align: left; font-weight: var(--weight-regular); color: var(--text-strong); }
 .rp-table td { text-align: center; width: 88px; }
-.rp-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; }
-.rp-dot--rec { background: var(--lp-good); }
-.rp-dot--men { border: 2px solid var(--accent); }
-.rp-dot--no { width: 12px; height: 2px; border-radius: 0; background: rgba(159, 179, 217, .45); }
+/* Zelle je Frage und System: in wie vielen von 3 Antworten genannt.
+   Gruen heisst zusaetzlich mindestens einmal empfohlen. */
+.rp-cell { display: inline-block; min-width: 2.6em; padding: 2px 6px; border-radius: 6px; font-style: normal; font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; color: var(--accent); background: var(--lp-warn-soft); }
+.rp-cell--rec { color: var(--lp-good); background: var(--lp-good-soft); }
+.rp-cell--no { color: var(--text-muted); background: transparent; font-weight: var(--weight-regular); }
 .rp-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); font-size: var(--text-xs); color: var(--text-muted); }
 .rp-legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
 
@@ -222,17 +226,17 @@
 .lp-field input::placeholder, .lp-field textarea::placeholder { color: #8a99ad; }
 .lp-field input:focus-visible, .lp-field select:focus-visible, .lp-field textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .lp-optional { margin-bottom: var(--space-3); font-size: var(--text-sm); }
-.lp-optional summary, .lp-terms summary { cursor: pointer; color: var(--text-strong); font-weight: var(--weight-bold); }
+.lp-optional summary { cursor: pointer; color: var(--text-strong); font-weight: var(--weight-bold); }
 .lp-optional[open] summary { margin-bottom: var(--space-3); }
 .lp-check { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--text-sm); color: var(--text-body); margin: var(--space-2) 0 var(--space-4); cursor: pointer; }
 .lp-check input { flex: none; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
 .lp-form .cta-button { display: block; width: 100%; text-align: center; font-size: var(--text-md); }
 .lp-form .cta-button:disabled { opacity: .7; cursor: wait; }
 .lp-small { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); line-height: 1.6; }
-.lp-terms { margin-top: var(--space-4); font-size: var(--text-sm); }
-.lp-terms dl { margin: var(--space-3) 0 0; display: grid; gap: var(--space-2); }
+/* Leistungsbeschreibung sichtbar vor Haekchen und Button. */
+.lp-terms { margin: var(--space-2) 0 var(--space-4); padding: var(--space-4); display: grid; gap: var(--space-3); font-size: var(--text-xs); line-height: 1.6; background: rgba(7, 20, 38, .45); border-radius: 10px; }
 .lp-terms dt { color: var(--text-strong); font-weight: var(--weight-bold); }
-.lp-terms dd { margin: 0; }
+.lp-terms dd { margin: 0; color: var(--text-body); }
 
 /* ── 7. Fragen ────────────────────────────────────────────────────────── */
 .lp-faq { max-width: 52rem; margin-top: var(--space-8); }
@@ -247,7 +251,9 @@
 @media (max-width: 960px) {
     .lp-hero, .lp-offer, .lp-person { grid-template-columns: minmax(0, 1fr); }
     .rp-app { grid-template-columns: minmax(0, 1fr); }
-    .rp-app__nav { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--lp-line); padding: var(--space-3); }
+    /* Alle fuenf Reiter sichtbar, notfalls in zwei Zeilen. Gerade
+       "Massnahmen" darf nicht ausserhalb des Bildes liegen. */
+    .rp-app__nav { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--lp-line); padding: var(--space-3); }
     .rp-app__brand { display: none; }
     .rp-app__nav button { white-space: nowrap; }
     .rp-app__nav small { display: none; }
@@ -267,8 +273,12 @@
     .rp-bar { grid-template-columns: 6.8rem minmax(0, 1fr) 2.9rem; font-size: var(--text-xs); }
     .rp-grid2, .lp-cols, .lp-row { grid-template-columns: minmax(0, 1fr); }
     .lp-row--plz { grid-template-columns: 1fr 2fr; }
-    .rp-table td { width: 44px; padding-inline: 2px; }
-    .rp-table thead th { font-size: .65rem; }
+    .rp-table { table-layout: fixed; }
+    .rp-table th, .rp-table td { padding-inline: 2px; }
+    .rp-table thead th:first-child, .rp-table tbody th { width: auto; font-size: var(--text-xs); padding-right: var(--space-2); }
+    .rp-table thead th:not(:first-child), .rp-table td { width: 3.4rem; }
+    .rp-table thead th { font-size: .62rem; }
+    .rp-cell { min-width: 0; padding: 2px 4px; font-size: var(--text-xs); }
     .rp-todo li { padding-left: 64px; }
     .lp-form, .lp-price { padding: var(--space-6) var(--space-4); }
 }
