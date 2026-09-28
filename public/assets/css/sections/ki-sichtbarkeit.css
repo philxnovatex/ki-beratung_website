@@ -5,7 +5,7 @@
    style.css (Farben, Schrift, .cta-button, Kontaktformular-Status, Footer,
    Cookie-Banner), bringt aber ein eigenes, ruhigeres Layout mit.
 
-   Aufbau: Einstieg mit Report-Titelseite, durchklickbarer Beispielreport,
+   Aufbau: Einstieg mit Beispiel-KI-Antwort, durchklickbarer Beispielreport,
    Leistungen, Ablauf, Ansprechpartner, Preis und Buchung, Fragen.
    Klassen: lp-* fuer die Seite, rp-* fuer den Report.
    ============================================================================ */
@@ -15,7 +15,6 @@
     --lp-raised: var(--c-navy-700);
     --lp-deep: var(--c-navy-900);
     --lp-card: #13274b;
-    --lp-card-2: #1a3160;
     --lp-line: rgba(159, 179, 217, .18);
     --lp-good: #6fd6a2;
     --lp-good-soft: rgba(111, 214, 162, .14);
@@ -61,37 +60,94 @@
 .lp-top__link:hover, .lp-top__link:focus-visible { background: var(--accent); color: var(--primary-color); }
 
 /* ── 1. Einstieg ──────────────────────────────────────────────────────── */
-.av-hero { padding-block: clamp(48px, 7vw, 96px); background: linear-gradient(180deg, var(--c-navy-900) 0%, var(--lp-bg) 100%); }
-.lp-hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
-.lp-hero h1 { margin: 0 0 var(--space-5, 1.25rem); max-width: 16ch; }
-.lp-hero .lp-lead { margin-bottom: var(--space-8); }
+/* Blaues Licht von oben und ein feines Punktraster, das zu den Rändern hin
+   ausläuft. Beides ruhig und ohne Bewegung, Gold bleibt dem Button. */
+.av-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(48px, 7vw, 96px);
+    background:
+        radial-gradient(60% 55% at 50% 0%, rgba(86, 132, 230, .24), transparent 70%),
+        linear-gradient(180deg, var(--c-navy-900) 0%, var(--lp-bg) 100%);
+}
+.av-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(rgba(159, 179, 217, .16) 1px, transparent 1px);
+    background-size: var(--space-6) var(--space-6);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 25%, #000 30%, transparent 75%);
+}
+/* Eine zentrierte Spalte. Die Frage darf breit laufen und bricht
+   ausgeglichen um, statt in drei schmale Zeilen gequetscht zu werden. */
+.lp-hero { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.lp-hero__badge {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid rgba(255, 201, 71, .35);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 201, 71, .08);
+    margin-bottom: var(--space-6);
+}
+.lp .lp-hero h1 { margin: 0 0 var(--space-6); text-align: center; text-wrap: balance; }
+.lp-hero .lp-lead { max-width: 42rem; margin: 0 auto var(--space-8); text-wrap: balance; }
+.lp-hero .lp-actions { justify-content: center; }
+.lp-hero__offer { margin-top: var(--space-6); font-size: var(--text-sm); color: var(--text-body); text-wrap: balance; }
+.lp-hero__assure { margin-top: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); }
+.lp-hero__assure span { white-space: nowrap; }
 .lp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); }
 .lp-textlink { font-weight: var(--weight-bold); text-decoration: none; }
 .lp-textlink::after { content: " \2193"; }
-.lp-facts { list-style: none; padding: 0; margin: var(--space-6) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); color: var(--text-strong); font-size: var(--text-sm); }
-.lp-facts li { display: flex; align-items: center; gap: var(--space-2); }
-.lp-facts li::before {
-    content: "";
-    width: 18px; height: 18px; border-radius: 50%;
-    background: var(--lp-good-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%236fd6a2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
-}
 
-.lp-strip { border-block: 1px solid var(--lp-line); padding-block: var(--space-6); background: var(--lp-bg); }
-.lp-strip .lp-wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3) var(--space-8); font-size: var(--text-sm); color: var(--text-muted); }
-.lp-strip strong { color: var(--text-strong); }
+/* Beispiel-KI-Antwort unter dem Button: Frage des Kunden, Antwort mit drei
+   Wettbewerbern, darunter der Befund. Einmaliges Einblenden nacheinander,
+   16 px Weg, nur ohne Wunsch nach reduzierter Bewegung. */
+.av-chat {
+    width: 100%;
+    max-width: 44rem;
+    margin: var(--space-16) 0 0;
+    text-align: left;
+    background: var(--lp-card);
+    border: 1px solid var(--lp-line);
+    border-radius: var(--lp-radius);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+    overflow: hidden;
+}
+.av-chat__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-6); border-bottom: 1px solid var(--lp-line); font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--text-muted); }
+.av-chat__body { display: grid; gap: var(--space-4); padding: var(--space-6); font-size: var(--text-sm); }
+.av-chat__q {
+    justify-self: end;
+    max-width: 85%;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg);
+    background: rgba(159, 179, 217, .14);
+    color: var(--text-strong);
+}
+.av-chat__a { color: var(--text-body); }
+.av-chat__a ol { margin: var(--space-2) 0 0; padding-left: var(--space-6); display: grid; gap: var(--space-1); }
+.av-chat__a b, .av-chat__miss b { color: var(--text-strong); }
+.av-chat__miss {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 1px dashed rgba(255, 155, 145, .45);
+    border-radius: var(--radius-md);
+}
+@media (prefers-reduced-motion: no-preference) {
+    .av-chat__q, .av-chat__a, .av-chat__miss { animation: av-in var(--duration-slow) var(--ease-out) both; }
+    .av-chat__q { animation-delay: var(--duration-base); }
+    .av-chat__a { animation-delay: calc(var(--duration-base) + var(--duration-slow)); }
+    .av-chat__miss { animation-delay: calc(var(--duration-base) + 2 * var(--duration-slow)); }
+}
+@keyframes av-in { from { opacity: 0; transform: translateY(16px); } }
 
 /* ── Report: gemeinsame Bausteine ─────────────────────────────────────── */
-.rp-card, .rp-app { background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-radius); box-shadow: 0 24px 60px rgba(0, 0, 0, .35); overflow: hidden; }
-.rp-card__head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--lp-line); }
-.rp-card__head strong { color: var(--text-strong); }
-.rp-card__body { padding: var(--space-6); display: grid; gap: var(--space-6); }
+.rp-app { background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-radius); box-shadow: 0 24px 60px rgba(0, 0, 0, .35); overflow: hidden; }
 /* Einzige Kennzeichnung als Beispiel. Dezent, aber in jedem Bereich sichtbar. */
 .rp-tag { font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--text-muted); background: rgba(159, 179, 217, .12); border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
-.rp-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
-.rp-kpi { background: var(--lp-card-2); border-radius: 10px; padding: var(--space-4); }
-.rp-kpi b { display: block; font-size: 1.75rem; line-height: 1.1; color: var(--text-strong); letter-spacing: -0.02em; }
-.rp-kpi span { font-size: var(--text-sm); color: var(--text-muted); }
-.rp-kpi--warn b { color: var(--lp-bad); }
 .rp-label { font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--text-muted); margin-bottom: var(--space-1); }
 .rp-bars { display: grid; gap: var(--space-3); }
 .rp-bar { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 3.4rem; align-items: center; gap: var(--space-3); font-size: var(--text-sm); color: var(--text-strong); }
@@ -147,10 +203,11 @@
 .rp-table thead th:first-child { text-align: left; }
 .rp-table tbody th { text-align: left; font-weight: var(--weight-regular); color: var(--text-strong); }
 .rp-table td { text-align: center; width: 88px; }
-.rp-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: middle; }
-.rp-dot--rec { background: var(--lp-good); }
-.rp-dot--men { border: 2px solid var(--accent); }
-.rp-dot--no { width: 12px; height: 2px; border-radius: 0; background: rgba(159, 179, 217, .45); }
+/* Zelle je Frage und System: in wie vielen von 3 Antworten genannt.
+   Gruen heisst zusaetzlich mindestens einmal empfohlen. */
+.rp-cell { display: inline-block; min-width: 2.6em; padding: 2px 6px; border-radius: 6px; font-style: normal; font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; color: var(--accent); background: var(--lp-warn-soft); }
+.rp-cell--rec { color: var(--lp-good); background: var(--lp-good-soft); }
+.rp-cell--no { color: var(--text-muted); background: transparent; font-weight: var(--weight-regular); }
 .rp-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); font-size: var(--text-xs); color: var(--text-muted); }
 .rp-legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
 
@@ -191,14 +248,28 @@
 .lp-price h2 { font-size: var(--text-xl, 1.6rem); margin-bottom: var(--space-4); }
 .lp-price__num { font-size: 4rem; font-weight: 800; line-height: 1; color: var(--text-strong); letter-spacing: -0.03em; }
 .lp-price__num small { font-size: var(--text-base); font-weight: var(--weight-regular); color: var(--text-muted); letter-spacing: 0; margin-left: var(--space-2); }
+/* Künftiger Preis in einer ruhigen Zeile unter der 500: gerade
+   durchgestrichen, daneben ein Augenzwinkern. Leiser als der Preis selbst. */
+.lp .lp-price__later { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); margin-top: var(--space-3); }
+/* Zahl hell und in normaler Stärke, Strich dünn und halbtransparent:
+   Ein dicker Strich über fetten Ziffern macht die Zahl unleserlich. */
+.lp-price__later s {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-regular);
+    color: var(--text-body);
+    text-decoration-line: line-through;
+    text-decoration-color: rgba(255, 155, 145, .75);
+    text-decoration-thickness: 1px;
+}
+.lp-price__later span:last-child { font-size: var(--text-sm); color: var(--text-body); }
 .lp-price ul { list-style: none; padding: 0; margin: var(--space-6) 0; display: grid; gap: var(--space-2); color: var(--text-strong); }
 .lp-price li { position: relative; padding-left: 28px; }
 .lp-price li::before {
     content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border-radius: 50%;
     background: var(--lp-warn-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23ffc947' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/11px no-repeat;
 }
-.lp-price__note { border-top: 1px solid var(--lp-line); padding-top: var(--space-4); font-size: var(--text-sm); }
-.lp-price__seats { margin-top: var(--space-4); font-weight: var(--weight-bold); color: var(--accent); font-size: var(--text-sm); }
+.lp-price__note { border-top: 1px solid var(--lp-line); padding-top: var(--space-4); font-size: var(--text-sm); display: grid; gap: var(--space-3); }
+.lp-price__note p { margin: 0; }
 
 .lp-form { background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: 18px; padding: var(--space-8); }
 .lp-form h3 { font-size: var(--text-lg); margin-bottom: var(--space-1); }
@@ -222,17 +293,17 @@
 .lp-field input::placeholder, .lp-field textarea::placeholder { color: #8a99ad; }
 .lp-field input:focus-visible, .lp-field select:focus-visible, .lp-field textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .lp-optional { margin-bottom: var(--space-3); font-size: var(--text-sm); }
-.lp-optional summary, .lp-terms summary { cursor: pointer; color: var(--text-strong); font-weight: var(--weight-bold); }
+.lp-optional summary { cursor: pointer; color: var(--text-strong); font-weight: var(--weight-bold); }
 .lp-optional[open] summary { margin-bottom: var(--space-3); }
 .lp-check { display: flex; gap: var(--space-3); align-items: flex-start; font-size: var(--text-sm); color: var(--text-body); margin: var(--space-2) 0 var(--space-4); cursor: pointer; }
 .lp-check input { flex: none; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); }
 .lp-form .cta-button { display: block; width: 100%; text-align: center; font-size: var(--text-md); }
 .lp-form .cta-button:disabled { opacity: .7; cursor: wait; }
 .lp-small { font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3); line-height: 1.6; }
-.lp-terms { margin-top: var(--space-4); font-size: var(--text-sm); }
-.lp-terms dl { margin: var(--space-3) 0 0; display: grid; gap: var(--space-2); }
+/* Leistungsbeschreibung sichtbar vor Haekchen und Button. */
+.lp-terms { margin: var(--space-2) 0 var(--space-4); padding: var(--space-4); display: grid; gap: var(--space-3); font-size: var(--text-xs); line-height: 1.6; background: rgba(7, 20, 38, .45); border-radius: 10px; }
 .lp-terms dt { color: var(--text-strong); font-weight: var(--weight-bold); }
-.lp-terms dd { margin: 0; }
+.lp-terms dd { margin: 0; color: var(--text-body); }
 
 /* ── 7. Fragen ────────────────────────────────────────────────────────── */
 .lp-faq { max-width: 52rem; margin-top: var(--space-8); }
@@ -245,9 +316,11 @@
 
 /* ── Breakpoints ──────────────────────────────────────────────────────── */
 @media (max-width: 960px) {
-    .lp-hero, .lp-offer, .lp-person { grid-template-columns: minmax(0, 1fr); }
+    .lp-offer, .lp-person { grid-template-columns: minmax(0, 1fr); }
     .rp-app { grid-template-columns: minmax(0, 1fr); }
-    .rp-app__nav { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--lp-line); padding: var(--space-3); }
+    /* Alle fuenf Reiter sichtbar, notfalls in zwei Zeilen. Gerade
+       "Massnahmen" darf nicht ausserhalb des Bildes liegen. */
+    .rp-app__nav { flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--lp-line); padding: var(--space-3); }
     .rp-app__brand { display: none; }
     .rp-app__nav button { white-space: nowrap; }
     .rp-app__nav small { display: none; }
@@ -259,16 +332,18 @@
 @media (max-width: 600px) {
     .lp-top__logo img { height: 46px; }
     .lp-actions .cta-button { width: 100%; text-align: center; }
-    .rp-card__body, .rp-app__main { padding: var(--space-4); }
-    .rp-card__head { padding: var(--space-3) var(--space-4); }
-    .rp-kpi { padding: var(--space-3); }
-    .rp-kpi b { font-size: 1.25rem; }
-    .rp-kpi span { font-size: var(--text-xs); display: block; line-height: 1.4; }
+    .av-chat { margin-top: var(--space-12); }
+    .av-chat__bar, .av-chat__body { padding-inline: var(--space-4); }
+    .rp-app__main { padding: var(--space-4); }
     .rp-bar { grid-template-columns: 6.8rem minmax(0, 1fr) 2.9rem; font-size: var(--text-xs); }
     .rp-grid2, .lp-cols, .lp-row { grid-template-columns: minmax(0, 1fr); }
     .lp-row--plz { grid-template-columns: 1fr 2fr; }
-    .rp-table td { width: 44px; padding-inline: 2px; }
-    .rp-table thead th { font-size: .65rem; }
+    .rp-table { table-layout: fixed; }
+    .rp-table th, .rp-table td { padding-inline: 2px; }
+    .rp-table thead th:first-child, .rp-table tbody th { width: auto; font-size: var(--text-xs); padding-right: var(--space-2); }
+    .rp-table thead th:not(:first-child), .rp-table td { width: 3.4rem; }
+    .rp-table thead th { font-size: .62rem; }
+    .rp-cell { min-width: 0; padding: 2px 4px; font-size: var(--text-xs); }
     .rp-todo li { padding-left: 64px; }
     .lp-form, .lp-price { padding: var(--space-6) var(--space-4); }
 }

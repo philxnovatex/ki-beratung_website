@@ -48,57 +48,45 @@
     <main id="main-content" class="lp">
 
         <!-- ══ 1. Einstieg ═══════════════════════════════════════════════════
-             Links Frage, Versprechen, Button und drei Zusagen. Rechts die
-             Titelseite des Reports mit Beispieldaten. Der Button muss auf dem
-             Telefon im ersten Bildschirm stehen (Test in conversions.js). -->
+             Zentriert: Frage, ein Satz Versprechen, ein Button mit einer Zeile
+             Risikoabbau darunter. Darunter als Bild eine Beispiel-KI-Antwort,
+             in der drei Wettbewerber empfohlen werden und Ihr Unternehmen
+             fehlt. Sie zeigt das Problem, das die Frage stellt. Der Preis im
+             Button steht nie ohne seine Gegenleistung (Referenz und
+             Fallstudie) direkt darunter. Bewusst ohne Platzzahl, Restplatz-
+             hinweis oder Countdown. Der Button muss
+             auf dem Telefon im ersten Bildschirm stehen (Test in
+             conversions.js). Die Antwort blendet einmalig per CSS ein, ohne
+             JavaScript und bei reduzierter Bewegung steht sie sofort da. -->
         <section class="av-hero" aria-labelledby="hero-heading">
             <div class="lp-wrap lp-hero">
-                <div>
-                    <p class="lp-kicker">AI Visibility Audit für B2B-Unternehmen</p>
-                    <h1 id="hero-heading">Empfiehlt ChatGPT Ihr Unternehmen oder Ihre Konkurrenz?</h1>
-                    <p class="lp-lead">Wir stellen ChatGPT, Claude und Gemini die Fragen, die Ihre Kunden vor dem Kauf stellen. Sie sehen schwarz auf weiß, wer empfohlen wird, warum, und was Sie ändern können.</p>
-                    <div class="lp-actions">
-                        <a class="cta-button" href="#pilot-anfrage">Audit für 500 € buchen</a>
-                        <a class="lp-textlink" href="#report">Beispielreport ansehen</a>
-                    </div>
-                    <ul class="lp-facts">
-                        <li>Ergebnis in 3 Werktagen</li>
-                        <li>Zahlung erst nach Lieferung</li>
-                        <li>Kein Vorgespräch nötig</li>
-                    </ul>
+                <p class="lp-kicker lp-hero__badge">AI Visibility Audit für B2B-Unternehmen</p>
+                <h1 id="hero-heading">Empfiehlt ChatGPT Ihr Unternehmen oder Ihre Konkurrenz?</h1>
+                <p class="lp-lead">Wir stellen ChatGPT, Claude und Gemini die Fragen, die Ihre Kunden vor dem Kauf stellen, und zeigen Ihnen, wen die Systeme empfehlen und wo Sie ansetzen können.</p>
+                <div class="lp-actions">
+                    <a class="cta-button" href="#pilot-anfrage">Audit für 500 € buchen</a>
+                    <a class="lp-textlink" href="#report">Beispielreport ansehen</a>
                 </div>
+                <p class="lp-hero__offer">Referenzkunden-Angebot: gegen namentliche Referenz und eine freigegebene Fallstudie.</p>
+                <p class="lp-hero__assure"><span>Ergebnis in 3 Werktagen</span> · <span>Zahlung erst nach Lieferung</span></p>
 
-                <!-- Zahlen erfunden und zueinander passend: 108/324 = 33 %,
-                     36/324 = 11 %, Wettbewerber A 152/324 = 47 %. -->
-                <div class="rp-card" aria-label="Vorschau eines Reports mit Beispieldaten">
-                    <div class="rp-card__head"><strong>KI-Sichtbarkeitsreport</strong><span class="rp-tag">Beispieldaten</span></div>
-                    <div class="rp-card__body">
-                        <div class="rp-kpis">
-                            <div class="rp-kpi"><b>33 %</b><span>genannt</span></div>
-                            <div class="rp-kpi rp-kpi--warn"><b>11 %</b><span>empfohlen</span></div>
-                            <div class="rp-kpi"><b>Platz 4</b><span>von 7 Anbietern</span></div>
+                <figure class="av-chat" aria-label="Beispiel: So antwortet eine KI auf eine Kauffrage">
+                    <div class="av-chat__bar"><span>Beispielantwort einer KI</span><span class="rp-tag">Beispieldaten</span></div>
+                    <div class="av-chat__body">
+                        <p class="av-chat__q">Welche Firma empfiehlst du für die Wartung von Industriekälteanlagen in NRW?</p>
+                        <div class="av-chat__a">
+                            <p>Für die Wartung von Industriekälteanlagen in NRW kommen vor allem diese Anbieter infrage:</p>
+                            <ol>
+                                <li><b>Wettbewerber A</b>: 24-Stunden-Notdienst und viele positive Bewertungen</li>
+                                <li><b>Wettbewerber B</b>: spezialisiert auf Lebensmittelbetriebe</li>
+                                <li><b>Wettbewerber C</b>: transparente Preise für Wartungsverträge</li>
+                            </ol>
                         </div>
-                        <div class="rp-bars">
-                            <p class="rp-label">Wer bei Kaufentscheidungen empfohlen wird</p>
-                            <div class="rp-bar"><span>Wettbewerber A</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:94%"></span></span><span class="rp-bar__val">47 %</span></div>
-                            <div class="rp-bar"><span>Wettbewerber B</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:58%"></span></span><span class="rp-bar__val">29 %</span></div>
-                            <div class="rp-bar"><span>Wettbewerber C</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:36%"></span></span><span class="rp-bar__val">18 %</span></div>
-                            <div class="rp-bar rp-bar--you"><span>Ihr Unternehmen</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:22%"></span></span><span class="rp-bar__val">11 %</span></div>
-                        </div>
-                        <p class="rp-insight">Sie werden gefunden, aber selten empfohlen. Wettbewerber A wird viermal so oft empfohlen wie Sie.</p>
+                        <p class="av-chat__miss"><b>Ihr Unternehmen</b><span class="rp-pill rp-pill--bad">nicht genannt</span></p>
                     </div>
-                </div>
+                </figure>
             </div>
         </section>
-
-        <div class="lp-strip">
-            <div class="lp-wrap">
-                <span>Gemessen in <strong>ChatGPT, Claude und Gemini</strong></span>
-                <span><strong>36 Kauffragen</strong> aus Ihrem Markt</span>
-                <span><strong>324 Antworten</strong> ausgewertet</span>
-                <span><strong>Festpreis</strong> statt Angebot nach Erstgespräch</span>
-            </div>
-        </div>
 
         <!-- ══ 2. Beispielreport ═════════════════════════════════════════════
              Zum Durchklicken wie eine Software. Reiter per report-tabs.js;
@@ -107,8 +95,8 @@
         <section id="report" class="lp-section lp-section--deep" aria-labelledby="report-heading">
             <div class="lp-wrap">
                 <p class="lp-kicker">Ihr Report</p>
-                <h2 id="report-heading">Alles, was Sie wissen müssen, auf fünf Seiten</h2>
-                <p class="lp-lead">Klicken Sie sich durch einen Beispielreport. Ihrer sieht genauso aus, mit Ihren Fragen, Ihren Wettbewerbern und Ihren Zahlen.</p>
+                <h2 id="report-heading">So ist Ihre Auswertung aufgebaut</h2>
+                <p class="lp-lead">Klicken Sie sich durch einen Beispielreport. Ihre Auswertung folgt demselben Aufbau, mit Ihren Fragen, Ihren Wettbewerbern und Ihren Zahlen.</p>
 
                 <div class="rp-app" data-report>
                     <div class="rp-app__nav" role="tablist" aria-label="Bereiche des Reports">
@@ -123,53 +111,48 @@
 
                         <div class="rp-panel" id="rp1" role="tabpanel" aria-labelledby="rt1">
                             <div class="rp-panel__head"><div><h3>Übersicht</h3><p>36 Fragen, 3 Systeme, je 3 Durchläufe</p></div><span class="rp-tag">Beispieldaten</span></div>
-                            <div class="rp-kpis">
-                                <div class="rp-kpi"><b>108</b><span>Nennungen in 324 Antworten</span></div>
-                                <div class="rp-kpi rp-kpi--warn"><b>36</b><span>Empfehlungen</span></div>
-                                <div class="rp-kpi"><b>Platz 4</b><span>von 7 Anbietern</span></div>
-                            </div>
                             <div class="rp-grid2">
                                 <div class="rp-box rp-bars">
-                                    <p class="rp-label">Empfohlen je KI-System</p>
-                                    <div class="rp-bar rp-bar--you"><span>Gemini</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:38%"></span></span><span class="rp-bar__val">19 %</span></div>
-                                    <div class="rp-bar rp-bar--you"><span>ChatGPT</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:16%"></span></span><span class="rp-bar__val">8 %</span></div>
-                                    <div class="rp-bar rp-bar--you"><span>Claude</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:12%"></span></span><span class="rp-bar__val">6 %</span></div>
+                                    <p class="rp-label">Empfohlen je KI-System, Anteil der je 108 Antworten</p>
+                                    <div class="rp-bar rp-bar--you"><span>Gemini</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:19%"></span></span><span class="rp-bar__val">19 %</span></div>
+                                    <div class="rp-bar rp-bar--you"><span>ChatGPT</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:8%"></span></span><span class="rp-bar__val">8 %</span></div>
+                                    <div class="rp-bar rp-bar--you"><span>Claude</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:6%"></span></span><span class="rp-bar__val">6 %</span></div>
                                 </div>
                                 <div class="rp-box">
-                                    <p class="rp-label">Das Wichtigste in drei Sätzen</p>
-                                    <p class="rp-text">Die KI kennt Sie, empfiehlt aber meist andere. Am schwächsten sind Sie bei Fragen nach Kosten und Anbietervergleichen. Der größte Hebel liegt nicht auf Ihrer Website, sondern auf einem Branchenportal, auf dem Sie fehlen.</p>
+                                    <p class="rp-label">Das Wichtigste in Kürze</p>
+                                    <p class="rp-text">Sie werden in 108 von 324 Antworten genannt, aber nur in 36 empfohlen. Am seltensten kommen Sie bei Fragen nach Kosten und Anbietervergleichen vor. Ein Branchenportal, auf dem Sie fehlen, wird in Empfehlungen für Wettbewerber A am häufigsten zitiert. Das ist der erste Prüfpunkt.</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="rp-panel" id="rp2" role="tabpanel" aria-labelledby="rt2">
-                            <div class="rp-panel__head"><div><h3>Die Fragen Ihrer Kunden</h3><p>6 von 36 Fragen, je Frage 3 Durchläufe pro System</p></div><span class="rp-tag">Beispieldaten</span></div>
+                            <div class="rp-panel__head"><div><h3>Die Fragen Ihrer Kunden</h3><p>6 von 36 Fragen. Je Zelle: in wie vielen von 3 Antworten Sie genannt werden</p></div><span class="rp-tag">Beispieldaten</span></div>
                             <div class="rp-scroll">
                                 <table class="rp-table">
                                     <thead><tr><th scope="col">Frage</th><th scope="col">ChatGPT</th><th scope="col">Claude</th><th scope="col">Gemini</th></tr></thead>
                                     <tbody>
-                                        <tr><th scope="row">Welche Firmen warten Industriekälteanlagen in NRW?</th><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--rec" aria-label="empfohlen"></span></td></tr>
-                                        <tr><th scope="row">Wer baut Kühlhäuser für Lebensmittelbetriebe?</th><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td></tr>
-                                        <tr><th scope="row">Was kostet ein Wartungsvertrag für eine Kälteanlage?</th><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td></tr>
-                                        <tr><th scope="row">Welcher Kältetechniker hat einen 24-Stunden-Notdienst?</th><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--rec" aria-label="empfohlen"></span></td></tr>
-                                        <tr><th scope="row">Kältetechnik-Anbieter für den Mittelstand im Vergleich</th><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td><td><span class="rp-dot rp-dot--no" aria-label="nicht genannt"></span></td></tr>
-                                        <tr><th scope="row">Worauf achte ich bei der Wahl eines Kältetechnik-Dienstleisters?</th><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td><td><span class="rp-dot rp-dot--men" aria-label="genannt"></span></td></tr>
+                                        <tr><th scope="row">Welche Firmen warten Industriekälteanlagen in NRW?</th><td><span class="rp-cell" aria-label="in 2 von 3 Antworten genannt">2/3</span></td><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell rp-cell--rec" aria-label="in 3 von 3 Antworten genannt, mindestens einmal empfohlen">3/3</span></td></tr>
+                                        <tr><th scope="row">Wer baut Kühlhäuser für Lebensmittelbetriebe?</th><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell" aria-label="in 1 von 3 Antworten genannt">1/3</span></td></tr>
+                                        <tr><th scope="row">Was kostet ein Wartungsvertrag für eine Kälteanlage?</th><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell" aria-label="in 1 von 3 Antworten genannt">1/3</span></td><td><span class="rp-cell" aria-label="in 2 von 3 Antworten genannt">2/3</span></td></tr>
+                                        <tr><th scope="row">Welcher Kältetechniker hat einen 24-Stunden-Notdienst?</th><td><span class="rp-cell" aria-label="in 1 von 3 Antworten genannt">1/3</span></td><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell rp-cell--rec" aria-label="in 3 von 3 Antworten genannt, mindestens einmal empfohlen">3/3</span></td></tr>
+                                        <tr><th scope="row">Kältetechnik-Anbieter für den Mittelstand im Vergleich</th><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td><td><span class="rp-cell rp-cell--no" aria-label="in keiner von 3 Antworten genannt">0/3</span></td></tr>
+                                        <tr><th scope="row">Worauf achte ich bei der Wahl eines Kältetechnik-Dienstleisters?</th><td><span class="rp-cell" aria-label="in 3 von 3 Antworten genannt">3/3</span></td><td><span class="rp-cell" aria-label="in 2 von 3 Antworten genannt">2/3</span></td><td><span class="rp-cell" aria-label="in 3 von 3 Antworten genannt">3/3</span></td></tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="rp-legend"><span><i class="rp-dot rp-dot--rec"></i>empfohlen</span><span><i class="rp-dot rp-dot--men"></i>nur genannt</span><span><i class="rp-dot rp-dot--no"></i>nicht genannt</span></p>
+                            <p class="rp-legend"><span><i class="rp-cell rp-cell--rec">3/3</i>genannt und mindestens einmal empfohlen</span><span><i class="rp-cell">2/3</i>nur genannt</span><span><i class="rp-cell rp-cell--no">0/3</i>nicht genannt</span></p>
                         </div>
 
                         <div class="rp-panel" id="rp3" role="tabpanel" aria-labelledby="rt3">
                             <div class="rp-panel__head"><div><h3>Wer statt Ihnen empfohlen wird</h3><p>Anteil der 324 Antworten mit Empfehlung</p></div><span class="rp-tag">Beispieldaten</span></div>
                             <div class="rp-box rp-bars">
-                                <div class="rp-bar"><span>Wettbewerber A</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:94%"></span></span><span class="rp-bar__val">47 %</span></div>
-                                <div class="rp-bar"><span>Wettbewerber B</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:58%"></span></span><span class="rp-bar__val">29 %</span></div>
-                                <div class="rp-bar"><span>Wettbewerber C</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:36%"></span></span><span class="rp-bar__val">18 %</span></div>
-                                <div class="rp-bar rp-bar--you"><span>Ihr Unternehmen</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:22%"></span></span><span class="rp-bar__val">11 %</span></div>
-                                <div class="rp-bar"><span>3 weitere</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:8%"></span></span><span class="rp-bar__val">je unter 5 %</span></div>
+                                <div class="rp-bar"><span>Wettbewerber A</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:47%"></span></span><span class="rp-bar__val">47 %</span></div>
+                                <div class="rp-bar"><span>Wettbewerber B</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:29%"></span></span><span class="rp-bar__val">29 %</span></div>
+                                <div class="rp-bar"><span>Wettbewerber C</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:18%"></span></span><span class="rp-bar__val">18 %</span></div>
+                                <div class="rp-bar rp-bar--you"><span>Ihr Unternehmen</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:11%"></span></span><span class="rp-bar__val">11 %</span></div>
+                                <div class="rp-bar"><span>3 weitere</span><span class="rp-bar__track"><span class="rp-bar__fill" style="width:4%"></span></span><span class="rp-bar__val">je unter 5 %</span></div>
                             </div>
-                            <p class="rp-insight">Wettbewerber A gewinnt vor allem bei Fragen nach Notdienst und Kosten. Genau dort fehlen auf Ihrer Website klare Aussagen.</p>
+                            <p class="rp-insight">Wettbewerber A wird vor allem bei Fragen nach Notdienst und Kosten empfohlen. Zu beiden Themen enthält Ihre Website keine klaren Aussagen.</p>
                         </div>
 
                         <div class="rp-panel" id="rp4" role="tabpanel" aria-labelledby="rt4">
@@ -183,11 +166,11 @@
                         </div>
 
                         <div class="rp-panel" id="rp5" role="tabpanel" aria-labelledby="rt5">
-                            <div class="rp-panel__head"><div><h3>Ihre nächsten Schritte</h3><p>Nach Wirkung und Aufwand sortiert</p></div><span class="rp-tag">Beispieldaten</span></div>
+                            <div class="rp-panel__head"><div><h3>Ihre nächsten Schritte</h3><p>Nach Priorität sortiert, jeweils mit Begründung</p></div><span class="rp-tag">Beispieldaten</span></div>
                             <ol class="rp-todo">
-                                <li><h4>Eintrag im Branchenportal anlegen</h4><p>Die meistzitierte Quelle in Empfehlungen für Wettbewerber A. Sie sind dort nicht gelistet.</p><p class="rp-meta"><span class="rp-pill rp-pill--good">Wirkung hoch</span><span class="rp-pill rp-pill--good">Aufwand gering</span></p></li>
-                                <li><h4>Leistungsseite um Einsatzgebiet und Preisrahmen ergänzen</h4><p>Die KI zitiert Ihre Seite, findet dort aber keine Antwort auf die häufigsten Kauffragen.</p><p class="rp-meta"><span class="rp-pill rp-pill--good">Wirkung hoch</span><span class="rp-pill rp-pill--warn">Aufwand mittel</span></p></li>
-                                <li><h4>Kundenbewertungen gezielt einholen</h4><p>3 Bewertungen gegen 87 bei Wettbewerber A, auf einer Plattform, die 41-mal zitiert wird.</p><p class="rp-meta"><span class="rp-pill rp-pill--warn">Wirkung mittel</span><span class="rp-pill rp-pill--warn">Aufwand mittel</span></p></li>
+                                <li><h4>Eintrag im Branchenportal anlegen</h4><p>Begründung: meistzitierte Quelle in Empfehlungen für Wettbewerber A, Ihr Unternehmen ist dort nicht gelistet.</p><p class="rp-meta"><span class="rp-pill rp-pill--good">Priorität hoch</span><span class="rp-pill rp-pill--good">Aufwand gering</span></p></li>
+                                <li><h4>Leistungsseite um Einsatzgebiet und Preisrahmen ergänzen</h4><p>Begründung: Ihre Seite wird zitiert, enthält aber keine Angaben zu Einsatzgebiet und Kosten, nach denen häufig gefragt wird.</p><p class="rp-meta"><span class="rp-pill rp-pill--good">Priorität hoch</span><span class="rp-pill rp-pill--warn">Aufwand mittel</span></p></li>
+                                <li><h4>Kundenbewertungen gezielt einholen</h4><p>Begründung: 3 Bewertungen gegen 87 bei Wettbewerber A, auf einer Plattform, die 41-mal zitiert wird.</p><p class="rp-meta"><span class="rp-pill rp-pill--warn">Priorität mittel</span><span class="rp-pill rp-pill--warn">Aufwand mittel</span></p></li>
                             </ol>
                         </div>
 
@@ -203,7 +186,7 @@
                 <h2 id="leistung-heading">Klarheit statt Bauchgefühl</h2>
                 <div class="lp-cols">
                     <article><h3>Report als PDF</h3><p>Übersicht, Fragen, Wettbewerb, Quellen und Maßnahmen. Verständlich ohne Vorwissen.</p></article>
-                    <article><h3>Alle 324 Antworten</h3><p>Jede Zahl lässt sich bis zur Originalantwort der KI zurückverfolgen.</p></article>
+                    <article><h3>Alle Originalantworten</h3><p>Jede Zahl lässt sich bis zur Antwort der KI zurückverfolgen.</p></article>
                     <article><h3>Priorisierter Maßnahmenplan</h3><p>Was zuerst kommt, was es bringt und wie viel Aufwand es macht.</p></article>
                     <article><h3>60 Minuten Besprechung</h3><p>Wir gehen die Ergebnisse gemeinsam durch, per Video.</p></article>
                 </div>
@@ -217,8 +200,8 @@
                 <h2 id="ablauf-heading">In drei Schritten zum Ergebnis</h2>
                 <ol class="lp-steps">
                     <li><h3>Online buchen</h3><em>2 Minuten</em><p>Website, Leistung und Markt angeben. Wir bestätigen den Auftrag innerhalb eines Werktags.</p></li>
-                    <li><h3>Wir messen</h3><em>3 Werktage</em><p>36 Kauffragen, je dreimal in ChatGPT, Claude und Gemini. Sie müssen nichts tun und keine Zugänge freigeben.</p></li>
-                    <li><h3>Ergebnis besprechen</h3><em>60 Minuten</em><p>Sie erhalten den Report und besprechen ihn mit uns. Die Rechnung kommt erst danach.</p></li>
+                    <li><h3>Wir messen</h3><em>3 Werktage</em><p>Die Kauffragen aus Ihrem Markt, jede mehrfach in ChatGPT, Claude und Gemini. Sie müssen nichts tun und keine Zugänge freigeben.</p></li>
+                    <li><h3>Report und Besprechung</h3><em>60 Minuten</em><p>Sie erhalten den schriftlichen Report, die Rechnung liegt bei. Den Termin für die Besprechung vereinbaren wir mit Ihnen.</p></li>
                 </ol>
             </div>
         </section>
@@ -229,7 +212,7 @@
                 <img src="../assets/images/smart-700.webp" width="700" height="700" loading="lazy" decoding="async" alt="Portraitfoto von Philipp Koch, Gründer von Neuratex AI">
                 <div>
                     <p class="lp-kicker" id="person-heading">Ihr Ansprechpartner</p>
-                    <blockquote>„Ich zeige Ihnen, was Ihre Kunden über Sie erfahren, wenn sie eine KI fragen. Und was Sie daran ändern können.“</blockquote>
+                    <blockquote>„Ich untersuche, wie Ihr Unternehmen in KI-Antworten erscheint, und leite daraus konkrete Empfehlungen für Ihre nächsten Schritte ab.“</blockquote>
                     <p>Als Unternehmensberater habe ich Transformationen begleitet, als KI-Verantwortlicher im Versicherungskonzern praktische Lösungen umgesetzt. Heute unterstütze ich mittelständische Unternehmen dabei, KI sinnvoll zu nutzen.</p>
                     <p class="lp-person__who"><strong>Philipp Koch</strong><br>Gründer, Neuratex AI · <a href="tel:+4917647338240">0176 47338240</a> · <a href="mailto:philippkoch@neuratex.de">philippkoch@neuratex.de</a></p>
                 </div>
@@ -247,25 +230,30 @@
         <section id="pilot-anfrage" class="lp-section lp-section--raised" aria-labelledby="anfrage-heading">
             <div class="lp-wrap lp-offer">
                 <div class="lp-price">
-                    <h2 id="anfrage-heading">Einführungspreis für die ersten drei Kunden</h2>
+                    <p class="lp-kicker">Referenzkunden-Angebot</p>
+                    <h2 id="anfrage-heading">Ihr Unternehmen als Referenzprojekt</h2>
+                    <!-- Kuenftiger Preis, kein "statt" oder "regulaer": 1.900 EUR
+                         hat noch niemand bezahlt. Ein erfundener Vergleichspreis
+                         waere irrefuehrend (UWG). Muss spaeter auch gelten. -->
                     <p class="lp-price__num">500 €<small>einmalig</small></p>
+                    <p class="lp-price__later"><span class="sr-only">Künftiger Preis: </span><s>1.900 €</s><span>Das zahlen alle nach Ihnen.</span></p>
                     <ul>
-                        <li>Vollständiger Audit mit Report und Besprechung</li>
+                        <li>Vollständiger Audit mit Report und Ergebnisbesprechung</li>
                         <li>Ergebnis in 3 Werktagen</li>
-                        <li>Rechnung erst nach Lieferung</li>
-                        <li>Danach kostet der Audit 1.900 €</li>
+                        <li>Rechnung mit dem Report, keine Vorkasse</li>
                     </ul>
-                    <p class="lp-price__note">Im Gegenzug nennen wir Sie als Referenz und veröffentlichen eine kurze Fallstudie. Den Inhalt geben Sie vorher frei.</p>
-                    <!-- PLATZSTATUS: Muss stimmen. Nach der ersten bestaetigten
-                         Buchung aendern in "Noch 2 von 3 Plaetzen frei", danach
-                         entsprechend. Sind alle vergeben, Preis und Formular auf
-                         den kuenftigen Preis umstellen. -->
-                    <p class="lp-price__seats">Noch 3 von 3 Plätzen frei</p>
+                    <!-- Bewusst ohne Platzzaehler: Er lenkt auf den eigenen
+                         Verkaufsstand statt auf den Nutzen. Das Angebot erklaert
+                         sich ueber Preis und Gegenleistung. -->
+                    <div class="lp-price__note">
+                        <p>Zum Start bieten wir den vollständigen AI Visibility Audit für einmalig 500 € an. Dafür dürfen wir Ihr Unternehmen als Referenz nennen und die Ergebnisse in einer gemeinsam abgestimmten Fallstudie vorstellen. Die Fallstudie veröffentlichen wir erst nach Ihrer Freigabe.</p>
+                        <p>Der Preis umfasst den gesamten beschriebenen Audit inklusive Ergebnisbesprechung. Es entstehen keine späteren Aufzahlungen.</p>
+                    </div>
                 </div>
 
                 <div class="lp-form">
                     <h3>Audit buchen</h3>
-                    <p class="lp-form__intro" id="anfrage-required">Dauert etwa 2 Minuten. Alle Felder außer den Wettbewerbern sind Pflicht.</p>
+                    <p class="lp-form__intro" id="anfrage-required">Dauert etwa 2 Minuten, ein Vorgespräch ist nicht nötig. Alle Felder außer den Wettbewerbern sind Pflicht.</p>
                     <form id="contact-form" data-form="pilot" data-track-start action="/api/contact" method="post" aria-labelledby="anfrage-heading" aria-describedby="anfrage-required">
                         <fieldset>
                             <legend>Ihr Unternehmen</legend>
@@ -341,6 +329,11 @@
                             <label for="contact-website">Dieses Feld bitte leer lassen</label>
                             <input id="contact-website" name="website" tabindex="-1" autocomplete="off">
                         </div>
+                        <dl class="lp-terms" aria-label="Leistungsbeschreibung">
+                            <div><dt>Leistung</dt><dd>Mindestens 36 Kauffragen, jede mindestens dreimal in ChatGPT, Claude und Gemini, schriftlicher Report mit priorisierten Maßnahmen, Besprechung von etwa einer Stunde per Video. Eine Website, ein Markt, Fragen auf Deutsch.</dd></div>
+                            <div><dt>Preis</dt><dd>500 € einmalig. Dafür dürfen wir Sie als Referenz nennen und eine Fallstudie veröffentlichen, deren Inhalt Sie vorher schriftlich freigeben.</dd></div>
+                            <div><dt>Lieferung und Zahlung</dt><dd>Report innerhalb von drei Werktagen, gezählt ab dem Werktag nach unserer Auftragsbestätigung. Die Rechnung liegt dem Report bei, zahlbar innerhalb von 14 Tagen.</dd></div>
+                        </dl>
                         <label class="lp-check" for="contact-bestaetigung">
                             <input id="contact-bestaetigung" name="bestaetigung" type="checkbox" required>
                             <span>Ich buche für mein Unternehmen, nicht als Verbraucher, und bin mit Referenz und Fallstudie nach unserer schriftlichen Freigabe einverstanden.</span>
@@ -348,16 +341,6 @@
                         <button type="submit" class="cta-button">Verbindlich für 500 € buchen</button>
                         <p class="lp-small">Sie geben damit ein verbindliches Angebot ab. Der Auftrag kommt erst mit unserer Auftragsbestätigung per E-Mail zustande. Ihre Angaben verwenden wir für Buchung und Rechnung, siehe <a href="legal/datenschutz.html#pilotbuchung" target="_blank" rel="noopener noreferrer">Datenschutzhinweise (öffnet in neuem Tab)</a>.</p>
                         <p id="contact-status" class="contact-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p>
-                        <details class="lp-terms">
-                            <summary>Leistungsbeschreibung und Bedingungen</summary>
-                            <dl>
-                                <dt>Leistung</dt><dd>36 Kauffragen, jede dreimal in ChatGPT, Claude und Gemini gestellt (324 Antworten), Report mit priorisierten Maßnahmen und eine Besprechung von etwa einer Stunde per Video.</dd>
-                                <dt>Umfang</dt><dd>Eine Website, ein Markt, Fragen auf Deutsch.</dd>
-                                <dt>Preis und Gegenleistung</dt><dd>500 Euro einmalig. Dafür dürfen wir Ihr Unternehmen als Referenz nennen und eine Fallstudie veröffentlichen, deren Inhalt Sie vorher schriftlich freigeben.</dd>
-                                <dt>Auftrag</dt><dd>Der Auftrag entsteht mit unserer Auftragsbestätigung per E-Mail. Können wir ihn nicht annehmen, entstehen keine Kosten.</dd>
-                                <dt>Lieferung und Zahlung</dt><dd>Innerhalb von drei Werktagen, gezählt ab dem Werktag nach der Auftragsbestätigung. Rechnung mit dem Report, zahlbar innerhalb von 14 Tagen.</dd>
-                            </dl>
-                        </details>
                     </form>
                 </div>
             </div>
