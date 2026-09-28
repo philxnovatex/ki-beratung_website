@@ -13,16 +13,13 @@ const { validateOrigin, checkRateLimit, getClientIP, isValidEmail,
 const EINGANGSBESTAETIGUNG = [
   'Guten Tag,',
   '',
-  'vielen Dank für Ihre Buchung eines Pilotplatzes für den AI Visibility Audit. Ihre Angaben sind bei uns eingegangen.',
+  'vielen Dank für Ihre Buchung des AI Visibility Audit. Ihre Angaben sind bei uns eingegangen.',
   '',
-  'So geht es weiter:',
-  '1. Wir prüfen Ihre Angaben und senden Ihnen innerhalb eines Werktags die Auftragsbestätigung per E-Mail. Mit ihr kommt der Auftrag zustande.',
-  '2. Die schriftliche Auswertung erhalten Sie innerhalb von drei Werktagen, gezählt ab dem Werktag nach der Auftragsbestätigung.',
-  '3. Mit der Auswertung erhalten Sie die Rechnung, zahlbar innerhalb von 14 Tagen. Den Termin für die Besprechung der Ergebnisse stimmen wir mit Ihnen ab.',
+  'Wir prüfen sie und melden uns innerhalb eines Werktags mit der Auftragsbestätigung oder einer Rückmeldung, falls wir den Auftrag nicht annehmen können. Erst mit der Auftragsbestätigung kommt der Auftrag zustande.',
   '',
   'Haben Sie diese Buchung nicht selbst vorgenommen, antworten Sie bitte kurz auf diese E-Mail. Wir löschen die Angaben dann.',
   '',
-  'Bei Fragen antworten Sie einfach auf diese E-Mail.',
+  'Bei Fragen antworten Sie einfach auf diese E-Mail oder rufen Sie an: 0176 47338240.',
   '',
   'Viele Grüße',
   'Philipp Koch',
@@ -105,11 +102,13 @@ module.exports = async function handler(req, res) {
     return reply(400, 'invalid_body', 'Bitte füllen Sie das Kontaktformular aus.');
   }
   const { name, email, company = '', message = '', privacy, website = '', domain = '', herkunft = '',
-    leistungen = '', kunden = '', markt = '', wettbewerber = '', anschrift = '', unternehmer, referenz } = body;
+    leistungen = '', kunden = '', markt = '', region = '', wettbewerber = '', strasse = '', plz = '', ort = '',
+    bestaetigung } = body;
   if (website !== '') return reply(400, 'invalid_request', 'Anfrage konnte nicht verarbeitet werden.');
   // Pilotbuchungen der Landingpage schicken statt einer Nachricht die Website
   // des Kunden. Dann sind Unternehmen, Website und die Angaben für Messung und
-  // Rechnung Pflicht, die Nachricht nicht. Das Feld heißt bewusst domain, denn
+  // Rechnung Pflicht, die Nachricht nicht. Der Datenschutz ist dort ein Hinweis
+  // statt eines Häkchens (Vertragsanbahnung, keine Einwilligung nötig). Das Feld heißt bewusst domain, denn
   // website ist die Spamfalle.
   pilot = typeof domain === 'string' && domain.trim() !== '';
   // Klartext erhalten, einschließlich Apostrophen und Zeilenumbrüchen. Kein HTML-Versand.
@@ -123,9 +122,15 @@ module.exports = async function handler(req, res) {
       ? 'Bitte prüfen Sie Name, E-Mail, Unternehmen und Website-Adresse.'
       : 'Bitte prüfen Sie Name, E-Mail und Nachricht sowie die angegebenen Zeichenlimits.');
   }
-  if (pilot && (!validText(leistungen, 600, true) || !validLine(kunden, 300, true) || !validLine(markt, 120, true)
-    || !validText(wettbewerber, 600, false) || !validText(anschrift, 300, true))) {
-    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Ihre Angaben zu Leistungen, Kunden, Markt und Rechnungsanschrift.');
+  const MAERKTE = { Deutschland: 'Deutschland', DACH: 'Deutschland, Österreich, Schweiz', Region: 'Region' };
+  if (pilot && (!validLine(leistungen, 600, true) || !validLine(kunden, 300, true)
+    || typeof markt !== 'string' || !Object.hasOwn(MAERKTE, markt)
+    || !validLine(region, 120, markt === 'Region') || !validText(wettbewerber, 600, false))) {
+    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Ihre Angaben zu Leistungen, Kunden und Markt.');
+  }
+  if (pilot && (!validLine(strasse, 120, true) || !validLine(ort, 80, true)
+    || typeof plz !== 'string' || !/^[0-9A-Za-z -]{3,10}$/.test(plz.trim()))) {
+    return reply(400, 'invalid_fields', 'Bitte prüfen Sie Straße, PLZ und Ort der Rechnungsanschrift.');
   }
   // Herkunft des Besuchs (UTM-Parameter), vom Skript befüllt. Sie dient nur der
   // Auswertung der Kampagnen. Fehlt sie oder ist sie unbrauchbar, geht die
@@ -133,11 +138,11 @@ module.exports = async function handler(req, res) {
   const quelle = typeof herkunft === 'string'
     ? herkunft.replace(/[\x00-\x1f\x7f]+/g, ' ').trim().slice(0, 300) : '';
   const bestaetigt = (value) => value === true || (nativeForm && value === 'on');
-  if (!bestaetigt(privacy)) {
+  if (!pilot && !bestaetigt(privacy)) {
     return reply(400, 'privacy_required', 'Bitte bestätigen Sie die Datenschutzhinweise.');
   }
-  if (pilot && (!bestaetigt(unternehmer) || !bestaetigt(referenz))) {
-    return reply(400, 'terms_required', 'Bitte bestätigen Sie, dass Sie als Unternehmen buchen, und Ihr Einverständnis zu Referenz und Fallstudie.');
+  if (pilot && !bestaetigt(bestaetigung)) {
+    return reply(400, 'terms_required', 'Bitte bestätigen Sie, dass Sie als Unternehmen buchen und mit Referenz und Fallstudie einverstanden sind.');
   }
   // Beim Einfügen im Dashboard rutschen leicht Leerzeichen oder Umbrüche mit.
   const apiKey = (process.env.BREVO_API_KEY || '').trim();
@@ -156,13 +161,13 @@ module.exports = async function handler(req, res) {
   const eingang = `Eingang: ${new Date().toISOString()}`;
   const text = pilot ? [
     'Pilotbuchung AI Visibility Audit: verbindlich gebucht, Auftragsbestätigung steht aus', '',
-    `Name: ${name.trim()}`, `E-Mail: ${kunde}`, `Unternehmen: ${company.trim()}`, `Website: ${domain.trim()}`, '',
-    'Wofür empfohlen werden:', leistungen.trim(), '',
-    `Kunden: ${kunden.trim()}`, `Markt: ${markt.trim()}`, '',
+    `Name: ${name.trim()}`, `E-Mail: ${kunde}`, `Website: ${domain.trim()}`, '',
+    `Leistungen: ${leistungen.trim()}`, `Kunden: ${kunden.trim()}`,
+    `Markt: ${markt === 'Region' ? 'Region: ' + region.trim() : MAERKTE[markt]}`, '',
     'Wettbewerber:', wettbewerber.trim() || 'keine Angabe, aus den Antworten ermitteln', '',
-    'Rechnungsanschrift:', company.trim(), anschrift.trim(), '',
-    'Bucht als Unternehmer: ja', 'Referenz und Fallstudie nach Freigabe: einverstanden',
-    'Datenschutzhinweise bestätigt: ja', `Herkunft: ${quelle || 'keine Angabe'}`, eingang,
+    'Rechnungsanschrift:', company.trim(), strasse.trim(), `${plz.trim()} ${ort.trim()}`, '',
+    'Bucht als Unternehmer, Referenz und Fallstudie nach Freigabe: bestätigt',
+    `Herkunft: ${quelle || 'keine Angabe'}`, eingang,
   ] : [
     `Name: ${name.trim()}`, `E-Mail: ${kunde}`,
     `Unternehmen: ${company.trim() || 'Nicht angegeben'}`,
@@ -198,7 +203,7 @@ module.exports = async function handler(req, res) {
       sender: { email: sender.trim(), name: 'Philipp Koch, Neuratex AI' },
       to: [{ email: kunde }],
       replyTo: { email: recipient.trim(), name: 'Philipp Koch' },
-      subject: 'Eingang Ihrer Buchung: Pilotplatz AI Visibility Audit',
+      subject: 'Eingang Ihrer Buchung: AI Visibility Audit',
       textContent: EINGANGSBESTAETIGUNG,
     }, 4000);
     eingangsmail = response.status === 201;
@@ -208,6 +213,6 @@ module.exports = async function handler(req, res) {
     console.error('[contact] Eingangsbestätigung fehlgeschlagen');
   }
   return reply(200, null, eingangsmail
-    ? 'Vielen Dank! Ihre Buchung ist eingegangen. Sie erhalten eine Eingangsbestätigung per E-Mail und innerhalb eines Werktags unsere Auftragsbestätigung.'
-    : 'Vielen Dank! Ihre Buchung ist eingegangen. Sie erhalten innerhalb eines Werktags unsere Auftragsbestätigung per E-Mail.');
+    ? 'Vielen Dank! Ihre Buchung ist eingegangen, eine Eingangsbestätigung ist per E-Mail unterwegs. Innerhalb eines Werktags erhalten Sie unsere Auftragsbestätigung oder eine Rückmeldung, falls wir den Auftrag nicht annehmen können.'
+    : 'Vielen Dank! Ihre Buchung ist eingegangen. Innerhalb eines Werktags erhalten Sie unsere Auftragsbestätigung oder eine Rückmeldung, falls wir den Auftrag nicht annehmen können.');
 };

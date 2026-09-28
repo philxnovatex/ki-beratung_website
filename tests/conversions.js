@@ -93,11 +93,12 @@ async function checkEndpoint() {
     // Pilotbuchung der Landingpage: Website-Adresse statt Nachricht, Angaben für
     // Messung und Rechnung, Herkunft der Anzeige. Danach geht eine feste
     // Eingangsbestätigung an den Kunden. Die Spamfalle heißt weiterhin "website".
+    // Datenschutz ist bei der Buchung ein Hinweis, kein Häkchen: kein privacy-Feld.
     const pilot = { name: 'Alex Test', email: 'Alex@Example.com', company: 'Beispiel GmbH',
       domain: 'www.beispiel.de', herkunft: 'utm_source=chatgpt; utm_campaign=pilot',
-      leistungen: 'Industriewartung\nErsatzteile', kunden: 'Maschinenbauer, 50 bis 500 Mitarbeitende',
-      markt: 'DACH', wettbewerber: '', anschrift: 'Musterstraße 1\n40210 Düsseldorf',
-      unternehmer: true, referenz: true, privacy: true };
+      leistungen: 'Industriewartung, Ersatzteile', kunden: 'Maschinenbauer, 50 bis 500 Mitarbeitende',
+      markt: 'DACH', region: '', wettbewerber: '', strasse: 'Musterstraße 1', plz: '40210', ort: 'Düsseldorf',
+      bestaetigung: true };
     calls = [];
     const gebucht = await request(pilot);
     assert.equal(gebucht.statusCode, 200);
@@ -107,10 +108,11 @@ async function checkEndpoint() {
     assert.deepEqual(intern.to, [{ email: 'philippkoch@neuratex.de' }]);
     assert.equal(intern.replyTo.email, 'alex@example.com');
     assert.equal(intern.subject, 'Neue Pilotbuchung AI Visibility Audit: Beispiel GmbH');
-    for (const zeile of ['Website: www.beispiel.de', 'Wofür empfohlen werden:\nIndustriewartung\nErsatzteile',
-      'Kunden: Maschinenbauer, 50 bis 500 Mitarbeitende', 'Markt: DACH', 'keine Angabe, aus den Antworten ermitteln',
-      'Rechnungsanschrift:\nBeispiel GmbH\nMusterstraße 1\n40210 Düsseldorf', 'Bucht als Unternehmer: ja',
-      'Referenz und Fallstudie nach Freigabe: einverstanden', 'Herkunft: utm_source=chatgpt; utm_campaign=pilot']) {
+    for (const zeile of ['Website: www.beispiel.de', 'Leistungen: Industriewartung, Ersatzteile',
+      'Kunden: Maschinenbauer, 50 bis 500 Mitarbeitende', 'Markt: Deutschland, Österreich, Schweiz',
+      'keine Angabe, aus den Antworten ermitteln', 'Rechnungsanschrift:\nBeispiel GmbH\nMusterstraße 1\n40210 Düsseldorf',
+      'Bucht als Unternehmer, Referenz und Fallstudie nach Freigabe: bestätigt',
+      'Herkunft: utm_source=chatgpt; utm_campaign=pilot']) {
       assert.ok(intern.textContent.includes(zeile), 'Mail an uns enthält: ' + zeile);
     }
     assert.ok(!intern.textContent.includes('Nachricht:'));
@@ -121,13 +123,16 @@ async function checkEndpoint() {
       assert.ok(!eingang.textContent.includes(wert) && !eingang.subject.includes(wert), 'Keine Formularinhalte in der Eingangsbestätigung: ' + wert);
     }
     calls = [];
+    assert.equal((await request({ ...pilot, markt: 'Region', region: 'NRW' })).statusCode, 200);
+    assert.ok(calls[0].textContent.includes('Markt: Region: NRW'));
+    calls = [];
     assert.equal((await request({ ...pilot, herkunft: { x: 1 } })).statusCode, 200, 'Unbrauchbare Herkunft weist niemanden ab');
     assert.ok(calls[0].textContent.includes('Herkunft: keine Angabe'));
     calls = [];
     assert.equal((await request({ ...pilot, herkunft: 'x\r\nBcc: y@example.com' })).statusCode, 200);
     assert.ok(calls[0].textContent.includes('Herkunft: x Bcc: y@example.com'));
     calls = [];
-    const nativePilot = await request(new URLSearchParams({ ...pilot, unternehmer: 'on', referenz: 'on', privacy: 'on' }).toString(), { headers: { 'content-type': 'application/x-www-form-urlencoded' } });
+    const nativePilot = await request(new URLSearchParams({ ...pilot, bestaetigung: 'on' }).toString(), { headers: { 'content-type': 'application/x-www-form-urlencoded' } });
     assert.equal(nativePilot.statusCode, 200);
     assert.match(nativePilot.body, /Vielen Dank für Ihre Buchung/);
     assert.match(nativePilot.body, /ki-sichtbarkeit\.html#pilot-anfrage/);
@@ -157,11 +162,13 @@ async function checkEndpoint() {
       assert.equal((await request({ ...valid, ...patch })).statusCode, 400, JSON.stringify(patch));
     }
     for (const patch of [ { company: '' }, { company: '  ' }, { domain: 'a\nb' }, { domain: 'x'.repeat(201) },
-      { domain: '' }, { domain: ['www.beispiel.de'] }, { privacy: false }, { website: 'https://spam.example' },
+      { domain: '' }, { domain: ['www.beispiel.de'] }, { website: 'https://spam.example' },
       { leistungen: '' }, { leistungen: '  ' }, { leistungen: 'x'.repeat(601) }, { leistungen: ['x'] },
-      { kunden: '' }, { kunden: 'a\nb' }, { markt: '' }, { markt: {} }, { anschrift: '' },
-      { anschrift: 'x'.repeat(301) }, { anschrift: '\u0000' }, { wettbewerber: 'x'.repeat(601) },
-      { unternehmer: false }, { unternehmer: 'on' }, { referenz: undefined }, { referenz: 'true' } ]) {
+      { leistungen: 'a\nb' }, { kunden: '' }, { kunden: 'a\nb' }, { markt: '' }, { markt: {} },
+      { markt: 'Mond' }, { markt: 'hasOwnProperty' }, { markt: 'Region', region: '' }, { markt: 'Region', region: 'a\nb' },
+      { wettbewerber: 'x'.repeat(601) }, { strasse: '' }, { strasse: 'x'.repeat(121) }, { plz: '' }, { plz: '1' },
+      { plz: '40210!' }, { plz: 40210 }, { ort: '' }, { ort: 'a\nb' },
+      { bestaetigung: false }, { bestaetigung: 'on' }, { bestaetigung: undefined }, { bestaetigung: 'true' } ]) {
       assert.equal((await request({ ...pilot, ...patch })).statusCode, 400, 'Pilot ' + JSON.stringify(patch));
     }
     for (const body of [null, [], 'malformed']) assert.equal((await request(body)).statusCode, 400);
@@ -265,25 +272,30 @@ async function checkBrowser(browser, base) {
     await open('/pages/ki-sichtbarkeit?utm_source=chatgpt&utm_medium=paid&utm_campaign=pilot-audit');
     requests = 0;
     const buchung = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH',
-      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', markt: 'DACH', anschrift: 'Musterstraße 1, 40210 Düsseldorf' };
+      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', strasse: 'Musterstraße 1', plz: '40210', ort: 'Düsseldorf' };
+    assert.equal(await page.locator('#contact-region').isVisible(), false, 'Region nur bei Auswahl Region');
     for (const [key, value] of Object.entries(buchung)) await page.locator('#contact-' + key).fill(value);
-    for (const key of ['unternehmer', 'referenz', 'privacy']) await page.locator('#contact-' + key).check();
+    await page.locator('#contact-bestaetigung').check();
     await page.locator('#contact-form button').click();
     assert.equal(requests, 0, 'Website-Adresse ist Pflicht');
     await page.locator('#contact-domain').fill('www.beispiel.de');
-    await page.locator('#contact-referenz').uncheck();
+    await page.locator('#contact-markt').selectOption('Region');
     await page.locator('#contact-form button').click();
-    assert.equal(requests, 0, 'Einverständnis zu Referenz und Fallstudie ist Pflicht');
-    await page.locator('#contact-referenz').check();
+    assert.equal(requests, 0, 'Bei Auswahl Region ist die Region Pflicht');
+    await page.locator('#contact-region').fill('NRW');
+    await page.locator('#contact-bestaetigung').uncheck();
+    await page.locator('#contact-form button').click();
+    assert.equal(requests, 0, 'Bestätigung als Unternehmen und zu Referenz ist Pflicht');
+    await page.locator('#contact-bestaetigung').check();
     await page.locator('#contact-form button').click();
     await page.waitForFunction(() => document.querySelector('#contact-status').dataset.state === 'success');
     assert.equal(requests, 1);
     assert.deepEqual(payload, { ...buchung, domain: 'www.beispiel.de', message: '', wettbewerber: '',
-      herkunft: 'utm_source=chatgpt; utm_medium=paid; utm_campaign=pilot-audit', website: '',
-      unternehmer: true, referenz: true, privacy: true });
+      markt: 'Region', region: 'NRW', herkunft: 'utm_source=chatgpt; utm_medium=paid; utm_campaign=pilot-audit',
+      website: '', privacy: false, bestaetigung: true });
+    assert.equal(await page.locator('#contact-region').isVisible(), false, 'Nach dem Absenden wieder Deutschland');
     // Formularbeginn genau einmal, trotz vieler Eingaben, für die Abbruchquote.
     assert.deepEqual(await events(), [['form_start', { form: 'pilot' }], ['form_complete', { form: 'pilot' }]]);
-    assert.equal(await page.locator('.kopieren-knopf').count(), 1);
     fs.mkdirSync(path.join(__dirname, '../.cache/landing-qa'), { recursive: true });
     for (const width of [390, 768, 1440]) {
       await page.setViewportSize({ width, height: 844 });
@@ -369,15 +381,17 @@ async function checkBrowser(browser, base) {
     assert.equal(body.get('message'), 'Anfrage ohne JavaScript');
     assert.equal(body.get('privacy'), 'on');
     await noJs.goto(base + '/pages/ki-sichtbarkeit.html');
-    assert.equal(await noJs.locator('.kopieren-knopf').count(), 0, 'Ohne JavaScript kein funktionsloser Knopf');
     const buchung = { name: 'Alex Test', email: 'alex@example.com', company: 'Beispiel GmbH', domain: 'www.beispiel.de',
-      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', markt: 'DACH', anschrift: 'Musterstraße 1, 40210 Düsseldorf' };
+      leistungen: 'Industriewartung', kunden: 'Maschinenbauer', region: 'NRW', strasse: 'Musterstraße 1', plz: '40210', ort: 'Düsseldorf' };
+    assert.equal(await noJs.locator('#contact-region').isVisible(), true, 'Ohne JavaScript ist die Region immer sichtbar');
     for (const [key, value] of Object.entries(buchung)) await noJs.locator('#contact-' + key).fill(value);
-    for (const key of ['unternehmer', 'referenz', 'privacy']) await noJs.locator('#contact-' + key).check();
+    await noJs.locator('#contact-markt').selectOption('Region');
+    await noJs.locator('#contact-bestaetigung').check();
     await noJs.locator('#contact-form button').click();
     await noJs.waitForURL('**/api/contact');
     for (const [key, value] of Object.entries(buchung)) assert.equal(body.get(key), value, key);
-    for (const key of ['unternehmer', 'referenz', 'privacy']) assert.equal(body.get(key), 'on', key);
+    assert.equal(body.get('markt'), 'Region');
+    assert.equal(body.get('bestaetigung'), 'on');
     assert.equal(body.get('website'), '');
     console.log('  OK    Kontaktformular und Pilotbuchung senden auch ohne JavaScript');
   } finally { await noJs.close(); }

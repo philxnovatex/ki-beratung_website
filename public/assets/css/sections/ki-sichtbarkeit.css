@@ -4,43 +4,25 @@
    Eigene Datei, weil die Seite eigene Abschnitte mitbringt, die es sonst
    nirgends gibt. Die Tokens kommen aus style.css, hier steht nur Anordnung.
 
-   Grundsatz dieser Seite: Der Besucher soll in wenigen Sekunden sehen, was er
-   bekommt. Deshalb steht direkt unter dem Hero eine vollstaendige, als
-   Beispiel gekennzeichnete Auswertung und nicht noch ein Textblock.
+   Grundsatz dieser Seite: Besucher kommen aus einer Anzeige, meist vom
+   Telefon. Auf der Seite steht nur, was zum Kauf beitraegt, in dieser
+   Reihenfolge: Einstieg, Ergebnis, Person, Buchung, drei Fragen, Methodik
+   (zugeklappt). Keine Einblend-Animationen, damit kein Text auf Bewegung
+   wartet.
 
    Der Hero ist bewusst NICHT .hero-section.hero-enhanced: Diese Kombination
    gehoert laut AGENTS.md ausschliesslich zur Startseite und bringt dort
-   min-height: 100vh mit. Auf einer Landingpage muss die Auswertung direkt
-   darunter angeschnitten sein, sonst scrollt niemand dorthin.
+   min-height: 100vh mit.
    ============================================================================ */
 
-/* ── Einblenden ───────────────────────────────────────────────────────────
-   scroll-reveal.js setzt 'visible' und 'in-view'. Ohne JavaScript wird der
-   Startzustand vom noscript-Block im Kopf der Seite zurueckgenommen, genau
-   wie auf den uebrigen Seiten. Bei reduzierter Bewegung blendet das Skript
-   sofort ein, die Regel unten ist die zweite Absicherung. */
-.av-reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity var(--duration-slow) var(--ease-out),
-                transform var(--duration-slow) var(--ease-out);
-}
-.av-reveal.visible,
-.av-reveal.in-view { opacity: 1; transform: none; }
-
-@media (prefers-reduced-motion: reduce) {
-    .av-reveal { opacity: 1; transform: none; }
-}
-
 /* ── Gemeinsame Bausteine ─────────────────────────────────────────────────
-   Die Seite ist ueberwiegend linksbuendig. Das globale h2 ist zentriert, das
-   wird hier abschnittsweise zurueckgenommen. */
+   Die Seite ist linksbuendig. Das globale h2 ist zentriert, das wird hier
+   abschnittsweise zurueckgenommen. */
 .av-section { background: rgba(10, 25, 49, .64); }
 .av-section--raised { background: rgba(17, 34, 64, .62); }
 
-.av-head { max-width: 56rem; margin-bottom: var(--space-12); }
-.av-head h2 { text-align: left; margin-bottom: var(--space-4); }
-.av-head p { color: var(--text-body); }
+.av-head { max-width: 56rem; margin-bottom: var(--space-8); }
+.av-head h2 { text-align: left; margin-bottom: 0; }
 
 .av-eyebrow {
     font-family: var(--font-secondary);
@@ -59,72 +41,148 @@
     border-radius: var(--radius-md);
     padding: var(--space-6);
 }
-.av-card h3 { margin-bottom: var(--space-2); font-size: var(--text-md); }
-.av-card p { max-width: none; color: var(--text-muted); font-size: var(--text-base); }
 
-/* ── Hero ─────────────────────────────────────────────────────────────────
-   Kompakt gehalten. Auf 390 px muss die Kernbotschaft samt erster
-   Handlungsaufforderung ohne groesseren Scroll lesbar sein, deshalb keine
-   Mindesthoehe und ein knapper Innenabstand. */
+/* Links im Fliesstext dieser Seite. Ohne eigene Farbe liefen sie im
+   Browserstandard auf dunklem Grund und fielen durch den Kontrast. */
+.av-note a,
+.av-person__kontakt a,
+.av-privacy-note a {
+    color: var(--text-strong);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+.av-note a:hover,
+.av-person__kontakt a:hover,
+.av-privacy-note a:hover { color: var(--accent); }
+
+/* ── Kopf ohne Navigation ─────────────────────────────────────────────────
+   Nur Logo und ein Sprung zur Buchung. Zweitrangig gestaltet, damit er dem
+   gelben Hauptbutton im Einstieg nicht die Aufmerksamkeit nimmt. */
+.lp-header-cta {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    color: var(--accent);
+    font-weight: var(--weight-bold);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.lp-header-cta:hover,
+.lp-header-cta:focus-visible { background: var(--accent); color: var(--primary-color); }
+
+/* ── 1. Einstieg ──────────────────────────────────────────────────────────
+   Auf 390 px muessen Frage, Ergebnis, Preis und Button ohne Scroll sichtbar
+   sein. Der Chat steht auf dem Desktop rechts, auf dem Telefon darunter. */
 .av-hero {
     position: relative;
-    padding-block: var(--space-12) var(--space-8);
+    padding-block: var(--space-12) var(--space-12);
     background: linear-gradient(180deg, rgba(11, 30, 58, .48) 0%, rgba(10, 25, 49, .62) 100%);
-    text-align: center;
     overflow: hidden;
 }
-.av-hero .container { position: relative; z-index: 2; }
-
-.av-hero h1 {
-    max-width: 30ch;
-    margin-inline: auto;
-    margin-bottom: var(--space-6);
-    text-wrap: balance;
-}
-.av-hero .av-eyebrow { margin-bottom: var(--space-3); }
-
-/* Der erste Satz ordnet ein, der zweite ist das Versprechen. Der zweite traegt
-   deshalb mehr Gewicht und die hellere Farbe. */
-.av-hero__intro {
-    max-width: 60ch;
-    margin: 0 auto var(--space-4);
-    color: var(--text-muted);
-    font-size: var(--text-base);
-}
-.av-hero__lead {
-    max-width: 62ch;
-    margin: 0 auto var(--space-8);
-    color: var(--text-strong);
-    font-size: var(--text-md);
-    font-weight: var(--weight-bold);
-    line-height: var(--leading-snug);
-}
-
-.av-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    justify-content: center;
+.av-hero__grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--space-12);
     align-items: center;
 }
-.av-actions--left { justify-content: flex-start; }
+.av-hero h1 {
+    max-width: 22ch;
+    margin: 0 0 var(--space-4);
+    text-align: left;
+    text-wrap: balance;
+}
+.av-hero__lead {
+    max-width: 52ch;
+    margin: 0 0 var(--space-3);
+    color: var(--text-body);
+    font-size: var(--text-md);
+}
+.av-hero__scope {
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-secondary);
+    font-size: var(--text-sm);
+    color: var(--accent);
+}
+.av-hero__price {
+    max-width: 52ch;
+    margin: 0 0 var(--space-6);
+    color: var(--text-body);
+    font-size: var(--text-sm);
+}
+.av-hero__price strong { color: var(--text-strong); font-size: var(--text-md); }
 
+.av-actions { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; }
 .av-note {
+    max-width: 52ch;
+    margin: var(--space-4) 0 0;
     font-size: var(--text-sm);
     color: var(--text-muted);
-    margin: var(--space-6) auto 0;
-    max-width: 52ch;
 }
 
-/* ── Die Beispielauswertung ───────────────────────────────────────────────
-   Das Kernstueck. Gebaut als Tabelle aus Text und Balken, nicht als Bild:
-   So bleibt sie ohne JavaScript lesbar, skaliert bis 390 px, ist markierbar
-   und kostet keine Ladezeit. */
-.av-report {
-    background: rgba(17, 34, 64, .62);
-    padding-top: var(--space-12);
+/* Nachgestellter Chat. Bewusst neutral: keine Anbieteroberflaeche, kein
+   Logo. Die Kennzeichnung steht oben, bevor jemand den Inhalt liest. */
+.av-chat {
+    margin: 0;
+    padding: var(--space-6);
+    background: rgba(7, 20, 38, .82);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    display: grid;
+    gap: var(--space-4);
 }
-.av-report .av-head { margin-bottom: var(--space-6); }
+.av-chat p { max-width: none; margin: 0; }
+.av-chat__flag {
+    justify-self: start;
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(255, 201, 71, .12);
+    border: 1px solid rgba(255, 201, 71, .45);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1) var(--space-3);
+}
+.av-chat__frage {
+    justify-self: end;
+    max-width: 85%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--c-navy-500);
+    border-radius: var(--radius-md) var(--radius-md) var(--radius-sm) var(--radius-md);
+    color: var(--text-strong);
+    font-size: var(--text-sm);
+}
+.av-chat__antwort { color: var(--text-body); font-size: var(--text-sm); }
+.av-chat__antwort ol { margin: var(--space-3) 0 0; padding-left: var(--space-6); display: grid; gap: var(--space-2); }
+.av-chat__antwort strong { color: var(--text-strong); }
+.av-chat figcaption {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--border-subtle);
+    color: var(--text-strong);
+    font-weight: var(--weight-bold);
+}
+
+/* ── 2. Ergebnis ──────────────────────────────────────────────────────── */
+.av-result {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: var(--space-12);
+    align-items: start;
+}
+.av-checks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-4);
+}
+.av-checks li { position: relative; padding-left: var(--space-8); color: var(--text-body); }
+.av-checks .icon { position: absolute; left: 0; top: 0.3em; color: var(--accent); }
 
 .avr-panel {
     margin: 0;
@@ -134,7 +192,6 @@
     box-shadow: var(--shadow-md);
     overflow: hidden;
 }
-
 .avr-head {
     display: flex;
     flex-wrap: wrap;
@@ -144,6 +201,7 @@
     border-bottom: 1px solid var(--border-subtle);
     background: rgba(17, 34, 64, .7);
 }
+.avr-head p { margin: 0; max-width: none; }
 .avr-head__title {
     font-family: var(--font-secondary);
     font-size: var(--text-xs);
@@ -158,7 +216,7 @@
     font-family: var(--font-secondary);
     font-size: var(--text-xs);
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--accent);
     background: rgba(255, 201, 71, .12);
@@ -166,173 +224,16 @@
     border-radius: var(--radius-pill);
     padding: var(--space-1) var(--space-3);
 }
+.avr-body { padding: var(--space-6); display: grid; gap: var(--space-6); }
 
-.avr-body {
-    display: grid;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-    gap: var(--space-8);
-    padding: var(--space-6);
-}
-.avr-block h3 {
-    font-size: var(--text-sm);
-    font-family: var(--font-secondary);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: var(--space-4);
-}
-
-/* Balken: Share of Voice ................................................. */
-.avr-bars { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); }
-.avr-bar__label {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-3);
-    margin-bottom: var(--space-2);
-}
-.avr-bar__name { font-size: var(--text-base); color: var(--text-body); }
-.avr-bar__value {
-    font-family: var(--font-secondary);
-    font-weight: 700;
-    font-size: var(--text-md);
-    color: var(--text-strong);
-}
-.avr-bar__track {
-    display: block;
-    height: 10px;
-    border-radius: var(--radius-pill);
-    background: rgba(30, 41, 59, .9);
-    overflow: hidden;
-}
-/* Die Breite steht im Markup als --wert und gilt immer, auch ohne
-   JavaScript. Die Bewegung laeuft ueber scaleX und ist damit nur Zugabe. */
-.avr-bar__fill {
-    display: block;
-    height: 100%;
-    width: var(--wert, 0%);
-    border-radius: var(--radius-pill);
-    background: var(--c-blue-500);
-    transform-origin: left center;
-}
-.av-reveal.in-view .avr-bar__fill {
-    animation: avrGrow var(--duration-slow) var(--ease-out) both;
-}
-@keyframes avrGrow {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
-}
-/* Die eigene Marke ist die Zeile, um die es geht. Sie traegt den Akzent,
-   die Wettbewerber bleiben blau. */
-.avr-bar--eigen .avr-bar__fill { background: var(--accent); }
-.avr-bar--eigen .avr-bar__name { color: var(--text-strong); font-weight: var(--weight-bold); }
-.avr-bar--eigen .avr-bar__value { color: var(--accent); }
-.avr-bar--rest .avr-bar__fill { background: var(--text-faint); opacity: .55; }
-
-/* Kennzahlen: eigene Marke gegen den staerksten Wettbewerber ............. */
-.avr-kpis { margin: 0; display: grid; gap: var(--space-3); }
-.avr-kpi {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto auto;
-    align-items: baseline;
-    gap: var(--space-2) var(--space-4);
-    padding: var(--space-3) var(--space-4);
-    background: rgba(17, 34, 64, .72);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-}
-.avr-kpi__name { font-size: var(--text-sm); color: var(--text-body); }
-.avr-kpi__own,
-.avr-kpi__rival {
-    font-family: var(--font-secondary);
-    font-weight: 700;
-    font-size: var(--text-md);
-    text-align: right;
-    min-width: 4.5ch;
-}
-.avr-kpi__own { color: var(--accent); }
-.avr-kpi__rival { color: var(--text-muted); }
-.avr-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-4);
-    font-size: var(--text-xs);
-    font-family: var(--font-secondary);
-    color: var(--text-muted);
-}
-.avr-legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
-.avr-legend i {
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    background: var(--text-muted);
-}
-.avr-legend .avr-legend__own { background: var(--accent); }
-
-/* Quellen hinter dem Wettbewerber ....................................... */
-.avr-sources h3 {
-    font-size: var(--text-sm);
-    font-family: var(--font-secondary);
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: var(--space-4);
-}
-.avr-sources {
-    padding: var(--space-6);
-    border-top: 1px solid var(--border-subtle);
-    background: rgba(10, 25, 49, .55);
-}
-.avr-source-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: var(--space-3);
-}
-.avr-source-list li {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-3) var(--space-4);
-    background: rgba(17, 34, 64, .72);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    font-size: var(--text-sm);
-    color: var(--text-body);
-}
-.avr-source-list b {
-    font-family: var(--font-secondary);
-    font-weight: 700;
-    color: var(--text-strong);
-    white-space: nowrap;
-}
-
-/* Der Befund unter der Auswertung. Ohne ihn sind es nur Zahlen. */
-.avr-finding {
-    display: grid;
-    gap: var(--space-2);
-    padding: var(--space-6);
-    border-top: 1px solid rgba(255, 201, 71, .35);
-    background: rgba(255, 201, 71, .07);
-}
-.avr-finding strong { color: var(--accent); font-size: var(--text-md); }
-.avr-finding p { max-width: none; color: var(--text-body); }
-
-.avr-caption {
-    margin: var(--space-6) 0 0;
-    max-width: 62ch;
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-}
-
-/* Nenner zu jeder Quote. Die Seite verspricht Zaehler und Nenner, also
-   zeigt auch das Beispiel beides. In den Kennzahlen unter dem Prozentwert,
-   in den Balken daneben, damit die Zeile auf 390 px nicht umbricht. */
+.avr-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.avr-table th,
+.avr-table td { padding: var(--space-3) var(--space-2); text-align: right; border-bottom: 1px solid var(--border-subtle); }
+.avr-table th:first-child { text-align: left; }
+.avr-table thead th { color: var(--text-muted); font-weight: var(--weight-regular); }
+.avr-table tbody th { color: var(--text-body); font-weight: var(--weight-regular); }
+.avr-table td { color: var(--text-body); font-size: var(--text-md); font-weight: var(--weight-bold); }
+.avr-table .avr-eigen { color: var(--accent); }
 .avr-n {
     display: block;
     margin-top: var(--space-1);
@@ -340,201 +241,28 @@
     font-weight: var(--weight-regular);
     color: var(--text-muted);
 }
-.avr-bar__value .avr-n { display: inline; margin: 0 0 0 var(--space-2); }
-.avr-basis {
-    max-width: none;
-    margin-top: var(--space-4);
-    font-family: var(--font-secondary);
-    font-size: var(--text-xs);
-    color: var(--text-muted);
-}
 
-/* ── Was Sie bekommen ─────────────────────────────────────────────────── */
-.av-checks {
-    list-style: none;
-    margin: 0 0 var(--space-12);
-    padding: 0;
+.avr-steps { margin: 0; display: grid; gap: var(--space-4); }
+.avr-steps div { padding-left: var(--space-4); border-left: 2px solid var(--border-subtle); }
+.avr-steps div:last-child { border-left-color: var(--accent); }
+.avr-steps dt { color: var(--text-strong); font-weight: var(--weight-bold); font-size: var(--text-sm); }
+.avr-steps dd { margin: 0; color: var(--text-body); font-size: var(--text-sm); }
+
+/* ── 3. Person ────────────────────────────────────────────────────────── */
+.av-person {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: var(--space-4) var(--space-8);
-}
-.av-checks li {
-    position: relative;
-    padding-left: var(--space-8);
-    color: var(--text-body);
-}
-.av-checks .icon {
-    position: absolute;
-    left: 0;
-    top: 0.3em;
-    color: var(--accent);
-}
-.av-report__intro {
-    max-width: 62ch;
-    margin-bottom: var(--space-6);
-    color: var(--text-strong);
-    font-size: var(--text-md);
-    font-weight: var(--weight-bold);
-}
-
-/* Diese Bloecke setzen ihre Abstaende ueber gap. Die Basisregel p + p aus
-   style.css kaeme sonst noch obendrauf und verdoppelte den Absatzabstand. */
-.av-prose p + p,
-.av-selftest p + p,
-.av-offer__text p + p,
-.av-guarantee p + p { margin-top: 0; }
-
-/* ── Eigene Messung ───────────────────────────────────────────────────── */
-.av-prose { display: grid; gap: var(--space-4); max-width: 62ch; }
-.av-prose p { color: var(--text-body); font-size: var(--text-md); }
-.av-prose strong { color: var(--text-strong); }
-/* Das Protokoll ist klein, aber vollstaendig: Datum, System, Zugang, Anzahl
-   und die Einschraenkung. Es macht die Beobachtung pruefbar. */
-.av-protocol {
-    max-width: 62ch;
-    margin-top: var(--space-8);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--border-subtle);
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-}
-.av-protocol strong { color: var(--text-body); }
-
-/* ── Selbsttest ───────────────────────────────────────────────────────── */
-.av-selftest {
-    display: grid;
-    gap: var(--space-4);
-    max-width: 52rem;
-    padding: var(--space-8);
-    background: rgba(17, 34, 64, .78);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-}
-.av-selftest h2 { text-align: left; margin: 0; }
-.av-selftest p { max-width: none; color: var(--text-body); }
-.av-selftest .av-prompt {
-    padding: var(--space-4) var(--space-6);
-    font-family: var(--font-secondary);
-    font-size: var(--text-sm);
-    line-height: var(--leading-normal);
-    color: var(--text-strong);
-    background: rgba(7, 20, 38, .82);
-    border: 1px solid var(--border-subtle);
-    border-left: 2px solid var(--interactive);
-    border-radius: var(--radius-sm);
-}
-/* Der Knopf entsteht in page-common.js. Zweitrangig gestaltet, Gold bleibt
-   der Anfrage vorbehalten. */
-.kopieren-knopf {
-    justify-self: start;
-    padding: var(--space-2) var(--space-4);
-    font: inherit;
-    font-size: var(--text-sm);
-    font-weight: var(--weight-bold);
-    color: var(--text-strong);
-    background: transparent;
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-pill);
-    cursor: pointer;
-    transition: border-color var(--duration-fast) var(--ease-out),
-                color var(--duration-fast) var(--ease-out);
-}
-.kopieren-knopf:hover { border-color: var(--interactive); }
-.kopieren-knopf:focus-visible { outline: 2px solid var(--interactive); outline-offset: 2px; }
-
-/* ── Angebot ──────────────────────────────────────────────────────────── */
-.av-offer {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: var(--space-12);
+    grid-template-columns: 11rem minmax(0, 1fr);
+    gap: var(--space-8);
     align-items: center;
+    max-width: 56rem;
 }
-.av-offer__text { display: grid; gap: var(--space-4); }
-.av-offer__text h2 { text-align: left; margin: 0; }
-.av-offer__text p { color: var(--text-body); }
-.av-offer__text strong { color: var(--text-strong); }
+.av-person__foto { width: 100%; height: auto; border-radius: 50%; border: 2px solid var(--border-subtle); }
+.av-person__text h2 { text-align: left; margin-bottom: var(--space-4); }
+.av-person__text p { color: var(--text-body); }
+.av-person__kontakt { margin-top: var(--space-4); font-size: var(--text-sm); }
 
-.av-price {
-    padding: var(--space-8);
-    text-align: center;
-    background: rgba(10, 25, 49, .78);
-    border: 1px solid rgba(255, 201, 71, .45);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-}
-.av-price p { max-width: none; }
-.av-price__label {
-    font-family: var(--font-secondary);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-.av-price__wert {
-    margin: var(--space-2) 0;
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-black);
-    line-height: var(--leading-tight);
-    color: var(--text-strong);
-}
-.av-price__wert span {
-    font-size: var(--text-md);
-    font-weight: var(--weight-regular);
-    color: var(--text-muted);
-}
-.av-price__bedingung { color: var(--text-body); font-size: var(--text-sm); }
-.av-price__danach { margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
-.av-price__plaetze {
-    margin: var(--space-6) 0 var(--space-4);
-    font-family: var(--font-secondary);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-strong);
-}
-.av-price .cta-button { display: block; width: 100%; box-sizing: border-box; text-align: center; }
-
-/* ── Absicherung ──────────────────────────────────────────────────────── */
-.av-guarantee {
-    display: grid;
-    gap: var(--space-4);
-    max-width: 52rem;
-    padding: var(--space-8);
-    border: 1px solid rgba(255, 201, 71, .45);
-    border-radius: var(--radius-lg);
-    background: rgba(255, 201, 71, .07);
-}
-.av-guarantee h2 { text-align: left; margin: 0; }
-.av-guarantee p { max-width: 60ch; color: var(--text-strong); font-size: var(--text-md); }
-
-/* ── Haeufige Einwaende ───────────────────────────────────────────────── */
-.av-faq { margin: 0; display: grid; gap: var(--space-4); max-width: 56rem; }
-.av-faq dt {
-    margin-bottom: var(--space-2);
-    font-size: var(--text-md);
-    font-weight: var(--weight-bold);
-    color: var(--text-strong);
-}
-.av-faq dd { margin: 0; color: var(--text-body); }
-
-/* ── Grenzen der Methode ──────────────────────────────────────────────── */
-.av-honest .av-head { margin-bottom: var(--space-6); }
-.av-limits {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: var(--space-6);
-}
-.av-limits li { color: var(--text-body); }
-.av-limits strong { display: block; margin-bottom: var(--space-2); color: var(--text-strong); }
-
-/* ── Anfrage ──────────────────────────────────────────────────────────── */
-.av-request { background: rgba(17, 34, 64, .62); }
+/* ── 4. Angebot und Buchung ───────────────────────────────────────────── */
+.av-request { background: rgba(10, 25, 49, .64); }
 .av-request__grid {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
@@ -542,111 +270,132 @@
     align-items: start;
 }
 .av-request__grid h2 { text-align: left; margin-bottom: var(--space-4); }
+.av-request__intro { color: var(--text-body); margin-bottom: var(--space-4); }
+.av-plaetze {
+    margin: 0 0 var(--space-6);
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+}
 /* Kurze Leistungsbeschreibung neben dem Buchungsformular. Sie ist die
-   Vertragsgrundlage der Buchung und muss zur Auftragsbestätigung passen. */
-.av-terms__heading { font-size: var(--text-lg); margin-bottom: var(--space-4); }
+   Vertragsgrundlage der Buchung und muss zur Auftragsbestaetigung passen. */
 .av-terms { margin: 0; display: grid; gap: var(--space-4); }
 .av-terms div { padding-left: var(--space-4); border-left: 2px solid var(--accent); }
 .av-terms dt { color: var(--text-strong); font-weight: var(--weight-bold); font-size: var(--text-sm); }
 .av-terms dd { margin: 0; color: var(--text-body); font-size: var(--text-sm); }
-.av-request__intro { color: var(--text-body); margin-bottom: var(--space-6); }
-.av-request__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
-.av-request__list li {
-    position: relative;
-    padding-left: var(--space-8);
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-}
-.av-request__list li .icon {
-    position: absolute;
-    left: 0;
-    top: 0.25em;
-    color: var(--accent);
-}
 
 /* Das Formular uebernimmt Aufbau und Verhalten vom Kontaktformular
-   (contact.js, /api/contact). Hier steht nur die Flaeche drumherum. */
+   (contact.js, /api/contact). Hier steht nur, was die Buchung zusaetzlich
+   braucht: Gruppen, Auswahlfeld, aufklappbare Wettbewerber, Hinweise. */
 .av-form-card {
-    background: rgba(10, 25, 49, .78);
+    background: rgba(7, 20, 38, .78);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: var(--space-8);
     box-shadow: var(--shadow-md);
 }
-.av-form-card h3 { font-size: var(--text-lg); margin-bottom: var(--space-2); }
-/* Hinweis zwischen Beschriftung und Feld, per aria-describedby verknuepft. */
-.av-form-card .contact-field__hint {
-    max-width: none;
+.av-form-card > p { color: var(--text-muted); font-size: var(--text-sm); max-width: none; margin-bottom: var(--space-4); }
+.av-fieldset { margin: 0 0 var(--space-4); padding: 0; border: 0; min-width: 0; }
+.av-fieldset legend {
+    margin-bottom: var(--space-4);
+    font-family: var(--font-secondary);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.av-form-card .contact-field { margin-bottom: var(--space-4); }
+/* contact-field ist display: grid und wuerde hidden sonst ueberstimmen
+   (Regionsfeld, von contact.js ein- und ausgeblendet). */
+.av-form-card [hidden] { display: none; }
+.av-form-card .contact-fields { gap: var(--space-4); }
+.av-form-card .contact-field__hint { max-width: none; margin: 0; font-size: var(--text-sm); color: var(--text-muted); }
+.av-form-card select {
+    width: 100%;
+    min-width: 0;
+    padding: var(--space-3);
+    background: var(--surface-sunken);
+    color: var(--text-strong);
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius-sm);
+    font: inherit;
+}
+.av-form-card select:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* PLZ schmal, Ort breit. */
+.av-form-card .av-plz-ort { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+
+.av-optional { margin-bottom: var(--space-4); }
+.av-optional summary {
+    cursor: pointer;
+    color: var(--text-body);
+    font-size: var(--text-sm);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    margin-bottom: var(--space-3);
+}
+.av-optional summary:hover { color: var(--accent); }
+
+.av-privacy-note { max-width: none; margin: 0 0 var(--space-6); font-size: var(--text-sm); color: var(--text-muted); }
+.av-form-card .cta-button { display: block; width: 100%; box-sizing: border-box; text-align: center; }
+/* Direkt unter dem Button, dort wird entschieden: verbindlich, aber erst mit
+   Auftragsbestaetigung, und sofort eine Eingangsbestaetigung. */
+.av-form-note { max-width: none; margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); }
+
+/* ── 5. Drei Fragen ───────────────────────────────────────────────────── */
+.av-faq {
     margin: 0;
-    font-size: var(--text-sm);
-    color: var(--text-muted);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--space-4);
 }
-/* Zwei Felder nebeneinander mit unterschiedlich langen Hinweisen: Das Feld
-   steht unten, damit beide Eingaben auf einer Linie liegen. */
-.av-form-card .contact-fields .contact-field:has(.contact-field__hint) {
-    grid-template-rows: auto 1fr auto;
-}
-/* Haelt den naechsten Schritt klein: keine Verpflichtung, Rechnung erst nach
-   Lieferung. Steht direkt unter dem Button, dort wird entschieden. */
-.av-form-note {
-    max-width: none;
-    margin-top: var(--space-4);
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-}
-.av-form-card > p {
-    color: var(--text-muted);
-    font-size: var(--text-sm);
-    max-width: none;
-    margin-bottom: var(--space-6);
-}
+.av-faq dt { margin-bottom: var(--space-2); font-size: var(--text-md); font-weight: var(--weight-bold); color: var(--text-strong); }
+.av-faq dd { margin: 0; color: var(--text-body); }
+
+/* ── 6. Methodik (zugeklappt) ─────────────────────────────────────────── */
+.av-method summary { cursor: pointer; list-style: none; }
+.av-method summary::-webkit-details-marker { display: none; }
+.av-method summary h2 { display: inline; text-align: left; margin: 0; font-size: var(--text-lg); }
+.av-method summary::after { content: " +"; color: var(--accent); font-weight: var(--weight-bold); }
+.av-method[open] summary::after { content: " \2212"; }
+.av-method__body { max-width: 62ch; margin-top: var(--space-6); }
+.av-method__body h3 { margin: var(--space-6) 0 var(--space-3); font-size: var(--text-md); }
+.av-method__body h3:first-child { margin-top: 0; }
+.av-method__body ul { margin: 0; padding-left: var(--space-6); display: grid; gap: var(--space-2); color: var(--text-body); }
+.av-method__body p { color: var(--text-body); }
+.av-protocol { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-muted) !important; }
 
 /* ── Breakpoints ──────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-    .avr-body { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+    .av-hero__grid,
+    .av-result,
     .av-request__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
-    .av-offer { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
 }
 
 @media (max-width: 600px) {
-    .av-hero { padding-block: var(--space-8) var(--space-6); }
-    .av-hero h1 { max-width: none; margin-bottom: var(--space-4); }
-    .av-hero__lead { margin-bottom: var(--space-6); }
+    .av-hero { padding-block: var(--space-6) var(--space-8); }
+    .av-hero h1 { margin-bottom: var(--space-3); }
+    .av-hero__lead { font-size: var(--text-base); }
     .av-actions { flex-direction: column; align-items: stretch; }
-    .av-note { margin-top: var(--space-4); }
-
-    .avr-head { padding: var(--space-3) var(--space-4); }
+    .av-actions .cta-button { text-align: center; }
+    .av-chat { padding: var(--space-4); }
+    .avr-head,
+    .avr-body { padding: var(--space-4); }
     .avr-flag { margin-left: 0; }
-    .avr-body,
-    .avr-sources,
-    .avr-finding { padding: var(--space-4); }
-    .avr-kpi {
-        grid-template-columns: minmax(0, 1fr) auto auto;
-        gap: var(--space-2) var(--space-3);
-    }
-    .avr-source-list li { flex-wrap: wrap; gap: var(--space-2); }
-
-    .av-card { padding: var(--space-4); }
+    .av-person { grid-template-columns: 5rem minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+    .av-card,
     .av-form-card { padding: var(--space-4); }
-    .av-selftest,
-    .av-price,
-    .av-guarantee { padding: var(--space-6) var(--space-4); }
-    .av-selftest .av-prompt { padding: var(--space-3) var(--space-4); }
-    .av-checks { margin-bottom: var(--space-8); }
+    /* Das globale Umbrechen auf eine Spalte gilt auch fuer PLZ und Ort. */
+    .av-form-card .av-plz-ort { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ── Niedrige Fenster ─────────────────────────────────────────────────────
-   Ein 1366x600-Fenster hat unter dem klebenden Kopf rund 520 px. Der Hero
-   muss dort so kompakt sein, dass die Auswertung darunter noch angeschnitten
-   ist. Sonst sieht der Besucher genau das nicht, wofuer er gekommen ist. */
+   Ein 1366x600-Fenster hat unter dem klebenden Kopf rund 520 px. Der Button
+   im Einstieg muss dort sichtbar bleiben. */
 @media (min-width: 901px) and (max-height: 760px) {
-    .av-hero { padding-block: var(--space-8) var(--space-6); }
-    .av-hero h1 {
-        font-size: clamp(1.9rem, 1.6vw + 1.2rem, 2.35rem);
-        max-width: 34ch;
-        margin-bottom: var(--space-4);
-    }
-    .av-hero__intro { margin-bottom: var(--space-3); }
-    .av-hero__lead { margin-bottom: var(--space-6); }
-    .av-note { margin-top: var(--space-4); }
+    .av-hero { padding-block: var(--space-8) var(--space-8); }
+    .av-hero h1 { font-size: clamp(1.9rem, 1.6vw + 1.2rem, 2.35rem); }
 }

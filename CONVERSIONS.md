@@ -23,19 +23,22 @@ Pflichtfelder der Buchung (Server und Markup):
 | Feld | Inhalt | Grenze |
 |---|---|---|
 | `name`, `email` | wie Kontaktformular | 120 / E-Mail-Prüfung |
-| `company` | Unternehmen, erscheint auch als erste Zeile der Rechnungsanschrift | 140, einzeilig |
 | `domain` | Website-Adresse | 200, einzeilig |
-| `leistungen` | wofür der Kunde empfohlen werden will | 600, mehrzeilig |
-| `kunden` | Branche und Größe der Kunden | 300, einzeilig |
-| `markt` | Deutschland, DACH oder Region | 120, einzeilig |
-| `anschrift` | Rechnungsanschrift ohne Firmennamen | 300, mehrzeilig |
-| `unternehmer` | Buchung als Unternehmer, nicht als Verbraucher | Checkbox |
-| `referenz` | Einverständnis zu Referenz und Fallstudie nach Freigabe | Checkbox |
-| `privacy` | Datenschutzhinweise | Checkbox |
+| `leistungen` | welche Leistungen untersucht werden | 600, einzeilig |
+| `kunden` | für welche Kunden | 300, einzeilig |
+| `markt` | Auswahl `Deutschland`, `DACH` oder `Region` | nur diese Werte |
+| `region` | nur Pflicht bei `markt=Region`, mit JavaScript sonst ausgeblendet | 120, einzeilig |
+| `company` | Unternehmen, erste Zeile der Rechnungsanschrift | 140, einzeilig |
+| `strasse`, `plz`, `ort` | Rechnungsanschrift | 120 / 3 bis 10 Zeichen / 80 |
+| `bestaetigung` | Buchung als Unternehmen und Einverständnis zu Referenz und Fallstudie nach Freigabe, ein Häkchen | Checkbox |
 
-Optional: `wettbewerber` (600, mehrzeilig). Eine USt-IdNr. wird nicht
-abgefragt, weil Neuratex AI als Kleinunternehmer (§ 19 UStG) abrechnet.
-Checkboxen kommen per JSON als `true`, ohne JavaScript als `on`.
+Optional: `wettbewerber` (600, mehrzeilig, im Formular zugeklappt). Der
+Datenschutz ist bei der Buchung ein Hinweis mit Link, kein Häkchen: Die
+Verarbeitung dient der Vertragsanbahnung (Art. 6 Abs. 1 lit. b DSGVO), eine
+Einwilligung ist nicht nötig. `privacy` bleibt nur für die Kontaktseite
+Pflicht. Eine USt-IdNr. wird nicht abgefragt, weil Neuratex AI als
+Kleinunternehmer (§ 19 UStG) abrechnet. Checkboxen kommen per JSON als
+`true`, ohne JavaScript als `on`.
 
 Ablauf im Server:
 

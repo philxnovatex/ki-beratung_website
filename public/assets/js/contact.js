@@ -5,8 +5,8 @@
     const button = form.querySelector('button[type="submit"]');
     const status = document.getElementById('contact-status');
     // Die Beschriftung kommt aus dem Markup, nicht aus diesem Skript. Auf der
-    // Seite zur KI-Sichtbarkeit heisst der Schalter "Pilotplatz verbindlich
-    // buchen"; fest verdrahtetes "Nachricht senden" haette ihn nach dem
+    // Seite zur KI-Sichtbarkeit heisst der Schalter "Audit fuer 500 Euro
+    // verbindlich buchen"; fest verdrahtetes "Nachricht senden" haette ihn nach dem
     // ersten Absenden stillschweigend umbenannt.
     const beschriftung = button.textContent;
     let sending = false;
@@ -40,6 +40,23 @@
         }, { once: true });
     }
 
+    // Regionsfeld der Pilotbuchung: nur sichtbar und Pflicht, wenn als Markt
+    // "Eine Region in Deutschland" gewaehlt ist. Ohne JavaScript bleibt es
+    // sichtbar, der Server verlangt es nur bei dieser Auswahl.
+    const markt = form.elements.markt;
+    const regionFeld = form.querySelector('[data-region-feld]');
+    if (markt && regionFeld) {
+        const region = regionFeld.querySelector('input');
+        const zeigeRegion = () => {
+            const aktiv = markt.value === 'Region';
+            regionFeld.hidden = !aktiv;
+            region.required = aktiv;
+            if (!aktiv) region.value = '';
+        };
+        markt.addEventListener('change', zeigeRegion);
+        zeigeRegion();
+    }
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (sending || !form.reportValidity()) return;
@@ -62,12 +79,10 @@
         };
         // Nur die Pilotbuchung der Landingpage hat diese Felder. Fehlen sie,
         // bleibt die Anfrage der Kontaktseite wie bisher.
-        for (const key of ['domain', 'herkunft', 'leistungen', 'kunden', 'markt', 'wettbewerber', 'anschrift']) {
+        for (const key of ['domain', 'herkunft', 'leistungen', 'kunden', 'markt', 'region', 'wettbewerber', 'strasse', 'plz', 'ort']) {
             if (fields.has(key)) daten[key] = text(key);
         }
-        for (const key of ['unternehmer', 'referenz']) {
-            if (form.elements[key]) daten[key] = fields.get(key) === 'on';
-        }
+        if (form.elements.bestaetigung) daten.bestaetigung = fields.get('bestaetigung') === 'on';
         sending = true;
         button.disabled = true;
         button.textContent = 'Wird gesendet…';
@@ -88,6 +103,8 @@
                 status.textContent = data.message || 'Vielen Dank! Ihre Nachricht wurde übermittelt. Wir melden uns per E-Mail bei Ihnen.';
                 status.dataset.state = 'success';
                 form.reset();
+                // reset() loest kein change aus; Regionsfeld wieder ausblenden.
+                form.elements.markt?.dispatchEvent(new Event('change'));
                 // Feste Kategorie aus dem Markup, niemals Formularinhalte.
                 window.neuratexTrack?.('form_complete', { form: form.dataset.form || 'contact' });
             } else {
