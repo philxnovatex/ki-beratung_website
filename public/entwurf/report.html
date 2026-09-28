@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Visibility Audit | Neuratex AI (Entwurf)</title>
+<style>
+@font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url('../assets/fonts/inter-v20-latin-regular.woff2') format('woff2'); }
+@font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url('../assets/fonts/inter-v20-latin-700.woff2') format('woff2'); }
+@font-face { font-family: Inter; font-weight: 800; font-display: swap; src: url('../assets/fonts/inter-v20-latin-800.woff2') format('woff2'); }
+
+:root {
+  --ink: #0b1733;
+  --ink-soft: #3d4a63;
+  --muted: #6b7489;
+  --line: #e3e5ea;
+  --paper: #ffffff;
+  --sand: #f6f5f1;
+  --navy: #13235a;
+  --navy-deep: #0b1733;
+  --blue: #2f8fd8;
+  --orange: #f0931e;
+  --orange-soft: #fdf1e1;
+  --good: #1d7a4c;
+  --good-soft: #e5f3ec;
+  --bad: #b3261e;
+  --bad-soft: #fbe9e7;
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(11, 23, 51, .06), 0 12px 40px rgba(11, 23, 51, .10);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.6; color: var(--ink-soft); background: var(--paper); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { color: var(--ink); line-height: 1.12; letter-spacing: -0.02em; font-weight: 800; }
+h1 { font-size: clamp(2.3rem, 4.6vw, 3.7rem); }
+h2 { font-size: clamp(1.8rem, 3.2vw, 2.6rem); }
+h3 { font-size: 1.15rem; letter-spacing: -0.01em; font-weight: 700; }
+a { color: inherit; }
+.wrap { width: min(1160px, 100% - 40px); margin-inline: auto; }
+section { padding-block: clamp(64px, 9vw, 112px); }
+.kicker { color: var(--orange); font-weight: 700; font-size: .95rem; margin-bottom: 14px; }
+.lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 36rem; }
+h2 + .lead { margin-top: 18px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 26px; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 700; text-decoration: none; border: 0; font: inherit; font-weight: 700; cursor: pointer; transition: background .15s, transform .15s; }
+.btn:hover { background: var(--navy-deep); transform: translateY(-1px); }
+.btn--ghost { background: transparent; color: var(--navy); padding-inline: 4px; }
+.btn--ghost:hover { background: transparent; text-decoration: underline; }
+
+/* Kopf */
+.top { position: sticky; top: 0; z-index: 10; background: #fff; border-bottom: 1px solid var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.top img { height: 58px; width: auto; }
+.top a.link { font-weight: 700; color: var(--navy); text-decoration: none; font-size: .95rem; }
+
+/* Einstieg */
+.hero { background: var(--sand); padding-block: clamp(48px, 7vw, 88px) clamp(56px, 8vw, 96px); }
+.hero .wrap { display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: center; }
+.hero h1 { margin-bottom: 22px; }
+.hero .lead { margin-bottom: 30px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 22px 0 0; padding: 0; list-style: none; font-size: .95rem; color: var(--ink); }
+.facts li { display: flex; align-items: center; gap: 8px; }
+.facts li::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: var(--good-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%231d7a4c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+
+/* Report-Karte im Einstieg */
+.cover { background: var(--paper); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.cover__head { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; border-bottom: 1px solid var(--line); font-size: .85rem; color: var(--muted); }
+.cover__head strong { color: var(--ink); font-size: .95rem; }
+.tag { font-size: .75rem; font-weight: 700; color: var(--muted); background: #f0f1f4; border-radius: 999px; padding: 3px 10px; white-space: nowrap; }
+.cover__body { padding: 22px; display: grid; gap: 22px; }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.kpi { background: var(--sand); border-radius: 10px; padding: 14px; }
+.kpi b { display: block; font-size: 1.75rem; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; }
+.kpi span { font-size: .8rem; color: var(--muted); }
+.kpi--warn b { color: var(--bad); }
+.insight { display: flex; gap: 12px; align-items: flex-start; background: var(--orange-soft); border-radius: 10px; padding: 14px 16px; color: var(--ink); font-size: .95rem; }
+.insight i { flex: 0 0 22px; height: 22px; border-radius: 50%; background: var(--orange); color: #fff; font-style: normal; font-weight: 800; font-size: .8rem; display: grid; place-items: center; margin-top: 1px; }
+
+/* Balken */
+.bars { display: grid; gap: 12px; }
+.bar { display: grid; grid-template-columns: 8.5rem 1fr 3.2rem; align-items: center; gap: 12px; font-size: .92rem; color: var(--ink); }
+.bar__track { height: 10px; background: #eef0f3; border-radius: 99px; overflow: hidden; }
+.bar__fill { height: 100%; background: #b9c3d6; border-radius: 99px; }
+.bar__val { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bar--you { font-weight: 700; }
+.bar--you .bar__fill { background: var(--orange); }
+.bar--you .bar__val { color: var(--orange); }
+.bars__title { font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: none; margin-bottom: 2px; }
+
+/* Plattformen */
+.strip { padding-block: 26px; border-bottom: 1px solid var(--line); }
+.strip .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; color: var(--muted); font-size: .95rem; }
+.strip strong { color: var(--ink); }
+
+/* Report */
+.report-sec { background: var(--navy-deep); }
+.report-sec h2, .report-sec .kicker { color: #fff; }
+.report-sec .kicker { color: #f7b35a; }
+.report-sec .lead { color: #c3cbe0; margin-bottom: 44px; }
+.app { background: var(--paper); border-radius: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.35); display: grid; grid-template-columns: 230px 1fr; overflow: hidden; min-height: 520px; }
+.app__nav { background: #f7f8fa; border-right: 1px solid var(--line); padding: 22px 14px; display: flex; flex-direction: column; gap: 4px; }
+.app__brand { font-size: .8rem; color: var(--muted); padding: 0 10px 14px; border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.app__brand strong { display: block; color: var(--ink); font-size: .95rem; }
+.app__nav button { all: unset; cursor: pointer; padding: 10px 12px; border-radius: 8px; font-size: .95rem; color: var(--ink-soft); display: flex; justify-content: space-between; }
+.app__nav button:hover { background: #eef0f4; }
+.app__nav button[aria-selected="true"] { background: var(--navy); color: #fff; font-weight: 700; }
+.app__nav button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.app__nav small { opacity: .7; }
+.app__main { padding: 30px 34px; }
+.app__top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+.app__top h3 { font-size: 1.35rem; }
+.app__top p { font-size: .9rem; color: var(--muted); }
+.panel[hidden] { display: none; }
+.panel { display: grid; gap: 22px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.box { border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+
+/* Fragen-Tabelle */
+.qt { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.qt th { text-align: left; font-size: .78rem; color: var(--muted); font-weight: 700; padding: 0 10px 10px; border-bottom: 1px solid var(--line); }
+.qt td { padding: 13px 10px; border-bottom: 1px solid var(--line); color: var(--ink); vertical-align: middle; }
+.qt td:not(:first-child), .qt th:not(:first-child) { text-align: center; width: 88px; }
+.dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; }
+.dot--rec { background: var(--good); }
+.dot--men { border: 2px solid var(--orange); }
+.dot--no { width: 12px; height: 2px; border-radius: 0; background: #c3c8d2; vertical-align: middle; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .82rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+
+/* Quellen */
+.src { display: grid; gap: 10px; }
+.src__row { display: grid; grid-template-columns: 1fr auto; gap: 6px 16px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; }
+.src__row b { color: var(--ink); }
+.src__row small { grid-column: 1 / -1; color: var(--muted); font-size: .85rem; }
+.pill { font-size: .78rem; font-weight: 700; border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.pill--bad { background: var(--bad-soft); color: var(--bad); }
+.pill--warn { background: var(--orange-soft); color: #9a5a0a; }
+.pill--good { background: var(--good-soft); color: var(--good); }
+
+/* Massnahmen */
+.todo { display: grid; gap: 12px; }
+.todo__item { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding: 18px; border: 1px solid var(--line); border-radius: 12px; }
+.todo__nr { width: 38px; height: 38px; border-radius: 10px; background: var(--navy); color: #fff; font-weight: 800; display: grid; place-items: center; }
+.todo__item h4 { color: var(--ink); font-size: 1rem; margin-bottom: 4px; }
+.todo__item p { font-size: .92rem; }
+.todo__meta { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+/* Leistungen */
+.cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 48px; }
+.cols article { border-top: 2px solid var(--ink); padding-top: 18px; }
+.cols h3 { margin-bottom: 8px; }
+.cols p { font-size: .98rem; }
+
+/* Ablauf */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 44px; counter-reset: s; }
+.step { background: var(--paper); border-radius: var(--radius); padding: 28px; box-shadow: 0 1px 2px rgba(11,23,51,.06); position: relative; }
+.step::before { counter-increment: s; content: counter(s); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--orange-soft); color: #9a5a0a; font-weight: 800; margin-bottom: 18px; }
+.step h3 { margin-bottom: 6px; }
+.step em { font-style: normal; font-weight: 700; color: var(--ink); font-size: .9rem; display: block; margin-bottom: 8px; }
+.sand { background: var(--sand); }
+
+/* Person */
+.person { display: grid; grid-template-columns: 280px 1fr; gap: 56px; align-items: center; }
+.person img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: center 20%; border-radius: var(--radius); }
+.person blockquote { font-size: clamp(1.3rem, 2.2vw, 1.7rem); line-height: 1.35; color: var(--ink); font-weight: 700; letter-spacing: -0.01em; margin: 14px 0 22px; }
+.person p { max-width: 38rem; }
+.person .who { margin-top: 18px; color: var(--ink); }
+.person .who b { display: block; }
+
+/* Angebot */
+.offer { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: start; }
+.price { background: var(--navy-deep); color: #c3cbe0; border-radius: 18px; padding: 36px; position: sticky; top: 96px; }
+.price h2 { color: #fff; margin-bottom: 18px; }
+.price__num { font-size: 4rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.price__num small { font-size: 1rem; font-weight: 400; color: #c3cbe0; letter-spacing: 0; margin-left: 8px; }
+.price ul { list-style: none; padding: 0; margin: 26px 0; display: grid; gap: 10px; }
+.price li { padding-left: 28px; position: relative; }
+.price li::before { content: ""; position: absolute; left: 0; top: 5px; width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23f7b35a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/11px no-repeat; }
+.price__note { border-top: 1px solid rgba(255,255,255,.14); padding-top: 18px; font-size: .92rem; }
+.seats { display: inline-block; margin-top: 16px; font-weight: 700; color: #f7b35a; font-size: .92rem; }
+
+.form { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 32px; }
+.form h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.form > p { font-size: .92rem; color: var(--muted); margin-bottom: 22px; }
+fieldset { border: 0; padding: 0; margin: 0 0 18px; }
+legend { font-weight: 700; color: var(--ink); font-size: .95rem; margin-bottom: 12px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.row--plz { grid-template-columns: 1fr 2fr; }
+.field { display: grid; gap: 6px; margin-bottom: 12px; }
+.field label { font-size: .88rem; font-weight: 700; color: var(--ink); }
+.field input, .field select { width: 100%; font: inherit; font-size: .98rem; padding: 12px 14px; border: 1px solid #cdd2dc; border-radius: 9px; background: #fff; color: var(--ink); }
+.field input::placeholder { color: #9aa1b1; }
+.field input:focus, .field select:focus { outline: 2px solid var(--blue); outline-offset: 1px; border-color: var(--blue); }
+.check { display: flex; gap: 12px; align-items: flex-start; font-size: .9rem; margin: 6px 0 14px; }
+.check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--navy); flex: none; }
+.form .btn { width: 100%; padding-block: 18px; font-size: 1.02rem; }
+.small { font-size: .84rem; color: var(--muted); margin-top: 12px; }
+details.terms { margin-top: 16px; font-size: .88rem; }
+details.terms summary { cursor: pointer; font-weight: 700; color: var(--navy); }
+details.terms dl { margin-top: 12px; display: grid; gap: 8px; }
+details.terms dt { font-weight: 700; color: var(--ink); }
+details.terms dd { margin: 0; }
+
+/* FAQ */
+.faq { max-width: 820px; margin-top: 36px; }
+.faq details { border-bottom: 1px solid var(--line); padding: 20px 0; }
+.faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; font-weight: 700; color: var(--ink); font-size: 1.08rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-weight: 400; font-size: 1.5rem; line-height: 1; color: var(--muted); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 10px; max-width: 44rem; }
+
+footer { border-top: 1px solid var(--line); padding: 28px 0; font-size: .88rem; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+footer nav { display: flex; gap: 20px; }
+
+@media (max-width: 960px) {
+  .hero .wrap, .offer, .person { grid-template-columns: 1fr; }
+  .app { grid-template-columns: 1fr; }
+  .app__nav { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line); padding: 12px; }
+  .app__brand { display: none; }
+  .app__nav button { white-space: nowrap; }
+  .app__nav small { display: none; }
+  .cols { grid-template-columns: 1fr 1fr; }
+  .steps { grid-template-columns: 1fr; }
+  .price { position: static; }
+  .person img { max-width: 220px; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .app__main { padding: 20px 16px; }
+  .grid2, .cols, .row { grid-template-columns: 1fr; }
+  .row--plz { grid-template-columns: 1fr 2fr; }
+  .kpi b { font-size: 1.4rem; }
+  .bar { grid-template-columns: 6.5rem 1fr 2.8rem; font-size: .85rem; }
+  .qt td:not(:first-child), .qt th:not(:first-child) { width: 44px; padding-inline: 4px; }
+  .qt th:not(:first-child) { font-size: .7rem; }
+  .form, .price { padding: 24px 18px; }
+  .actions .btn { width: 100%; }
+  .top img { height: 46px; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <img src="logo-hell.png" alt="Neuratex AI">
+    <a class="link" href="#buchen">Audit buchen</a>
+  </div>
+</header>
+
+<main>
+  <!-- 1. Einstieg -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="kicker">AI Visibility Audit für B2B-Unternehmen</p>
+        <h1>Empfiehlt ChatGPT Ihr Unternehmen oder Ihre Konkurrenz?</h1>
+        <p class="lead">Wir stellen ChatGPT, Claude und Gemini die Fragen, die Ihre Kunden vor dem Kauf stellen. Sie sehen schwarz auf weiß, wer empfohlen wird, warum, und was Sie ändern können.</p>
+        <div class="actions">
+          <a class="btn" href="#buchen">Audit für 500 € buchen</a>
+          <a class="btn btn--ghost" href="#report">Beispielreport ansehen ↓</a>
+        </div>
+        <ul class="facts">
+          <li>Ergebnis in 3 Werktagen</li>
+          <li>Zahlung erst nach Lieferung</li>
+          <li>Kein Vorgespräch nötig</li>
+        </ul>
+      </div>
+
+      <div class="cover" aria-label="Vorschau des Reports">
+        <div class="cover__head"><strong>KI-Sichtbarkeitsreport</strong><span class="tag">Beispieldaten</span></div>
+        <div class="cover__body">
+          <div class="kpis">
+            <div class="kpi"><b>33 %</b><span>genannt</span></div>
+            <div class="kpi kpi--warn"><b>11 %</b><span>empfohlen</span></div>
+            <div class="kpi"><b>Platz 4</b><span>von 7 Anbietern</span></div>
+          </div>
+          <div class="bars">
+            <p class="bars__title">Wer bei Kaufentscheidungen empfohlen wird</p>
+            <div class="bar"><span>Wettbewerber A</span><div class="bar__track"><div class="bar__fill" style="width:94%"></div></div><span class="bar__val">47 %</span></div>
+            <div class="bar"><span>Wettbewerber B</span><div class="bar__track"><div class="bar__fill" style="width:58%"></div></div><span class="bar__val">29 %</span></div>
+            <div class="bar"><span>Wettbewerber C</span><div class="bar__track"><div class="bar__fill" style="width:36%"></div></div><span class="bar__val">18 %</span></div>
+            <div class="bar bar--you"><span>Ihr Unternehmen</span><div class="bar__track"><div class="bar__fill" style="width:22%"></div></div><span class="bar__val">11 %</span></div>
+          </div>
+          <p class="insight"><i>!</i><span>Sie werden gefunden, aber selten empfohlen. Wettbewerber A wird viermal so oft empfohlen wie Sie.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap">
+      <span>Gemessen in <strong>ChatGPT, Claude und Gemini</strong></span>
+      <span><strong>36 Kauffragen</strong> aus Ihrem Markt</span>
+      <span><strong>324 Antworten</strong> ausgewertet</span>
+      <span><strong>Festpreis</strong> statt Angebot nach Erstgespräch</span>
+    </div>
+  </div>
+
+  <!-- 2. Report -->
+  <section class="report-sec" id="report">
+    <div class="wrap">
+      <p class="kicker">Ihr Report</p>
+      <h2>Alles, was Sie wissen müssen, auf fünf Seiten</h2>
+      <p class="lead">Klicken Sie sich durch einen Beispielreport. Ihrer sieht genauso aus, mit Ihren Fragen, Ihren Wettbewerbern und Ihren Zahlen.</p>
+
+      <div class="app">
+        <div class="app__nav" role="tablist" aria-label="Bereiche des Reports">
+          <p class="app__brand"><strong>Ihr Unternehmen</strong>Kältetechnik, NRW</p>
+          <button role="tab" aria-selected="true" aria-controls="p1" id="t1">Übersicht</button>
+          <button role="tab" aria-selected="false" aria-controls="p2" id="t2">Fragen <small>36</small></button>
+          <button role="tab" aria-selected="false" aria-controls="p3" id="t3">Wettbewerb</button>
+          <button role="tab" aria-selected="false" aria-controls="p4" id="t4">Quellen</button>
+          <button role="tab" aria-selected="false" aria-controls="p5" id="t5">Maßnahmen <small>3</small></button>
+        </div>
+        <div class="app__main">
+
+          <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+            <div class="app__top"><div><h3>Übersicht</h3><p>36 Fragen · 3 Systeme · je 3 Durchläufe</p></div><span class="tag">Beispieldaten</span></div>
+            <div class="kpis">
+              <div class="kpi"><b>108</b><span>von 324 Antworten nennen Sie</span></div>
+              <div class="kpi kpi--warn"><b>36</b><span>von 324 empfehlen Sie</span></div>
+              <div class="kpi"><b>4 von 7</b><span>Ihr Platz im Markt</span></div>
+            </div>
+            <div class="grid2">
+              <div class="box bars">
+                <p class="bars__title">Empfohlen je KI-System</p>
+                <div class="bar bar--you"><span>Gemini</span><div class="bar__track"><div class="bar__fill" style="width:38%"></div></div><span class="bar__val">19 %</span></div>
+                <div class="bar bar--you"><span>ChatGPT</span><div class="bar__track"><div class="bar__fill" style="width:16%"></div></div><span class="bar__val">8 %</span></div>
+                <div class="bar bar--you"><span>Claude</span><div class="bar__track"><div class="bar__fill" style="width:12%"></div></div><span class="bar__val">6 %</span></div>
+              </div>
+              <div class="box">
+                <p class="bars__title">Das Wichtigste in drei Sätzen</p>
+                <p style="color:var(--ink); margin-top:8px; font-size:.95rem">Die KI kennt Sie, empfiehlt aber meist andere. Am schwächsten sind Sie bei Fragen nach Kosten und Anbietervergleichen. Der größte Hebel liegt nicht auf Ihrer Website, sondern auf einem Branchenportal, auf dem Sie fehlen.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+            <div class="app__top"><div><h3>Die Fragen Ihrer Kunden</h3><p>6 von 36 Fragen, je Frage 3 Durchläufe pro System</p></div><span class="tag">Beispieldaten</span></div>
+            <table class="qt">
+              <thead><tr><th>Frage</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr></thead>
+              <tbody>
+                <tr><td>Welche Firmen warten Industriekälteanlagen in NRW?</td><td><span class="dot dot--men" title="genannt"></span></td><td><span class="dot dot--no" title="fehlt"></span></td><td><span class="dot dot--rec" title="empfohlen"></span></td></tr>
+                <tr><td>Wer baut Kühlhäuser für Lebensmittelbetriebe?</td><td><span class="dot dot--no"></span></td><td><span class="dot dot--no"></span></td><td><span class="dot dot--men"></span></td></tr>
+                <tr><td>Was kostet ein Wartungsvertrag für eine Kälteanlage?</td><td><span class="dot dot--no"></span></td><td><span class="dot dot--men"></span></td><td><span class="dot dot--men"></span></td></tr>
+                <tr><td>Welcher Kältetechniker hat einen 24-Stunden-Notdienst?</td><td><span class="dot dot--men"></span></td><td><span class="dot dot--no"></span></td><td><span class="dot dot--rec"></span></td></tr>
+                <tr><td>Kältetechnik-Anbieter für den Mittelstand im Vergleich</td><td><span class="dot dot--no"></span></td><td><span class="dot dot--no"></span></td><td><span class="dot dot--no"></span></td></tr>
+                <tr><td>Worauf achte ich bei der Wahl eines Kältetechnik-Dienstleisters?</td><td><span class="dot dot--men"></span></td><td><span class="dot dot--men"></span></td><td><span class="dot dot--men"></span></td></tr>
+              </tbody>
+            </table>
+            <p class="legend"><span><i class="dot dot--rec"></i>empfohlen</span><span><i class="dot dot--men"></i>nur genannt</span><span><i class="dot dot--no"></i>nicht genannt</span></p>
+          </div>
+
+          <div class="panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+            <div class="app__top"><div><h3>Wer statt Ihnen empfohlen wird</h3><p>Anteil der 324 Antworten mit Empfehlung</p></div><span class="tag">Beispieldaten</span></div>
+            <div class="box bars">
+              <div class="bar"><span>Wettbewerber A</span><div class="bar__track"><div class="bar__fill" style="width:94%"></div></div><span class="bar__val">47 %</span></div>
+              <div class="bar"><span>Wettbewerber B</span><div class="bar__track"><div class="bar__fill" style="width:58%"></div></div><span class="bar__val">29 %</span></div>
+              <div class="bar"><span>Wettbewerber C</span><div class="bar__track"><div class="bar__fill" style="width:36%"></div></div><span class="bar__val">18 %</span></div>
+              <div class="bar bar--you"><span>Ihr Unternehmen</span><div class="bar__track"><div class="bar__fill" style="width:22%"></div></div><span class="bar__val">11 %</span></div>
+              <div class="bar"><span>3 weitere</span><div class="bar__track"><div class="bar__fill" style="width:8%"></div></div><span class="bar__val">je &lt; 5 %</span></div>
+            </div>
+            <p class="insight"><i>!</i><span>Wettbewerber A gewinnt vor allem bei Fragen nach Notdienst und Kosten. Genau dort fehlen auf Ihrer Website klare Aussagen.</span></p>
+          </div>
+
+          <div class="panel" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+            <div class="app__top"><div><h3>Worauf sich die KI stützt</h3><p>Quellen, die in den Antworten zitiert werden</p></div><span class="tag">Beispieldaten</span></div>
+            <div class="src">
+              <div class="src__row"><b>Branchenportal mit Anbietervergleich</b><span class="pill pill--bad">Sie fehlen</span><small>58-mal zitiert, fast immer in Empfehlungen für Wettbewerber A</small></div>
+              <div class="src__row"><b>Bewertungsplattform</b><span class="pill pill--warn">3 Bewertungen</span><small>41-mal zitiert. Wettbewerber A hat dort 87 Bewertungen</small></div>
+              <div class="src__row"><b>Fachmagazin, Beitrag zur Kältewartung</b><span class="pill pill--bad">nicht erwähnt</span><small>23-mal zitiert, nennt drei Ihrer Wettbewerber</small></div>
+              <div class="src__row"><b>Ihre Website</b><span class="pill pill--good">19-mal zitiert</span><small>Leistungsseite wird gefunden, beantwortet aber keine Fragen nach Region und Kosten</small></div>
+            </div>
+          </div>
+
+          <div class="panel" id="p5" role="tabpanel" aria-labelledby="t5" hidden>
+            <div class="app__top"><div><h3>Ihre nächsten Schritte</h3><p>Nach Wirkung und Aufwand sortiert</p></div><span class="tag">Beispieldaten</span></div>
+            <div class="todo">
+              <div class="todo__item"><span class="todo__nr">1</span><div><h4>Eintrag im Branchenportal anlegen</h4><p>Die meistzitierte Quelle in Empfehlungen für Wettbewerber A. Sie sind dort nicht gelistet.</p><div class="todo__meta"><span class="pill pill--good">Wirkung hoch</span><span class="pill pill--good">Aufwand gering</span></div></div></div>
+              <div class="todo__item"><span class="todo__nr">2</span><div><h4>Leistungsseite um Einsatzgebiet und Preisrahmen ergänzen</h4><p>Die KI zitiert Ihre Seite, findet dort aber keine Antwort auf die häufigsten Kauffragen.</p><div class="todo__meta"><span class="pill pill--good">Wirkung hoch</span><span class="pill pill--warn">Aufwand mittel</span></div></div></div>
+              <div class="todo__item"><span class="todo__nr">3</span><div><h4>Kundenbewertungen gezielt einholen</h4><p>3 Bewertungen gegen 87 bei Wettbewerber A, auf einer Plattform, die 41-mal zitiert wird.</p><div class="todo__meta"><span class="pill pill--warn">Wirkung mittel</span><span class="pill pill--warn">Aufwand mittel</span></div></div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Leistungen -->
+  <section>
+    <div class="wrap">
+      <p class="kicker">Das bekommen Sie</p>
+      <h2>Klarheit statt Bauchgefühl</h2>
+      <div class="cols">
+        <article><h3>Report als PDF</h3><p>Übersicht, Fragen, Wettbewerb, Quellen und Maßnahmen. Verständlich ohne Vorwissen.</p></article>
+        <article><h3>Alle 324 Antworten</h3><p>Jede Zahl lässt sich bis zur Originalantwort der KI zurückverfolgen.</p></article>
+        <article><h3>Priorisierter Maßnahmenplan</h3><p>Was zuerst kommt, was es bringt und wie viel Aufwand es macht.</p></article>
+        <article><h3>60 Minuten Besprechung</h3><p>Wir gehen die Ergebnisse gemeinsam durch, per Video.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Ablauf -->
+  <section class="sand">
+    <div class="wrap">
+      <p class="kicker">So läuft es ab</p>
+      <h2>In drei Schritten zum Ergebnis</h2>
+      <div class="steps">
+        <div class="step"><h3>Online buchen</h3><em>2 Minuten</em><p>Website, Leistungen und Markt angeben. Wir bestätigen den Auftrag innerhalb eines Werktags.</p></div>
+        <div class="step"><h3>Wir messen</h3><em>3 Werktage</em><p>36 Kauffragen, je dreimal in ChatGPT, Claude und Gemini. Sie müssen nichts tun und keine Zugänge freigeben.</p></div>
+        <div class="step"><h3>Ergebnis besprechen</h3><em>60 Minuten</em><p>Sie erhalten den Report und besprechen ihn mit uns. Die Rechnung kommt erst danach.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Person -->
+  <section>
+    <div class="wrap person">
+      <img src="../assets/images/smart-700.webp" alt="Philipp Koch">
+      <div>
+        <p class="kicker">Ihr Ansprechpartner</p>
+        <blockquote>„Ich zeige Ihnen, was Ihre Kunden über Sie erfahren, wenn sie eine KI fragen. Und was Sie daran ändern können.“</blockquote>
+        <p>Als Unternehmensberater habe ich Transformationen begleitet, als KI-Verantwortlicher im Versicherungskonzern praktische Lösungen umgesetzt. Heute unterstütze ich mittelständische Unternehmen dabei, KI sinnvoll zu nutzen.</p>
+        <p class="who"><b>Philipp Koch</b>Gründer, Neuratex AI · <a href="tel:+4917647338240">0176 47338240</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Angebot und Buchung -->
+  <section class="sand" id="buchen">
+    <div class="wrap offer">
+      <div class="price">
+        <h2>Einführungspreis für die ersten drei Kunden</h2>
+        <p class="price__num">500 €<small>einmalig</small></p>
+        <ul>
+          <li>Vollständiger Audit mit Report und Besprechung</li>
+          <li>Ergebnis in 3 Werktagen</li>
+          <li>Rechnung erst nach Lieferung</li>
+          <li>Danach kostet der Audit 1.900 €</li>
+        </ul>
+        <p class="price__note">Im Gegenzug nennen wir Sie als Referenz und veröffentlichen eine kurze Fallstudie. Den Inhalt geben Sie vorher frei.</p>
+        <span class="seats">Noch 3 von 3 Plätzen frei</span>
+      </div>
+
+      <form class="form" onsubmit="return false">
+        <h3>Audit buchen</h3>
+        <p>Dauert etwa 2 Minuten. Wir melden uns innerhalb eines Werktags.</p>
+        <fieldset>
+          <legend>Ihr Unternehmen</legend>
+          <div class="field"><label for="f-web">Website</label><input id="f-web" placeholder="www.ihre-firma.de"></div>
+          <div class="field"><label for="f-leist">Welche Leistung sollen wir prüfen?</label><input id="f-leist" placeholder="z. B. Wartung von Kälteanlagen"></div>
+          <div class="row">
+            <div class="field"><label for="f-kunden">Für welche Kunden?</label><input id="f-kunden" placeholder="z. B. Lebensmittelbetriebe"></div>
+            <div class="field"><label for="f-markt">Markt</label><select id="f-markt"><option>Deutschland</option><option>Deutschland, Österreich, Schweiz</option><option>Eine Region</option></select></div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Kontakt und Rechnung</legend>
+          <div class="row">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" autocomplete="name"></div>
+            <div class="field"><label for="f-mail">E-Mail</label><input id="f-mail" type="email" autocomplete="email"></div>
+          </div>
+          <div class="field"><label for="f-firma">Firma</label><input id="f-firma" autocomplete="organization"></div>
+          <div class="field"><label for="f-str">Straße und Hausnummer</label><input id="f-str" autocomplete="address-line1"></div>
+          <div class="row row--plz">
+            <div class="field"><label for="f-plz">PLZ</label><input id="f-plz" autocomplete="postal-code"></div>
+            <div class="field"><label for="f-ort">Ort</label><input id="f-ort" autocomplete="address-level2"></div>
+          </div>
+        </fieldset>
+        <label class="check"><input type="checkbox"> <span>Ich buche für mein Unternehmen und bin mit Referenz und Fallstudie nach meiner Freigabe einverstanden.</span></label>
+        <button class="btn" type="submit">Verbindlich für 500 € buchen</button>
+        <p class="small">Der Auftrag kommt mit unserer Bestätigung per E-Mail zustande. Hinweise zum <a href="#">Datenschutz</a>.</p>
+        <details class="terms">
+          <summary>Leistungsbeschreibung und Bedingungen</summary>
+          <dl>
+            <dt>Leistung</dt><dd>36 Kauffragen, je dreimal in ChatGPT, Claude und Gemini (324 Antworten), Report, Maßnahmenplan, 60 Minuten Besprechung per Video.</dd>
+            <dt>Umfang</dt><dd>Eine Website, ein Markt, Fragen auf Deutsch.</dd>
+            <dt>Auftrag</dt><dd>Kommt mit unserer Auftragsbestätigung zustande. Können wir ihn nicht annehmen, entstehen keine Kosten.</dd>
+            <dt>Lieferung und Zahlung</dt><dd>Innerhalb von drei Werktagen ab dem Werktag nach der Bestätigung. Rechnung mit dem Report, zahlbar in 14 Tagen.</dd>
+          </dl>
+        </details>
+      </form>
+    </div>
+  </section>
+
+  <!-- 7. FAQ -->
+  <section>
+    <div class="wrap">
+      <p class="kicker">Häufige Fragen</p>
+      <h2>Bevor Sie buchen</h2>
+      <div class="faq">
+        <details><summary>Was unterscheidet das von SEO?</summary><p>SEO zeigt, wo Sie bei Google stehen. Der Audit zeigt, ob ChatGPT, Claude und Gemini Sie nennen und empfehlen, wenn Kunden nach Anbietern fragen. Das sind zwei verschiedene Ranglisten.</p></details>
+        <details><summary>Was brauchen Sie von mir?</summary><p>Nur die Angaben im Formular. Keine Zugänge zu Ihrer Website, zu Google oder anderen Systemen.</p></details>
+        <details><summary>Werde ich danach sicher empfohlen?</summary><p>Das kann niemand garantieren, auch wir nicht. Sie wissen danach aber genau, wo Sie stehen und welche Schritte die größte Wirkung versprechen.</p></details>
+        <details><summary>Was steht in der Fallstudie?</summary><p>Ihr Firmenname, die Ausgangslage, ausgewählte Ergebnisse und die empfohlenen Maßnahmen. Vertrauliches bleibt draußen, und veröffentlicht wird nur, was Sie freigeben.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Neuratex AI · Philipp Koch · Düsseldorf</span>
+    <nav><a href="#">Impressum</a><a href="#">Datenschutz</a></nav>
+  </div>
+</footer>
+
+<script src="report.js"></script>
+</body>
+</html>

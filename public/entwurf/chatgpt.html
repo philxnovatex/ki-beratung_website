@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entwurf ChatGPT | Neuratex AI</title>
+</head>
+<body style="margin:0">
+<div id="neuratex-direction" aria-label="Neuratex, neuer Gestaltungsentwurf">
+  <style>
+    #neuratex-direction {
+      --surface-page:#0b1420; --surface-secondary:#121f2e; --surface-paper:#eeeae2;
+      --text-primary:#f4f1e9; --text-body:#bcc6cf; --text-quiet:#94a3b2; --text-paper:#192432;
+      --line:#334151; --line-paper:#c6c9c9; --accent:#ffc947; --accent-ink:#0b1420;
+      --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem;
+      --space-6:1.5rem; --space-8:2rem; --space-12:3rem; --space-16:4rem; --space-24:6rem;
+      --hairline:1px; --radius:3px; --text-xs:.7rem; --text-sm:.85rem; --text-base:1rem;
+      --text-md:1.15rem; --text-lg:1.65rem; --text-xl:2.4rem; --text-display:clamp(2.8rem,5.9vw,4.6rem);
+      --leading-tight:1.04; --leading-body:1.55; --tracking-tight:-.052em; --tracking-wide:.12em;
+      --weight-normal:400; --weight-medium:500; --weight-bold:700; --full:100%; --zero:0;
+      --hero-columns:1.2fr 1fr; --equal-columns:1fr 1fr; --document-height:25rem;
+      --section-columns:.7fr 1.3fr; --row-columns:2rem 1fr; --offer-columns:1fr auto;
+      color:var(--text-primary); background:var(--surface-page); font-family:Inter,Arial,sans-serif;
+      line-height:var(--leading-body); overflow-wrap:anywhere; color-scheme:dark;
+    }
+    #neuratex-direction * {box-sizing:border-box}
+    #neuratex-direction h1,#neuratex-direction h2,#neuratex-direction h3,#neuratex-direction p {margin:var(--zero)}
+    #neuratex-direction a {color:inherit;text-decoration:none}
+    #neuratex-direction button {font:inherit;cursor:pointer}
+    #neuratex-direction .nd-nav {display:flex;justify-content:space-between;align-items:center;padding:var(--space-6) var(--space-8);border-bottom:var(--hairline) solid var(--line);gap:var(--space-4)}
+    #neuratex-direction .nd-brand {font-size:var(--text-lg);font-weight:var(--weight-bold);letter-spacing:var(--tracking-tight)}
+    #neuratex-direction .nd-brand span {font-weight:var(--weight-normal);color:var(--text-body)}
+    #neuratex-direction .nd-nav a {font-size:var(--text-sm);border-bottom:var(--hairline) solid var(--text-quiet);padding-block:var(--space-2)}
+    #neuratex-direction .nd-hero {padding:var(--space-16) var(--space-8) var(--space-12);display:grid;grid-template-columns:var(--hero-columns);gap:var(--space-12);align-items:center}
+    #neuratex-direction .nd-kicker {font-size:var(--text-xs);font-weight:var(--weight-medium);letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--text-body)}
+    #neuratex-direction h1 {font-size:var(--text-display);font-weight:var(--weight-medium);line-height:var(--leading-tight);letter-spacing:var(--tracking-tight);margin-block:var(--space-6)}
+    #neuratex-direction h1 span {color:var(--text-quiet)}
+    #neuratex-direction .nd-intro {font-size:var(--text-base);color:var(--text-body);margin-bottom:var(--space-8)}
+    #neuratex-direction .nd-action {display:inline-flex;align-items:center;justify-content:space-between;gap:var(--space-6);background:var(--accent);color:var(--accent-ink);font-size:var(--text-sm);font-weight:var(--weight-bold);padding:var(--space-4) var(--space-6);border:var(--zero);border-radius:var(--radius)}
+    #neuratex-direction .nd-meta {font-size:var(--text-sm);color:var(--text-body);margin-top:var(--space-4)}
+    #neuratex-direction .nd-document {background:var(--surface-paper);color:var(--text-paper);padding:var(--space-8);min-height:var(--document-height);display:flex;flex-direction:column;justify-content:space-between;gap:var(--space-6)}
+    #neuratex-direction .nd-document .nd-kicker {color:var(--text-paper)}
+    #neuratex-direction .nd-doc-top {display:flex;justify-content:space-between;gap:var(--space-3);padding-bottom:var(--space-4);border-bottom:var(--hairline) solid var(--line-paper);font-size:var(--text-xs)}
+    #neuratex-direction .nd-document h2 {font-size:var(--text-xl);line-height:var(--leading-tight);font-weight:var(--weight-medium);letter-spacing:var(--tracking-tight);margin-block:var(--space-4)}
+    #neuratex-direction .nd-doc-description {font-size:var(--text-sm);min-height:var(--space-16)}
+    #neuratex-direction .nd-doc-tabs {display:grid;grid-template-columns:var(--equal-columns);border-top:var(--hairline) solid var(--line-paper)}
+    #neuratex-direction .nd-doc-tabs button {text-align:left;background:transparent;color:var(--text-paper);border:var(--zero);border-bottom:var(--hairline) solid var(--line-paper);padding:var(--space-3) var(--space-2);font-size:var(--text-xs)}
+    #neuratex-direction .nd-doc-tabs button[aria-pressed="true"] {background:var(--text-paper);color:var(--surface-paper)}
+    #neuratex-direction .nd-document small {font-size:var(--text-xs)}
+    #neuratex-direction .nd-method {display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-4);margin-inline:var(--space-8);padding-block:var(--space-6);border-block:var(--hairline) solid var(--line);font-size:var(--text-sm);color:var(--text-body)}
+    #neuratex-direction .nd-method strong {color:var(--text-primary);font-weight:var(--weight-medium)}
+    #neuratex-direction .nd-outcome {display:grid;grid-template-columns:var(--section-columns);gap:var(--space-12);padding:var(--space-16) var(--space-8)}
+    #neuratex-direction .nd-outcome h2,#neuratex-direction .nd-offer h2 {font-size:var(--text-xl);font-weight:var(--weight-medium);line-height:var(--leading-tight);letter-spacing:var(--tracking-tight);margin-top:var(--space-4)}
+    #neuratex-direction .nd-outcome ol {list-style:none;margin:var(--zero);padding:var(--zero)}
+    #neuratex-direction .nd-outcome li {display:grid;grid-template-columns:var(--row-columns);gap:var(--space-4);padding-block:var(--space-6);border-bottom:var(--hairline) solid var(--line)}
+    #neuratex-direction .nd-outcome li:first-child {padding-top:var(--zero)}
+    #neuratex-direction .nd-number {font-size:var(--text-sm);color:var(--text-quiet)}
+    #neuratex-direction h3 {font-size:var(--text-md);font-weight:var(--weight-medium);margin-bottom:var(--space-2)}
+    #neuratex-direction .nd-outcome li p {font-size:var(--text-sm);color:var(--text-body)}
+    #neuratex-direction .nd-offer {padding:var(--space-12) var(--space-8);background:var(--surface-secondary)}
+    #neuratex-direction .nd-offer-top {display:grid;grid-template-columns:var(--offer-columns);gap:var(--space-8);align-items:start}
+    #neuratex-direction .nd-offer-copy {font-size:var(--text-sm);color:var(--text-body);margin-top:var(--space-6)}
+    #neuratex-direction .nd-price {font-size:var(--text-display);line-height:var(--leading-tight);letter-spacing:var(--tracking-tight);white-space:nowrap}
+    #neuratex-direction .nd-price-note {font-size:var(--text-sm);color:var(--text-body);margin-top:var(--space-2)}
+    #neuratex-direction details {border-top:var(--hairline) solid var(--line);margin-top:var(--space-8);padding-top:var(--space-4);font-size:var(--text-sm)}
+    #neuratex-direction summary {cursor:pointer;padding-block:var(--space-3);font-weight:var(--weight-medium)}
+    #neuratex-direction .nd-scope {display:grid;grid-template-columns:var(--equal-columns);gap:var(--space-6);color:var(--text-body);padding-block:var(--space-4)}
+    #neuratex-direction .nd-scope strong {display:block;color:var(--text-primary);margin-bottom:var(--space-2);font-weight:var(--weight-medium)}
+    #neuratex-direction .nd-footer {display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--space-4);padding:var(--space-6) var(--space-8);font-size:var(--text-xs);color:var(--text-body)}
+    @media(max-width:680px) {
+      #neuratex-direction {--hero-columns:1fr;--section-columns:1fr;--offer-columns:1fr;--document-height:22rem;--text-display:3rem}
+      #neuratex-direction .nd-hero {padding:var(--space-12) var(--space-6);gap:var(--space-8)}
+      #neuratex-direction .nd-nav,#neuratex-direction .nd-offer,#neuratex-direction .nd-outcome {padding-inline:var(--space-6)}
+      #neuratex-direction .nd-outcome {padding-block:var(--space-12);gap:var(--space-8)}
+      #neuratex-direction .nd-method {margin-inline:var(--space-6);justify-content:flex-start;gap:var(--space-6)}
+      #neuratex-direction .nd-scope {grid-template-columns:1fr}
+    }
+  </style>
+  <header class="nd-nav">
+    <div class="nd-brand">neuratex<span> ai</span></div>
+    <a href="#nd-offer">Zum Audit ↗</a>
+  </header>
+  <section class="nd-hero">
+    <div>
+      <p class="nd-kicker">KI-Sichtbarkeit für B2B-Unternehmen</p>
+      <h1 data-heading>Welche Anbieter<br>empfiehlt KI<br><span>in Ihrem Markt?</span></h1>
+      <p class="nd-intro">Wir untersuchen, ob Ihr Unternehmen dazugehört. Sie erhalten einen Wettbewerbsvergleich und begründete Empfehlungen für Ihre nächsten Schritte.</p>
+      <a class="nd-action" href="#nd-offer">Den Audit kennenlernen <span aria-hidden="true">↗</span></a>
+      <p class="nd-meta">500 € einmalig · Einführungspreis für drei Kunden</p>
+    </div>
+    <div class="nd-document" aria-label="Aufbau der Audit-Auswertung">
+      <div class="nd-doc-top"><span>NEURATEX AI</span><span>AUFBAU DER AUSWERTUNG</span></div>
+      <div aria-live="polite">
+        <p class="nd-kicker" data-chapter>01 / Standortbestimmung</p>
+        <h2 data-document-title>Ihre Position<br>in KI-Antworten.</h2>
+        <p class="nd-doc-description" data-document-copy>Bei welchen Kauffragen wird Ihr Unternehmen genannt? Wann wird es ausdrücklich empfohlen? Die Auswertung trennt beides.</p>
+      </div>
+      <div class="nd-doc-tabs" aria-label="Bestandteile der Auswertung">
+        <button type="button" data-chapter-button="0" aria-pressed="true">01 · Sichtbarkeit</button>
+        <button type="button" data-chapter-button="1" aria-pressed="false">02 · Wettbewerb</button>
+        <button type="button" data-chapter-button="2" aria-pressed="false">03 · Quellen</button>
+        <button type="button" data-chapter-button="3" aria-pressed="false">04 · Maßnahmen</button>
+      </div>
+      <small>36 Fragen · 3 Systeme · 324 dokumentierte Antworten</small>
+    </div>
+  </section>
+  <div class="nd-method" aria-label="Untersuchungsrahmen">
+    <span><strong>ChatGPT · Claude · Gemini</strong></span>
+    <span>Eine Website. Ein Markt.</span>
+    <span>Auswertung + persönliche Besprechung</span>
+  </div>
+  <section class="nd-outcome">
+    <div><p class="nd-kicker">Was Sie danach wissen</p><h2>Wo Sie stehen.<br>Was Sie als<br>Nächstes angehen.</h2></div>
+    <ol>
+      <li><span class="nd-number">01</span><div><h3>Bei welchen Fragen Sie vorkommen.</h3><p>Wir leiten Kauffragen aus Ihrem Angebot und Markt ab. Jede Frage wird je System dreimal gestellt, damit eine einzelne Antwort nicht das ganze Bild bestimmt.</p></div></li>
+      <li><span class="nd-number">02</span><div><h3>Wer neben Ihnen sichtbar ist.</h3><p>Sie sehen die genannten Wettbewerber und die von den Systemen zitierten Quellen. Jede ausgewiesene Quote lässt sich bis zur Antwort zurückverfolgen.</p></div></li>
+      <li><span class="nd-number">03</span><div><h3>Welche Maßnahmen sich begründen lassen.</h3><p>Sie erhalten priorisierte Empfehlungen und besprechen die Ergebnisse mit Philipp Koch. Jede Empfehlung wird mit einem konkreten Befund verbunden.</p></div></li>
+    </ol>
+  </section>
+  <section class="nd-offer" id="nd-offer">
+    <div class="nd-offer-top">
+      <div><p class="nd-kicker">Einführungspreis · Drei Kunden</p><h2>Der vollständige<br>AI Visibility Audit.</h2><p class="nd-offer-copy">Sie erhalten den Audit zum reduzierten Preis. Dafür dürfen wir Ihr Unternehmen namentlich als Referenz nennen und eine Fallstudie veröffentlichen. Den Inhalt geben Sie vorher schriftlich frei.</p></div>
+      <div><div class="nd-price">500 €</div><p class="nd-price-note">einmalig, keine Vorkasse</p><p class="nd-price-note">Künftiger Preis: 1.900 €</p></div>
+    </div>
+    <details>
+      <summary>Leistungsumfang und Buchungsbedingungen</summary>
+      <div class="nd-scope">
+        <p><strong>Enthalten</strong>36 Kauffragen, drei Systeme, je drei Durchläufe. Schriftliche Auswertung, Maßnahmenliste und etwa eine Stunde Ergebnisbesprechung per Video. Eine Website, ein Markt, Fragen auf Deutsch.</p>
+        <p><strong>Lieferung und Zahlung</strong>Auswertung innerhalb von drei Werktagen ab dem Werktag nach Auftragsbestätigung. Rechnung mit der Auswertung, zahlbar innerhalb von 14 Tagen.</p>
+        <p><strong>Auftrag</strong>Der Auftrag entsteht erst mit unserer Auftragsbestätigung per E-Mail. Können wir ihn nicht annehmen, entstehen keine Kosten.</p>
+        <p><strong>Grenzen</strong>Der Audit dokumentiert eine Stichprobe. Eine Nennung in künftigen Antworten oder eine bestimmte Verbesserung wird nicht garantiert.</p>
+      </div>
+    </details>
+  </section>
+  <footer class="nd-footer"><span>Neuratex AI · Philipp Koch · Düsseldorf</span><span>Gestaltungsentwurf · kein Buchungsformular</span></footer>
+  <script src="chatgpt.js"></script>
+</div>
+
+</body>
+</html>
