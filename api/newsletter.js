@@ -11,7 +11,7 @@
  *
  * Brevo schickt eine Bestätigungsmail. Erst mit dem Klick auf den Link darin
  * landet die Adresse auf der Newsletter-Liste. Bewusst NICHT die Lead-Liste
- * BREVO_LIST_ID: Whitepaper- und Quiz-Kontakte haben keine Werbeeinwilligung.
+ * BREVO_LIST_ID: Whitepaper-Kontakte haben keine Werbeeinwilligung.
  *
  * Security: Origin validation, rate limiting, input validation
  */

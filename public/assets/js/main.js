@@ -119,7 +119,7 @@
         // und h3 der Seite, also auf ueber 30 Elementen. Beim Scrollen entstand
         // daraus eine Dauerbewegung. h3 in Karten animiert ohnehin die Karte.
         const excludeSelectors = '.service-card, .stage-card, .testimonial-card, .principle-card,'
-            + ' .lead-gen-form-container, .contact-card, .hero-section, .result-card';
+            + ' .lead-gen-form-container, .contact-card, .hero-section';
         const headings = Array.from(document.querySelectorAll('h2'))
             .filter(h => !h.closest(excludeSelectors));
 

@@ -42,7 +42,6 @@
 |---|---|
 | `BREVO_API_KEY` | Brevo API-Schlüssel (Newsletter, Leads, Kontaktformular) |
 | `BREVO_LIST_ID` | Lead-Liste „Website Leads“ für Whitepaper (Default: `5`). **Kein Newsletter an diese Liste.** |
-| `BREVO_QUIZ_LIST_ID` | Lead-Liste für den KI-Reifegrad-Check (Fallback: `BREVO_LIST_ID`) |
 | `BREVO_NEWSLETTER_LIST_ID` | Newsletter-Liste, nur bestätigte Abonnenten (Pflicht für `/api/newsletter`) |
 | `BREVO_DOI_TEMPLATE_ID` | Brevo-Vorlage für die Double-Opt-In-Mail (Pflicht für `/api/newsletter`) |
 | `BREVO_CONTACT_SENDER_EMAIL`, `CONTACT_RECIPIENT_EMAIL` | Optional, Absender und Empfänger des Kontaktformulars |
@@ -55,7 +54,7 @@
   landet die Adresse auf `BREVO_NEWSLETTER_LIST_ID`. Der Bestätigungslink führt auf
   `pages/newsletter-bestaetigt.html`. Fehlt Liste oder Vorlage, antwortet die Function mit 503.
 - Nie `/v3/contacts` für Newsletter-Anmeldungen verwenden, das umgeht das Double-Opt-In.
-- Whitepaper- und Quiz-Kontakte haben **keine Werbeeinwilligung** und dürfen nicht
+- Whitepaper-Kontakte haben **keine Werbeeinwilligung** und dürfen nicht
   auf die Newsletter-Liste.
 - Kontaktverwaltung, Analytics und E-Mail-Versand erfolgen im **Brevo Dashboard**
 
