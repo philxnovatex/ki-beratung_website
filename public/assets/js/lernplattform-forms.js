@@ -127,7 +127,7 @@ if (newsletterForm && newsletterInput) {
       const data = await response.json().catch(() => ({}));
 
       if (response.ok && data.ok) {
-        setNlStatus(data.message || 'Erfolgreich eingetragen! Vielen Dank.', '#4caf50');
+        setNlStatus(data.message || 'Bitte bestätigen Sie Ihre Anmeldung über den Link in unserer E-Mail.', '#4caf50');
         newsletterInput.value = '';
         window.neuratexTrack?.('form_complete', { form: 'newsletter' });
       } else {

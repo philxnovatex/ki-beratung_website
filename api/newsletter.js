@@ -1,21 +1,29 @@
 /**
- * Vercel Serverless Function – Newsletter Signup via Brevo API
+ * Vercel Serverless Function – Newsletter-Anmeldung mit Double-Opt-In über Brevo
  *
  * Environment Variables (set in Vercel Dashboard):
- *   BREVO_API_KEY   – Brevo (ex-Sendinblue) API key
- *   BREVO_LIST_ID   – Numeric ID of the "Website Leads" list (default: 5)
+ *   BREVO_API_KEY             – Brevo (ex-Sendinblue) API key
+ *   BREVO_NEWSLETTER_LIST_ID  – ID der Liste "Newsletter" (nur bestätigte Abonnenten)
+ *   BREVO_DOI_TEMPLATE_ID     – ID der Double-Opt-In-Vorlage in Brevo
  *
  * Endpoint: POST /api/newsletter
  * Body:     { "email": "user@example.com" }
  *
- * Security: Origin validation, rate limiting, input sanitization
+ * Brevo schickt eine Bestätigungsmail. Erst mit dem Klick auf den Link darin
+ * landet die Adresse auf der Newsletter-Liste. Bewusst NICHT die Lead-Liste
+ * BREVO_LIST_ID: Whitepaper- und Quiz-Kontakte haben keine Werbeeinwilligung.
+ *
+ * Security: Origin validation, rate limiting, input validation
  */
 
 const { validateOrigin, checkRateLimit, getClientIP, isValidEmail, isBodyTooLarge, fetchWithTimeout } = require('./_shared/security');
 
-const BREVO_API_URL = 'https://api.brevo.com/v3/contacts';
+const BREVO_DOI_URL = 'https://api.brevo.com/v3/contacts/doubleOptinConfirmation';
+const REDIRECT_URL = 'https://www.neuratex.de/pages/newsletter-bestaetigt.html';
 
 module.exports = async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+
   // CORS pre-flight
   if (req.method === 'OPTIONS') {
     res.status(204).end();
@@ -41,8 +49,7 @@ module.exports = async function handler(req, res) {
   }
 
   // Rate limiting (5 requests per minute per IP)
-  const clientIP = getClientIP(req);
-  const rateCheck = checkRateLimit(clientIP, 5, 60_000);
+  const rateCheck = checkRateLimit('newsletter:' + getClientIP(req), 5, 60_000);
   res.setHeader('X-RateLimit-Remaining', rateCheck.remaining);
 
   if (!rateCheck.allowed) {
@@ -61,19 +68,20 @@ module.exports = async function handler(req, res) {
 
   const normalizedEmail = String(email).trim().toLowerCase();
 
-  // ── Brevo API Key ───────────────────────────────────────────────
-  const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) {
-    console.error('[newsletter] BREVO_API_KEY is not set');
-    res.status(500).json({ error: 'server_config_error', message: 'Newsletter-Service ist nicht konfiguriert.' });
+  // ── Konfiguration ───────────────────────────────────────────────
+  // Ohne eigene Liste und Vorlage lieber gar nicht anmelden als ohne Bestätigung.
+  const apiKey = (process.env.BREVO_API_KEY || '').trim();
+  const listId = parseInt(process.env.BREVO_NEWSLETTER_LIST_ID, 10);
+  const templateId = parseInt(process.env.BREVO_DOI_TEMPLATE_ID, 10);
+  if (!apiKey || !(listId > 0) || !(templateId > 0)) {
+    console.error('[newsletter] Missing or invalid server configuration');
+    res.status(503).json({ error: 'server_config_error', message: 'Die Newsletter-Anmeldung ist derzeit nicht verfügbar.' });
     return;
   }
 
-  const listId = parseInt(process.env.BREVO_LIST_ID, 10) || 5;
-
   // ── Call Brevo API ──────────────────────────────────────────────
   try {
-    const brevoRes = await fetchWithTimeout(BREVO_API_URL, {
+    const brevoRes = await fetchWithTimeout(BREVO_DOI_URL, {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -82,61 +90,25 @@ module.exports = async function handler(req, res) {
       },
       body: JSON.stringify({
         email: normalizedEmail,
-        listIds: [listId],
-        updateEnabled: true,
+        includeListIds: [listId],
+        templateId,
+        redirectionUrl: REDIRECT_URL,
       }),
     });
 
-    // Brevo returns 201 for new contacts, 204 for updated contacts
+    // 201 = neuer Kontakt, 204 = Kontakt existiert bereits. Beide Fälle gleich
+    // beantworten, damit sich nicht abfragen lässt, wer schon eingetragen ist.
     if (brevoRes.status === 201 || brevoRes.status === 204) {
-      res.status(200).json({ ok: true, message: 'Erfolgreich eingetragen!' });
+      res.status(200).json({ ok: true, message: 'Fast geschafft: Bitte bestätigen Sie Ihre Anmeldung über den Link in der E-Mail, die wir Ihnen gerade geschickt haben.' });
       return;
     }
 
-    // Handle "Contact already exists" (duplicate) – still a success from user perspective
-    if (brevoRes.status === 400) {
-      const errorBody = await brevoRes.json().catch(() => ({}));
-      if (errorBody.code === 'duplicate_parameter') {
-        // Contact exists → make sure they're on the list
-        try {
-          await addExistingContactToList(normalizedEmail, listId, apiKey);
-        } catch (e) {
-          console.warn('[newsletter] Could not add existing contact to list:', e.message);
-        }
-        res.status(200).json({ ok: true, message: 'Sie sind bereits eingetragen.' });
-        return;
-      }
-      console.error('[newsletter] Brevo API error:', errorBody);
-      res.status(502).json({ error: 'api_error', message: 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.' });
-      return;
-    }
-
-    const errorText = await brevoRes.text().catch(() => '');
-    console.error('[newsletter] Brevo unexpected status:', brevoRes.status, errorText);
+    // Nur Status und Brevos Fehlercode loggen. Die Meldung kann die Adresse enthalten.
+    const { code = '' } = await brevoRes.json().catch(() => ({}));
+    console.error('[newsletter] Brevo status:', brevoRes.status, String(code));
     res.status(502).json({ error: 'api_error', message: 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.' });
-  } catch (err) {
-    console.error('[newsletter] Fetch error:', err.message);
-    res.status(500).json({ error: 'server_error', message: 'Interner Serverfehler.' });
+  } catch {
+    console.error('[newsletter] Brevo request failed');
+    res.status(502).json({ error: 'api_error', message: 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es später.' });
   }
 };
-
-/**
- * If a contact already exists in Brevo, add them to the target list
- * POST https://api.brevo.com/v3/contacts/lists/{listId}/contacts/add
- */
-async function addExistingContactToList(email, listId, apiKey) {
-  const url = `https://api.brevo.com/v3/contacts/lists/${listId}/contacts/add`;
-  const response = await fetchWithTimeout(url, {
-    method: 'POST',
-    headers: {
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'api-key': apiKey,
-    },
-    body: JSON.stringify({ emails: [email] }),
-  });
-  if (!response.ok) {
-    const body = await response.text().catch(() => '');
-    throw new Error(`Brevo list-add failed: ${response.status} ${body}`);
-  }
-}

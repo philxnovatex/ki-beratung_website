@@ -38,10 +38,11 @@ function validateOrigin(req) {
   const origin = req.headers.origin || '';
   const referer = req.headers.referer || '';
 
-  // Allow if origin matches
-  if (origin && ALLOWED_ORIGINS.includes(origin)) return true;
+  // Ist ein Origin gesetzt, entscheidet allein er. Ein fremder Origin darf
+  // nicht über einen passenden Referer doch noch durchkommen.
+  if (origin) return ALLOWED_ORIGINS.includes(origin);
 
-  // Fallback: check referer header.
+  // Fallback nur ohne Origin: check referer header.
   // Wichtig: Vergleich über den geparsten Origin, nicht über startsWith().
   // startsWith('https://neuratex.de') passt sonst auch auf
   // https://neuratex.de.angreifer.example/ und lässt fremde Hosts durch.

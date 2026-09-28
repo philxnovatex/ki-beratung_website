@@ -3,7 +3,8 @@
  *
  * Environment Variables (set in Vercel Dashboard):
  *   BREVO_API_KEY        – Brevo (ex-Sendinblue) API key
- *   BREVO_QUIZ_LIST_ID   – Numeric ID der Liste "Reifegrad-Check" (Fallback: BREVO_LIST_ID, dann 5)
+ *   BREVO_QUIZ_LIST_ID   – Numeric ID der Liste "Reifegrad-Check" (Fallback: BREVO_LIST_ID, dann 5).
+ *                          Lead-Listen ohne Werbeeinwilligung, nie für Newsletter nutzen.
  *
  * Endpoint: POST /api/quiz-lead
  * Body:     { "email": "...", "name": "...", "company": "...",
@@ -51,8 +52,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const clientIP = getClientIP(req);
-  const rateCheck = checkRateLimit(clientIP, 5, 60_000);
+  const rateCheck = checkRateLimit('quiz-lead:' + getClientIP(req), 5, 60_000);
   res.setHeader('X-RateLimit-Remaining', rateCheck.remaining);
 
   if (!rateCheck.allowed) {
@@ -166,14 +166,14 @@ async function upsertContact(email, listId, attributes, apiKey) {
 
     // Unbekanntes Attribut im Brevo-Konto
     if (body.code === 'invalid_parameter') {
-      return { ok: false, status: 400, detail: body.message, retryWithoutQuizAttributes: true };
+      return { ok: false, status: 400, detail: String(body.code), retryWithoutQuizAttributes: true };
     }
 
-    return { ok: false, status: 400, detail: body.message || 'unknown' };
+    // Nur Brevos Fehlercode weitergeben, die Meldung kann die Adresse enthalten.
+    return { ok: false, status: 400, detail: String(body.code || 'unknown') };
   }
 
-  const text = await response.text().catch(() => '');
-  return { ok: false, status: response.status, detail: text };
+  return { ok: false, status: response.status, detail: '' };
 }
 
 /**
@@ -191,7 +191,7 @@ async function addExistingContactToList(email, listId, apiKey) {
     body: JSON.stringify({ emails: [email] }),
   });
   if (!response.ok) {
-    const body = await response.text().catch(() => '');
-    throw new Error(`Brevo list-add failed: ${response.status} ${body}`);
+    // Nur den Status, die Antwort kann die Adresse enthalten.
+    throw new Error(`Brevo list-add failed: ${response.status}`);
   }
 }

@@ -11,7 +11,7 @@
 - **Repo:** `github.com/philxnovatex/ki-beratung_website`
 - **Live-URL:** https://neuratex.de
 - **Hosting:** Vercel (statisch + Serverless Functions)
-- **Kein eigener Server in Produktion!** (`server.js` ist nur ein Legacy-Dev-Server)
+- **Kein eigener Server in Produktion!**
 
 ---
 
@@ -40,16 +40,24 @@
 
 | Variable | Zweck |
 |---|---|
-| `BREVO_API_KEY` | Brevo API-Schlüssel für Newsletter |
-| `BREVO_LIST_ID` | Brevo-Listen-ID (Default: `5`) |
+| `BREVO_API_KEY` | Brevo API-Schlüssel (Newsletter, Leads, Kontaktformular) |
+| `BREVO_LIST_ID` | Lead-Liste „Website Leads“ für Whitepaper (Default: `5`). **Kein Newsletter an diese Liste.** |
+| `BREVO_QUIZ_LIST_ID` | Lead-Liste für den KI-Reifegrad-Check (Fallback: `BREVO_LIST_ID`) |
+| `BREVO_NEWSLETTER_LIST_ID` | Newsletter-Liste, nur bestätigte Abonnenten (Pflicht für `/api/newsletter`) |
+| `BREVO_DOI_TEMPLATE_ID` | Brevo-Vorlage für die Double-Opt-In-Mail (Pflicht für `/api/newsletter`) |
+| `BREVO_CONTACT_SENDER_EMAIL`, `CONTACT_RECIPIENT_EMAIL` | Optional, Absender und Empfänger des Kontaktformulars |
 
 ## Newsletter
 
 - Newsletter-Anmeldungen laufen über **Brevo API** (ehemals Sendinblue)
-- Serverless Function: `api/newsletter.js`
-- Brevo-Liste: „Website Leads"
+- Serverless Function: `api/newsletter.js`, Endpunkt `/v3/contacts/doubleOptinConfirmation`
+- **Double-Opt-In ist Pflicht.** Brevo schickt die Bestätigungsmail, erst nach dem Klick
+  landet die Adresse auf `BREVO_NEWSLETTER_LIST_ID`. Der Bestätigungslink führt auf
+  `pages/newsletter-bestaetigt.html`. Fehlt Liste oder Vorlage, antwortet die Function mit 503.
+- Nie `/v3/contacts` für Newsletter-Anmeldungen verwenden, das umgeht das Double-Opt-In.
+- Whitepaper- und Quiz-Kontakte haben **keine Werbeeinwilligung** und dürfen nicht
+  auf die Newsletter-Liste.
 - Kontaktverwaltung, Analytics und E-Mail-Versand erfolgen im **Brevo Dashboard**
-- Kein eigenes Double-Opt-In nötig – Brevo übernimmt das bei Bedarf
 
 ## Technologie-Stack
 
@@ -169,9 +177,6 @@ umschaltet, muss diese gezielt zurücknehmen.
 ```
 public/           ← Das wird deployed (Vercel Output)
 api/              ← Vercel Serverless Functions
-server.js         ← ⚠️ Legacy Dev-Server, NICHT Produktion
-config.js         ← ⚠️ Legacy Dev-Server Konfig
-lib/              ← Legacy Dev-Server Module
 documents/        ← Onepager-Templates (nicht deployed)
 data/             ← Lokale Dev-Daten (.gitignore)
 ```
