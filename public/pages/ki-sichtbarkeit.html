@@ -26,6 +26,8 @@
     <link rel="manifest" href="../assets/icons/site.webmanifest">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/sections/ki-sichtbarkeit.css">
+    <link rel="stylesheet" href="../assets/css/sections/ki-sichtbarkeit-einstieg.css">
+    <noscript><style>.av-reveal,.av-reveal *{opacity:1!important;transform:none!important;}</style></noscript>
     <script src="../assets/js/analytics.js" defer></script>
     <link rel="stylesheet" href="../assets/vendor/cookieconsent/cookieconsent.css">
     <script defer src="../assets/vendor/cookieconsent/cookieconsent.umd.js"></script>
@@ -70,21 +72,110 @@
                 <p class="lp-hero__offer">Referenzkunden-Angebot: gegen namentliche Referenz und eine freigegebene Fallstudie.</p>
                 <p class="lp-hero__assure"><span>Ergebnis in 3 Werktagen</span> · <span>Zahlung erst nach Lieferung</span></p>
 
-                <figure class="av-chat" aria-label="Beispiel: So antwortet eine KI auf eine Kauffrage">
-                    <div class="av-chat__bar"><span>Beispielantwort einer KI</span><span class="rp-tag">Beispieldaten</span></div>
-                    <div class="av-chat__body">
-                        <p class="av-chat__q">Welche Firma empfiehlst du für die Wartung von Industriekälteanlagen in NRW?</p>
-                        <div class="av-chat__a">
-                            <p>Für die Wartung von Industriekälteanlagen in NRW kommen vor allem diese Anbieter infrage:</p>
-                            <ol>
-                                <li><b>Wettbewerber A</b>: 24-Stunden-Notdienst und viele positive Bewertungen</li>
-                                <li><b>Wettbewerber B</b>: spezialisiert auf Lebensmittelbetriebe</li>
-                                <li><b>Wettbewerber C</b>: transparente Preise für Wartungsverträge</li>
-                            </ol>
+                <!-- Helles Chatfenster, damit man auf einen Blick einen KI-Chat
+                     erkennt. Bewusst ohne Logo und Produktnamen eines Anbieters:
+                     Es ist ein Beispiel, kein Screenshot: Das "koennte" in der
+                     Kopfzeile kennzeichnet es.
+                     Das Eingabefeld ist nur Bild (aria-hidden, kein input). Der
+                     Befund darunter greift die Luecke aus "Fehlt Ihr Name?" auf.
+                     Szene: Sobald das Fenster gut zur Haelfte im Bild ist
+                     (data-reveal-linie, scroll-reveal.js), kommen Frage, Tippen,
+                     Antwort und Befund einmal flott nacheinander, zusammen gut
+                     zwei Sekunden. Ohne JavaScript und bei reduzierter Bewegung
+                     steht alles sofort da, die Tipp-Punkte gibt es dann nicht. -->
+                <figure class="av-chat av-reveal" data-reveal-linie="0.45" aria-label="Beispiel: So antwortet eine KI auf eine Kauffrage">
+                    <div class="av-chat__window">
+                        <p class="av-chat__bar">So könnte das auch bei Ihren Kunden aussehen:</p>
+                        <div class="av-chat__body">
+                            <p class="av-chat__q">Welche Firma empfiehlst du für die Wartung von Industriekälteanlagen in NRW?</p>
+                            <p class="av-chat__typing" aria-hidden="true"><span></span><span></span><span></span></p>
+                            <div class="av-chat__a">
+                                <p>Für die Wartung von Industriekälteanlagen in NRW kommen vor allem diese Anbieter infrage:</p>
+                                <ol>
+                                    <li><b>Wettbewerber A</b>: 24-Stunden-Notdienst und viele positive Bewertungen</li>
+                                    <li><b>Wettbewerber B</b>: spezialisiert auf Lebensmittelbetriebe</li>
+                                    <li><b>Wettbewerber C</b>: transparente Preise für Wartungsverträge</li>
+                                </ol>
+                            </div>
                         </div>
-                        <p class="av-chat__miss"><b>Ihr Unternehmen</b><span class="rp-pill rp-pill--bad">nicht genannt</span></p>
+                        <div class="av-chat__input" aria-hidden="true">
+                            <span>Stellen Sie eine Frage</span>
+                            <span class="av-chat__send"><svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                        </div>
                     </div>
+                    <p class="av-chat__miss"><span class="av-chat__miss-icon" aria-hidden="true">!</span>Ihr Kunde hat jetzt drei Anbieter im Kopf. Sie sind nicht dabei.</p>
                 </figure>
+            </div>
+        </section>
+
+        <!-- ══ 1b. Frage und Situation ═══════════════════════════════════════
+             Direkt in den Schmerz, ohne Vorrede. Der Einstieg ist ein
+             zugespitztes Bild (der neue Vertriebler), danach Fragen an den
+             Besucher, kein Befund ueber sein Unternehmen: Fragezeichen und
+             "kann" bleiben. Auf breiten Fenstern rastet der Abschnitt ein und baut
+             sich Satz fuer Satz auf (pin-sequence.js, Eintrag "ki-frage").
+             Ohne JavaScript, bei reduzierter Bewegung und unter 900 px steht
+             alles untereinander, auf dem Telefon mit Einblenden je Satz
+             (scroll-reveal.js). CSS: sections/ki-sichtbarkeit-einstieg.css -->
+        <section id="ki-frage" class="av-story" aria-labelledby="story-heading">
+            <div class="lp-wrap av-story__stage">
+                <div class="av-story__col">
+                    <h2 id="story-heading" class="av-story__q av-reveal" data-story-schritt>Ihre Konkurrenz hat einen neuen Vertriebler.<br>Er heißt <span class="av-story__hl">ChatGPT</span>.</h2>
+                    <p class="av-story__zeile av-reveal" data-story-schritt>Ein Kunde sucht Ihre Leistung.</p>
+                    <p class="av-story__zeile av-reveal" data-story-schritt>KI nennt Anbieter.</p>
+                    <p class="av-story__zeile av-story__zeile--fehlt av-reveal" data-story-schritt>Fehlt <span class="av-story__luecke">Ihr Name</span>?</p>
+                    <p class="av-story__folge av-reveal" data-story-schritt>Dann kann der Auftrag an Ihnen vorbeigehen, bevor Sie überhaupt davon erfahren.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 1c. Fakten ═════════════════════════════════════════════════════
+             Drei Studien, die Verschiedenes messen. Keine Gesamtquote daraus
+             rechnen, Zahlen nicht hochzaehlen lassen, Bezugsgruppe
+             ("befragt", "Deutschland", "B2B-Softwarekaeufer") nie in Fussnoten
+             auslagern. Geprueft am 29.09.2026 gegen die verlinkten Quellen. -->
+        <section class="av-facts" aria-labelledby="fakten-heading">
+            <div class="lp-wrap">
+                <h2 id="fakten-heading">KI beeinflusst die Anbieterwahl.</h2>
+                <ol class="av-facts__list" data-reveal-group>
+                    <li class="av-fact av-reveal">
+                        <p class="av-fact__num">94&nbsp;%</p>
+                        <div>
+                            <p class="av-fact__text">der von Forrester befragten Geschäftskunden berichten, KI im Kaufprozess zu nutzen.</p>
+                            <p class="av-fact__src"><a href="https://www.forrester.com/blogs/b2b_buyers_make_zero_click_buying_number_one/" target="_blank" rel="noopener noreferrer">Forrester, Buyers’ Journey Survey 2025<span class="sr-only"> (öffnet in neuem Tab)</span></a>. Veröffentlicht Januar 2026. KI allgemein, einschließlich interner Werkzeuge.</p>
+                        </div>
+                    </li>
+                    <li class="av-fact av-reveal">
+                        <p class="av-fact__num">62,1&nbsp;%</p>
+                        <div>
+                            <p class="av-fact__text">der Google-Suchen in Deutschland endeten ohne Klick.</p>
+                            <p class="av-fact__src"><a href="https://sparktoro.com/blog/zero-click-searches-highest-in-the-uk-lowest-in-germany-and-france-has-the-most-efficient-searchers/" target="_blank" rel="noopener noreferrer">SparkToro<span class="sr-only"> (öffnet in neuem Tab)</span></a> / <a href="https://www.similarweb.com/" target="_blank" rel="noopener noreferrer">Similarweb<span class="sr-only"> (öffnet in neuem Tab)</span></a>, Januar bis April 2026. Desktop und mobile Browser; nicht ausschließlich Suchen mit KI-Antwort.</p>
+                        </div>
+                    </li>
+                    <li class="av-fact av-reveal">
+                        <p class="av-fact__num">69&nbsp;%</p>
+                        <div>
+                            <p class="av-fact__text">der von G2 befragten B2B-Softwarekäufer berichten, durch KI einen anderen Anbieter gewählt zu haben als zunächst erwartet.</p>
+                            <p class="av-fact__src"><a href="https://learn.g2.com/g2-2026-ai-search-insight-report" target="_blank" rel="noopener noreferrer">G2, März 2026<span class="sr-only"> (öffnet in neuem Tab)</span></a>. Internationale Befragung von 1.076 B2B-Entscheidern zum Softwarekauf.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══ 1d. Aufforderung ═══════════════════════════════════════════════
+             Springt zum einzigen Formular (#pilot-anfrage). Das Formular ist
+             eine verbindliche Buchung, deshalb "buchen" und nie
+             "unverbindlich". Kein "netto": Kleinunternehmer nach Paragraf 19
+             UStG, 500 EUR ist der Endbetrag. -->
+        <section class="av-cta" aria-labelledby="cta-heading">
+            <div class="lp-wrap">
+                <div class="av-cta__box av-reveal">
+                    <h2 id="cta-heading">Finden Sie heraus, ob Ihr Unternehmen genannt wird.</h2>
+                    <p>Wer wird genannt? Wo fehlen Sie? Was können Sie verbessern? Unser KI-Audit liefert die Antworten anhand von 36 Fragen aus Ihrem Markt.</p>
+                    <a class="cta-button" href="#pilot-anfrage">KI-Audit für 500 € buchen</a>
+                    <p class="av-cta__fine">500 € einmalig als Referenzkunde. Zahlung erst nach Lieferung. Referenz und Fallstudie nur mit Ihrer schriftlichen Freigabe.</p>
+                </div>
             </div>
         </section>
 
@@ -232,11 +323,14 @@
                 <div class="lp-price">
                     <p class="lp-kicker">Referenzkunden-Angebot</p>
                     <h2 id="anfrage-heading">Ihr Unternehmen als Referenzprojekt</h2>
-                    <!-- Kuenftiger Preis, kein "statt" oder "regulaer": 1.900 EUR
-                         hat noch niemand bezahlt. Ein erfundener Vergleichspreis
-                         waere irrefuehrend (UWG). Muss spaeter auch gelten. -->
+                    <!-- Kuenftiger Preis, kein "statt", "regulaer" und keine
+                         Durchstreichung: 1.900 EUR hat noch niemand bezahlt. Ein
+                         erfundener Vergleichspreis waere irrefuehrend (UWG).
+                         "Fuenf" ist verbindlich: Nach dem fuenften Auftrag gilt
+                         der Preis von 500 EUR nicht mehr, sonst ist die
+                         Verknappung selbst irrefuehrend. -->
                     <p class="lp-price__num">500 €<small>einmalig</small></p>
-                    <p class="lp-price__later"><span class="sr-only">Künftiger Preis: </span><s>1.900 €</s><span>Das zahlen alle nach Ihnen.</span></p>
+                    <p class="lp-price__later"><span>Für die ersten fünf Referenzkunden.</span> <span>Danach kostet der Audit 1.900 €.</span></p>
                     <ul>
                         <li>Vollständiger Audit mit Report und Ergebnisbesprechung</li>
                         <li>Ergebnis in 3 Werktagen</li>
@@ -354,6 +448,7 @@
                 <div class="lp-faq">
                     <details><summary>Was unterscheidet das von SEO?</summary><p>SEO zeigt, wo Sie bei Google stehen. Der Audit zeigt, ob ChatGPT, Claude und Gemini Sie nennen und empfehlen, wenn Kunden nach Anbietern fragen. Das sind zwei verschiedene Ranglisten.</p></details>
                     <details><summary>Was brauchen Sie von mir?</summary><p>Nur die Angaben im Formular. Keine Zugänge zu Ihrer Website, zu Google oder anderen Systemen.</p></details>
+                    <details><summary>Testen Sie die Apps von ChatGPT, Claude und Gemini?</summary><p>Die automatisierten Messungen erfolgen über die offiziellen Schnittstellen von OpenAI, Anthropic und Google mit Websuche. Die Ergebnisse können von den jeweiligen Apps abweichen. Im Bericht dokumentieren wir die eingesetzten Modelle und Messbedingungen.</p></details>
                     <details><summary>Werde ich danach sicher empfohlen?</summary><p>Das kann niemand garantieren, auch wir nicht. Sie wissen danach aber genau, wo Sie stehen und welche Schritte die größte Wirkung versprechen.</p></details>
                     <details><summary>Was steht in der Fallstudie?</summary><p>Ihr Firmenname, die Ausgangslage, ausgewählte Ergebnisse und die empfohlenen Maßnahmen. Vertrauliches bleibt draußen, und veröffentlicht wird nur, was Sie schriftlich freigeben.</p></details>
                 </div>
@@ -375,6 +470,8 @@
     <script src="../assets/js/page-common.js" defer></script>
     <script src="../assets/js/contact.js" defer></script>
     <script src="../assets/js/report-tabs.js" defer></script>
+    <script src="../assets/js/pin-sequence.js" defer></script>
+    <script src="../assets/js/scroll-reveal.js" defer></script>
     <script src="../assets/js/cookie-consent.js" defer></script>
     <script type="application/ld+json">
     {

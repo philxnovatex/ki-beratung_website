@@ -8,6 +8,8 @@
  * Das Skript setzt ausschliesslich Klassen:
  *   - .pin-aktiv an der Sektion, die im CSS das Layout umschaltet
  *   - die konfigurierte Klasse am jeweils sichtbaren Schritt
+ *   - optional (fertigKlasse) eine Klasse an allen Schritten davor, fuer
+ *     Sequenzen, die sich aufbauen statt einander abzuloesen
  * Die gesamte Gestaltung liegt im CSS (sections/ablauf.css, style.css).
  *
  * Wann nicht eingerastet wird:
@@ -45,6 +47,19 @@
             // Drei Striche zeigen den Fortschritt, ohne etwas zu behaupten.
             punkte: true,
             ziffern: false
+        },
+        {
+            // Landingpage KI-Sichtbarkeit: Frage und Situation bauen sich Satz
+            // fuer Satz auf. Gezeigte Saetze bleiben stehen (fertigKlasse) und
+            // verschwinden beim Zurueckscrollen nicht wieder (nurVorwaerts).
+            id: 'ki-frage',
+            schritte: '[data-story-schritt]',
+            aktivKlasse: 'schritt-aktiv',
+            fertigKlasse: 'schritt-fertig',
+            nurVorwaerts: true,
+            leiste: false,
+            punkte: true,
+            ziffern: false
         }
     ];
 
@@ -60,7 +75,8 @@
        Hoehe wird gemessen und ans CSS gereicht, damit Ueberschriften nicht
        darunter verschwinden. */
     function kopfHoehe() {
-        const kopf = document.querySelector('.main-header');
+        // .lp-top ist der schlanke Kopf der Anzeigen-Landingpage.
+        const kopf = document.querySelector('.main-header, .lp-top');
         return kopf ? Math.round(kopf.getBoundingClientRect().height) : 0;
     }
 
@@ -173,8 +189,14 @@
 
         function zeigeSchritt(index) {
             if (index === letzterSchritt) return;
+            // Einmal gezeigt bleibt gezeigt: Beim Zurueckscrollen baut sich
+            // die Sequenz nicht wieder ab.
+            if (konfig.nurVorwaerts && index < letzterSchritt) return;
             letzterSchritt = index;
-            schritte.forEach((el, i) => el.classList.toggle(konfig.aktivKlasse, i === index));
+            schritte.forEach((el, i) => {
+                el.classList.toggle(konfig.aktivKlasse, i === index);
+                if (konfig.fertigKlasse) el.classList.toggle(konfig.fertigKlasse, i < index);
+            });
 
             const anzeige = rail || punkte;
             if (!anzeige) return;
@@ -233,7 +255,10 @@
             sektion.classList.remove('pin-aktiv');
             ziffernZuruecksetzen();
             // Alle Schritte wieder sichtbar zuruecklassen, nicht halb geschaltet.
-            schritte.forEach(el => el.classList.remove(konfig.aktivKlasse));
+            schritte.forEach(el => {
+                el.classList.remove(konfig.aktivKlasse);
+                if (konfig.fertigKlasse) el.classList.remove(konfig.fertigKlasse);
+            });
             if (rail) { rail.remove(); rail = null; }
             if (punkte) { punkte.remove(); punkte = null; }
             letzterSchritt = -1;
