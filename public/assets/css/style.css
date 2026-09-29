@@ -306,6 +306,7 @@
 
     --c-blue-500: #185ADB;   /* Interaktion */
     --c-blue-400: #3b7bf0;
+    --c-blue-300: #7aa7ff;   /* helles Blau, Hervorhebung auf dunklem Grund */
     --c-violet-500: #4f46e5; /* Akzent im Demo-Player */
     --c-violet-600: #7c3aed;
 

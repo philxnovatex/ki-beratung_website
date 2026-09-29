@@ -30,7 +30,8 @@
         '.testimonial-card',
         '.timeline-item',
         '.ki-apps__card',
-        '.cs-card'
+        '.cs-card',
+        '.av-reveal'
     ];
 
     // Container, deren Kinder gestaffelt erscheinen sollen
@@ -39,7 +40,10 @@
         '.services-grid',
         '.testimonials-grid',
         '.ki-apps__grid',
-        '.timeline'
+        '.timeline',
+        // Ohne diesen Eintrag erschienen Kinder von data-reveal-group
+        // gleichzeitig, obwohl der Kopfkommentar Staffelung verspricht.
+        '[data-reveal-group]'
     ];
 
     const STAFFEL_MS = 90;   // Abstand zwischen Geschwistern
@@ -88,6 +92,16 @@
             });
         });
 
+        // Eigene Ausloeselinie per data-reveal-linie="0.55": Das Element startet
+        // erst, wenn seine Oberkante ueber 55 % der Fensterhoehe steht. Fuer
+        // Szenen, die man sehen soll, statt dass sie unten am Rand verpuffen.
+        // Solche Elemente laufen nicht ueber den Beobachter, sondern allein
+        // ueber die Pruefung beim Scrollen weiter unten.
+        function linie(el) {
+            const a = parseFloat(el.dataset.revealLinie);
+            return isNaN(a) ? null : window.innerHeight * a;
+        }
+
         // Elemente, die beim Laden bereits sichtbar oder schon vorbeigescrollt
         // sind, sofort einblenden. Ein Einblendeffekt für etwas, das der Nutzer
         // ohnehin schon sieht, bringt nichts. Vor allem aber schützt das gegen
@@ -96,15 +110,20 @@
         const sofort = [];
         elemente.forEach(el => {
             const r = el.getBoundingClientRect();
-            if (r.top < window.innerHeight * 0.9) sofort.push(el);
+            const grenze = linie(el);
+            if (r.top < (grenze === null ? window.innerHeight * 0.9 : grenze)) sofort.push(el);
         });
         sofort.forEach(el => { sichtbarMachen(el); elemente.delete(el); });
 
-        let ausgeloest = sofort.length;
+        // Der Beobachter meldet sich direkt nach observe() einmal fuer jedes
+        // Element, sichtbar oder nicht. Bleibt diese Meldung aus, ist er defekt.
+        let beobachterLebt = false;
 
         const observer = new IntersectionObserver((entries, obs) => {
+            beobachterLebt = true;
             entries.forEach(entry => {
                 if (!entry.isIntersecting) return;
+                if (linie(entry.target) !== null) return;
                 const el = entry.target;
                 const verzoegerung = (staffel.get(el) || 0) * STAFFEL_MS;
 
@@ -112,7 +131,6 @@
                     el.style.transitionDelay = verzoegerung + 'ms';
                 }
                 sichtbarMachen(el);
-                ausgeloest++;
                 obs.unobserve(el);
                 // Aus der Menge nehmen, damit die Nachtrag-Prüfung beim Scrollen
                 // und dieser Beobachter nicht auseinanderlaufen.
@@ -150,8 +168,9 @@
             const unten = window.innerHeight - 80;
             elemente.forEach(el => {
                 const r = el.getBoundingClientRect();
+                const grenze = linie(el);
                 // Alles, was im Bild ist oder bereits daran vorbei ist
-                if (r.top < unten) {
+                if (r.top < (grenze === null ? unten : grenze)) {
                     sichtbarMachen(el);
                     observer.unobserve(el);
                     elemente.delete(el);
@@ -181,8 +200,12 @@
         // Letzte Absicherung: Falls der Beobachter gar nicht anspringt, wird
         // nach 2,5 Sekunden pauschal alles gezeigt. Ein dauerhaft unsichtbarer
         // Inhalt wäre schlimmer als eine ausgefallene Animation.
+        // Frueher zaehlte hier, ob schon etwas eingeblendet wurde. Stand beim
+        // Laden nichts im Bild und scrollte niemand, galt der Beobachter
+        // faelschlich als defekt, und alle Einblendungen der Seite waren
+        // verschenkt, bevor man sie sah.
         setTimeout(() => {
-            if (ausgeloest > 0) return;
+            if (beobachterLebt) return;
             elemente.forEach(sichtbarMachen);
         }, 2500);
     }

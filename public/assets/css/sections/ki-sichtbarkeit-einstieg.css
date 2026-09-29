@@ -1,0 +1,323 @@
+/* ============================================================================
+   KI SICHTBARKEIT: Einstieg nach dem Hero
+
+   Drei Teile, die als eine Passage gelesen werden:
+     1. Frage und Situation (#ki-frage), gross und typografisch
+     2. Drei Fakten mit Quellen als Liste
+     3. Aufforderung mit Sprung zum Formular
+
+   Bewegung, zwei Wege:
+     - Breite Fenster: #ki-frage rastet ein und baut sich Satz fuer Satz auf.
+       Die Klassen .pin-aktiv, .schritt-aktiv und .schritt-fertig setzt
+       pin-sequence.js. Gezeigte Saetze bleiben stehen.
+     - Sonst (Telefon, niedrige Fenster): Jeder Satz und jede Faktenzeile
+       blendet beim Erscheinen einmal ein (.av-reveal, scroll-reveal.js).
+   Ohne JavaScript greift der noscript-Block im HTML, bei reduzierter
+   Bewegung steht alles sofort da. Bewegt werden nur transform und opacity.
+   ============================================================================ */
+
+/* ── Einblenden (Telefon und alle Fenster ohne Einrasten) ─────────────── */
+.av-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out);
+}
+.av-reveal.in-view { opacity: 1; transform: none; }
+
+/* Frage, Fakten und Aufforderung sind eine Passage: keine Trennlinien der
+   allgemeinen section-Regel aus style.css dazwischen. */
+.av-story, .av-facts { border-bottom: 0; }
+
+/* ── 1. Frage und Situation ───────────────────────────────────────────── */
+.av-story {
+    /* Schriftgroesse der drei Saetze. Auch Mass fuer das Aufgleiten unten. */
+    --zeile-fs: clamp(1.6rem, min(1rem + 2.8vw, 6vh), 3.25rem);
+    /* Hervorhebung in der Frage: helles Markenblau, Gold bleibt fuer Sie. */
+    --av-hl: var(--c-blue-300);
+    position: relative;
+    padding-block: clamp(64px, 9vw, 112px) var(--space-12);
+    background: var(--lp-bg);
+}
+.av-story__stage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.av-story__col {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-3);
+    max-width: 58rem;
+}
+/* Abstaende nur ueber gap, sonst addiert sich p + p aus style.css dazu. */
+.av-story__col > * { margin: 0; }
+
+.lp .av-story__q {
+    margin-bottom: var(--space-8);
+    font-size: clamp(2rem, min(1.2rem + 3.6vw, 7.5vh), 4rem);
+    font-weight: var(--weight-black);
+    line-height: 1.06;
+    letter-spacing: -0.035em;
+    text-align: center;
+    text-wrap: balance;
+}
+.av-story__hl { color: var(--av-hl); }
+
+.av-story__zeile {
+    font-size: var(--zeile-fs);
+    font-weight: var(--weight-bold);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: var(--text-strong);
+    text-wrap: balance;
+}
+
+/* "Ihr Name" als leerer Platz: gestrichelter Rahmen wie beim Befund in der
+   Beispielantwort oben. Gold, weil Gold auf dieser Seite fuer Sie steht. */
+.av-story__luecke {
+    position: relative;
+    display: inline-block;
+    padding-inline: .18em;
+    color: var(--accent);
+}
+.av-story__luecke::after {
+    content: "";
+    position: absolute;
+    inset: -.02em -.04em -.06em;
+    border: 2px dashed rgba(255, 201, 71, .6);
+    border-radius: var(--radius-md);
+    pointer-events: none;
+}
+
+.lp .av-story__folge {
+    max-width: 34rem;
+    margin-top: var(--space-8);
+    font-size: var(--text-lg);
+    color: var(--text-body);
+    text-wrap: balance;
+}
+
+/* ── 1. Eingerastet ───────────────────────────────────────────────────── */
+/* Gut 40 % Bildschirmhoehe Weg pro Satz: ein, zwei Drehungen am Mausrad.
+   Kuerzer liest sich gehetzt, laenger wird zur Praesentation. */
+.av-story.pin-aktiv {
+    height: calc(var(--schritte, 5) * 42vh + 100vh);
+    padding-block: 0;
+}
+.av-story.pin-aktiv .av-story__stage {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    justify-content: center;
+    gap: var(--space-8);
+    padding-block: calc(var(--kopf-hoehe, 76px) + var(--space-6)) var(--space-8);
+}
+/* Blaues Licht hinter der Buehne, wie im Hero. Es wird heller, sobald die
+   Luecke steht: Aus der Frage wird ein Befund. Nur Deckkraft wechselt. */
+.av-story.pin-aktiv .av-story__stage::before,
+.av-story.pin-aktiv .av-story__stage::after {
+    content: "";
+    position: absolute;
+    inset: 10% 0;
+    z-index: -1;
+    pointer-events: none;
+    transition: opacity var(--duration-reveal) var(--ease-in-out);
+}
+.av-story.pin-aktiv .av-story__stage::before {
+    background: radial-gradient(50% 50% at 50% 45%, rgba(86, 132, 230, .2), transparent 70%);
+}
+.av-story.pin-aktiv .av-story__stage::after {
+    background: radial-gradient(45% 45% at 50% 55%, rgba(122, 167, 255, .14), transparent 70%);
+    opacity: 0;
+}
+.av-story.pin-aktiv .av-story__stage:has(.av-story__zeile--fehlt.schritt-aktiv, .av-story__zeile--fehlt.schritt-fertig)::after {
+    opacity: 1;
+}
+
+/* Die Spalte steht immer mittig im Bild: Solange Saetze fehlen, sitzt sie um
+   die halbe Hoehe der fehlenden tiefer und gleitet mit jedem Satz nach oben.
+   Sonst stuende die Frage anfangs allein oben ueber einer leeren Flaeche.
+   --rest zaehlt die noch verborgenen Schritte. */
+.av-story.pin-aktiv .av-story__col {
+    --rest: 4;
+    transform: translateY(calc(var(--rest) * (var(--zeile-fs) * 1.12 + var(--space-3)) / 2));
+    transition: transform var(--duration-slow) var(--ease-in-out);
+}
+.av-story.pin-aktiv .av-story__col:has(> :nth-child(2).schritt-aktiv) { --rest: 3; }
+.av-story.pin-aktiv .av-story__col:has(> :nth-child(3).schritt-aktiv) { --rest: 2; }
+.av-story.pin-aktiv .av-story__col:has(> :nth-child(4).schritt-aktiv) { --rest: 1; }
+.av-story.pin-aktiv .av-story__col:has(> :nth-child(5).schritt-aktiv) { --rest: 0; }
+
+/* Hoehere Spezifitaet als .av-reveal.in-view: Eingerastet entscheidet
+   allein der Schritt, nicht das Einblenden. */
+.av-story.pin-aktiv [data-story-schritt] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--duration-slow) var(--ease-out),
+                transform var(--duration-slow) var(--ease-out),
+                color var(--duration-base) var(--ease-in-out);
+}
+.av-story.pin-aktiv [data-story-schritt].schritt-aktiv,
+.av-story.pin-aktiv [data-story-schritt].schritt-fertig {
+    opacity: 1;
+    transform: none;
+}
+/* Die Frage erscheint gross und setzt sich dann. */
+.av-story.pin-aktiv .av-story__q { transform: translateY(24px) scale(1.04); }
+.av-story.pin-aktiv .av-story__q.schritt-aktiv,
+.av-story.pin-aktiv .av-story__q.schritt-fertig { transform: none; }
+
+/* Gelesene Saetze treten zurueck, der aktuelle fuehrt. "Fehlt Ihr Name?"
+   bleibt hell, er ist die Pointe. Gedimmt wird ueber die Farbe, nicht die
+   Deckkraft, damit der Kontrast nach WCAG AA erhalten bleibt. */
+.av-story.pin-aktiv .av-story__zeile.schritt-fertig:not(.av-story__zeile--fehlt) {
+    color: var(--text-muted);
+}
+
+/* Die Luecke: Erst steht der Satz, dann faellt der Rahmen um den Namen. */
+.av-story.pin-aktiv .av-story__luecke {
+    color: var(--text-strong);
+    transition: color var(--duration-base) var(--ease-in-out) var(--duration-slow);
+}
+.av-story.pin-aktiv .av-story__luecke::after {
+    opacity: 0;
+    transform: scale(1.25);
+    transition: opacity var(--duration-base) var(--ease-out) var(--duration-slow),
+                transform var(--duration-slow) var(--ease-out) var(--duration-slow);
+}
+.av-story.pin-aktiv .schritt-aktiv .av-story__luecke,
+.av-story.pin-aktiv .schritt-fertig .av-story__luecke { color: var(--accent); }
+.av-story.pin-aktiv .schritt-aktiv .av-story__luecke::after,
+.av-story.pin-aktiv .schritt-fertig .av-story__luecke::after { opacity: 1; transform: none; }
+
+/* Fortschritt, erzeugt von pin-sequence.js. Gleiches Bild wie auf der
+   Startseite, dort steht es in problem-pin.css. */
+.av-story .pin-punkte { display: flex; justify-content: center; gap: var(--space-3); }
+.av-story .pin-punkt {
+    width: 40px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--lp-line);
+    transition: background var(--duration-base) var(--ease-out);
+}
+.av-story .pin-punkt[data-status="aktiv"]  { background: var(--accent); }
+.av-story .pin-punkt[data-status="fertig"] { background: rgba(255, 201, 71, .45); }
+
+/* Niedrige Fenster: enger statt abschalten. */
+@media (min-width: 901px) and (max-height: 820px) {
+    .av-story.pin-aktiv .av-story__stage { gap: var(--space-4); padding-block: calc(var(--kopf-hoehe, 76px) + var(--space-4)) var(--space-4); }
+    .lp .av-story.pin-aktiv .av-story__q { margin-bottom: var(--space-4); }
+    .lp .av-story.pin-aktiv .av-story__folge { margin-top: var(--space-4); }
+}
+/* Sicherung, falls die Klasse unter 900 px doch gesetzt ist. */
+@media (max-width: 900px) {
+    .av-story.pin-aktiv { height: auto; padding-block: clamp(64px, 9vw, 112px) var(--space-12); }
+    .av-story.pin-aktiv .av-story__stage { position: static; min-height: 0; padding-block: 0; }
+    .av-story.pin-aktiv .av-story__col { transform: none; }
+    .av-story.pin-aktiv [data-story-schritt] { opacity: 1; transform: none; }
+    .av-story .pin-punkte { display: none; }
+}
+
+/* ── 2. Fakten ────────────────────────────────────────────────────────── */
+.av-facts { padding-block: var(--space-12); background: var(--lp-bg); }
+.lp .av-facts h2 {
+    font-size: clamp(1.75rem, 1rem + 2.4vw, 2.75rem);
+    font-weight: var(--weight-black);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+/* Schmaler als die Seitenbreite: Die Liste soll rechts Luft haben, statt
+   den ganzen Bildschirm zu fuellen. */
+.av-facts__list { list-style: none; padding: 0; margin: var(--space-8) 0 0; max-width: 60rem; }
+.av-fact {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    gap: var(--space-2) var(--space-8);
+    align-items: center;
+    padding-block: var(--space-6);
+}
+.av-fact > div > * { margin: 0; }
+/* Trennlinie mit Akzentpunkt. Die Linie zieht sich beim Einblenden von
+   links auf, der Punkt sitzt an ihrem Anfang. */
+.av-fact::before,
+.av-fact::after { content: ""; position: absolute; left: 0; top: 0; pointer-events: none; }
+.av-fact::before { right: 0; height: 1px; background: var(--lp-line); transform-origin: left center; }
+.av-fact::after { width: 7px; height: 7px; margin-top: -3px; border-radius: 50%; background: var(--accent); }
+.lp .av-fact__num {
+    margin: 0;
+    font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+    font-weight: var(--weight-black);
+    line-height: .95;
+    letter-spacing: -0.04em;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.av-fact__text { font-size: var(--text-lg); font-weight: var(--weight-bold); line-height: 1.35; color: var(--text-strong); }
+.lp .av-fact__src { margin-top: var(--space-3); font-size: var(--text-sm); line-height: 1.55; color: var(--text-muted); }
+.lp .av-fact__src a { color: var(--text-body); }
+
+/* Einblenden der Zeile: Zahl von links, Text von unten, Linie zieht auf. */
+.av-fact.av-reveal { transform: none; }
+.av-fact.av-reveal .av-fact__num { transform: translateX(-24px); }
+.av-fact.av-reveal > div { transform: translateY(16px); }
+.av-fact.av-reveal::before { transform: scaleX(0); }
+.av-fact.av-reveal .av-fact__num,
+.av-fact.av-reveal > div,
+.av-fact.av-reveal::before {
+    transition: transform var(--duration-slow) var(--ease-out);
+    transition-delay: inherit;
+}
+.av-fact.av-reveal.in-view .av-fact__num,
+.av-fact.av-reveal.in-view > div,
+.av-fact.av-reveal.in-view::before { transform: none; }
+
+/* ── 3. Aufforderung ──────────────────────────────────────────────────── */
+.av-cta { padding-block: var(--space-8) clamp(64px, 9vw, 112px); background: var(--lp-bg); }
+/* Mittig als Abschluss der Passage. Der goldene Strich sitzt deshalb oben
+   statt links. */
+.av-cta__box {
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    max-width: 46rem;
+    margin-inline: auto;
+    padding: var(--space-8);
+    text-align: center;
+    background: var(--lp-card);
+    border: 1px solid var(--lp-line);
+    border-top: 3px solid var(--accent);
+    border-radius: var(--lp-radius);
+}
+.av-cta__box > * { margin: 0; }
+.lp .av-cta__box h2 { font-size: var(--text-xl); text-align: center; text-wrap: balance; }
+.lp .av-cta__box p { text-wrap: balance; }
+.av-cta__box .cta-button { margin-top: var(--space-2); }
+.lp .av-cta__fine { font-size: var(--text-sm); color: var(--text-muted); }
+
+/* Sprung vom Button: Der klebende Kopf verdeckt sonst den Abschnittsanfang. */
+.lp section[id] { scroll-margin-top: var(--space-8); }
+
+/* ── Schmale Fenster ──────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .av-story { padding-block: var(--space-16) var(--space-8); }
+    .av-fact { grid-template-columns: minmax(0, 1fr); padding-block: var(--space-6); }
+    .av-cta__box { padding: var(--space-6) var(--space-4); }
+    .av-cta__box .cta-button { width: 100%; text-align: center; }
+}
+
+/* ── Reduzierte Bewegung: alles steht sofort da ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    .av-reveal,
+    .av-fact.av-reveal .av-fact__num,
+    .av-fact.av-reveal > div,
+    .av-fact.av-reveal::before {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}

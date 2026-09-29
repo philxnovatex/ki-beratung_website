@@ -5,8 +5,10 @@
    style.css (Farben, Schrift, .cta-button, Kontaktformular-Status, Footer,
    Cookie-Banner), bringt aber ein eigenes, ruhigeres Layout mit.
 
-   Aufbau: Einstieg mit Beispiel-KI-Antwort, durchklickbarer Beispielreport,
-   Leistungen, Ablauf, Ansprechpartner, Preis und Buchung, Fragen.
+   Aufbau: Einstieg mit Beispiel-KI-Antwort, danach Frage, Fakten und
+   Aufforderung (eigene Datei: ki-sichtbarkeit-einstieg.css), durchklickbarer
+   Beispielreport, Leistungen, Ablauf, Ansprechpartner, Preis und Buchung,
+   Fragen.
    Klassen: lp-* fuer die Seite, rp-* fuer den Report.
    ============================================================================ */
 
@@ -100,49 +102,127 @@
 .lp-textlink { font-weight: var(--weight-bold); text-decoration: none; }
 .lp-textlink::after { content: " \2193"; }
 
-/* Beispiel-KI-Antwort unter dem Button: Frage des Kunden, Antwort mit drei
-   Wettbewerbern, darunter der Befund. Einmaliges Einblenden nacheinander,
-   16 px Weg, nur ohne Wunsch nach reduzierter Bewegung. */
+/* Beispiel-KI-Antwort unter dem Button: ein helles Chatfenster, wie man es
+   von KI-Assistenten kennt. Weiss auf dem dunklen Grund ist der Blickfang und
+   sagt ohne Lesen "das ist ein KI-Chat". Frage rechts in grauer Blase,
+   Antwort als freier Text, unten ein Eingabefeld (nur Bild). Darunter,
+   ueber die Fensterkante gelegt, der Befund. Einmaliges Einblenden
+   nacheinander, 16 px Weg, nur ohne Wunsch nach reduzierter Bewegung.
+   Eigene Farben, weil die Palette keine helle Flaeche kennt. Kontrast auf
+   Weiss: Schrift 17:1, gedaempft 6:1. */
 .av-chat {
+    --chat-bg: #ffffff;
+    --chat-ink: #111827;
+    --chat-text: #374151;
+    --chat-muted: #5b6472;
+    --chat-soft: #f1f3f6;
+    --chat-line: #e5e7eb;
     width: 100%;
     max-width: 44rem;
     margin: var(--space-16) 0 0;
     text-align: left;
-    background: var(--lp-card);
-    border: 1px solid var(--lp-line);
-    border-radius: var(--lp-radius);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, .35);
+}
+.av-chat__window {
+    background: var(--chat-bg);
+    color: var(--chat-text);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 30px 80px rgba(0, 0, 0, .5);
     overflow: hidden;
 }
-.av-chat__bar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-6); border-bottom: 1px solid var(--lp-line); font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--text-muted); }
-.av-chat__body { display: grid; gap: var(--space-4); padding: var(--space-6); font-size: var(--text-sm); }
+/* Kopfzeile als Ueberschrift des Beispiels. Das "koennte" darin ersetzt das
+   fruehere Etikett "Beispieldaten". */
+.lp .av-chat__bar { margin: 0; padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--chat-line); font-size: var(--text-md); font-weight: var(--weight-bold); line-height: 1.35; color: var(--chat-ink); }
+.av-chat__body { display: grid; gap: var(--space-6); padding: var(--space-6); font-size: var(--text-base); line-height: 1.6; }
+.av-chat__body p { margin: 0; }
 .av-chat__q {
     justify-self: end;
-    max-width: 85%;
+    max-width: 80%;
     padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-lg) var(--radius-lg) var(--radius-sm) var(--radius-lg);
-    background: rgba(159, 179, 217, .14);
-    color: var(--text-strong);
+    border-radius: 22px;
+    background: var(--chat-soft);
+    color: var(--chat-ink);
 }
-.av-chat__a { color: var(--text-body); }
-.av-chat__a ol { margin: var(--space-2) 0 0; padding-left: var(--space-6); display: grid; gap: var(--space-1); }
-.av-chat__a b, .av-chat__miss b { color: var(--text-strong); }
-.av-chat__miss {
+.av-chat__a { color: var(--chat-text); }
+.av-chat__a ol { margin: var(--space-3) 0 0; padding-left: var(--space-6); display: grid; gap: var(--space-2); }
+.av-chat__a b { color: var(--chat-ink); }
+.av-chat__input {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border: 1px dashed rgba(255, 155, 145, .45);
-    border-radius: var(--radius-md);
+    margin: 0 var(--space-6) var(--space-8);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+    border: 1px solid var(--chat-line);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 2px 8px rgba(17, 24, 39, .06);
+    font-size: var(--text-sm);
+    color: var(--chat-muted);
+}
+.av-chat__send { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--chat-ink); color: var(--chat-bg); flex: none; }
+/* Befund unter dem Fenster als ganzer Satz, nicht als Etikett: Man soll ihn
+   ohne Nachdenken verstehen. Das Ausrufezeichen in Gold zieht den Blick. */
+.av-chat__miss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    margin: var(--space-6) 0 0;
+    font-size: var(--text-md);
+    font-weight: var(--weight-bold);
+    color: var(--text-strong);
+    text-align: left;
+}
+.av-chat__miss-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-weight: var(--weight-black);
+    line-height: 1;
+}
+/* Tipp-Punkte: gibt es nur waehrend der Szene. Sie liegen in derselben
+   Rasterzelle wie die Antwort, damit beim Wechsel nichts springt. */
+.av-chat__typing { display: none; grid-row: 2; grid-column: 1; align-self: start; gap: 5px; padding: var(--space-3) var(--space-4); border-radius: 22px; background: var(--chat-soft); width: fit-content; }
+.av-chat__typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--chat-muted); }
+.av-chat__a { grid-row: 2; grid-column: 1; }
+
+/* Die Szene. Das weisse Fenster steht von Anfang an, nur sein Inhalt kommt
+   nacheinander: Frage von rechts wie eine gesendete Nachricht, kurz Tippen,
+   Antwort mit den drei Namen einzeln, zuletzt der Satz darunter. Flott,
+   zusammen gut zwei Sekunden, damit niemand warten muss. Ausgeloest von
+   scroll-reveal.js (.in-view), einmal pro Seitenaufruf. */
+.av-chat.av-reveal { opacity: 1; transform: none; transition: none; }
+.av-chat {
+    --t-tippen: calc(var(--duration-base) + var(--duration-fast));
+    --t-antwort: calc(var(--t-tippen) + 2 * var(--duration-base));
+    --t-befund: calc(var(--t-antwort) + var(--duration-slow));
 }
 @media (prefers-reduced-motion: no-preference) {
-    .av-chat__q, .av-chat__a, .av-chat__miss { animation: av-in var(--duration-slow) var(--ease-out) both; }
-    .av-chat__q { animation-delay: var(--duration-base); }
-    .av-chat__a { animation-delay: calc(var(--duration-base) + var(--duration-slow)); }
-    .av-chat__miss { animation-delay: calc(var(--duration-base) + 2 * var(--duration-slow)); }
+    .av-chat.av-reveal:not(.in-view) :is(.av-chat__q, .av-chat__a, .av-chat__miss) { opacity: 0; }
+    .av-chat.in-view .av-chat__q { animation: av-rechts var(--duration-slow) var(--ease-out) both; }
+    .av-chat.in-view .av-chat__typing {
+        display: flex;
+        animation: av-tippen calc(2 * var(--duration-base)) var(--ease-in-out) var(--t-tippen) both;
+    }
+    .av-chat.in-view .av-chat__typing span { animation: av-punkt var(--duration-base) var(--ease-in-out) var(--t-tippen) 2 alternate both; }
+    .av-chat.in-view .av-chat__typing span:nth-child(2) { animation-delay: calc(var(--t-tippen) + var(--duration-fast) / 2); }
+    .av-chat.in-view .av-chat__typing span:nth-child(3) { animation-delay: calc(var(--t-tippen) + var(--duration-fast)); }
+    .av-chat.in-view .av-chat__a { animation: av-in var(--duration-slow) var(--ease-out) var(--t-antwort) both; }
+    .av-chat.in-view .av-chat__a li { animation: av-in var(--duration-slow) var(--ease-out) both; }
+    .av-chat.in-view .av-chat__a li:nth-child(1) { animation-delay: calc(var(--t-antwort) + var(--duration-fast)); }
+    .av-chat.in-view .av-chat__a li:nth-child(2) { animation-delay: calc(var(--t-antwort) + 2 * var(--duration-fast)); }
+    .av-chat.in-view .av-chat__a li:nth-child(3) { animation-delay: calc(var(--t-antwort) + 3 * var(--duration-fast)); }
+    .av-chat.in-view .av-chat__miss { animation: av-in var(--duration-slow) var(--ease-out) var(--t-befund) both; }
 }
 @keyframes av-in { from { opacity: 0; transform: translateY(16px); } }
+@keyframes av-rechts { from { opacity: 0; transform: translateX(24px); } }
+/* Ein- und wieder ausblenden, am Ende weg: Danach steht nur die Antwort. */
+@keyframes av-tippen { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
+@keyframes av-punkt { from { opacity: .35; transform: none; } to { opacity: 1; transform: translateY(-3px); } }
 
 /* ── Report: gemeinsame Bausteine ─────────────────────────────────────── */
 .rp-app { background: var(--lp-card); border: 1px solid var(--lp-line); border-radius: var(--lp-radius); box-shadow: 0 24px 60px rgba(0, 0, 0, .35); overflow: hidden; }
@@ -248,20 +328,10 @@
 .lp-price h2 { font-size: var(--text-xl, 1.6rem); margin-bottom: var(--space-4); }
 .lp-price__num { font-size: 4rem; font-weight: 800; line-height: 1; color: var(--text-strong); letter-spacing: -0.03em; }
 .lp-price__num small { font-size: var(--text-base); font-weight: var(--weight-regular); color: var(--text-muted); letter-spacing: 0; margin-left: var(--space-2); }
-/* Künftiger Preis in einer ruhigen Zeile unter der 500: gerade
-   durchgestrichen, daneben ein Augenzwinkern. Leiser als der Preis selbst. */
-.lp .lp-price__later { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); margin-top: var(--space-3); }
-/* Zahl hell und in normaler Stärke, Strich dünn und halbtransparent:
-   Ein dicker Strich über fetten Ziffern macht die Zahl unleserlich. */
-.lp-price__later s {
-    font-size: var(--text-lg);
-    font-weight: var(--weight-regular);
-    color: var(--text-body);
-    text-decoration-line: line-through;
-    text-decoration-color: rgba(255, 155, 145, .75);
-    text-decoration-thickness: 1px;
-}
-.lp-price__later span:last-child { font-size: var(--text-sm); color: var(--text-body); }
+/* Bedingung und künftiger Preis in zwei ruhigen Zeilen unter der 500:
+   oben die Bedingung hell, darunter die Folge leiser. */
+.lp .lp-price__later { display: grid; gap: var(--space-1); margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-body); }
+.lp-price__later span:first-child { color: var(--text-strong); font-weight: var(--weight-bold); }
 .lp-price ul { list-style: none; padding: 0; margin: var(--space-6) 0; display: grid; gap: var(--space-2); color: var(--text-strong); }
 .lp-price li { position: relative; padding-left: 28px; }
 .lp-price li::before {
@@ -334,6 +404,8 @@
     .lp-actions .cta-button { width: 100%; text-align: center; }
     .av-chat { margin-top: var(--space-12); }
     .av-chat__bar, .av-chat__body { padding-inline: var(--space-4); }
+    .av-chat__body { font-size: var(--text-sm); }
+    .av-chat__input { margin-inline: var(--space-4); }
     .rp-app__main { padding: var(--space-4); }
     .rp-bar { grid-template-columns: 6.8rem minmax(0, 1fr) 2.9rem; font-size: var(--text-xs); }
     .rp-grid2, .lp-cols, .lp-row { grid-template-columns: minmax(0, 1fr); }
